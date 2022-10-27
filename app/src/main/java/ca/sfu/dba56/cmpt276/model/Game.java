@@ -7,8 +7,8 @@ public class Game {
     private int expectedHigh;
     private String achievements[];
 
-    public Game(){
-
+    //Default Constructor
+    private Game(){
     }
 
     public int getPlayers(){
