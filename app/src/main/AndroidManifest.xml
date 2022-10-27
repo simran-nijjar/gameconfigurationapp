@@ -13,9 +13,17 @@
         android:theme="@style/Theme.CMPT276"
         tools:targetApi="31">
         <activity
+            android:name=".AddNewGame"
+            android:exported="false"
+            android:label="@string/addNewGame">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".HelpActivity"
-            android:label="@string/help"
-            android:exported="false">
+            android:exported="false"
+            android:label="@string/help">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
