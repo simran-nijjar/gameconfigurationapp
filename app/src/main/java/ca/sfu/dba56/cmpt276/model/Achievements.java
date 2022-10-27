@@ -8,6 +8,11 @@ public class Achievements {
     public void getAchievement(int minScore, int maxScore, int playerScore){
         String Achievement;
         /*
+
+        if(playerScore < minScore && playerScore >maxScore){
+            Achievement = "Score is out of range";
+        }
+
         if() {
             Achievement = "Terrible Turtle";
         }
