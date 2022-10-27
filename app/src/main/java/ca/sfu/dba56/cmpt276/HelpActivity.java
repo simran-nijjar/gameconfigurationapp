@@ -28,22 +28,37 @@ public class HelpActivity extends AppCompatActivity {
     private void setInfo() {
         Button info = findViewById(R.id.info);
         TextView info_content = findViewById(R.id.info_content);
+        info_content.setVisibility(View.GONE);
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                info_content.setText(R.string.info_content);
-                info_content.setMovementMethod(LinkMovementMethod.getInstance());
+                if(info_content.getVisibility() == View.GONE) {
+                    info_content.setText(R.string.info_content);
+                    info_content.setMovementMethod(LinkMovementMethod.getInstance());
+                    info_content.setVisibility(View.VISIBLE);
+                }else if (info_content.getVisibility() == View.VISIBLE){
+                    info_content.setText("");
+                    info_content.setVisibility(View.GONE);
+                }
             }
         });
+
     }
 
     private void setDescription(){
         Button description = findViewById(R.id.description);
         TextView description_content = findViewById(R.id.description_content);
+        description_content.setVisibility(View.GONE);
         description.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                description_content.setText(R.string.description_content);
+                if(description_content.getVisibility() == View.GONE) {
+                    description_content.setText(R.string.description_content);
+                    description_content.setVisibility(View.VISIBLE);
+                }else if (description_content.getVisibility() == View.VISIBLE){
+                    description_content.setText("");
+                    description_content.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -52,10 +67,17 @@ public class HelpActivity extends AppCompatActivity {
     private void setAchievement(){
         Button achieve = findViewById(R.id.achieve);
         TextView achieve_content = findViewById(R.id.achieve_content);
+        achieve_content.setVisibility(View.GONE);
         achieve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                achieve_content.setText(R.string.achieve_content);
+                if(achieve_content.getVisibility() == View.GONE) {
+                    achieve_content.setText(R.string.achieve_content);
+                    achieve_content.setVisibility(View.VISIBLE);
+                }else if (achieve_content.getVisibility() == View.VISIBLE){
+                    achieve_content.setText("");
+                    achieve_content.setVisibility(View.GONE);
+                }
             }
         });
     }
