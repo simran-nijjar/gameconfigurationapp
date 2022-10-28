@@ -1,5 +1,6 @@
 package ca.sfu.dba56.cmpt276;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -19,6 +20,8 @@ public class HelpActivity extends AppCompatActivity {
         setInfo();
         setDescription();
         setAchievement();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     public static Intent makeIntent(Context context){
