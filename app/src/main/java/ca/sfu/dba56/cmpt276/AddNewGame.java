@@ -50,8 +50,8 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void showResult(){
-        Button check = findViewById(R.id.check_btn);
-        check.setOnClickListener(new View.OnClickListener() {
+        Button save = findViewById(R.id.save_btn);
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
