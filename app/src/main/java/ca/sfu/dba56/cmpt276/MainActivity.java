@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Configurations");
         UpdateUI();
 
+        setUpAddConfigurationButton();
     }
 
     private void setUpHelpButton() {
@@ -50,6 +53,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateListView(ConfigurationsManager manager) {
+    }
+
+
+    private void setUpAddConfigurationButton(){
+        FloatingActionButton addConfigBtn = findViewById(R.id.addBtn);
+        addConfigBtn.setOnClickListener(v ->{
+            Intent intent = AddConfiguration.makeIntent(MainActivity.this);
+            startActivity(intent);
+        });
     }
 
 }
