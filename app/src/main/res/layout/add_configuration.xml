@@ -19,10 +19,10 @@
         app:layout_constraintVertical_bias="0.207" />
 
     <TextView
-        android:id="@+id/txtExpectedLowScore"
+        android:id="@+id/txtExpectedPoorScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Expected Low Score"
+        android:text="Expected Poor Score"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,16 +32,16 @@
         app:layout_constraintVertical_bias="0.119" />
 
     <TextView
-        android:id="@+id/txtExpectedHighScore"
+        android:id="@+id/txtExpectedGreatScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Expected High Score"
+        android:text="Expected Great Score"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.135"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtExpectedLowScore"
+        app:layout_constraintTop_toBottomOf="@+id/txtExpectedPoorScore"
         app:layout_constraintVertical_bias="0.145" />
 
     <EditText
@@ -57,32 +57,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.177" />
 
-    <EditText
-        android:id="@+id/inputLowScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.858"
-        app:layout_constraintStart_toEndOf="@+id/txtGameName"
-        app:layout_constraintTop_toBottomOf="@+id/inputName"
-        app:layout_constraintVertical_bias="0.075" />
-
-    <EditText
-        android:id="@+id/inputHighScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toEndOf="@+id/txtExpectedHighScore"
-        app:layout_constraintTop_toBottomOf="@+id/inputLowScore"
-        app:layout_constraintVertical_bias="0.096" />
-
     <Button
         android:id="@+id/saveConfigBtn"
         android:layout_width="wrap_content"
@@ -91,8 +65,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.947"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputHighScore"
-        app:layout_constraintVertical_bias="0.898" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/inputLowScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtExpectedPoorScore"
+        app:layout_constraintTop_toBottomOf="@+id/inputName"
+        app:layout_constraintVertical_bias="0.075" />
+
+    <EditText
+        android:id="@+id/inputHighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toEndOf="@+id/txtExpectedGreatScore"
+        app:layout_constraintTop_toBottomOf="@+id/inputLowScore"
+        app:layout_constraintVertical_bias="0.096" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
