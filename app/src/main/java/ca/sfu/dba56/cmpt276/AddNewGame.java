@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,8 +16,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class AddNewGame extends AppCompatActivity {
+    private int players;
+    private int scores;
+
+    private EditText num_player;
+    private EditText combined_score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +51,26 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void saveInput(){
-        EditText num_player = findViewById(R.id.num_players_input);
-        EditText combined_score = findViewById(R.id.combined_score_input);
+        num_player = findViewById(R.id.num_players_input);
+        combined_score = findViewById(R.id.combined_score_input);
+        players = Integer.parseInt(String.valueOf(num_player));
+        scores = Integer.parseInt(String.valueOf(combined_score));
+    }
 
+    private boolean isEmpty(String input){
+        if(TextUtils.isEmpty(input)){
+            Toast.makeText(this, "Text field is empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }else return true;
+    }
+
+    private boolean isValid(){
+        if(isEmpty(String.valueOf(num_player))){
+            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if(isEmpty(String.valueOf(combined_score))){
+            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showResult(){
