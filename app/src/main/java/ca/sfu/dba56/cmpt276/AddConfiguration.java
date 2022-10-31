@@ -11,6 +11,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import ca.sfu.dba56.cmpt276.model.Configuration;
+import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
+
 public class AddConfiguration extends AppCompatActivity {
     private EditText gameNameTxt;
     private EditText expPoorScoreTxt;
@@ -24,10 +27,23 @@ public class AddConfiguration extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_configuration);
-        getUserInput();
-        setUpSaveConfigButton();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        Bundle b = getIntent().getExtras();
+        if(b!= null){
+            //Edit Game Config Activity
+            //Activity Name
+            getSupportActionBar().setTitle("Edit Game Config");
+            //TODO: edit config
+        }
+        else{
+            //Add Game Config Activity
+            //Activity Name
+            getSupportActionBar().setTitle("Add new Game Config");
+            getUserInput();
+            setUpSaveConfigButton();
+        }
     }
 
     public static Intent makeIntent(Context context){
@@ -45,12 +61,15 @@ public class AddConfiguration extends AppCompatActivity {
         Button saveConfigBtn = findViewById(R.id.saveConfigBtn);
         saveConfigBtn.setOnClickListener(v ->{
             //Toast message is temporary
-            //TO DO: save game using ConfigurationsManager
+            //TODO: save game using ConfigurationsManager
             convertTxtToStr();
-            //Save game if all values are not empty
-            if (checkInputNotEmpty(strGameName) == true
-                    && checkInputNotEmpty(strExpPoorScore) == true
-                    && checkInputNotEmpty(strExpGreatScore) == true) {
+            //Save game if all values are valid
+            if (checkInputNotEmpty(strGameName)
+                    && checkInputNotEmpty(strExpPoorScore)
+                    && checkInputNotEmpty(strExpGreatScore)){
+                Configuration newConfig = new Configuration(strGameName, Integer.parseInt(strExpPoorScore),  Integer.parseInt(strExpGreatScore));
+                ConfigurationsManager manager = ConfigurationsManager.getInstance();
+                manager.add(newConfig);
                 Toast.makeText(this, "You saved the configuration", Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -65,11 +84,20 @@ public class AddConfiguration extends AppCompatActivity {
     }
 
     private boolean checkInputNotEmpty(String userInput){
+        //check if inuts are not empty
         if (TextUtils.isEmpty(userInput)){
             Toast.makeText(this, "ERROR: Text fields cannot be empty. Please enter correct values and try again",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
+        //check if poor value is >= then great value
+        if(Integer.parseInt(strExpPoorScore) >= Integer.parseInt(strExpGreatScore)){
+            Toast.makeText(this, "ERROR: Expected poor value is larger than expected great value. Please enter correct values and try again",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
     }
+
+//end of the class
 }

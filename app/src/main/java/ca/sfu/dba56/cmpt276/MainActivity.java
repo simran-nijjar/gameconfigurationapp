@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             //get rid of text
-            txt.setText("");
+            txt.setText("there is a new config in the list");
             //populate list view with games from manager
             populateListView(manager);
         }
