@@ -24,6 +24,7 @@ public class AddNewGame extends AppCompatActivity {
 
     private EditText num_player;
     private EditText combined_score;
+    //new change
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
