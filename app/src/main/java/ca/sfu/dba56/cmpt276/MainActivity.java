@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,24 +22,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUpHelpButton();
-        setUpAddConfigurationButton();
         getSupportActionBar().setTitle("Configurations");
         UpdateUI();
 
+        setUpAddConfigurationButton();
     }
 
     private void setUpHelpButton() {
         Button helpBtn = (Button)findViewById(R.id.helpBtn);
         helpBtn.setOnClickListener(v -> {
             Intent intent = HelpActivity.makeIntent(MainActivity.this);
-            startActivity(intent);
-        });
-    }
-
-    private void setUpAddConfigurationButton(){
-        FloatingActionButton addConfigBtn = findViewById(R.id.addBtn);
-        addConfigBtn.setOnClickListener(v ->{
-            Intent intent = AddConfiguration.makeIntent(MainActivity.this);
             startActivity(intent);
         });
     }
@@ -61,6 +57,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateListView(ConfigurationsManager manager) {
+        // creating list of config items
+        ArrayList<String> items = new ArrayList<String>();
+        //array of string config names
+        int count = 0;
+        while(count < manager.configListSize()){
+            String strResult = "\n" + manager.get(count).getGameNameFromConfig() + "\n";
+            items.add(strResult);
+            count++;
+        }
+        //adapter
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,
+                R.layout.text_view_config_items,
+                items);
+        ListView list = findViewById(R.id.configList);
+        list.setAdapter(adapter);
+    }
+
+
+    private void setUpAddConfigurationButton(){
+        FloatingActionButton addConfigBtn = findViewById(R.id.addBtn);
+        addConfigBtn.setOnClickListener(v ->{
+            Intent intent = AddConfiguration.makeIntent(MainActivity.this);
+            startActivity(intent);
+        });
     }
 
 }
