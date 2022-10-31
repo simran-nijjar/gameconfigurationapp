@@ -23,6 +23,9 @@ public class AddConfiguration extends AppCompatActivity {
     private String strExpPoorScore;
     private String strExpGreatScore;
 
+    private int intExpPoorScore;
+    private int intExpGreatScore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,10 +67,9 @@ public class AddConfiguration extends AppCompatActivity {
             //TODO: save game using ConfigurationsManager
             convertTxtToStr();
             //Save game if all values are valid
-            if (checkInputNotEmpty(strGameName)
-                    && checkInputNotEmpty(strExpPoorScore)
-                    && checkInputNotEmpty(strExpGreatScore)){
-                Configuration newConfig = new Configuration(strGameName, Integer.parseInt(strExpPoorScore),  Integer.parseInt(strExpGreatScore));
+            convertStringToInt();
+            if (isUserInputValid()) {
+                Configuration newConfig = new Configuration(strGameName, intExpPoorScore, intExpGreatScore);
                 ConfigurationsManager manager = ConfigurationsManager.getInstance();
                 manager.add(newConfig);
                 Toast.makeText(this, "You saved the configuration", Toast.LENGTH_SHORT).show();
@@ -83,21 +85,48 @@ public class AddConfiguration extends AppCompatActivity {
         strExpGreatScore = expGreatScoreTxt.getText().toString();
     }
 
+    private void convertStringToInt(){
+        intExpPoorScore = Integer.parseInt(strExpPoorScore);
+        intExpGreatScore = Integer.parseInt(strExpGreatScore);
+    }
+
+    private boolean isUserInputValid(){
+        boolean isEmpty = true;
+        boolean isPoorLess = false;
+        if (checkInputNotEmpty(strGameName)
+                && checkInputNotEmpty(strExpPoorScore)
+                && checkInputNotEmpty(strExpGreatScore)){
+            isEmpty = false;
+        }
+
+        if (isPoorScoreLessThanGreat(intExpPoorScore, intExpGreatScore)){
+            isPoorLess = true;
+        }
+
+        if (isEmpty == false && isPoorLess == true){
+            return true;
+        }
+        return false;
+    }
+
     private boolean checkInputNotEmpty(String userInput){
-        //check if inuts are not empty
+        //check if inputs are not empty
         if (TextUtils.isEmpty(userInput)){
             Toast.makeText(this, "ERROR: Text fields cannot be empty. Please enter correct values and try again",
-                    Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        //check if poor value is >= then great value
-        if(Integer.parseInt(strExpPoorScore) >= Integer.parseInt(strExpGreatScore)){
-            Toast.makeText(this, "ERROR: Expected poor value is larger than expected great value. Please enter correct values and try again",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
-//end of the class
+    private boolean isPoorScoreLessThanGreat(int low, int great){
+        if (low < great){
+            return true;
+        }
+        else {
+            Toast.makeText(this, "Poor score must be less than great score. Try again", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+    //end of the class
 }
