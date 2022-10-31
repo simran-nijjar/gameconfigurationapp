@@ -67,7 +67,6 @@ public class AddConfiguration extends AppCompatActivity {
             //TODO: save game using ConfigurationsManager
             convertTxtToStr();
             //Save game if all values are valid
-            convertStringToInt();
             if (isUserInputValid()) {
                 Configuration newConfig = new Configuration(strGameName, intExpPoorScore, intExpGreatScore);
                 ConfigurationsManager manager = ConfigurationsManager.getInstance();
@@ -91,42 +90,20 @@ public class AddConfiguration extends AppCompatActivity {
     }
 
     private boolean isUserInputValid(){
-        boolean isEmpty = true;
-        boolean isPoorLess = false;
-        if (checkInputNotEmpty(strGameName)
-                && checkInputNotEmpty(strExpPoorScore)
-                && checkInputNotEmpty(strExpGreatScore)){
-            isEmpty = false;
-        }
-
-        if (isPoorScoreLessThanGreat(intExpPoorScore, intExpGreatScore)){
-            isPoorLess = true;
-        }
-
-        if (isEmpty == false && isPoorLess == true){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean checkInputNotEmpty(String userInput){
-        //check if inputs are not empty
-        if (TextUtils.isEmpty(userInput)){
+        if (TextUtils.isEmpty(strGameName)
+                || TextUtils.isEmpty(strExpPoorScore)
+                || TextUtils.isEmpty(strExpGreatScore)){
             Toast.makeText(this, "ERROR: Text fields cannot be empty. Please enter correct values and try again",
                     Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        convertStringToInt();
+        if (intExpPoorScore >= intExpGreatScore){
+            Toast.makeText(this, "Poor score must be less than great score. Try again", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
-    private boolean isPoorScoreLessThanGreat(int low, int great){
-        if (low < great){
-            return true;
-        }
-        else {
-            Toast.makeText(this, "Poor score must be less than great score. Try again", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-    }
     //end of the class
 }
