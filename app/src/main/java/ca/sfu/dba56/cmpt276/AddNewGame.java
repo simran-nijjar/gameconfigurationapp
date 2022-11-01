@@ -8,7 +8,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,19 +21,19 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class AddNewGame extends AppCompatActivity {
-    private int players;
-    private int scores;
-
+    private int players_int;
+    private int scores_int;
+    String num_players_str = "";
+    String combined_scores_str = "";
     private EditText num_player;
     private EditText combined_score;
-    //new change
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_game);
         chooseGame();
-        saveInput();
+        checkInput();
         showResult();
     }
 
@@ -41,8 +43,7 @@ public class AddNewGame extends AppCompatActivity {
 
     private void chooseGame() {
         Spinner dropdown = findViewById(R.id.gameName);
-        // testing
-        String[] items = new String[]{"Poker", "Bingo", "Wordle New"};
+        String[] items = new String[]{"Poker", "Bingo", "Wordle New"};  // just for testing
         // create an adapter to describe how the items are displayed
         // basic variant
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -51,28 +52,52 @@ public class AddNewGame extends AppCompatActivity {
 
     }
 
-    private void saveInput(){
+
+    private void checkInput(){
         num_player = findViewById(R.id.num_players_input);
         combined_score = findViewById(R.id.combined_score_input);
-        players = Integer.parseInt(String.valueOf(num_player));
-        scores = Integer.parseInt(String.valueOf(combined_score));
+
+        num_player.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                num_players_str = num_player.getText().toString();
+                try {
+                    players_int = Integer.parseInt(num_players_str);
+                    if (players_int < 2) {
+                        Toast.makeText(AddNewGame.this, "Invalid input: 2 players minimum", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (NumberFormatException ex){
+                    Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        combined_score.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                combined_scores_str = combined_score.getText().toString();
+                try {
+                    scores_int = Integer.parseInt(combined_scores_str);
+                    if (scores_int < players_int) {
+                        Toast.makeText(AddNewGame.this, "Invalid input: 1 score minimum for each player", Toast.LENGTH_SHORT).show();
+                    }else if(scores_int % players_int != 0){
+                        Toast.makeText(AddNewGame.this, "Invalid input: scores must be an integer for each player", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (NumberFormatException ex){
+                    Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
-    private boolean isEmpty(String input){
-        if(TextUtils.isEmpty(input)){
-            Toast.makeText(this, "Text field is empty", Toast.LENGTH_SHORT).show();
-            return false;
-        }else return true;
-    }
-
-    private boolean isValid(){
-        if(isEmpty(String.valueOf(num_player))){
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-            return false;
-        }else if(isEmpty(String.valueOf(combined_score))){
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void showResult(){
         Button save = findViewById(R.id.save_btn);
