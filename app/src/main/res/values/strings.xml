@@ -3,24 +3,25 @@
     <string name="help">Help</string>
     <string name="addNewGame">Add New Game</string>
     <string name="info_content">
-        \t
-        The creators of this game are Sodium. For more information about this app,
+        \nThe creators of this game are Sodium. For more information about this app,
         check out this resource:
         <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">CMPT276</a>
-        \n
     </string>
     <string name="description_content">
-        \t
-        This app provides achievement goals to turn some competitive board games into a more co-operative experience.
-        \n
-        \t
-        At the end of a game, the combined score of all players is used to calculate a combined achievement level, with a higher total score earning a better achievement.
+        \nThis app provides achievement goals to turn some competitive board games into a more co-operative experience.\n
+        \nAt the end of a game, the combined score of all players is used to calculate a combined achievement level, with a higher total score earning a better achievement.\n
+        \nSources:\n
+        \n<a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a>
+        \n<a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a>
+        \n<a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a>
+        \n<a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a>
     </string>
     <string name="achieve_content">
-        Goofy Goblins \t\t\t\t\t Majestic Unicorns
-        \n\nMajestic Unicorns \t\t Fabulous Dragons
-        \n\nFabulous Dragons \t\t Brilliant Pixies
-        \n\nFabulous Dragons \t\t Brilliant Pixies
+        \n
+        Goofy Goblins \t\t\t\t\t Majestic Unicorns\n\n
+        Majestic Unicorns \t\t Fabulous Dragons\n\n
+        Fabulous Dragons \t\t Brilliant Pixies\n\n
+        Fabulous Dragons \t\t Brilliant Pixies\n\n
     </string>
     <string name="num_player">Enter the number of players:</string>
     <string name="combined_score">Enter the combined score of all players:</string>
