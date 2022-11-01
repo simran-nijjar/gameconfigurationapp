@@ -27,6 +27,8 @@ public class AddNewGame extends AppCompatActivity {
     String combined_scores_str = "";
     private EditText num_player;
     private EditText combined_score;
+    boolean isPlayerValid;
+    boolean isScoresValid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,8 @@ public class AddNewGame extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_game);
         chooseGame();
         checkInput();
-        showResult();
+        saveInput();
+        //showResult();
     }
 
     public static Intent makeIntent(Context context){
@@ -68,9 +71,13 @@ public class AddNewGame extends AppCompatActivity {
                 try {
                     players_int = Integer.parseInt(num_players_str);
                     if (players_int < 2) {
+                        isPlayerValid = false;
                         Toast.makeText(AddNewGame.this, "Invalid input: 2 players minimum", Toast.LENGTH_SHORT).show();
+                    }else {
+                        isPlayerValid = true;
                     }
                 }catch (NumberFormatException ex){
+                    //isScoresValid = false;
                     Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -87,36 +94,72 @@ public class AddNewGame extends AppCompatActivity {
                 try {
                     scores_int = Integer.parseInt(combined_scores_str);
                     if (scores_int < players_int) {
+                        isScoresValid = false;
                         Toast.makeText(AddNewGame.this, "Invalid input: 1 score minimum for each player", Toast.LENGTH_SHORT).show();
                     }else if(scores_int % players_int != 0){
+                        isScoresValid = false;
                         Toast.makeText(AddNewGame.this, "Invalid input: scores must be an integer for each player", Toast.LENGTH_SHORT).show();
+                    }else {
+                        isScoresValid = true;
                     }
                 }catch (NumberFormatException ex){
+                    //isScoresValid = false;
                     Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-
-    private void showResult(){
+    private void saveInput() {
         Button save = findViewById(R.id.save_btn);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
-                alertDialog.setTitle("Achievement");
-                alertDialog.setMessage("achievement level");
-
-                alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(AddNewGame.this, MainActivity.class));
-                    }
-                });
-                alertDialog.show();
+                if (isPlayerValid && isScoresValid) {
+                    //save.setEnabled(true);
+                    showResult();
+                }else {
+                    //save.setEnabled(false);
+                    Toast.makeText(AddNewGame.this, "not good", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
+    }
+
+    private void showResult(){
+//        Button save = findViewById(R.id.save_btn);
+//        save.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
+//                alertDialog.setTitle("Achievement");
+//                alertDialog.setMessage("achievement level");
+//
+//                alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        startActivity(new Intent(AddNewGame.this, MainActivity.class));
+//                    }
+//                });
+//                alertDialog.show();
+//            }
+//        });
+
+        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
+        alertDialog.setTitle("Achievement");
+        alertDialog.setMessage("achievement level");
+
+        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(AddNewGame.this, MainActivity.class));
+            }
+        });
+        alertDialog.show();
+
+    }
+
+    protected void onResume(){
+        super.onResume();
     }
 
 
