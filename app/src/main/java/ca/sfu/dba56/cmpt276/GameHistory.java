@@ -2,7 +2,9 @@ package ca.sfu.dba56.cmpt276;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
@@ -21,6 +24,8 @@ import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 public class GameHistory extends AppCompatActivity {
     ConfigurationsManager manager = ConfigurationsManager.getInstance();
     int indexOfGame = 0;
+    int currentConfigPosition;
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +71,7 @@ public class GameHistory extends AppCompatActivity {
             count++;
         }
         //adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.game_items, items);
+        adapter = new ArrayAdapter<String>(this, R.layout.game_items, items);
         ListView list = findViewById(R.id.HistoryList);
         list.setAdapter(adapter);
     }
@@ -81,22 +86,5 @@ public class GameHistory extends AppCompatActivity {
             startActivity(intent);
         });
     }
-
-//    private void registerClickCallBack() {
-//        ListView list = findViewById(R.id.HistoryList);
-//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-//                TextView textView = (TextView) viewClicked;
-//                String massage = "You are selecting Game #" + (position+1);
-//                Toast.makeText(GameHistory.this, massage, Toast.LENGTH_SHORT).show();
-//                //make an intent for view configuration activity
-////                Intent intent = ViewConfiguration.makeIntent(GameHistory.this);
-////                intent.putExtra(getString(R.string.selected_config_position), position);
-////                startActivity(intent);
-//            }
-//        });
-//    }
-
 
 }

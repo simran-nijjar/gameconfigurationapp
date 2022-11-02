@@ -3,9 +3,12 @@ package ca.sfu.dba56.cmpt276;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,7 +20,9 @@ public class ViewConfiguration extends AppCompatActivity {
 
     private TextView expPoorScoreEditTxt;
     private TextView expGreatScoreEditTxt;
+    ConfigurationsManager manager = ConfigurationsManager.getInstance();
     int currentConfigPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +34,7 @@ public class ViewConfiguration extends AppCompatActivity {
         //check what position of configuration was selected
         Bundle b = getIntent().getExtras();
         currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
-        ConfigurationsManager manager = ConfigurationsManager.getInstance();
+        manager = ConfigurationsManager.getInstance();
         Configuration currentConfig = manager.get(currentConfigPosition);
         //Activity Name
         getSupportActionBar().setTitle("Game " + currentConfig.getGameNameFromConfig() + " Configuration");
@@ -41,6 +46,7 @@ public class ViewConfiguration extends AppCompatActivity {
         expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMaxBestScoreFromConfig()));
 
         setUpGameHistoryButton();
+        setUpDelete(currentConfigPosition);
         //setUpAddGameButton();
     }
 
@@ -56,5 +62,39 @@ public class ViewConfiguration extends AppCompatActivity {
             intent2.putExtra("game name2", currentConfigPosition);
             startActivity(intent2);
         });
+    }
+
+    private void setUpDelete(int currentConfigPosition){
+        Button deleteBtn = findViewById(R.id.btnDeleteConfig);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteOrCancel(currentConfigPosition);
+            }
+        });
+    }
+
+    private void deleteOrCancel(int currentConfigPosition){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to delete?")
+                .setCancelable(false)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        manager.remove(currentConfigPosition);
+                        //ViewConfiguration.this.finish();
+                        Intent k = new Intent(ViewConfiguration.this, MainActivity.class);
+                        startActivity(k);
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 }
