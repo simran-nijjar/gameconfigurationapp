@@ -90,6 +90,14 @@ public class AddNewGame extends AppCompatActivity {
                 selectedGameInt = dropdown.getSelectedItemPosition();
                 Toast.makeText(getApplicationContext(), "Selected: " + selectedGameInt + " " + selectedGame,
                         Toast.LENGTH_SHORT).show(); // Toast message for testing
+                num_player = findViewById(R.id.num_players_input);
+                combined_score = findViewById(R.id.combined_score_input);
+                player_msg = findViewById(R.id.player_msg);
+                score_msg = findViewById(R.id.score_msg);
+                num_player.setText("");
+                combined_score.setText("");
+                player_msg.setText("");
+                score_msg.setText("");
                 checkInput(selectedGameInt);
                 saveInput(selectedGameInt);
             }
@@ -108,11 +116,7 @@ public class AddNewGame extends AppCompatActivity {
 
         num_player.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void afterTextChanged(Editable s) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 num_players_str = num_player.getText().toString();
                 try {
                     players_int = Integer.parseInt(num_players_str);
@@ -128,15 +132,17 @@ public class AddNewGame extends AppCompatActivity {
                     Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
-
-        combined_score.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        combined_score.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 combined_scores_str = combined_score.getText().toString();
                 try {
                     scores_int = Integer.parseInt(combined_scores_str);
@@ -158,6 +164,12 @@ public class AddNewGame extends AppCompatActivity {
                 }catch (NumberFormatException ex){
                     Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
                 }
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
