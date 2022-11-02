@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Configurations");
         UpdateUI();
 
+        registerClickCallBack();
         setUpAddConfigurationButton();
     }
 
@@ -73,6 +77,24 @@ public class MainActivity extends AppCompatActivity {
                 items);
         ListView list = findViewById(R.id.configList);
         list.setAdapter(adapter);
+    }
+
+
+    private void registerClickCallBack() {
+        ListView list = findViewById(R.id.configList);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                TextView textView = (TextView) viewClicked;
+                String massage = "You are selecting config #" + (position+1);
+                Toast.makeText(MainActivity.this, massage, Toast.LENGTH_SHORT).show();
+
+                //make an intent for view configuration activity
+                Intent intent = ViewConfiguration.makeIntent(MainActivity.this);
+                intent.putExtra(getString(R.string.selected_config_position), position);
+                startActivity(intent);
+            }
+        });
     }
 
 
