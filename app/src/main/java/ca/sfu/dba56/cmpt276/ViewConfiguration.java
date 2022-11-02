@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -38,9 +39,19 @@ public class ViewConfiguration extends AppCompatActivity {
         //populate them
         expPoorScoreEditTxt.setText(String.valueOf(currentConfig.getMinPoorScoreFromConfig()));
         expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMinPoorScoreFromConfig()));
+
+        setUpAddGameButton();
     }
 
     public static Intent makeIntent(Context context){
         return new Intent(context, ViewConfiguration.class);
+    }
+
+    private void setUpAddGameButton(){
+        Button addBtn = findViewById(R.id.addGameBtn);
+        addBtn.setOnClickListener(v -> {
+            Intent intent = AddNewGame.makeIntent(ViewConfiguration.this);
+            startActivity(intent);
+        });
     }
 }
