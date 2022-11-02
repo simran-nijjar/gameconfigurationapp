@@ -40,21 +40,21 @@ public class ViewConfiguration extends AppCompatActivity {
         expPoorScoreEditTxt.setText(String.valueOf(currentConfig.getMinPoorScoreFromConfig()));
         expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMaxBestScoreFromConfig()));
 
-        setUpAddGameButton();
+        setUpGameHistoryButton();
+        //setUpAddGameButton();
     }
 
     public static Intent makeIntent(Context context){
         return new Intent(context, ViewConfiguration.class);
     }
 
-    private void setUpAddGameButton(){
-        Button addBtn = findViewById(R.id.addGameBtn);
+
+    private void setUpGameHistoryButton(){
+        Button addBtn = findViewById(R.id.btnHistoryConfig);
         addBtn.setOnClickListener(v -> {
-            Intent intent = AddNewGame.makeIntent(ViewConfiguration.this);
-            ConfigurationsManager manager = ConfigurationsManager.getInstance();
-            Configuration currentConfig = manager.get(currentConfigPosition);
-            intent.putExtra("game name", currentConfig.getGameNameFromConfig());
-            startActivity(intent);
+            Intent intent2 = GameHistory.makeIntent(ViewConfiguration.this);
+            intent2.putExtra("game name2", currentConfigPosition);
+            startActivity(intent2);
         });
     }
 }

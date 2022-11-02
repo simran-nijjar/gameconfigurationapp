@@ -1,0 +1,102 @@
+package ca.sfu.dba56.cmpt276;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import ca.sfu.dba56.cmpt276.model.Configuration;
+import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
+
+public class GameHistory extends AppCompatActivity {
+    ConfigurationsManager manager = ConfigurationsManager.getInstance();
+    int indexOfGame = 0;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game_history);
+
+        Bundle b = getIntent().getExtras();
+        indexOfGame = b.getInt("game name2");
+        UpdateUI(indexOfGame);
+        setUpAddGameButton(indexOfGame);
+    }
+
+    public static Intent makeIntent(Context context){
+        return new Intent(context, GameHistory.class);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UpdateUI(indexOfGame);
+    }
+
+    private void UpdateUI(int indexOfGame) {
+        TextView txt = findViewById(R.id.GameHistoryEmpty);
+        if(manager.get(indexOfGame).size() == 0){
+            txt.setText("No Game History yet.\n \n You can add one by pressing 'Add New Game' button on the previous page" );
+        }
+        else {
+            txt.setText("");
+            //populate list view
+            populateListView(manager, indexOfGame);
+        }
+    }
+
+    private void populateListView(ConfigurationsManager manager, int indexOfGame) {
+        // creating list of games items
+        ArrayList<String> items = new ArrayList<String>();
+        //array of games
+        int count = 0;
+        while(count < manager.get(indexOfGame).size()){
+            String strResult = "\n" + manager.get(indexOfGame).get(count) + "\n";
+            items.add(strResult);
+            count++;
+        }
+        //adapter
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.game_items, items);
+        ListView list = findViewById(R.id.HistoryList);
+        list.setAdapter(adapter);
+    }
+
+    private void setUpAddGameButton(int indexOfGame){
+        Button addBtn = findViewById(R.id.button);
+        addBtn.setOnClickListener(v -> {
+            Intent intent = AddNewGame.makeIntent(GameHistory.this);
+            ConfigurationsManager manager = ConfigurationsManager.getInstance();
+            Configuration currentConfig = manager.get(indexOfGame);
+            intent.putExtra("game name", currentConfig.getGameNameFromConfig());
+            startActivity(intent);
+        });
+    }
+
+//    private void registerClickCallBack() {
+//        ListView list = findViewById(R.id.HistoryList);
+//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+//                TextView textView = (TextView) viewClicked;
+//                String massage = "You are selecting Game #" + (position+1);
+//                Toast.makeText(GameHistory.this, massage, Toast.LENGTH_SHORT).show();
+//                //make an intent for view configuration activity
+////                Intent intent = ViewConfiguration.makeIntent(GameHistory.this);
+////                intent.putExtra(getString(R.string.selected_config_position), position);
+////                startActivity(intent);
+//            }
+//        });
+//    }
+
+
+}

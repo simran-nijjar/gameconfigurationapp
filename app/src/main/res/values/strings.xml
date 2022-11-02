@@ -2,6 +2,7 @@
     <string name="app_name">CMPT276</string>
     <string name="help">Help</string>
     <string name="addNewGame">Add New Game</string>
+    <string name="gameHistory">Game History</string>
     <string name="info_content">
         \nThe creators of this game are Sodium. For more information about this app,
         check out this resource:

@@ -3,12 +3,22 @@ package ca.sfu.dba56.cmpt276.model;
 
 public class Game {
     private int players;
-    private int expectedLow;
-    private int expectedHigh;
+    private int scores;
     private String achievements[];
 
-    //Default Constructor
-    private Game(){
+
+    public Game() {
+    }
+
+    public Game(int players, int scores) {
+        this.players = players;
+        this.scores = scores;
+    }
+
+    public Game(int players, int scores, String[] achievements) {
+        this.players = players;
+        this.scores = scores;
+        this.achievements = achievements;
     }
 
     public int getPlayers(){
@@ -19,19 +29,21 @@ public class Game {
         this.players = players;
     }
 
-    public int getExpectedLow(){
-        return expectedLow;
+    public int getScores() {
+        return scores;
     }
 
-    public void setExpectedLow(int low){
-        this.expectedLow = low;
+    public void setScores(int scores) {
+        this.scores = scores;
     }
 
-    public int getExpectedHigh(){
-        return expectedHigh;
+    public String[] getAchievements() {
+        return achievements;
     }
 
-    public void setExpectedHigh(int high){
-        this.expectedHigh = high;
+    public void setAchievements(String[] achievements) {
+        this.achievements = achievements;
     }
+
+
 }
