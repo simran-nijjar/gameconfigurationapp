@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ public class ViewConfiguration extends AppCompatActivity {
 
     private TextView expPoorScoreEditTxt;
     private TextView expGreatScoreEditTxt;
+    private Button editConfigScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +41,21 @@ public class ViewConfiguration extends AppCompatActivity {
         //populate them
         expPoorScoreEditTxt.setText(String.valueOf(currentConfig.getMinPoorScoreFromConfig()));
         expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMinPoorScoreFromConfig()));
+
+        //make edit button open edit configuration screen.
+        editConfigScreen = findViewById(R.id.btnEditConfig);
+        editConfigScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewConfiguration.this,EditConfiguration.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public static Intent makeIntent(Context context){
         return new Intent(context, ViewConfiguration.class);
     }
+
+
 }
