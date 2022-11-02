@@ -18,12 +18,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationBarView;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
-import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.Game;
 
@@ -42,14 +40,13 @@ public class AddNewGame extends AppCompatActivity {
     //private Configuration currentConfig;
     String selectedGame = "";
     private int selectedGameInt;
+    int indexForGameHistory = -1; // for testing
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_game);
         chooseGame();
-        //checkInput();
-        //saveInput();
         storeSelectedGame();
     }
 
@@ -69,16 +66,14 @@ public class AddNewGame extends AppCompatActivity {
         ArrayList<String> items = new ArrayList<>();
         int count = 0;
         int defaultGameIndex = 0;
-        String defaultGame = "\n" + name + "\n";
         while(count < manager.configListSize()){
-            String strResult = "\n" + manager.get(count).getGameNameFromConfig() + "\n";
+            String strResult = manager.get(count).getGameNameFromConfig();
             items.add(strResult);
-            if(Objects.equals(items.get(count), defaultGame)){
+            if(Objects.equals(items.get(count), name)){
                 defaultGameIndex = count;
             }
             count++;
         }
-
         // create an adapter to describe how the items are displayed
         // basic variant
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -95,7 +90,6 @@ public class AddNewGame extends AppCompatActivity {
                 selectedGameInt = dropdown.getSelectedItemPosition();
                 Toast.makeText(getApplicationContext(), "Selected: " + selectedGameInt + " " + selectedGame,
                         Toast.LENGTH_SHORT).show(); // Toast message for testing
-
                 checkInput(selectedGameInt);
                 saveInput(selectedGameInt);
             }
@@ -175,26 +169,25 @@ public class AddNewGame extends AppCompatActivity {
             public void onClick(View v) {
                 if (isPlayerValid && isScoresValid) {
                     // add user input to game history
-                    String achievements[] = new String[3]; // for testing
+                    String[] achievements = new String[3]; // for testing
                     achievements[0] = "aaa";
-                    achievements[1] = "aaa";
-                    achievements[2] = "aaa";
-//                    Game game = new Game();
-//                    game.setPlayers(players_int);
-//                    manager.get(selectedGameInt).add(game);
-                    showResult();
+                    achievements[1] = "bbb";
+                    achievements[2] = "ccc";
+                    manager.get(selectedGameInt).add(new Game(players_int, scores_int, achievements));
+                    indexForGameHistory++; // for testing
+                    showResult(achievements, indexForGameHistory);
                 }else {
-
                     Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private void showResult(){
+    private void showResult(String[] achievements, int index){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
         alertDialog.setTitle("Achievement");
-        alertDialog.setMessage("achievement level"); // just for testing, should show achievement level instead
+        //alertDialog.setMessage(""+ manager.get(selectedGameInt).get(index)); // for testing
+        alertDialog.setMessage("" + Arrays.toString(achievements));
         alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(AddNewGame.this, MainActivity.class));
