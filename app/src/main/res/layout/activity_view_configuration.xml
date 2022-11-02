@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewConfiguration">
+
+    <TextView
+        android:id="@+id/txtPoorScoreConfigView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Poor Score"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.257"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.16" />
+
+    <TextView
+        android:id="@+id/txtGreatScoreConfigView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Great Score"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintEnd_toEndOf="@+id/txtPoorScoreConfigView"
+        app:layout_constraintStart_toStartOf="@+id/txtPoorScoreConfigView"
+        app:layout_constraintTop_toBottomOf="@+id/txtPoorScoreConfigView" />
+
+    <Button
+        android:id="@+id/btnEditConfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Edit"
+        app:layout_constraintEnd_toEndOf="@+id/btnDeleteConfig"
+        app:layout_constraintStart_toStartOf="@+id/btnDeleteConfig"
+        app:layout_constraintTop_toBottomOf="@+id/btnHistoryConfig" />
+
+    <Button
+        android:id="@+id/btnHistoryConfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="History"
+        app:layout_constraintEnd_toEndOf="@+id/btnEditConfig"
+        app:layout_constraintStart_toStartOf="@+id/btnEditConfig"
+        app:layout_constraintTop_toBottomOf="@+id/txtGreatScoreConfigView" />
+
+    <Button
+        android:id="@+id/btnDeleteConfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditConfig" />
+
+    <TextView
+        android:id="@+id/textFillPoorScoreConfigView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtPoorScoreConfigView"
+        app:layout_constraintTop_toTopOf="@+id/txtPoorScoreConfigView" />
+
+    <TextView
+        android:id="@+id/textFillGreatScoreConfigView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintEnd_toEndOf="@+id/textFillPoorScoreConfigView"
+        app:layout_constraintStart_toStartOf="@+id/textFillPoorScoreConfigView"
+        app:layout_constraintTop_toTopOf="@+id/txtGreatScoreConfigView" />
+</androidx.constraintlayout.widget.ConstraintLayout>
