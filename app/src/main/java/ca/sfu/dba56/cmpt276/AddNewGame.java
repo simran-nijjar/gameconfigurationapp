@@ -17,6 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
+
 public class AddNewGame extends AppCompatActivity {
     private int players_int;
     private int scores_int;
@@ -28,6 +30,7 @@ public class AddNewGame extends AppCompatActivity {
     boolean isScoresValid;
     private TextView player_msg;
     private TextView score_msg;
+    private ConfigurationsManager cm = ConfigurationsManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class AddNewGame extends AppCompatActivity {
         // create an adapter to describe how the items are displayed
         // basic variant
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, );
         // set the spinners adapter to the dropdown menu
         dropdown.setAdapter(adapter);
 
@@ -100,11 +104,15 @@ public class AddNewGame extends AppCompatActivity {
                         isScoresValid = false;
                         score_msg.setText("Invalid input: 1 score minimum for each player");
                         //Toast.makeText(AddNewGame.this, "Invalid input: 1 score minimum for each player", Toast.LENGTH_SHORT).show();
-                    }else if(scores_int % players_int != 0){
-                        isScoresValid = false;
-                        score_msg.setText("Invalid input: score must be an integer for each player");
-                        //Toast.makeText(AddNewGame.this, "Invalid input: scores must be an integer for each player", Toast.LENGTH_SHORT).show();
-                    }else {
+                    }
+
+//                    else if(scores_int % players_int != 0){
+//                        isScoresValid = false;
+//                        score_msg.setText("Invalid input: score must be an integer for each player");
+//                        //Toast.makeText(AddNewGame.this, "Invalid input: scores must be an integer for each player", Toast.LENGTH_SHORT).show();
+//                    }
+
+                    else {
                         isScoresValid = true;
                         score_msg.setText("");
                     }
@@ -123,7 +131,6 @@ public class AddNewGame extends AppCompatActivity {
             public void onClick(View v) {
                 if (isPlayerValid && isScoresValid) {
                     // add user input to game history
-
 
                     showResult();
                 }else {
