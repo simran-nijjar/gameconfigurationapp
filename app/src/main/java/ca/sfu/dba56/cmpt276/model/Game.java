@@ -1,24 +1,20 @@
 package ca.sfu.dba56.cmpt276.model;
 
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Game {
     private int players;
     private int scores;
     private String achievements[];
+    private String dateGamePlayed;
 
-
-    public Game() {
-    }
-
-    public Game(int players, int scores) {
-        this.players = players;
-        this.scores = scores;
-    }
-
-    public Game(int players, int scores, String[] achievements) {
+    public Game(int players, int scores, String[] achievements, String dateGamePlayed) {
         this.players = players;
         this.scores = scores;
         this.achievements = achievements;
+        this.dateGamePlayed = dateGamePlayed;
     }
 
     public int getPlayers(){
@@ -45,5 +41,7 @@ public class Game {
         this.achievements = achievements;
     }
 
-
+    public String getDateGamePlayed(){
+        return dateGamePlayed;
+    }
 }

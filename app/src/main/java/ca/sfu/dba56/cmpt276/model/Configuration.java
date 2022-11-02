@@ -39,7 +39,7 @@ public class Configuration {
     public void remove(int i){listOfGames.remove(i);}
     // for testing
     public String get(int i){
-        return listOfGames.get(i).getPlayers() + " players, " + listOfGames.get(i).getScores() + " scores, " + Arrays.toString(listOfGames.get(i).getAchievements());
+        return  "Players: " + listOfGames.get(i).getPlayers() + " Scores: " + listOfGames.get(i).getScores() + " " + listOfGames.get(i).getDateGamePlayed() + " " + Arrays.toString(listOfGames.get(i).getAchievements());
     }
     public int size(){
         return listOfGames.size();

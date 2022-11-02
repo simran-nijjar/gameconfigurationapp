@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -28,6 +30,7 @@ import ca.sfu.dba56.cmpt276.model.Game;
 public class AddNewGame extends AppCompatActivity {
     private int players_int;
     private int scores_int;
+    private String dateGamePlayed;
     private String num_players_str = "";
     private String combined_scores_str = "";
     private EditText num_player;
@@ -174,6 +177,13 @@ public class AddNewGame extends AppCompatActivity {
         });
     }
 
+    public String saveDatePlayed(){
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd, y @ h:mma");
+        LocalDateTime currentDate = LocalDateTime.now();
+        dateGamePlayed = currentDate.format(dateFormat);
+        return dateGamePlayed;
+    }
+
     private void saveInput(int selectedGameInt) {
         Button save = findViewById(R.id.save_btn);
         save.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +195,7 @@ public class AddNewGame extends AppCompatActivity {
                     achievements[0] = "aaa";
                     achievements[1] = "bbb";
                     achievements[2] = "ccc";
-                    manager.get(selectedGameInt).add(new Game(players_int, scores_int, achievements));
+                    manager.get(selectedGameInt).add(new Game(players_int, scores_int, achievements, saveDatePlayed()));
                     indexForGameHistory++; // for testing
                     showResult(achievements, indexForGameHistory);
                 }else {
