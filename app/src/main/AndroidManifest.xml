@@ -29,31 +29,31 @@
         </activity>
         <activity
             android:name=".AddConfiguration"
-            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
-            android:exported="false"
             android:label="Add New Game Configuration"
+            android:exported="false"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".HelpActivity"
-            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
-            android:exported="false"
             android:label="@string/help"
+            android:exported="false"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".MainActivity"
-            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
