@@ -38,7 +38,7 @@ public class ViewConfiguration extends AppCompatActivity {
         expGreatScoreEditTxt = findViewById(R.id.textFillGreatScoreConfigView);
         //populate them
         expPoorScoreEditTxt.setText(String.valueOf(currentConfig.getMinPoorScoreFromConfig()));
-        expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMinPoorScoreFromConfig()));
+        expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMaxBestScoreFromConfig()));
 
         setUpAddGameButton();
     }
