@@ -38,7 +38,7 @@ public class AddNewGame extends AppCompatActivity {
     private TextView score_msg;
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     //private Configuration currentConfig;
-    String selectedGame = "";
+    private String selectedGame = ""; // for testing
     private int selectedGameInt;
     int indexForGameHistory = -1; // for testing
 
@@ -86,7 +86,7 @@ public class AddNewGame extends AppCompatActivity {
         Spinner dropdown = findViewById(R.id.gameName);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                selectedGame = dropdown.getSelectedItem().toString();
+                selectedGame = dropdown.getSelectedItem().toString(); // for testing
                 selectedGameInt = dropdown.getSelectedItemPosition();
                 Toast.makeText(getApplicationContext(), "Selected: " + selectedGameInt + " " + selectedGame,
                         Toast.LENGTH_SHORT).show(); // Toast message for testing
