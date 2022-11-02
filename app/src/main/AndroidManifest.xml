@@ -21,16 +21,39 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".HelpActivity"
+            android:name=".ViewConfiguration"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".AddConfiguration"
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
             android:exported="false"
-            android:label="@string/help">
+            android:label="Add New Game Configuration"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".HelpActivity"
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="@string/help"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

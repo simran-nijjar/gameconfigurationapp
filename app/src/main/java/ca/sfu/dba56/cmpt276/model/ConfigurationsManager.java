@@ -28,8 +28,10 @@ public class ConfigurationsManager {
     private List<Configuration> ListOfConfigurations = new ArrayList<>();
 
     public void add(Configuration newConfig) {ListOfConfigurations.add(newConfig);}
+    public Configuration get(int i){return ListOfConfigurations.get(i);}
     public void remove(int i) {ListOfConfigurations.remove(i);}
     public boolean isEmpty() {return this.ListOfConfigurations.isEmpty();}
+    public  int configListSize() {return ListOfConfigurations.size();}
 
 
 }
