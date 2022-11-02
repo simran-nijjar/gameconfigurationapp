@@ -18,7 +18,7 @@ public class ViewConfiguration extends AppCompatActivity {
 
     private TextView expPoorScoreEditTxt;
     private TextView expGreatScoreEditTxt;
-    private Button editConfigScreen;
+    private Button editConfigScreenBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,16 @@ public class ViewConfiguration extends AppCompatActivity {
         ActionBar bar = getSupportActionBar();
         bar.setDisplayHomeAsUpEnabled(true);
 
+        UpdateUI();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UpdateUI();
+    }
+
+    private void UpdateUI() {
         //check what position of configuration was selected
         Bundle b = getIntent().getExtras();
         int currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
@@ -40,16 +50,14 @@ public class ViewConfiguration extends AppCompatActivity {
         expGreatScoreEditTxt = findViewById(R.id.textFillGreatScoreConfigView);
         //populate them
         expPoorScoreEditTxt.setText(String.valueOf(currentConfig.getMinPoorScoreFromConfig()));
-        expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMinPoorScoreFromConfig()));
+        expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMaxBestScoreFromConfig()));
 
         //make edit button open edit configuration screen.
-        editConfigScreen = findViewById(R.id.btnEditConfig);
-        editConfigScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ViewConfiguration.this,EditConfiguration.class);
-                startActivity(intent);
-            }
+        editConfigScreenBtn = findViewById(R.id.btnEditConfig);
+        editConfigScreenBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(ViewConfiguration.this,AddConfiguration.class);
+            intent.putExtra(getString(R.string.selected_config_position), currentConfigPosition);
+            startActivity(intent);
         });
     }
 

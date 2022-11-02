@@ -32,6 +32,9 @@ public class ConfigurationsManager {
     public void remove(int i) {ListOfConfigurations.remove(i);}
     public boolean isEmpty() {return this.ListOfConfigurations.isEmpty();}
     public  int configListSize() {return ListOfConfigurations.size();}
+    //change a config for a new config in a position in a list
+    public void set(int currentConfigPosition, Configuration newConfig){ListOfConfigurations.set(currentConfigPosition, newConfig);}
+
 
 
 }

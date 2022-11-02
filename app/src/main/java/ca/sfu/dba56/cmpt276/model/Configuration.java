@@ -18,9 +18,7 @@ public class Configuration {
     //range for best score
     private int maxBestScore;
     //min num of players (2)
-    private final int minNumOfPlayers = 2;
-    //max num of player
-    private int maxNumOfPlayers;
+    private final int minNumOfPlayers = 1;
     //list of games (history)
     private List<Game> listOfGames = new ArrayList<>();
 
@@ -41,11 +39,9 @@ public class Configuration {
     public void setGameNameInConfig(String newName){gameName = newName;}
     public void setMinPoorScoreInConfig(int newScore){minPoorScore = newScore;}
     public void setMaxBestScoreInConfig(int newScore){maxBestScore = newScore;}
-    public void setMaxNumOfPlayers(int newNumMaxPlayers){maxNumOfPlayers = newNumMaxPlayers;}
     //getters
     public String getGameNameFromConfig(){return gameName;}
     public int getMinPoorScoreFromConfig(){return minPoorScore;}
     public int getMaxBestScoreFromConfig(){return maxBestScore;}
-    public int getMaxNumOfPlayersFromConfig(){return maxNumOfPlayers;}
 
 }
