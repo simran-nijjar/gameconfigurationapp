@@ -17,7 +17,7 @@ public class ViewConfiguration extends AppCompatActivity {
 
     private TextView expPoorScoreEditTxt;
     private TextView expGreatScoreEditTxt;
-
+    int currentConfigPosition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +28,7 @@ public class ViewConfiguration extends AppCompatActivity {
 
         //check what position of configuration was selected
         Bundle b = getIntent().getExtras();
-        int currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
+        currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
         ConfigurationsManager manager = ConfigurationsManager.getInstance();
         Configuration currentConfig = manager.get(currentConfigPosition);
         //Activity Name
@@ -51,6 +51,9 @@ public class ViewConfiguration extends AppCompatActivity {
         Button addBtn = findViewById(R.id.addGameBtn);
         addBtn.setOnClickListener(v -> {
             Intent intent = AddNewGame.makeIntent(ViewConfiguration.this);
+            ConfigurationsManager manager = ConfigurationsManager.getInstance();
+            Configuration currentConfig = manager.get(currentConfigPosition);
+            intent.putExtra("game name", currentConfig.getGameNameFromConfig());
             startActivity(intent);
         });
     }
