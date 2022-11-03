@@ -45,7 +45,7 @@ public class ViewConfiguration extends AppCompatActivity {
         expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMaxBestScoreFromConfig()));
 
         setUpGameHistoryButton();
-        setUpDelete(currentConfigPosition);
+        setUpDeleteButton(currentConfigPosition);
         setUpAddGameButton();
     }
 
@@ -74,7 +74,7 @@ public class ViewConfiguration extends AppCompatActivity {
         });
     }
 
-    private void setUpDelete(int currentConfigPosition){
+    private void setUpDeleteButton(int currentConfigPosition){
         Button deleteBtn = findViewById(R.id.btnDeleteConfig);
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
