@@ -52,15 +52,20 @@ public class ViewAchievements extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             numPlayersStr = numPlayers.getText().toString();
-            noAchievementsDisplayed.setVisibility(View.GONE);
             if(!numPlayersStr.isEmpty()){
                 numPlayersInt = Integer.parseInt(numPlayersStr);
                 if (numPlayersInt < 1){
-                    Toast.makeText(ViewAchievements.this, "Number of players must be greater than 0", Toast.LENGTH_SHORT).show();
+                    noAchievementsDisplayed.setText(R.string.invalidPlayersMsg);
                 }
                 else {
+                    noAchievementsDisplayed.setVisibility(View.GONE);
                     displayAchievementLevels();
                 }
+            }
+            else{
+                noAchievementsDisplayed.setText(R.string.emptyAchievementsMsg);
+                noAchievementsDisplayed.setVisibility(View.VISIBLE);
+                displayAchievements.setText("");
             }
         }
         @Override
@@ -79,20 +84,20 @@ public class ViewAchievements extends AppCompatActivity {
         int maxScore = achievements.calculateMinMaxScore(manager.get(indexOfGame).getMaxBestScoreFromConfig(), numPlayersInt);
         range = achievements.calculateLevelRange(minScore, maxScore);
         int newStartRange = 0;
-        achievementLevels += "Worst Game Level: Range < " + minScore + "\n";
+        achievementLevels += "Worst Game Level: Range < " + minScore + "\n\n";
         for (int i = 1; i < achievements.getIndex() + 1; i++){
             achievementLevels += achievements.getAchievementLevel(i);
             achievementLevels += " Range: [";
             if (i == 1) {
                 achievementLevels += achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
-                achievementLevels += ", " + (minScore + range) + "]\n";
+                achievementLevels += ", " + (minScore + range) + "]\n\n";
                 newStartRange = (minScore + range);
             }
             else if (i == achievements.getIndex()){
-                achievementLevels += " " + (newStartRange + 1) + ", " + (maxScore) + "]\n";
+                achievementLevels += " " + (newStartRange + 1) + ", " + (maxScore) + "]\n\n";
             }
             else{
-                achievementLevels += " " + (newStartRange + 1) + ", " + (newStartRange + 1 + range) + "]\n";
+                achievementLevels += " " + (newStartRange + 1) + ", " + (newStartRange + 1 + range) + "]\n\n";
                 newStartRange += 1 + range;
             }
         }

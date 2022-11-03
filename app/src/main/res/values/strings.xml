@@ -30,4 +30,5 @@
     <string name="combined_score">Enter the combined score of all players:</string>
     <string name="selected_config_position">selected position</string>
     <string name="emptyAchievementsMsg">Enter number of players to see achievement levels with range</string>
+    <string name="invalidPlayersMsg">Number of players cannot be less than 1. Please try again.</string>
 </resources>
