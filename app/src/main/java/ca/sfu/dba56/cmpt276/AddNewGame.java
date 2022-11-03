@@ -212,7 +212,7 @@ public class AddNewGame extends AppCompatActivity {
         alertDialog.setMessage("" + Arrays.toString(achievements));
         alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                AddNewGame.this.finish();
+                AddNewGame.this.finish(); // back to View Configuration page
                 //startActivity(new Intent(AddNewGame.this, MainActivity.class));
             }
         });
