@@ -66,7 +66,7 @@
             android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:label="@string/viewAchievements"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".ViewConfiguration"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"

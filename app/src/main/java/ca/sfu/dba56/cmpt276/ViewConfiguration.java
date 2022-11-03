@@ -22,7 +22,7 @@ public class ViewConfiguration extends AppCompatActivity {
 
     private TextView expPoorScoreEditTxt;
     private TextView expGreatScoreEditTxt;
-    int currentConfigPosition;
+    private int currentConfigPosition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +33,9 @@ public class ViewConfiguration extends AppCompatActivity {
 
         //check what position of configuration was selected
         Bundle b = getIntent().getExtras();
-        currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
+        if (b != null) {
+            currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
+        }
         ConfigurationsManager manager = ConfigurationsManager.getInstance();
         Configuration currentConfig = manager.get(currentConfigPosition);
         //Activity Name

@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ca.sfu.dba56.cmpt276.model.Achievements;
@@ -28,11 +30,14 @@ public class ViewAchievements extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_achievements);
-        noAchievementsDisplayed = findViewById(R.id.emptyAchievements);
+        noAchievementsDisplayed = findViewById(R.id.emptyAchievementsList);
         numPlayers = findViewById(R.id.userInputPlayers);
         numPlayers.addTextChangedListener(textWatcher);
         Bundle b = getIntent().getExtras();
         indexOfGame = b.getInt("Achievement Game Name");
+        displayAchievements = findViewById(R.id.listOfAchievements);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     public static Intent makeIntent(Context context){
@@ -42,25 +47,29 @@ public class ViewAchievements extends AppCompatActivity {
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            noAchievementsDisplayed.setText("Enter number of players to see achievement levels with minimum required score\n");
+            noAchievementsDisplayed.setText(R.string.emptyAchievementsMsg);
         }
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             numPlayersStr = numPlayers.getText().toString();
+            noAchievementsDisplayed.setVisibility(View.GONE);
             if(!numPlayersStr.isEmpty()){
-                noAchievementsDisplayed.setText("");
                 numPlayersInt = Integer.parseInt(numPlayersStr);
-                displayAchievementLevels();
+                if (numPlayersInt < 1){
+                    Toast.makeText(ViewAchievements.this, "Number of players must be greater than 0", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    displayAchievementLevels();
+                }
             }
         }
         @Override
         public void afterTextChanged(Editable s) {
-
         }
     };
 
     private void displayAchievementLevels(){
-        String achievementLevels = " ";
+        String achievementLevels = "";
         numPlayers = findViewById(R.id.userInputPlayers);
         numPlayersStr = numPlayers.getText().toString();
         numPlayersInt = Integer.parseInt(numPlayersStr);
@@ -69,7 +78,6 @@ public class ViewAchievements extends AppCompatActivity {
         int minScore = achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
         int maxScore = achievements.calculateMinMaxScore(manager.get(indexOfGame).getMaxBestScoreFromConfig(), numPlayersInt);
         range = achievements.calculateLevelRange(minScore, maxScore);
-        Toast.makeText(this, "min " + minScore + " max " + maxScore + " players " + numPlayersInt + " range " + range, Toast.LENGTH_SHORT).show();
         int newStartRange = 0;
         achievementLevels += "Worst Game Level: Range < " + minScore + "\n";
         for (int i = 1; i < achievements.getIndex() + 1; i++){
@@ -89,7 +97,6 @@ public class ViewAchievements extends AppCompatActivity {
             }
         }
         achievementLevels += "\n";
-        displayAchievements = findViewById(R.id.listOfAchievements);
         displayAchievements.setText(achievementLevels);
     }
 }
