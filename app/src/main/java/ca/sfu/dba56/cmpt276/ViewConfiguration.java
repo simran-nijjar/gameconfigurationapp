@@ -47,7 +47,7 @@ public class ViewConfiguration extends AppCompatActivity {
 
         setUpGameHistoryButton();
         setUpDelete(currentConfigPosition);
-        //setUpAddGameButton();
+        setUpAddGameButton();
     }
 
     public static Intent makeIntent(Context context){
@@ -61,6 +61,17 @@ public class ViewConfiguration extends AppCompatActivity {
             Intent intent2 = GameHistory.makeIntent(ViewConfiguration.this);
             intent2.putExtra("game name2", currentConfigPosition);
             startActivity(intent2);
+        });
+    }
+
+    private void setUpAddGameButton(){
+        Button addBtn = findViewById(R.id.addGameBtn);
+        addBtn.setOnClickListener(v -> {
+            Intent intent = AddNewGame.makeIntent(ViewConfiguration.this);
+            ConfigurationsManager manager = ConfigurationsManager.getInstance();
+            Configuration currentConfig = manager.get(currentConfigPosition);
+            intent.putExtra("game name", currentConfig.getGameNameFromConfig());
+            startActivity(intent);
         });
     }
 

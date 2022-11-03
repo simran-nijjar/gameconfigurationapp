@@ -24,7 +24,6 @@ import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 public class GameHistory extends AppCompatActivity {
     ConfigurationsManager manager = ConfigurationsManager.getInstance();
     int indexOfGame = 0;
-    int currentConfigPosition;
     ArrayAdapter<String> adapter;
 
     @Override
@@ -35,7 +34,6 @@ public class GameHistory extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         indexOfGame = b.getInt("game name2");
         UpdateUI(indexOfGame);
-        setUpAddGameButton(indexOfGame);
     }
 
     public static Intent makeIntent(Context context){
@@ -76,15 +74,5 @@ public class GameHistory extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
-    private void setUpAddGameButton(int indexOfGame){
-        Button addBtn = findViewById(R.id.button);
-        addBtn.setOnClickListener(v -> {
-            Intent intent = AddNewGame.makeIntent(GameHistory.this);
-            ConfigurationsManager manager = ConfigurationsManager.getInstance();
-            Configuration currentConfig = manager.get(indexOfGame);
-            intent.putExtra("game name", currentConfig.getGameNameFromConfig());
-            startActivity(intent);
-        });
-    }
 
 }

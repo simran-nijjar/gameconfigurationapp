@@ -40,10 +40,8 @@ public class AddNewGame extends AppCompatActivity {
     private TextView player_msg;
     private TextView score_msg;
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
-    //private Configuration currentConfig;
     private String selectedGame = ""; // for testing
     private int selectedGameInt;
-    int indexForGameHistory = -1; // for testing
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +89,8 @@ public class AddNewGame extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 selectedGame = dropdown.getSelectedItem().toString(); // for testing
                 selectedGameInt = dropdown.getSelectedItemPosition();
-                Toast.makeText(getApplicationContext(), "Selected: " + selectedGameInt + " " + selectedGame,
-                        Toast.LENGTH_SHORT).show(); // Toast message for testing
+//                Toast.makeText(getApplicationContext(), "Selected: " + selectedGameInt + 1 + ". " + selectedGame,
+//                        Toast.LENGTH_SHORT).show(); // Toast message for testing
                 num_player = findViewById(R.id.num_players_input);
                 combined_score = findViewById(R.id.combined_score_input);
                 player_msg = findViewById(R.id.player_msg);
@@ -196,8 +194,7 @@ public class AddNewGame extends AppCompatActivity {
                     achievements[1] = "bbb";
                     achievements[2] = "ccc";
                     manager.get(selectedGameInt).add(new Game(players_int, scores_int, achievements, saveDatePlayed()));
-                    indexForGameHistory++; // for testing
-                    showResult(achievements, indexForGameHistory);
+                    showResult(achievements);
                 }else {
                     Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                 }
@@ -205,10 +202,9 @@ public class AddNewGame extends AppCompatActivity {
         });
     }
 
-    private void showResult(String[] achievements, int index){
+    private void showResult(String[] achievements){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
         alertDialog.setTitle("Achievement");
-        //alertDialog.setMessage(""+ manager.get(selectedGameInt).get(index)); // for testing
         alertDialog.setMessage("" + Arrays.toString(achievements));
         alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
