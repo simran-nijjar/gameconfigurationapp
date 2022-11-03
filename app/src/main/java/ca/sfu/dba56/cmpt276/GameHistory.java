@@ -49,7 +49,7 @@ public class GameHistory extends AppCompatActivity {
     private void UpdateUI(int indexOfGame) {
         TextView txt = findViewById(R.id.GameHistoryEmpty);
         if(manager.get(indexOfGame).size() == 0){
-            txt.setText("No Game History yet.\n \n You can add one by pressing 'Add New Game' button on the previous page" );
+            txt.setText("No Game History yet.\n \n You can add one by pressing 'Add Game' button on the previous page" );
         }
         else {
             txt.setText("");
