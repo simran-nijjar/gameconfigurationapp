@@ -63,7 +63,7 @@ public class AddNewGame extends AppCompatActivity {
         // drop down menu for games
         Spinner dropdown = findViewById(R.id.gameName);
 
-        // list of config items
+        // list of items
         ArrayList<String> items = new ArrayList<>();
         int count = 0;
         int defaultGameIndex = 0;
@@ -91,6 +91,8 @@ public class AddNewGame extends AppCompatActivity {
                 selectedGameInt = dropdown.getSelectedItemPosition();
 //                Toast.makeText(getApplicationContext(), "Selected: " + selectedGameInt + 1 + ". " + selectedGame,
 //                        Toast.LENGTH_SHORT).show(); // Toast message for testing
+
+                // set text again when the user changes selection
                 num_player = findViewById(R.id.num_players_input);
                 combined_score = findViewById(R.id.combined_score_input);
                 player_msg = findViewById(R.id.player_msg);
@@ -137,9 +139,7 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) {}
         });
 
         combined_score.addTextChangedListener(new TextWatcher() {
@@ -170,9 +170,7 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) {}
         });
     }
 
