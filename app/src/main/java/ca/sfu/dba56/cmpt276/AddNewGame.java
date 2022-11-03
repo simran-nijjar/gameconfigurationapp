@@ -28,17 +28,17 @@ import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.Game;
 
 public class AddNewGame extends AppCompatActivity {
-    private int players_int;
-    private int scores_int;
-    private String dateGamePlayed;
-    private String num_players_str = "";
-    private String combined_scores_str = "";
+    private int players_int; // int user input
+    private int scores_int; // int user input
+    private String dateGamePlayed; // date time
+    private String num_players_str = "";  // String user input
+    private String combined_scores_str = ""; // String user input
     private EditText num_player;
     private EditText combined_score;
-    boolean isPlayerValid;
-    boolean isScoresValid;
-    private TextView player_msg;
-    private TextView score_msg;
+    boolean isPlayerValid; // check if user input is valid
+    boolean isScoresValid; // check if user input is valid
+    private TextView player_msg; // alert message
+    private TextView score_msg; // alert message
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private String selectedGame = ""; // for testing
     private int selectedGameInt;
@@ -56,7 +56,7 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void chooseGame() {
-        // get selected game
+        // get selected game name from ViewConfiguration
         Bundle bundle = getIntent().getExtras();
         String name = bundle.getString("game name");
 
@@ -80,7 +80,7 @@ public class AddNewGame extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         // set the spinners adapter to the dropdown menu
         dropdown.setAdapter(adapter);
-        dropdown.setSelection(defaultGameIndex);
+        dropdown.setSelection(defaultGameIndex); // set default game in drop down menu
     }
 
     private void storeSelectedGame(){
@@ -99,6 +99,7 @@ public class AddNewGame extends AppCompatActivity {
                 combined_score.setText("");
                 player_msg.setText("");
                 score_msg.setText("");
+                // call function according to current selection
                 checkInput(selectedGameInt);
                 saveInput(selectedGameInt);
             }
@@ -106,13 +107,13 @@ public class AddNewGame extends AppCompatActivity {
         });
     }
 
-
+    // check if user input is valid
     private void checkInput(int selectedGameInt){
         num_player = findViewById(R.id.num_players_input);
         combined_score = findViewById(R.id.combined_score_input);
-        player_msg = findViewById(R.id.player_msg);
+        player_msg = findViewById(R.id.player_msg); // alert message
         player_msg.setTextColor(getResources().getColor(R.color.purple_700));
-        score_msg = findViewById(R.id.score_msg);
+        score_msg = findViewById(R.id.score_msg); // alert message
         score_msg.setTextColor(getResources().getColor(R.color.purple_700));
 
         num_player.addTextChangedListener(new TextWatcher() {
@@ -175,6 +176,7 @@ public class AddNewGame extends AppCompatActivity {
         });
     }
 
+    // get date time
     public String saveDatePlayed(){
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd, y @ h:mma");
         LocalDateTime currentDate = LocalDateTime.now();
@@ -182,6 +184,7 @@ public class AddNewGame extends AppCompatActivity {
         return dateGamePlayed;
     }
 
+    // save input to the list
     private void saveInput(int selectedGameInt) {
         Button save = findViewById(R.id.save_btn);
         save.setOnClickListener(new View.OnClickListener() {
@@ -202,6 +205,7 @@ public class AddNewGame extends AppCompatActivity {
         });
     }
 
+    // pop up a window to show achievement
     private void showResult(String[] achievements){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
         alertDialog.setTitle("Achievement");

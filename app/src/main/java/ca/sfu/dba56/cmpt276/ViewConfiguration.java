@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import ca.sfu.dba56.cmpt276.model.Configuration;
@@ -92,7 +91,6 @@ public class ViewConfiguration extends AppCompatActivity {
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         manager.remove(currentConfigPosition);
-                        //ViewConfiguration.this.finish();
                         Intent k = new Intent(ViewConfiguration.this, MainActivity.class);
                         startActivity(k);
 

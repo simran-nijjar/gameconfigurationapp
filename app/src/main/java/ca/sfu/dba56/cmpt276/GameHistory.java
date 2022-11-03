@@ -30,7 +30,7 @@ public class GameHistory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_history);
-
+        // get selected game name from ViewConfiguration
         Bundle b = getIntent().getExtras();
         indexOfGame = b.getInt("game name2");
         UpdateUI(indexOfGame);
