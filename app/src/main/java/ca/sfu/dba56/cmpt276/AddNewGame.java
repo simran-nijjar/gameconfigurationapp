@@ -126,7 +126,7 @@ public class AddNewGame extends AppCompatActivity {
                     players_int = Integer.parseInt(num_players_str);
                     if (players_int < 1) {
                         isPlayerValid = false;
-                        player_msg.setText("Invalid input: 1 players minimum");
+                        player_msg.setText("Invalid input: 1 player minimum");
                         //Toast.makeText(AddNewGame.this, "Invalid input: 1 players minimum", Toast.LENGTH_SHORT).show();
                     }else {
                         isPlayerValid = true;
