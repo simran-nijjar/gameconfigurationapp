@@ -13,8 +13,28 @@
         android:theme="@style/Theme.CMPT276"
         tools:targetApi="31">
         <activity
+            android:name=".GameHistory"
+            android:exported="false"
+            android:label="@string/gameHistory">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".AddNewGame"
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="@string/addNewGame"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ViewConfiguration"
-            android:exported="false">
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -35,6 +55,17 @@
             android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:label="@string/help"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ViewAchievements"
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="@string/viewAchievements"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
             <meta-data

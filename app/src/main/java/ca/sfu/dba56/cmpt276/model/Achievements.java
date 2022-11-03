@@ -1,54 +1,32 @@
 package ca.sfu.dba56.cmpt276.model;
 
+
+/* This class uses the range of the game and the player score to find out what
+ * Achievement the player is.
+ */
 public class Achievements {
+    private int index;
+    private String achievements[];
 
-    /* This class uses the range of the game and the player score to find out what
-     * Achievement the player is.
-     */
-    public void getAchievement(int minScore, int maxScore, int playerScore){
-        String Achievement;
-        /*
-
-        if(playerScore < minScore && playerScore >maxScore){
-            Achievement = "Score is out of range";
-        }
-
-        if() {
-            Achievement = "Terrible Turtle";
-        }
-
-        if(){
-            Achievement = " Awful Alligator ";
-        }
-
-        if(){
-            Achievement = "Dancing Deer";
-        }
-
-        if(){
-            Achievement = "Cool Crocodile";
-        }
-
-        if(){
-            Achievement= "Fabulous Flamingo";
-        }
-
-        if(){
-            Achievement = "Majestic Mermaid";
-
-        }
-
-        if(){
-            Achievement = "Fierce Falcon";
-        }
-
-        if(){
-            Achievement = "Greatest Gorilla";
-        }
-
-        */
+    public Achievements(){
+        this.achievements = new String[]{"0","A","B","C","D","E","F","G","H"};
+        this.index = 8;
     }
 
+    public int getIndex(){
+        return index;
+    }
 
+    public String getAchievementLevel(int index){
+        return achievements[index];
+    }
 
+    public int calculateMinMaxScore(int score, int numPlayers){
+        return score * numPlayers;
+    }
+
+    public int calculateLevelRange(int min, int max){
+        int range = ((max - min)/8);
+        return range;
+    }
 }

@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">CMPT276</string>
     <string name="help">Help</string>
+    <string name="addNewGame">Add New Game</string>
+    <string name="gameHistory">Game History</string>
+    <string name="viewAchievements">View Achievements</string>
+
     <string name="info_content">
         \nThe creators of this game are Sodium. For more information about this app,
         check out this resource:
@@ -22,5 +26,7 @@
         Fabulous Dragons \t\t Brilliant Pixies\n\n
         Fabulous Dragons \t\t Brilliant Pixies\n\n
     </string>
+    <string name="num_player">Enter the number of players:</string>
+    <string name="combined_score">Enter the combined score of all players:</string>
     <string name="selected_config_position">selected position</string>
 </resources>
