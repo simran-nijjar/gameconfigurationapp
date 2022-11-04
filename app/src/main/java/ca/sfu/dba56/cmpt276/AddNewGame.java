@@ -159,10 +159,10 @@ public class AddNewGame extends AppCompatActivity {
                             isScoresValid = false;
                             score_msg.setText(R.string.negCombinedScoresMsg);
                         }
-                        else if(scores_int > adjustedMax){
-                        isScoresValid = false;
-                        score_msg.setText(R.string.greaterCombinedScoreMsg);
-                    }
+//                        else if(scores_int > adjustedMax){
+//                        isScoresValid = false;
+//                        score_msg.setText(R.string.greaterCombinedScoreMsg);
+//                    }
                     else {
                         isScoresValid = true;
                         score_msg.setText("");
@@ -196,6 +196,7 @@ public class AddNewGame extends AppCompatActivity {
                     Game gamePlayed = new Game(players_int, scores_int, manager.get(selectedGameInt), saveDatePlayed());
                     manager.get(selectedGameInt).add(gamePlayed);
                     showResult(gamePlayed.getLevelAchieved());
+                    Toast.makeText(AddNewGame.this, "scores " + scores_int, Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                 }

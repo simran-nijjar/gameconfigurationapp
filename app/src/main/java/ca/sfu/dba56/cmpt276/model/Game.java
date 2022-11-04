@@ -6,7 +6,7 @@ public class Game {
     private int scores;
     private String dateGamePlayed;
     private Achievements achievements = new Achievements();
-    String levelAchieved;
+    private String levelAchieved;
 
     public Game(int players, int scores, Configuration manager, String dateGamePlayed) {
         this.players = players;
