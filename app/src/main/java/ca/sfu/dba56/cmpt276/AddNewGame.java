@@ -135,13 +135,11 @@ public class AddNewGame extends AppCompatActivity {
                     if (players_int < 1) {
                         isPlayerValid = false;
                         player_msg.setText("Invalid input: 1 player minimum");
-                        //Toast.makeText(AddNewGame.this, "Invalid input: 1 players minimum", Toast.LENGTH_SHORT).show();
                     }else {
                         isPlayerValid = true;
                         player_msg.setText("");
                         adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(indexOfGame).getMaxBestScoreFromConfig(), players_int);
                         adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), players_int);
-                        Toast.makeText(AddNewGame.this, "min " + adjustedMin, Toast.LENGTH_SHORT).show();
                     }
                 }catch (NumberFormatException ex){
                     Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
