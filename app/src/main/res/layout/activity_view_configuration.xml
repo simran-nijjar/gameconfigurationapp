@@ -36,18 +36,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Edit"
-        app:layout_constraintEnd_toEndOf="@+id/btnDeleteConfig"
-        app:layout_constraintStart_toStartOf="@+id/btnDeleteConfig"
-        app:layout_constraintTop_toBottomOf="@+id/btnHistoryConfig" />
+        app:layout_constraintEnd_toEndOf="@+id/addGameBtn"
+        app:layout_constraintStart_toStartOf="@+id/addGameBtn"
+        app:layout_constraintTop_toBottomOf="@+id/addGameBtn" />
 
     <Button
         android:id="@+id/btnHistoryConfig"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="108dp"
         android:text="History"
-        app:layout_constraintEnd_toEndOf="@+id/btnEditConfig"
-        app:layout_constraintStart_toStartOf="@+id/btnEditConfig"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtGreatScoreConfigView" />
 
     <Button
@@ -56,8 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnEditConfig"
+        app:layout_constraintStart_toStartOf="@+id/btnEditConfig"
         app:layout_constraintTop_toBottomOf="@+id/btnEditConfig" />
 
     <TextView
@@ -79,4 +80,25 @@
         app:layout_constraintEnd_toEndOf="@+id/textFillPoorScoreConfigView"
         app:layout_constraintStart_toStartOf="@+id/textFillPoorScoreConfigView"
         app:layout_constraintTop_toTopOf="@+id/txtGreatScoreConfigView" />
+
+    <Button
+        android:id="@+id/addGameBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Add Game"
+        app:layout_constraintEnd_toEndOf="@+id/btnHistoryConfig"
+        app:layout_constraintStart_toStartOf="@+id/btnHistoryConfig"
+        app:layout_constraintTop_toBottomOf="@+id/btnHistoryConfig" />
+
+    <Button
+        android:id="@+id/viewAchievementsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Achievements"
+        app:layout_constraintBottom_toTopOf="@+id/btnHistoryConfig"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtGreatScoreConfigView"
+        app:layout_constraintVertical_bias="0.557" />
 </androidx.constraintlayout.widget.ConstraintLayout>
