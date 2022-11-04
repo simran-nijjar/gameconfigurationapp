@@ -14,7 +14,10 @@
         tools:targetApi="31">
         <activity
             android:name=".GameHistory"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
             android:exported="false"
+            android:parentActivityName=".ViewConfiguration"
             android:label="@string/gameHistory">
             <meta-data
                 android:name="android.app.lib_name"
@@ -25,7 +28,9 @@
             android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:label="@string/addNewGame"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ViewConfiguration"
+            >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
