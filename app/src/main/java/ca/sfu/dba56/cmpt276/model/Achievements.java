@@ -42,8 +42,10 @@ public class Achievements {
         int minScore = calculateMinMaxScore(min, players);
         int maxScore = calculateMinMaxScore(max, players);
         this.intAchievements[0] = minScore;
-        for (int i = 1; i < getIndex(); i++){
-            this.intAchievements[i] = maxScore;
+        this.intAchievements[1] = minScore;
+        int range = calculateLevelRange(minScore, maxScore);
+        for (int i = 2; i < getIndex(); i++){
+            this.intAchievements[i] = (this.intAchievements[i-1] + range + 1);
         }
     }
 
@@ -51,12 +53,12 @@ public class Achievements {
         if (combinedScore < intAchievements[0]){
             this.levelAchieved = getAchievementLevel(0);
         }
-        else if (combinedScore == intAchievements[0]){
+        else if (combinedScore == intAchievements[1]){
             this.levelAchieved = getAchievementLevel(1);
         }
         else {
-            for (int i = 1; i < intAchievements.length; i++) {
-                if (combinedScore > intAchievements[i-1] && combinedScore <= intAchievements[i]){
+            for (int i = 2; i < intAchievements.length; i++) {
+                if (combinedScore >= intAchievements[i] && combinedScore < intAchievements[i+1]){
                     this.levelAchieved = getAchievementLevel(i);
                 }
             }
