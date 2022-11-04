@@ -74,11 +74,10 @@ public class ViewConfiguration extends AppCompatActivity {
             startActivity(intent);
         });
 
-        //TODO: fill what lines below do
+        //set up buttons for new game and history
         setUpGameHistoryButton();
         setUpDeleteButton(currentConfigPosition);
         setUpAddGameButton();
-        expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMaxBestScoreFromConfig()));
         //setUpAddGameButton();
 
         setUpViewAchievementsButton();
