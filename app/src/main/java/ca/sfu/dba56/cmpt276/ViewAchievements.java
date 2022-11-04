@@ -8,7 +8,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,7 +46,7 @@ public class ViewAchievements extends AppCompatActivity {
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            noAchievementsDisplayed.setText(R.string.emptyAchievementsMsg);
+            noAchievementsDisplayed.setText(R.string.empty_achievements_msg);
         }
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -55,7 +54,7 @@ public class ViewAchievements extends AppCompatActivity {
             if(!numPlayersStr.isEmpty()){
                 numPlayersInt = Integer.parseInt(numPlayersStr);
                 if (numPlayersInt < 1){
-                    noAchievementsDisplayed.setText(R.string.invalidPlayersMsg);
+                    noAchievementsDisplayed.setText(R.string.invalid_players_msg);
                 }
                 else {
                     noAchievementsDisplayed.setVisibility(View.GONE);
@@ -63,7 +62,7 @@ public class ViewAchievements extends AppCompatActivity {
                 }
             }
             else{
-                noAchievementsDisplayed.setText(R.string.emptyAchievementsMsg);
+                noAchievementsDisplayed.setText(R.string.empty_achievements_msg);
                 noAchievementsDisplayed.setVisibility(View.VISIBLE);
                 displayAchievements.setText("");
             }
@@ -79,10 +78,9 @@ public class ViewAchievements extends AppCompatActivity {
         numPlayersStr = numPlayers.getText().toString();
         numPlayersInt = Integer.parseInt(numPlayersStr);
 
-        int range = 0;
         int minScore = achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
         int maxScore = achievements.calculateMinMaxScore(manager.get(indexOfGame).getMaxBestScoreFromConfig(), numPlayersInt);
-        range = achievements.calculateLevelRange(minScore, maxScore);
+        int range = achievements.calculateLevelRange(minScore, maxScore);
         int newStartRange = 0;
         achievementLevels += "Worst Game Level: Range < " + minScore + "\n\n";
         for (int i = 1; i < achievements.getIndex() + 1; i++){
