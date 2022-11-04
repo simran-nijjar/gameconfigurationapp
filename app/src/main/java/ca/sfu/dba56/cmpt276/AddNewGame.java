@@ -46,6 +46,7 @@ public class AddNewGame extends AppCompatActivity {
     private int selectedGameInt;
     private int indexOfGame;
     private int adjustedMax;
+    private int adjustedMin;
     private Achievements addNewGameAchievements = new Achievements();
 
     @Override
@@ -90,12 +91,6 @@ public class AddNewGame extends AppCompatActivity {
         // set the spinners adapter to the dropdown menu
         dropdown.setAdapter(adapter);
         dropdown.setSelection(defaultGameIndex); // set default game in drop down menu
-    }
-
-    private void validateUserInput(boolean isPlayerValid){
-        if (isPlayerValid){
-            adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(indexOfGame).getMaxBestScoreFromConfig(), players_int);
-        }
     }
 
     private void storeSelectedGame(){
@@ -146,7 +141,9 @@ public class AddNewGame extends AppCompatActivity {
                     }else {
                         isPlayerValid = true;
                         player_msg.setText("");
-                        validateUserInput(isPlayerValid);
+                        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(indexOfGame).getMaxBestScoreFromConfig(), players_int);
+                        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), players_int);
+                        Toast.makeText(AddNewGame.this, "min " + adjustedMin, Toast.LENGTH_SHORT).show();
                     }
                 }catch (NumberFormatException ex){
                     Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
@@ -164,13 +161,18 @@ public class AddNewGame extends AppCompatActivity {
                 combined_scores_str = combined_score.getText().toString();
                 try {
                     scores_int = Integer.parseInt(combined_scores_str);
-                    if (scores_int < players_int || players_int == 0) {
+//                    if (scores_int < players_int || players_int == 0) {
+//                        isScoresValid = false;
+//                        score_msg.setText("Invalid input: 1 score minimum for each player");
+//                        //Toast.makeText(AddNewGame.this, "Invalid input: 1 score minimum for each player", Toast.LENGTH_SHORT).show();
+//                    }else
+                        if (scores_int < 0 && adjustedMin > 0){
+                            isScoresValid = false;
+                            score_msg.setText(R.string.negCombinedScoresMsg);
+                        }
+                        else if(scores_int > adjustedMax){
                         isScoresValid = false;
-                        score_msg.setText("Invalid input: 1 score minimum for each player");
-                        //Toast.makeText(AddNewGame.this, "Invalid input: 1 score minimum for each player", Toast.LENGTH_SHORT).show();
-                    }else if(scores_int > adjustedMax){
-                        isScoresValid = false;
-                        score_msg.setText("Invalid input: score can not be greater than the maximum score");
+                        score_msg.setText(R.string.greaterCombinedScoreMsg);
                         //Toast.makeText(AddNewGame.this, "Invalid input: scores must be an integer for each player", Toast.LENGTH_SHORT).show();
                     }
 //                    else if(scores_int < manager.get(selectedGameInt).getMinPoorScoreFromConfig() && scores_int >= players_int) {

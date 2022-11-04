@@ -15,7 +15,8 @@ public class Achievements {
     private int maxScore;
 
     public Achievements(){
-        this.achievements = new String[]{"0","A","B","C","D","E","F","G","H"};
+        this.achievements = new String[]{"Worst Level","Bad Level","Okay Level","Alright Level",
+                "Better Level","Good Level","Almost There Level","Great Level","Best Level"};
         this.index = 8;
     }
 
