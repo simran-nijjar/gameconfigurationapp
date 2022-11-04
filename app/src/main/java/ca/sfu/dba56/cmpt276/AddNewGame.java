@@ -161,10 +161,10 @@ public class AddNewGame extends AppCompatActivity {
                             isScoresValid = false;
                             score_msg.setText(R.string.negCombinedScoresMsg);
                         }
-                        else if(scores_int > adjustedMax){
-                        isScoresValid = false;
-                        score_msg.setText(R.string.greaterCombinedScoreMsg);
-                    }
+//                        else if(scores_int > adjustedMax){
+//                        isScoresValid = false;
+//                        score_msg.setText(R.string.greaterCombinedScoreMsg);
+//                    }
                     else {
                         isScoresValid = true;
                         score_msg.setText("");

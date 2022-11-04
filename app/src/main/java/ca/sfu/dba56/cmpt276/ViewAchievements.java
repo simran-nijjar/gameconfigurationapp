@@ -101,7 +101,7 @@ public class ViewAchievements extends AppCompatActivity {
                 newStartRange += 1 + range;
             }
         }
-        achievementLevels += "\n";
+        achievementLevels += "Legendary Level: Range > " + maxScore;
         displayAchievements.setText(achievementLevels);
     }
 }
