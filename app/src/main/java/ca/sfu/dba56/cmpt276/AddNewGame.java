@@ -43,7 +43,7 @@ public class AddNewGame extends AppCompatActivity {
     private TextView score_msg; // alert message
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private int selectedGameInt; // user selected game config index
-    private int indexOfGame;
+    //private int indexOfGame;
     private int adjustedMax;
     private int adjustedMin;
     private Achievements addNewGameAchievements = new Achievements();
@@ -54,8 +54,8 @@ public class AddNewGame extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_game);
         chooseGame();
         storeSelectedGame();
-        Bundle b = getIntent().getExtras();
-        indexOfGame = b.getInt("game name");
+//        Bundle b = getIntent().getExtras();
+//        indexOfGame = b.getInt("game name");
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
