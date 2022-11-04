@@ -136,8 +136,8 @@ public class AddNewGame extends AppCompatActivity {
                     }else {
                         isPlayerValid = true;
                         player_msg.setText("");
-                        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(indexOfGame).getMaxBestScoreFromConfig(), players_int);
-                        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), players_int);
+                        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
+                        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMinPoorScoreFromConfig(), players_int);
                     }
                 }catch (NumberFormatException ex){
                     Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
@@ -193,7 +193,7 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isPlayerValid && isScoresValid) {
-                    Game gamePlayed = new Game(players_int, scores_int, manager.get(indexOfGame), saveDatePlayed());
+                    Game gamePlayed = new Game(players_int, scores_int, manager.get(selectedGameInt), saveDatePlayed());
                     manager.get(selectedGameInt).add(gamePlayed);
                     showResult(gamePlayed.getLevelAchieved());
                 }else {
