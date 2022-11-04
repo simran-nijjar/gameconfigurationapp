@@ -39,7 +39,8 @@ public class Configuration {
     public void remove(int i){listOfGames.remove(i);}
     // show the list in game history screen
     public String get(int i){
-        return  "Players: " + listOfGames.get(i).getPlayers() + " Scores: " + listOfGames.get(i).getScores() + " " + listOfGames.get(i).getDateGamePlayed();
+        return  "Players: " + listOfGames.get(i).getPlayers() + " Scores: " + listOfGames.get(i).getScores() + " " + listOfGames.get(i).getDateGamePlayed()
+                + " " + listOfGames.get(i).getLevelAchieved();
     }
     public int size(){
         return listOfGames.size();

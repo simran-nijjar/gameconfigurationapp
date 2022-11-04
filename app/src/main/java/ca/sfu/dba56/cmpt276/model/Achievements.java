@@ -9,8 +9,10 @@ import android.widget.Toast;
 public class Achievements {
     private int index;
     private String achievements[];
-    private int intAchievements[] = new int[8];
+    private int intAchievements[] = new int[9];
     private String levelAchieved;
+    private int minScore;
+    private int maxScore;
 
     public Achievements(){
         this.achievements = new String[]{"0","A","B","C","D","E","F","G","H"};
@@ -39,8 +41,8 @@ public class Achievements {
     }
 
     public void setAchievementsBounds(int min, int max, int players) {
-        int minScore = calculateMinMaxScore(min, players);
-        int maxScore = calculateMinMaxScore(max, players);
+        minScore = calculateMinMaxScore(min, players);
+        maxScore = calculateMinMaxScore(max, players);
         this.intAchievements[0] = minScore;
         this.intAchievements[1] = minScore;
         int range = calculateLevelRange(minScore, maxScore);
@@ -58,8 +60,15 @@ public class Achievements {
         }
         else {
             for (int i = 2; i < intAchievements.length; i++) {
-                if (combinedScore >= intAchievements[i] && combinedScore < intAchievements[i+1]){
-                    this.levelAchieved = getAchievementLevel(i);
+                if (i == (intAchievements.length - 1)){
+                    if (combinedScore >= intAchievements[i] && combinedScore <= maxScore){
+                        this.levelAchieved = getAchievementLevel(i);
+                    }
+                }
+                else {
+                    if (combinedScore >= intAchievements[i] && combinedScore < intAchievements[i + 1]) {
+                        this.levelAchieved = getAchievementLevel(i);
+                    }
                 }
             }
         }
