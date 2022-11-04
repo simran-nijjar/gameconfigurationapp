@@ -90,4 +90,15 @@
         app:layout_constraintEnd_toEndOf="@+id/btnHistoryConfig"
         app:layout_constraintStart_toStartOf="@+id/btnHistoryConfig"
         app:layout_constraintTop_toBottomOf="@+id/btnHistoryConfig" />
+
+    <Button
+        android:id="@+id/viewAchievementsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Achievements"
+        app:layout_constraintBottom_toTopOf="@+id/btnHistoryConfig"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtGreatScoreConfigView"
+        app:layout_constraintVertical_bias="0.557" />
 </androidx.constraintlayout.widget.ConstraintLayout>

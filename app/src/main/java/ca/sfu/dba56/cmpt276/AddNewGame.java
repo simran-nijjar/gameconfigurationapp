@@ -1,5 +1,6 @@
 package ca.sfu.dba56.cmpt276;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
+import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.Game;
 
@@ -42,6 +44,10 @@ public class AddNewGame extends AppCompatActivity {
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private String selectedGame = ""; // for testing
     private int selectedGameInt;
+    private int indexOfGame;
+    private int adjustedMax;
+    private int adjustedMin;
+    private Achievements addNewGameAchievements = new Achievements();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,10 @@ public class AddNewGame extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_game);
         chooseGame();
         storeSelectedGame();
+        Bundle b = getIntent().getExtras();
+        indexOfGame = b.getInt("game name");
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     public static Intent makeIntent(Context context){
@@ -89,8 +99,6 @@ public class AddNewGame extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 selectedGame = dropdown.getSelectedItem().toString(); // for testing
                 selectedGameInt = dropdown.getSelectedItemPosition();
-//                Toast.makeText(getApplicationContext(), "Selected: " + selectedGameInt + 1 + ". " + selectedGame,
-//                        Toast.LENGTH_SHORT).show(); // Toast message for testing
 
                 // set text again when the user changes selection
                 num_player = findViewById(R.id.num_players_input);
@@ -127,10 +135,11 @@ public class AddNewGame extends AppCompatActivity {
                     if (players_int < 1) {
                         isPlayerValid = false;
                         player_msg.setText("Invalid input: 1 player minimum");
-                        //Toast.makeText(AddNewGame.this, "Invalid input: 1 players minimum", Toast.LENGTH_SHORT).show();
                     }else {
                         isPlayerValid = true;
                         player_msg.setText("");
+                        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(indexOfGame).getMaxBestScoreFromConfig(), players_int);
+                        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), players_int);
                     }
                 }catch (NumberFormatException ex){
                     Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
@@ -148,18 +157,15 @@ public class AddNewGame extends AppCompatActivity {
                 combined_scores_str = combined_score.getText().toString();
                 try {
                     scores_int = Integer.parseInt(combined_scores_str);
-                    if (scores_int < players_int || players_int == 0) {
+                        if (scores_int < 0 && adjustedMin > 0){
+                            isScoresValid = false;
+                            score_msg.setText(R.string.negCombinedScoresMsg);
+                        }
+                        else if(scores_int > adjustedMax){
                         isScoresValid = false;
-                        score_msg.setText("Invalid input: 1 score minimum for each player");
-                        //Toast.makeText(AddNewGame.this, "Invalid input: 1 score minimum for each player", Toast.LENGTH_SHORT).show();
-                    }else if(scores_int > players_int * manager.get(selectedGameInt).getMaxBestScoreFromConfig()){
-                        isScoresValid = false;
-                        score_msg.setText("Invalid input: score can not be greater than the maximum score");
-                        //Toast.makeText(AddNewGame.this, "Invalid input: scores must be an integer for each player", Toast.LENGTH_SHORT).show();
-                    }else if(scores_int < players_int * manager.get(selectedGameInt).getMinPoorScoreFromConfig() && scores_int >= players_int) {
-                        isScoresValid = false;
-                        score_msg.setText("Invalid input: score can not be smaller than the minimum score");
-                    }else {
+                        score_msg.setText(R.string.greaterCombinedScoreMsg);
+                    }
+                    else {
                         isScoresValid = true;
                         score_msg.setText("");
                     }
@@ -189,13 +195,9 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isPlayerValid && isScoresValid) {
-                    // add user input to game history
-                    String[] achievements = new String[3]; // for testing
-                    achievements[0] = "aaa";
-                    achievements[1] = "bbb";
-                    achievements[2] = "ccc";
-                    manager.get(selectedGameInt).add(new Game(players_int, scores_int, achievements, saveDatePlayed()));
-                    showResult(achievements);
+                    Game gamePlayed = new Game(players_int, scores_int, manager.get(indexOfGame), saveDatePlayed());
+                    manager.get(selectedGameInt).add(gamePlayed);
+                    showResult(gamePlayed.getLevelAchieved());
                 }else {
                     Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                 }
@@ -204,14 +206,13 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     // pop up a window to show achievement
-    private void showResult(String[] achievements){
+    private void showResult(String achievements){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
         alertDialog.setTitle("Achievement");
-        alertDialog.setMessage("" + Arrays.toString(achievements));
+        alertDialog.setMessage("" + achievements);
         alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 AddNewGame.this.finish(); // back to View Configuration page
-                //startActivity(new Intent(AddNewGame.this, MainActivity.class));
             }
         });
         alertDialog.show();
