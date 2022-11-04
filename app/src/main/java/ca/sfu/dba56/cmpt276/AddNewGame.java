@@ -152,11 +152,11 @@ public class AddNewGame extends AppCompatActivity {
                         isScoresValid = false;
                         score_msg.setText("Invalid input: 1 score minimum for each player");
                         //Toast.makeText(AddNewGame.this, "Invalid input: 1 score minimum for each player", Toast.LENGTH_SHORT).show();
-                    }else if(scores_int > manager.get(selectedGameInt).getMaxBestScoreFromConfig()){
+                    }else if(scores_int > players_int * manager.get(selectedGameInt).getMaxBestScoreFromConfig()){
                         isScoresValid = false;
                         score_msg.setText("Invalid input: score can not be greater than the maximum score");
                         //Toast.makeText(AddNewGame.this, "Invalid input: scores must be an integer for each player", Toast.LENGTH_SHORT).show();
-                    }else if(scores_int < manager.get(selectedGameInt).getMinPoorScoreFromConfig() && scores_int >= players_int) {
+                    }else if(scores_int < players_int * manager.get(selectedGameInt).getMinPoorScoreFromConfig() && scores_int >= players_int) {
                         isScoresValid = false;
                         score_msg.setText("Invalid input: score can not be smaller than the minimum score");
                     }else {
