@@ -42,7 +42,7 @@ public class AddNewGame extends AppCompatActivity {
     private TextView player_msg; // alert message
     private TextView score_msg; // alert message
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
-    private int selectedGameInt;
+    private int selectedGameInt; // user selected game config index
     private int indexOfGame;
     private int adjustedMax;
     private int adjustedMin;
