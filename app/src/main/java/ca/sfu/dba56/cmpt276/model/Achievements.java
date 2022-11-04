@@ -47,28 +47,32 @@ public class Achievements {
         this.intAchievements[0] = minScore;
         this.intAchievements[1] = minScore;
         int range = calculateLevelRange(minScore, maxScore);
-        for (int i = 2; i < getIndex(); i++){
+        for (int i = 2; i < intAchievements.length; i++){
             this.intAchievements[i] = (this.intAchievements[i-1] + range + 1);
         }
     }
 
     public void calculateLevelAchieved(int combinedScore){
+        boolean calculatingLevel = true;
         if (combinedScore < intAchievements[0]){
             this.levelAchieved = getAchievementLevel(0);
         }
-        else if (combinedScore == intAchievements[1]){
+        else if (combinedScore >= intAchievements[1] && combinedScore <= intAchievements[2]){
             this.levelAchieved = getAchievementLevel(1);
         }
         else {
-            for (int i = 2; i < intAchievements.length; i++) {
-                if (i == (intAchievements.length - 1)){
-                    if (combinedScore >= intAchievements[i] && combinedScore <= maxScore){
-                        this.levelAchieved = getAchievementLevel(i);
-                    }
-                }
-                else {
-                    if (combinedScore >= intAchievements[i] && combinedScore < intAchievements[i + 1]) {
-                        this.levelAchieved = getAchievementLevel(i);
+            while (calculatingLevel) {
+                for (int i = 2; i < intAchievements.length; i++) {
+                    if (i == (intAchievements.length - 1)) {
+                        if (combinedScore >= intAchievements[i] && combinedScore <= maxScore) {
+                            this.levelAchieved = getAchievementLevel(i);
+                            calculatingLevel = false;
+                        }
+                    } else {
+                        if (combinedScore >= intAchievements[i] && combinedScore < intAchievements[i + 1]) {
+                            this.levelAchieved = getAchievementLevel(i);
+                            calculatingLevel = false;
+                        }
                     }
                 }
             }

@@ -198,6 +198,7 @@ public class AddNewGame extends AppCompatActivity {
                     Game gamePlayed = new Game(players_int, scores_int, manager.get(indexOfGame), saveDatePlayed());
                     manager.get(selectedGameInt).add(gamePlayed);
                     showResult(gamePlayed.getLevelAchieved());
+                    Toast.makeText(AddNewGame.this, "scores " + scores_int, Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                 }
