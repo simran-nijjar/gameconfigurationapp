@@ -42,7 +42,6 @@ public class AddNewGame extends AppCompatActivity {
     private TextView player_msg; // alert message
     private TextView score_msg; // alert message
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
-    private String selectedGame = ""; // for testing
     private int selectedGameInt;
     private int indexOfGame;
     private int adjustedMax;
@@ -97,7 +96,6 @@ public class AddNewGame extends AppCompatActivity {
         Spinner dropdown = findViewById(R.id.gameName);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                selectedGame = dropdown.getSelectedItem().toString(); // for testing
                 selectedGameInt = dropdown.getSelectedItemPosition();
 
                 // set text again when the user changes selection
