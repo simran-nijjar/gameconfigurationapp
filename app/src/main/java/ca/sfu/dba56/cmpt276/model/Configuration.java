@@ -6,6 +6,7 @@ package ca.sfu.dba56.cmpt276.model;
 */
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Configuration {
@@ -36,6 +37,13 @@ public class Configuration {
     public void add(Game game){listOfGames.add(game);}
     //delete a game (from list on position i)
     public void remove(int i){listOfGames.remove(i);}
+    // show the list in game history screen
+    public String get(int i){
+        return  "Players: " + listOfGames.get(i).getPlayers() + " Scores: " + listOfGames.get(i).getScores() + " " + listOfGames.get(i).getDateGamePlayed() + " " + Arrays.toString(listOfGames.get(i).getAchievements());
+    }
+    public int size(){
+        return listOfGames.size();
+    }
 
     //setters
     public void setGameNameInConfig(String newName){gameName = newName;}
