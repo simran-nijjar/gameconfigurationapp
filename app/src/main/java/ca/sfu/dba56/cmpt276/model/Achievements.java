@@ -1,10 +1,7 @@
 package ca.sfu.dba56.cmpt276.model;
 
-
-import android.widget.Toast;
-
-/* This class uses the range of the game and the player score to find out what
- * Achievement the player is.
+/* This class calculates the achievement level, expected min score and max score, and
+* the range and bounds of the scores in each level.
  */
 public class Achievements {
     private int index;
