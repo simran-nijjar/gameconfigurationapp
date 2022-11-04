@@ -58,15 +58,12 @@ public class Achievements {
         if (combinedScore < intAchievements[0]){
             this.levelAchieved = getAchievementLevel(0);
         }
-        else if (combinedScore >= intAchievements[1] && combinedScore <= intAchievements[2]){
-            this.levelAchieved = getAchievementLevel(1);
-        }
         else if (combinedScore >= this.intAchievements[9]){
             this.levelAchieved = getAchievementLevel(9);
         }
         else {
             while (calculatingLevel) {
-                for (int i = 2; i < intAchievements.length - 1; i++) {
+                for (int i = 1; i < intAchievements.length - 1; i++) {
                     if (i == (intAchievements.length - 1)) {
                         if (combinedScore >= intAchievements[i] && combinedScore <= maxScore) {
                             this.levelAchieved = getAchievementLevel(i);
