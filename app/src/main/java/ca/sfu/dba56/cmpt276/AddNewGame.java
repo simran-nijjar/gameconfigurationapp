@@ -42,6 +42,7 @@ public class AddNewGame extends AppCompatActivity {
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private String selectedGame = ""; // for testing
     private int selectedGameInt;
+    private int indexOfGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,8 @@ public class AddNewGame extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_game);
         chooseGame();
         storeSelectedGame();
+        Bundle b = getIntent().getExtras();
+        indexOfGame = b.getInt("game name");
     }
 
     public static Intent makeIntent(Context context){
@@ -190,12 +193,13 @@ public class AddNewGame extends AppCompatActivity {
             public void onClick(View v) {
                 if (isPlayerValid && isScoresValid) {
                     // add user input to game history
-                    String[] achievements = new String[3]; // for testing
-                    achievements[0] = "aaa";
-                    achievements[1] = "bbb";
-                    achievements[2] = "ccc";
-                    manager.get(selectedGameInt).add(new Game(players_int, scores_int, achievements, saveDatePlayed()));
-                    showResult(achievements);
+//                    String[] achievements = new String[3]; // for testing
+//                    achievements[0] = "aaa";
+//                    achievements[1] = "bbb";
+//                    achievements[2] = "ccc";
+                    Game gamePlayed = new Game(players_int, scores_int, manager.get(indexOfGame), saveDatePlayed());
+                    manager.get(selectedGameInt).add(gamePlayed);
+                    showResult(gamePlayed.getLevelAchieved());
                 }else {
                     Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                 }
@@ -204,10 +208,10 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     // pop up a window to show achievement
-    private void showResult(String[] achievements){
+    private void showResult(String achievements){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
         alertDialog.setTitle("Achievement");
-        alertDialog.setMessage("" + Arrays.toString(achievements));
+        alertDialog.setMessage("" + achievements);
         alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 AddNewGame.this.finish(); // back to View Configuration page
