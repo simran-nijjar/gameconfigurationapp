@@ -77,18 +77,32 @@ public class Achievements {
         }
     }
 
-//    public void setAchievementsScores(int min, int max, int players){
-//        minScore = calculateMinMaxScore(min, players);
-//        maxScore = calculateMinMaxScore(max, players);
-//        this.intAchievements[0] = minScore;
-//        this.intAchievements[1] = minScore;
-//        for (int i = 2; i <)
-//    }
-//
-//    public void calculateScoreAchieved(int combinedScore){
-//        if (combinedScore < intAchievements[0]){
-//            this.levelAchieved = getAchievementLevel(0);
-//        }
-//        else if (combinedScore >= intAchievements[])
-//    }
+    public void setAchievementsScores(int min, int max, int players){
+        minScore = calculateMinMaxScore(min, players);
+        maxScore = calculateMinMaxScore(max, players);
+        this.intAchievements[0] = minScore;
+        this.intAchievements[1] = minScore;
+        for (int i = 2; i <= (maxScore - minScore + 1); i++){
+            this.intAchievements[i] = minScore + i - 1;
+        }
+        if ((maxScore - minScore + 1) != 8) {
+            this.intAchievements[maxScore - minScore + 1] = maxScore;
+        }
+    }
+
+    public void calculateScoreAchieved(int combinedScore){
+        if (combinedScore < intAchievements[0]){
+            this.levelAchieved = getAchievementLevel(0);
+        }
+        else if (combinedScore >= intAchievements[maxScore - minScore + 1]){
+            this.levelAchieved = getAchievementLevel(9);
+        }
+        else{
+            for (int i = 1; i < (maxScore - minScore + 2); i++){
+                if (combinedScore == intAchievements[i]){
+                    this.levelAchieved = getAchievementLevel(i);
+                }
+            }
+        }
+    }
 }

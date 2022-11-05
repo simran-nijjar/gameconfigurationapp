@@ -18,7 +18,8 @@ public class Game {
         }
 
         else{
-
+            achievements.setAchievementsScores(manager.getMinPoorScoreFromConfig(), manager.getMaxBestScoreFromConfig(), players);
+            achievements.calculateScoreAchieved(scores);
         }
 
         this.levelAchieved = achievements.getLevelAchieved();

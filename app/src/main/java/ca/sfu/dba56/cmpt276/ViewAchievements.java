@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -94,45 +95,57 @@ public class ViewAchievements extends AppCompatActivity {
         int range = achievements.calculateLevelRange(minScore, maxScore);
         boolean lessLevels = false;
         if (Math.abs(maxScore - minScore) > 8) {
-            int newStartRange = 0;
-            achievementLevels += "Worst Game Level: Range < " + minScore + "\n\n";
-            for (int i = 1; i < achievements.getNumOfBoundedLevels() + 1; i++) {
-                if (newStartRange + 1 + range < maxScore) {
-                    achievementLevels += achievements.getAchievementLevel(i);
-                    achievementLevels += " Range: [";
-                    if (i == 1) {
-                        achievementLevels += achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
-                        achievementLevels += ", " + (minScore + range) + "]\n\n";
-                        newStartRange = (minScore + range);
-                    } else if (i == achievements.getNumOfBoundedLevels()) {
-                        achievementLevels += " " + (newStartRange) + ", " + (maxScore) + "]\n\n";
-                    } else {
-                        achievementLevels += " " + (newStartRange + 1) + ", " + (newStartRange + 1 + range) + "]\n\n";
-                        newStartRange += 1 + range;
-                    }
-                }
-                else{
-                    lessLevels = true;
-                }
-            }
-            if (lessLevels){
-                achievementLevels += "Legendary Level: Range >= " + (newStartRange + 1);
-            }
-            else {
-                achievementLevels += "Legendary Level: Range > " + maxScore;
-            }
+            achievementLevels = displayAchievementRanges(achievementLevels, range, lessLevels);
         }
         else{
-            achievementLevels += "Worst Game Level: Score < " + minScore +"\n\n";
-            for (int i = 1; i <= (maxScore - minScore + 1); i++){
-                achievementLevels += achievements.getAchievementLevel(i);
-                achievementLevels += " Score : [";
-                achievementLevels += (achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt) + i - 1);
-                achievementLevels += "]\n\n";
-            }
-            achievementLevels += "Legendary Level: Score > " + maxScore;
+            achievementLevels = displayAchievementScores(achievementLevels);
         }
         displayAchievements.setText(achievementLevels);
+    }
+
+    @NonNull
+    private String displayAchievementRanges(String achievementLevels, int range, boolean lessLevels) {
+        int newStartRange = 0;
+        achievementLevels += "Worst Game Level: Range < " + minScore + "\n\n";
+        for (int i = 1; i < achievements.getNumOfBoundedLevels() + 1; i++) {
+            if (newStartRange + 1 + range < Math.abs(maxScore)) {
+                achievementLevels += achievements.getAchievementLevel(i);
+                achievementLevels += " Range: [";
+                if (i == 1) {
+                    achievementLevels += achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
+                    achievementLevels += ", " + (minScore + range) + "]\n\n";
+                    newStartRange = (minScore + range);
+                } else if (i == achievements.getNumOfBoundedLevels()) {
+                    achievementLevels += " " + (newStartRange) + ", " + (maxScore) + "]\n\n";
+                } else {
+                    achievementLevels += " " + (newStartRange + 1) + ", " + (newStartRange + 1 + range) + "]\n\n";
+                    newStartRange += 1 + range;
+                }
+            }
+            else{
+                lessLevels = true;
+            }
+        }
+        if (lessLevels){
+            achievementLevels += "Legendary Level: Range >= " + (newStartRange + 1);
+        }
+        else {
+            achievementLevels += "Legendary Level: Range > " + maxScore;
+        }
+        return achievementLevels;
+    }
+
+    @NonNull
+    private String displayAchievementScores(String achievementLevels) {
+        achievementLevels += "Worst Game Level: Score < " + minScore +"\n\n";
+        for (int i = 1; i < (maxScore - minScore + 1); i++){
+            achievementLevels += achievements.getAchievementLevel(i);
+            achievementLevels += " Score : [";
+            achievementLevels += (achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt) + i - 1);
+            achievementLevels += "]\n\n";
+        }
+        achievementLevels += "Legendary Level: Score >= " + maxScore;
+        return achievementLevels;
     }
 
     private void calculateMinAndMaxScore() {
