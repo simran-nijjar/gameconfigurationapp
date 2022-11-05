@@ -49,6 +49,7 @@ public class GameHistory extends AppCompatActivity {
         //adapter
         adapter = new ArrayAdapter<String>(this, R.layout.game_items, items);
         ListView list = findViewById(R.id.HistoryList);
+        list.setSelector(android.R.color.transparent);
         list.setAdapter(adapter);
     }
 
