@@ -135,8 +135,6 @@ public class ViewAchievements extends AppCompatActivity {
         displayAchievements.setText(achievementLevels);
     }
 
-
-
     private void calculateMinAndMaxScore() {
         minScore = achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
         maxScore = achievements.calculateMinMaxScore(manager.get(indexOfGame).getMaxBestScoreFromConfig(), numPlayersInt);
