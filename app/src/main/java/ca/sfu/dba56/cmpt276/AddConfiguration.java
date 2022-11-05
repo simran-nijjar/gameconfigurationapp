@@ -43,7 +43,7 @@ public class AddConfiguration extends AppCompatActivity {
         else{
             //Add Game Config Activity
             //Activity Name
-            getSupportActionBar().setTitle("Add new Game Config");
+            getSupportActionBar().setTitle("Add New Game Config");
             getUserInput();
             setUpSaveConfigButton();
         }

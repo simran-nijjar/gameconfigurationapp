@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,13 +49,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void UpdateUI() {
         ConfigurationsManager manager = ConfigurationsManager.getInstance();
-        TextView txt = findViewById(R.id.TextConfiguresEmpty);
+        // image made from miro
+        // https://miro.com
+        ImageView image = findViewById(R.id.image_main);
         if(manager.isEmpty()){
-            txt.setText("No Configurations yet.\n \n You can add one by pressing 'plus' button in the bottom right corner" );
+            image.setVisibility(View.VISIBLE);
         }
         else {
-            //get rid of text
-            txt.setText("");
+            //get rid of image
+            image.setVisibility(View.INVISIBLE);
             //populate list view with games from manager
             populateListView(manager);
         }
