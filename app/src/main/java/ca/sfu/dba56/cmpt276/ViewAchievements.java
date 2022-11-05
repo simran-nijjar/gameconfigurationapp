@@ -31,6 +31,7 @@ public class ViewAchievements extends AppCompatActivity {
     private double maxScore;
     private int lengthOfDecimal;
     private double decimalRange;
+    private double lengthOfDecimalRange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,25 +124,22 @@ public class ViewAchievements extends AppCompatActivity {
             getAddingValue(lengthOfDecimal);
 
             double newStartRange = 0;
-            String lengthAfterDecimal = "";
-            for (int i = 0; i < lengthOfDecimal; i++){
-                lengthAfterDecimal += "#";
-            }
-            DecimalFormat decimalFormat = new DecimalFormat("0." + lengthAfterDecimal);
+            formatDouble(range);
             achievementLevels += "Worst Game Level: Range < " + minScore + "\n\n";
             for (int i = 1; i < achievements.getNumOfBoundedLevels() + 1; i++){
                 achievementLevels += achievements.getAchievementLevel(i);
                 achievementLevels += " Range: [";
                 if (i == 1){
+                    Toast.makeText(this, "range " + decimalRange, Toast.LENGTH_SHORT).show();
                     achievementLevels += achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
-                    achievementLevels += ", " + (minScore + decimalFormat.format(decimalRange)) + "]\n\n";
-                    newStartRange = (minScore + Double.parseDouble(decimalFormat.format(decimalRange)));
+                    achievementLevels += ", " + formatDouble(minScore + formatDouble(range)) + "]\n\n";
+                    newStartRange = (minScore + formatDouble(range));
                 } else if (i == achievements.getNumOfBoundedLevels()){
-                    achievementLevels += " " + (newStartRange) + ", " + (maxScore) + "]\n\n";
+                    achievementLevels += " " + (formatDouble(newStartRange)) + ", " + (maxScore) + "]\n\n";
                 } else{
-                    achievementLevels += " " + (newStartRange + Double.parseDouble(decimalFormat.format(decimalRange))) + ", " +
-                            (newStartRange + Double.parseDouble(decimalFormat.format(decimalRange)) + Double.parseDouble(decimalFormat.format(range)) + "]\n\n");
-                    newStartRange += Double.parseDouble(decimalFormat.format(decimalRange)) + Double.parseDouble(decimalFormat.format(range));
+                    achievementLevels += " " + formatDouble(formatDouble(newStartRange) + formatDouble(decimalRange)) + ", " +
+                            (newStartRange + formatDouble(decimalRange) + formatDouble(range) + "]\n\n");
+                    newStartRange += formatDouble(decimalRange) + formatDouble(range);
                 }
             }
             achievementLevels += "Legendary Level: Range > " + maxScore;
@@ -160,6 +158,20 @@ public class ViewAchievements extends AppCompatActivity {
         for (int i = 0; i < lengthOfDecimal; i++){
             decimalRange *= 0.1;
         }
+        formatDouble(decimalRange);
+        String length = " " + decimalRange;
+        String[] result = length.split("\\.");
+        lengthOfDecimalRange = result[1].length();
+    }
+
+    private Double formatDouble(double value) {
+        String lengthAfterDecimal = "";
+        for (int i = 0; i < lengthOfDecimalRange; i++){
+            lengthAfterDecimal += "#";
+        }
+        DecimalFormat decimalFormat = new DecimalFormat("0." + lengthAfterDecimal);
+
+        return Double.parseDouble(decimalFormat.format(value));
     }
 
 
