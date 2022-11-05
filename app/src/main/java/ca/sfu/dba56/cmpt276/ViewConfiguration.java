@@ -85,6 +85,7 @@ public class ViewConfiguration extends AppCompatActivity {
             historyBtn.setVisibility(View.INVISIBLE);
             image.setVisibility(View.VISIBLE);
         }else {
+            //get rid of image
             image.setVisibility(View.INVISIBLE);
             historyBtn.setVisibility(View.VISIBLE);
             historyBtn.setOnClickListener(v -> {
