@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 import ca.sfu.dba56.cmpt276.model.Achievements;
@@ -121,7 +123,6 @@ public class ViewAchievements extends AppCompatActivity {
 
         else{
             getDecimalPlaces(achievements.calculateLevelRange(minScore,maxScore));
-            getAddingValue(lengthOfDecimal);
 
             double newStartRange = 0;
             formatDouble(range);
@@ -133,12 +134,13 @@ public class ViewAchievements extends AppCompatActivity {
                     Toast.makeText(this, "range " + decimalRange, Toast.LENGTH_SHORT).show();
                     achievementLevels += achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
                     achievementLevels += ", " + formatDouble(minScore + formatDouble(range)) + "]\n\n";
-                    newStartRange = (minScore + formatDouble(range));
+                    newStartRange = formatDouble(minScore + formatDouble(range));
+                    formatDouble(newStartRange);
                 } else if (i == achievements.getNumOfBoundedLevels()){
                     achievementLevels += " " + (formatDouble(newStartRange)) + ", " + (maxScore) + "]\n\n";
                 } else{
-                    achievementLevels += " " + formatDouble(formatDouble(newStartRange) + formatDouble(decimalRange)) + ", " +
-                            (newStartRange + formatDouble(decimalRange) + formatDouble(range) + "]\n\n");
+                    achievementLevels += " " + (formatDouble(newStartRange) + (decimalRange*decimalRange)) + ", " +
+                            formatDouble((formatDouble(newStartRange) + formatDouble(decimalRange) + formatDouble(range))) + "]\n\n";
                     newStartRange += formatDouble(decimalRange) + formatDouble(range);
                 }
             }
@@ -148,30 +150,48 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private void getDecimalPlaces(double userInput){
-        String strUserInput = "" + userInput;
-        String[] result = strUserInput.split("\\.");
-        lengthOfDecimal = result[1].length();
+        String splitter = Double.toString(Math.abs(userInput));
+        int intPlaces = splitter.indexOf('.');
+        int decPlaces = splitter.length() - intPlaces - 1;
+        Toast.makeText(this, "length splitter + userInput " + decPlaces + userInput, Toast.LENGTH_LONG).show();
+        lengthOfDecimal = decPlaces;
+//        Toast.makeText(this, "lengthOfDecimal " + lengthOfDecimal, Toast.LENGTH_SHORT).show();
+        getAddingValue();
     }
 
-    private void getAddingValue(int lengthOfDecimal){
+    private void getAddingValue(){
         decimalRange = 0.1;
         for (int i = 0; i < lengthOfDecimal; i++){
-            decimalRange *= 0.1;
+            decimalRange *= decimalRange;
         }
-        formatDouble(decimalRange);
+        //2
+        Toast.makeText(this, "decimalRange " + decimalRange, Toast.LENGTH_SHORT).show();
+        decimalRange = formatDouble(decimalRange);
+        Toast.makeText(this, "decimalRange formatted " + decimalRange, Toast.LENGTH_SHORT).show();
+        getLengthOfRange();
+    }
+
+    private void getLengthOfRange() {
+        Double formattedDR = formatDouble(decimalRange);
+//        Toast.makeText(this, " dr " + decimalRange, Toast.LENGTH_SHORT).show();
         String length = " " + decimalRange;
-        String[] result = length.split("\\.");
-        lengthOfDecimalRange = result[1].length();
+//        String[] result = decimalRange.toString().split("\\.");
+//        lengthOfDecimalRange = result[1].length();
+//        Toast.makeText(this, "3 = " + lengthOfDecimalRange, Toast.LENGTH_SHORT).show();
     }
 
     private Double formatDouble(double value) {
-        String lengthAfterDecimal = "";
-        for (int i = 0; i < lengthOfDecimalRange; i++){
-            lengthAfterDecimal += "#";
-        }
-        DecimalFormat decimalFormat = new DecimalFormat("0." + lengthAfterDecimal);
-
-        return Double.parseDouble(decimalFormat.format(value));
+        BigDecimal bd = new BigDecimal(value).setScale(lengthOfDecimal, RoundingMode.CEILING);
+        double newValue = bd.doubleValue();
+        return newValue;
+//        String lengthAfterDecimal = "";
+//        for (int i = 0; i < lengthOfDecimalRange + 1; i++){
+//            lengthAfterDecimal += "#";
+//        }
+////        Toast.makeText(this, "length " + lengthOfDecimalRange, Toast.LENGTH_SHORT).show();
+//        DecimalFormat decimalFormat = new DecimalFormat("0." + lengthAfterDecimal);
+//
+//        return Double.parseDouble(decimalFormat.format(value));
     }
 
 
