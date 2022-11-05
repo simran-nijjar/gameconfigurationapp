@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,8 +20,8 @@ import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
 public class ViewAchievements extends AppCompatActivity {
-    ConfigurationsManager manager = ConfigurationsManager.getInstance();
-    Achievements achievements = new Achievements();
+    private ConfigurationsManager manager = ConfigurationsManager.getInstance();
+    private Achievements achievements = new Achievements();
     private EditText numPlayers;
     private String numPlayersStr;
     private int numPlayersInt;
@@ -57,6 +58,16 @@ public class ViewAchievements extends AppCompatActivity {
 
     public static Intent makeIntent(Context context){
         return new Intent(context, ViewAchievements.class);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
