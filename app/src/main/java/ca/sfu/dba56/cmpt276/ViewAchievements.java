@@ -8,14 +8,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 
 import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
@@ -29,11 +24,8 @@ public class ViewAchievements extends AppCompatActivity {
     private int indexOfGame;
     private TextView noAchievementsDisplayed;
     private TextView displayAchievements;
-    private double minScore;
-    private double maxScore;
-    private int lengthOfDecimal;
-    private double decimalRange;
-    private double lengthOfDecimalRange;
+    private int minScore;
+    private int maxScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,100 +91,50 @@ public class ViewAchievements extends AppCompatActivity {
         numPlayersInt = Integer.parseInt(numPlayersStr);
 
         calculateMinAndMaxScore();
-        double range = achievements.calculateLevelRange(minScore, maxScore);
-        if (maxScore - minScore > 8) {
-            Toast.makeText(this, "range " + range, Toast.LENGTH_SHORT).show();
-            double newStartRange = 0;
+        int range = achievements.calculateLevelRange(minScore, maxScore);
+        boolean lessLevels = false;
+        if (Math.abs(maxScore - minScore) > 8) {
+            int newStartRange = 0;
             achievementLevels += "Worst Game Level: Range < " + minScore + "\n\n";
             for (int i = 1; i < achievements.getNumOfBoundedLevels() + 1; i++) {
-                achievementLevels += achievements.getAchievementLevel(i);
-                achievementLevels += " Range: [";
-                if (i == 1) {
-                    achievementLevels += achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
-                    achievementLevels += ", " + (minScore + range) + "]\n\n";
-                    newStartRange = (minScore + range);
-                } else if (i == achievements.getNumOfBoundedLevels()) {
-                    achievementLevels += " " + (newStartRange) + ", " + (maxScore) + "]\n\n";
-                } else {
-                    achievementLevels += " " + (newStartRange + 1) + ", " + (newStartRange + 1 + range) + "]\n\n";
-                    newStartRange += 1 + range;
+                if (newStartRange + 1 + range < maxScore) {
+                    achievementLevels += achievements.getAchievementLevel(i);
+                    achievementLevels += " Range: [";
+                    if (i == 1) {
+                        achievementLevels += achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
+                        achievementLevels += ", " + (minScore + range) + "]\n\n";
+                        newStartRange = (minScore + range);
+                    } else if (i == achievements.getNumOfBoundedLevels()) {
+                        achievementLevels += " " + (newStartRange) + ", " + (maxScore) + "]\n\n";
+                    } else {
+                        achievementLevels += " " + (newStartRange + 1) + ", " + (newStartRange + 1 + range) + "]\n\n";
+                        newStartRange += 1 + range;
+                    }
+                }
+                else{
+                    lessLevels = true;
                 }
             }
-            achievementLevels += "Legendary Level: Range > " + maxScore;
+            if (lessLevels){
+                achievementLevels += "Legendary Level: Range >= " + (newStartRange + 1);
+            }
+            else {
+                achievementLevels += "Legendary Level: Range > " + maxScore;
+            }
         }
-
         else{
-            getDecimalPlaces(achievements.calculateLevelRange(minScore,maxScore));
-
-            double newStartRange = 0;
-            formatDouble(range);
-            achievementLevels += "Worst Game Level: Range < " + minScore + "\n\n";
-            for (int i = 1; i < achievements.getNumOfBoundedLevels() + 1; i++){
+            achievementLevels += "Worst Game Level: Score < " + minScore +"\n\n";
+            for (int i = 1; i <= (maxScore - minScore + 1); i++){
                 achievementLevels += achievements.getAchievementLevel(i);
-                achievementLevels += " Range: [";
-                if (i == 1){
-                    Toast.makeText(this, "range " + decimalRange, Toast.LENGTH_SHORT).show();
-                    achievementLevels += achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
-                    achievementLevels += ", " + formatDouble(minScore + formatDouble(range)) + "]\n\n";
-                    newStartRange = formatDouble(minScore + formatDouble(range));
-                    formatDouble(newStartRange);
-                } else if (i == achievements.getNumOfBoundedLevels()){
-                    achievementLevels += " " + (formatDouble(newStartRange)) + ", " + (maxScore) + "]\n\n";
-                } else{
-                    achievementLevels += " " + (formatDouble(newStartRange) + (decimalRange*decimalRange)) + ", " +
-                            formatDouble((formatDouble(newStartRange) + formatDouble(decimalRange) + formatDouble(range))) + "]\n\n";
-                    newStartRange += formatDouble(decimalRange) + formatDouble(range);
-                }
+                achievementLevels += " Score : [";
+                achievementLevels += (achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt) + i - 1);
+                achievementLevels += "]\n\n";
             }
-            achievementLevels += "Legendary Level: Range > " + maxScore;
+            achievementLevels += "Legendary Level: Score > " + maxScore;
         }
         displayAchievements.setText(achievementLevels);
     }
 
-    private void getDecimalPlaces(double userInput){
-        String splitter = Double.toString(Math.abs(userInput));
-        int intPlaces = splitter.indexOf('.');
-        int decPlaces = splitter.length() - intPlaces - 1;
-        Toast.makeText(this, "length splitter + userInput " + decPlaces + userInput, Toast.LENGTH_LONG).show();
-        lengthOfDecimal = decPlaces;
-//        Toast.makeText(this, "lengthOfDecimal " + lengthOfDecimal, Toast.LENGTH_SHORT).show();
-        getAddingValue();
-    }
-
-    private void getAddingValue(){
-        decimalRange = 0.1;
-        for (int i = 0; i < lengthOfDecimal; i++){
-            decimalRange *= decimalRange;
-        }
-        //2
-        Toast.makeText(this, "decimalRange " + decimalRange, Toast.LENGTH_SHORT).show();
-        decimalRange = formatDouble(decimalRange);
-        Toast.makeText(this, "decimalRange formatted " + decimalRange, Toast.LENGTH_SHORT).show();
-        getLengthOfRange();
-    }
-
-    private void getLengthOfRange() {
-        Double formattedDR = formatDouble(decimalRange);
-//        Toast.makeText(this, " dr " + decimalRange, Toast.LENGTH_SHORT).show();
-        String length = " " + decimalRange;
-//        String[] result = decimalRange.toString().split("\\.");
-//        lengthOfDecimalRange = result[1].length();
-//        Toast.makeText(this, "3 = " + lengthOfDecimalRange, Toast.LENGTH_SHORT).show();
-    }
-
-    private Double formatDouble(double value) {
-        BigDecimal bd = new BigDecimal(value).setScale(lengthOfDecimal, RoundingMode.CEILING);
-        double newValue = bd.doubleValue();
-        return newValue;
-//        String lengthAfterDecimal = "";
-//        for (int i = 0; i < lengthOfDecimalRange + 1; i++){
-//            lengthAfterDecimal += "#";
-//        }
-////        Toast.makeText(this, "length " + lengthOfDecimalRange, Toast.LENGTH_SHORT).show();
-//        DecimalFormat decimalFormat = new DecimalFormat("0." + lengthAfterDecimal);
-//
-//        return Double.parseDouble(decimalFormat.format(value));
-    }
 
 
     private void calculateMinAndMaxScore() {

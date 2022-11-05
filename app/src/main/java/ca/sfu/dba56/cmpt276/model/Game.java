@@ -8,12 +8,18 @@ public class Game {
     private Achievements achievements = new Achievements();
     private String levelAchieved;
 
-    public Game(int players, int scores, Configuration manager, String dateGamePlayed) {
+    public Game(int players, int scores, Configuration manager, String dateGamePlayed, boolean isCalculatingRangeLevels) {
         this.players = players;
         this.scores = scores;
 
-        achievements.setAchievementsBounds(manager.getMinPoorScoreFromConfig(), manager.getMaxBestScoreFromConfig(), players);
-        achievements.calculateLevelAchieved(scores);
+        if (isCalculatingRangeLevels) {
+            achievements.setAchievementsBounds(manager.getMinPoorScoreFromConfig(), manager.getMaxBestScoreFromConfig(), players);
+            achievements.calculateLevelAchieved(scores);
+        }
+
+        else{
+
+        }
 
         this.levelAchieved = achievements.getLevelAchieved();
         this.dateGamePlayed = dateGamePlayed;

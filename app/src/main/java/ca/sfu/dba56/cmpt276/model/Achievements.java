@@ -6,7 +6,7 @@ package ca.sfu.dba56.cmpt276.model;
 public class Achievements {
     private int numOfBoundedLevels;
     private String achievements[];
-    private double intAchievements[] = new double[10];
+    private int intAchievements[] = new int[10];
     private String levelAchieved;
     private int minScore;
     private int maxScore;
@@ -29,8 +29,8 @@ public class Achievements {
         return score * numPlayers;
     }
 
-    public double calculateLevelRange(double min, double max){
-        double range = ((max - min)/8);
+    public int calculateLevelRange(int min, int max){
+        int range = ((max - min)/8);
         return range;
     }
 
@@ -43,7 +43,7 @@ public class Achievements {
         maxScore = calculateMinMaxScore(max, players);
         this.intAchievements[0] = minScore;
         this.intAchievements[1] = minScore;
-        double range = calculateLevelRange(minScore, maxScore);
+        int range = calculateLevelRange(minScore, maxScore);
         for (int i = 2; i < intAchievements.length - 1; i++){
             this.intAchievements[i] = (this.intAchievements[i-1] + range + 1);
         }
@@ -55,7 +55,7 @@ public class Achievements {
         if (combinedScore < intAchievements[0]){
             this.levelAchieved = getAchievementLevel(0);
         }
-        else if (combinedScore >= this.intAchievements[9]){
+        else if (combinedScore >= intAchievements[9]){
             this.levelAchieved = getAchievementLevel(9);
         }
         else {
@@ -76,4 +76,19 @@ public class Achievements {
             }
         }
     }
+
+//    public void setAchievementsScores(int min, int max, int players){
+//        minScore = calculateMinMaxScore(min, players);
+//        maxScore = calculateMinMaxScore(max, players);
+//        this.intAchievements[0] = minScore;
+//        this.intAchievements[1] = minScore;
+//        for (int i = 2; i <)
+//    }
+//
+//    public void calculateScoreAchieved(int combinedScore){
+//        if (combinedScore < intAchievements[0]){
+//            this.levelAchieved = getAchievementLevel(0);
+//        }
+//        else if (combinedScore >= intAchievements[])
+//    }
 }
