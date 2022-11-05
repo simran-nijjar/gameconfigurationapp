@@ -4,7 +4,7 @@ package ca.sfu.dba56.cmpt276.model;
 * the range and bounds of the scores in each level.
  */
 public class Achievements {
-    private int index;
+    private int numOfBoundedLevels;
     private String achievements[];
     private int intAchievements[] = new int[10];
     private String levelAchieved;
@@ -14,11 +14,11 @@ public class Achievements {
     public Achievements(){
         this.achievements = new String[]{"Worst Level","Bad Level","Okay Level","Alright Level",
                 "Better Level","Good Level","Almost There Level","Great Level","Best Level", "Legendary Level"};
-        this.index = 8;
+        this.numOfBoundedLevels = 8;
     }
 
-    public int getIndex(){
-        return index;
+    public int getNumOfBoundedLevels(){
+        return numOfBoundedLevels;
     }
 
     public String getAchievementLevel(int index){
@@ -55,7 +55,7 @@ public class Achievements {
         if (combinedScore < intAchievements[0]){
             this.levelAchieved = getAchievementLevel(0);
         }
-        else if (combinedScore >= this.intAchievements[9]){
+        else if (combinedScore >= intAchievements[9]){
             this.levelAchieved = getAchievementLevel(9);
         }
         else {
@@ -72,6 +72,35 @@ public class Achievements {
                             calculatingLevel = false;
                         }
                     }
+                }
+            }
+        }
+    }
+
+    public void setAchievementsScores(int min, int max, int players){
+        minScore = calculateMinMaxScore(min, players);
+        maxScore = calculateMinMaxScore(max, players);
+        this.intAchievements[0] = minScore;
+        this.intAchievements[1] = minScore;
+        for (int i = 2; i <= (maxScore - minScore + 1); i++){
+            this.intAchievements[i] = minScore + i - 1;
+        }
+        if ((maxScore - minScore + 1) != 8) {
+            this.intAchievements[maxScore - minScore + 1] = maxScore;
+        }
+    }
+
+    public void calculateScoreAchieved(int combinedScore){
+        if (combinedScore < intAchievements[0]){
+            this.levelAchieved = getAchievementLevel(0);
+        }
+        else if (combinedScore >= intAchievements[maxScore - minScore + 1]){
+            this.levelAchieved = getAchievementLevel(9);
+        }
+        else{
+            for (int i = 1; i < (maxScore - minScore + 2); i++){
+                if (combinedScore == intAchievements[i]){
+                    this.levelAchieved = getAchievementLevel(i);
                 }
             }
         }

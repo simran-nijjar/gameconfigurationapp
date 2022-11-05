@@ -46,6 +46,7 @@ public class AddNewGame extends AppCompatActivity {
     private int adjustedMax;
     private int adjustedMin;
     private Achievements addNewGameAchievements = new Achievements();
+    private boolean isCalculatingRangeForLevels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +136,12 @@ public class AddNewGame extends AppCompatActivity {
                         player_msg.setText("");
                         adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
                         adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMinPoorScoreFromConfig(), players_int);
+                        if (Math.abs(adjustedMax - adjustedMin) > 8){
+                            isCalculatingRangeForLevels = true;
+                        }
+                        else{
+                            isCalculatingRangeForLevels = false;
+                        }
                     }
                 }catch (NumberFormatException ex){
                     Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
@@ -156,10 +163,6 @@ public class AddNewGame extends AppCompatActivity {
                             isScoresValid = false;
                             score_msg.setText(R.string.negCombinedScoresMsg);
                         }
-//                        else if(scores_int > adjustedMax){
-//                        isScoresValid = false;
-//                        score_msg.setText(R.string.greaterCombinedScoreMsg);
-//                    }
                     else {
                         isScoresValid = true;
                         score_msg.setText("");
@@ -190,7 +193,7 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isPlayerValid && isScoresValid) {
-                    Game gamePlayed = new Game(players_int, scores_int, manager.get(selectedGameInt), saveDatePlayed());
+                    Game gamePlayed = new Game(players_int, scores_int, manager.get(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
                     manager.get(selectedGameInt).add(gamePlayed);
                     showResult(gamePlayed.getLevelAchieved());
                     Toast.makeText(AddNewGame.this, "scores " + scores_int, Toast.LENGTH_SHORT).show();
