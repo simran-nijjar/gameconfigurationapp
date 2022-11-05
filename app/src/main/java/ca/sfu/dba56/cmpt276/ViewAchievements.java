@@ -123,9 +123,11 @@ public class ViewAchievements extends AppCompatActivity {
         calculateMinAndMaxScore();
         int range = achievements.calculateLevelRange(minScore, maxScore);
         boolean lessLevels = false;
+        //Achievement levels will be displayed in ranges when max - min > 8
         if (Math.abs(maxScore - minScore) > 8) {
             achievementLevels = displayAchievementRanges(achievementLevels, range, lessLevels);
         }
+        //Achievement levels will be displayed in scores otherwise
         else{
             achievementLevels = displayAchievementScores(achievementLevels);
         }
@@ -133,7 +135,7 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     @NonNull
-    private String displayAchievementRanges(String achievementLevels, int range, boolean lessLevels) {
+    private String displayAchievementRanges(String achievementLevels, int range, boolean lessThanEightLevels) {
         int newStartRange = 0;
         achievementLevels += "Worst Game Level: Range < " + minScore + "\n\n";
         for (int i = 1; i < achievements.getNumOfBoundedLevels() + 1; i++) {
@@ -152,10 +154,10 @@ public class ViewAchievements extends AppCompatActivity {
                 }
             }
             else{
-                lessLevels = true;
+                lessThanEightLevels = true;
             }
         }
-        if (lessLevels){
+        if (lessThanEightLevels){
             achievementLevels += "Legendary Level: Range >= " + (newStartRange + 1);
         }
         else {
