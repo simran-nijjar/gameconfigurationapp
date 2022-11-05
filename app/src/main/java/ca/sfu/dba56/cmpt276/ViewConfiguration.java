@@ -80,6 +80,8 @@ public class ViewConfiguration extends AppCompatActivity {
 
     private void setUpGameHistoryButton(){
         Button historyBtn = findViewById(R.id.btnHistoryConfig);
+        // image made from miro
+        // https://miro.com
         ImageView image = findViewById(R.id.image_history);
         if(manager.get(currentConfigPosition).size() == 0){
             historyBtn.setVisibility(View.INVISIBLE);

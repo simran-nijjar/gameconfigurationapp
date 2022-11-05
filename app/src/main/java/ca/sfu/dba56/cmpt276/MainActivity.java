@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void UpdateUI() {
         ConfigurationsManager manager = ConfigurationsManager.getInstance();
+        // image made from miro
+        // https://miro.com
         ImageView image = findViewById(R.id.image_main);
         if(manager.isEmpty()){
             image.setVisibility(View.VISIBLE);
