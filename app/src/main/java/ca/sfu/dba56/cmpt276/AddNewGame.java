@@ -1,5 +1,6 @@
 package ca.sfu.dba56.cmpt276;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -42,12 +44,11 @@ public class AddNewGame extends AppCompatActivity {
     private TextView player_msg; // alert message
     private TextView score_msg; // alert message
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
-    private String selectedGame = ""; // for testing
-    private int selectedGameInt;
-    private int indexOfGame;
+    private int selectedGameInt; // user selected game config index
     private int adjustedMax;
     private int adjustedMin;
     private Achievements addNewGameAchievements = new Achievements();
+    private boolean isCalculatingRangeForLevels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +56,22 @@ public class AddNewGame extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_game);
         chooseGame();
         storeSelectedGame();
-        Bundle b = getIntent().getExtras();
-        indexOfGame = b.getInt("game name");
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     public static Intent makeIntent(Context context){
         return new Intent(context, AddNewGame.class);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void chooseGame() {
@@ -97,7 +106,6 @@ public class AddNewGame extends AppCompatActivity {
         Spinner dropdown = findViewById(R.id.gameName);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                selectedGame = dropdown.getSelectedItem().toString(); // for testing
                 selectedGameInt = dropdown.getSelectedItemPosition();
 
                 // set text again when the user changes selection
@@ -138,8 +146,14 @@ public class AddNewGame extends AppCompatActivity {
                     }else {
                         isPlayerValid = true;
                         player_msg.setText("");
-                        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(indexOfGame).getMaxBestScoreFromConfig(), players_int);
-                        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), players_int);
+                        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
+                        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMinPoorScoreFromConfig(), players_int);
+                        if (Math.abs(adjustedMax - adjustedMin) > 8){
+                            isCalculatingRangeForLevels = true;
+                        }
+                        else{
+                            isCalculatingRangeForLevels = false;
+                        }
                     }
                 }catch (NumberFormatException ex){
                     Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
@@ -161,10 +175,6 @@ public class AddNewGame extends AppCompatActivity {
                             isScoresValid = false;
                             score_msg.setText(R.string.negCombinedScoresMsg);
                         }
-                        else if(scores_int > adjustedMax){
-                        isScoresValid = false;
-                        score_msg.setText(R.string.greaterCombinedScoreMsg);
-                    }
                     else {
                         isScoresValid = true;
                         score_msg.setText("");
@@ -195,9 +205,10 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isPlayerValid && isScoresValid) {
-                    Game gamePlayed = new Game(players_int, scores_int, manager.get(indexOfGame), saveDatePlayed());
+                    Game gamePlayed = new Game(players_int, scores_int, manager.get(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
                     manager.get(selectedGameInt).add(gamePlayed);
                     showResult(gamePlayed.getLevelAchieved());
+                    Toast.makeText(AddNewGame.this, "scores " + scores_int, Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                 }

@@ -6,14 +6,21 @@ public class Game {
     private int scores;
     private String dateGamePlayed;
     private Achievements achievements = new Achievements();
-    String levelAchieved;
+    private String levelAchieved;
 
-    public Game(int players, int scores, Configuration manager, String dateGamePlayed) {
+    public Game(int players, int scores, Configuration manager, String dateGamePlayed, boolean isCalculatingRangeLevels) {
         this.players = players;
         this.scores = scores;
 
-        achievements.setAchievementsBounds(manager.getMinPoorScoreFromConfig(), manager.getMaxBestScoreFromConfig(), players);
-        achievements.calculateLevelAchieved(scores);
+        if (isCalculatingRangeLevels) {
+            achievements.setAchievementsBounds(manager.getMinPoorScoreFromConfig(), manager.getMaxBestScoreFromConfig(), players);
+            achievements.calculateLevelAchieved(scores);
+        }
+
+        else{
+            achievements.setAchievementsScores(manager.getMinPoorScoreFromConfig(), manager.getMaxBestScoreFromConfig(), players);
+            achievements.calculateScoreAchieved(scores);
+        }
 
         this.levelAchieved = achievements.getLevelAchieved();
         this.dateGamePlayed = dateGamePlayed;

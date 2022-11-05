@@ -2,24 +2,12 @@ package ca.sfu.dba56.cmpt276;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
 public class GameHistory extends AppCompatActivity {
@@ -34,7 +22,7 @@ public class GameHistory extends AppCompatActivity {
         // get selected game name from ViewConfiguration
         Bundle b = getIntent().getExtras();
         indexOfGame = b.getInt("game name2");
-        UpdateUI(indexOfGame);
+        populateListView(manager, indexOfGame);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -46,19 +34,6 @@ public class GameHistory extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        UpdateUI(indexOfGame);
-    }
-
-    private void UpdateUI(int indexOfGame) {
-        TextView txt = findViewById(R.id.GameHistoryEmpty);
-        if(manager.get(indexOfGame).size() == 0){
-            txt.setText("No Game History yet.\n \n You can add one by pressing 'Add Game' button on the previous page" );
-        }
-        else {
-            txt.setText("");
-            //populate list view
-            populateListView(manager, indexOfGame);
-        }
     }
 
     private void populateListView(ConfigurationsManager manager, int indexOfGame) {
@@ -74,6 +49,7 @@ public class GameHistory extends AppCompatActivity {
         //adapter
         adapter = new ArrayAdapter<String>(this, R.layout.game_items, items);
         ListView list = findViewById(R.id.HistoryList);
+        list.setSelector(android.R.color.transparent);
         list.setAdapter(adapter);
     }
 

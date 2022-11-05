@@ -36,7 +36,8 @@ public class AddConfiguration extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         if(b!= null){
             //Edit Game Config Activity
-            //TODO: edit config
+            //Activity Name
+            getSupportActionBar().setTitle("Edit Game Config");
             //check what position of configuration was selected
             int currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
             ConfigurationsManager manager = ConfigurationsManager.getInstance();
@@ -53,7 +54,8 @@ public class AddConfiguration extends AppCompatActivity {
         else{
             //Add Game Config Activity
             //Activity Name
-            getSupportActionBar().setTitle("Add new Game Config");
+            getSupportActionBar().setTitle("Add New Game Config");
+            getUserInput();
             setUpSaveConfigButton();
         }
     }

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.view.View;
 import android.widget.Button;
@@ -99,12 +100,29 @@ public class ViewConfiguration extends AppCompatActivity {
 
 
     private void setUpGameHistoryButton(){
-        Button addBtn = findViewById(R.id.btnHistoryConfig);
-        addBtn.setOnClickListener(v -> {
-            Intent intent2 = GameHistory.makeIntent(ViewConfiguration.this);
-            intent2.putExtra("game name2", currentConfigPosition);
-            startActivity(intent2);
-        });
+        Button historyBtn = findViewById(R.id.btnHistoryConfig);
+        // image made from miro
+        // https://miro.com
+        ImageView image = findViewById(R.id.image_history);
+        if(manager.get(currentConfigPosition).size() == 0){
+            historyBtn.setVisibility(View.INVISIBLE);
+            image.setVisibility(View.VISIBLE);
+        }else {
+            //get rid of image
+            image.setVisibility(View.INVISIBLE);
+            historyBtn.setVisibility(View.VISIBLE);
+            historyBtn.setOnClickListener(v -> {
+                Intent intent2 = GameHistory.makeIntent(ViewConfiguration.this);
+                intent2.putExtra("game name2", currentConfigPosition);
+                startActivity(intent2);
+            });
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpGameHistoryButton();
     }
 
     private void setUpAddGameButton(){
