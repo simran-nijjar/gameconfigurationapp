@@ -1,6 +1,8 @@
 package ca.sfu.dba56.cmpt276;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -27,6 +29,7 @@ public class ViewAchievements extends AppCompatActivity {
     private TextView displayAchievements;
     private int minScore;
     private int maxScore;
+    private final int MAX_PLAYERS = 100000000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,7 @@ public class ViewAchievements extends AppCompatActivity {
             numPlayersStr = numPlayers.getText().toString();
             if(!numPlayersStr.isEmpty()){
                 numPlayersInt = Integer.parseInt(numPlayersStr);
+                displayMaxPlayerMsg(numPlayersInt);
                 if (numPlayersInt < 1){
                     noAchievementsDisplayed.setText(R.string.invalid_players_msg);
                 }
@@ -84,6 +88,20 @@ public class ViewAchievements extends AppCompatActivity {
         public void afterTextChanged(Editable s) {
         }
     };
+
+    private void displayMaxPlayerMsg(int players){
+        if (players >= MAX_PLAYERS) {
+            AlertDialog alertDialog = new AlertDialog.Builder(ViewAchievements.this).create(); //Read Update
+            alertDialog.setTitle("Too many players");
+            alertDialog.setMessage("Sorry, that's too many players. Please try a smaller number");
+            alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    //Stay on ViewAchievement activity
+                }
+            });
+            alertDialog.show();
+        }
+    }
 
     private void displayAchievementLevels(){
         String achievementLevels = "";
