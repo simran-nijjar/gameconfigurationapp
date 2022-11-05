@@ -78,12 +78,26 @@ public class ViewConfiguration extends AppCompatActivity {
 
 
     private void setUpGameHistoryButton(){
-        Button addBtn = findViewById(R.id.btnHistoryConfig);
-        addBtn.setOnClickListener(v -> {
-            Intent intent2 = GameHistory.makeIntent(ViewConfiguration.this);
-            intent2.putExtra("game name2", currentConfigPosition);
-            startActivity(intent2);
-        });
+        TextView history_msg = findViewById(R.id.history_msg);
+        Button historyBtn = findViewById(R.id.btnHistoryConfig);
+        if(manager.get(currentConfigPosition).size() == 0){
+            historyBtn.setVisibility(View.INVISIBLE);
+            history_msg.setText("No Game History \n\nPlease click on 'Add New Game' button to add one");
+        }else {
+            history_msg.setText("");
+            historyBtn.setVisibility(View.VISIBLE);
+            historyBtn.setOnClickListener(v -> {
+                Intent intent2 = GameHistory.makeIntent(ViewConfiguration.this);
+                intent2.putExtra("game name2", currentConfigPosition);
+                startActivity(intent2);
+            });
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpGameHistoryButton();
     }
 
     private void setUpAddGameButton(){

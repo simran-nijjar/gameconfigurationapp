@@ -105,4 +105,16 @@
         app:layout_constraintHorizontal_bias="0.02"
         app:layout_constraintStart_toEndOf="@+id/btnDeleteConfig"
         app:layout_constraintTop_toBottomOf="@+id/addGameBtn" />
+
+    <TextView
+        android:id="@+id/history_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="84dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.118"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtGreatScoreConfigView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
