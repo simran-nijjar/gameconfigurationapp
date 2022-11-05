@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.view.View;
 import android.widget.Button;
@@ -78,13 +79,13 @@ public class ViewConfiguration extends AppCompatActivity {
 
 
     private void setUpGameHistoryButton(){
-        TextView history_msg = findViewById(R.id.history_msg);
         Button historyBtn = findViewById(R.id.btnHistoryConfig);
+        ImageView image = findViewById(R.id.image_history);
         if(manager.get(currentConfigPosition).size() == 0){
             historyBtn.setVisibility(View.INVISIBLE);
-            history_msg.setText("No Game History \n\nPlease click on 'Add New Game' button to add one");
+            image.setVisibility(View.VISIBLE);
         }else {
-            history_msg.setText("");
+            image.setVisibility(View.INVISIBLE);
             historyBtn.setVisibility(View.VISIBLE);
             historyBtn.setOnClickListener(v -> {
                 Intent intent2 = GameHistory.makeIntent(ViewConfiguration.this);
