@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
+import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.reflect.TypeToken;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+    private SaveUsingGson toSaveUsingGsonAndSP = new SaveUsingGson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //retrieve config manager
-        Gson gson = new Gson();
-        SharedPreferences newPrefs = getSharedPreferences("Save config manager",MODE_PRIVATE);
-        String json = newPrefs.getString("MyObject", "no manager saved");
-        ConfigurationsManager manager = ConfigurationsManager.getInstance();
-        Type listType = new TypeToken<List<Configuration>>() {}.getType();
-        if (!Objects.equals(json, "no manager saved")) {
-            Toast.makeText(this, json, Toast.LENGTH_SHORT).show();
-            manager = ConfigurationsManager.getInstance();
-            manager.setListOfConfigurations(gson.fromJson(json, listType));
-        }
+        toSaveUsingGsonAndSP.retrieveFromSharedPrefs(this);
 
         setUpHelpButton();
         getSupportActionBar().setTitle("Configurations");
@@ -53,11 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setUpAddConfigurationButton();
 
         //to save config manager
-        SharedPreferences.Editor editor = newPrefs.edit();
-        json = gson.toJson(manager.getListOfConfigurations());
-        editor.putString("MyObject", json);
-        editor.apply();
-
+        toSaveUsingGsonAndSP.saveToSharedRefs(this);
     }
 
     private void setUpHelpButton() {
@@ -74,14 +63,7 @@ public class MainActivity extends AppCompatActivity {
         UpdateUI();
 
         //to save config manager
-        SharedPreferences newPrefs = getSharedPreferences("Save config manager",MODE_PRIVATE);
-        SharedPreferences.Editor editor = newPrefs.edit();
-        Gson gson = new Gson();
-        ConfigurationsManager manager = ConfigurationsManager.getInstance();
-        String json = gson.toJson(manager.getListOfConfigurations());
-        Toast.makeText(this, json,Toast.LENGTH_SHORT).show();
-        editor.putString("MyObject", json);
-        editor.apply();
+        toSaveUsingGsonAndSP.saveToSharedRefs(this);
     }
 
     private void UpdateUI() {

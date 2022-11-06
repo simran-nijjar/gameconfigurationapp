@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
+import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
 public class AddConfiguration extends AppCompatActivity {
     private EditText gameNameTxt;

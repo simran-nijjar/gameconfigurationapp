@@ -30,6 +30,7 @@ import java.util.Objects;
 import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.Game;
+import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
 public class AddNewGame extends AppCompatActivity {
     private int players_int; // int user input
