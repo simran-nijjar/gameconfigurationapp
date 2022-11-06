@@ -39,7 +39,18 @@ public class AddConfiguration extends AppCompatActivity {
             //Edit Game Config Activity
             //Activity Name
             getSupportActionBar().setTitle("Edit Game Config");
-            //TODO: edit config
+            //check what position of configuration was selected
+            int currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
+            ConfigurationsManager manager = ConfigurationsManager.getInstance();
+            Configuration currentConfig = manager.get(currentConfigPosition);
+            //Activity Name
+            getSupportActionBar().setTitle("Edit Game " + currentConfig.getGameNameFromConfig() + " Configuration");
+            //set variables from pre-existing config to the screen
+            String gameName = String.valueOf(currentConfig.getGameNameFromConfig());
+            String minScoreStr = String.valueOf(currentConfig.getMinPoorScoreFromConfig());
+            String maxScoreStr = String.valueOf(currentConfig.getMaxBestScoreFromConfig());
+            setVariablesFromExistingConfig(gameName, minScoreStr, maxScoreStr);
+            setUpSaveConfigButton();
         }
         else{
             //Add Game Config Activity
@@ -49,6 +60,8 @@ public class AddConfiguration extends AppCompatActivity {
             setUpSaveConfigButton();
         }
     }
+
+  //add new configuration methods
 
     public static Intent makeIntent(Context context){
         return new Intent(context, AddConfiguration.class);
@@ -64,16 +77,35 @@ public class AddConfiguration extends AppCompatActivity {
     private void setUpSaveConfigButton(){
         Button saveConfigBtn = findViewById(R.id.saveConfigBtn);
         saveConfigBtn.setOnClickListener(v ->{
-            //Toast message is temporary
-            //TODO: save game using ConfigurationsManager
+            Bundle b = getIntent().getExtras();
+            //get variables checked again for the new input
+            getUserInput();
             convertTxtToStr();
-            //Save game if all values are valid
-            if (isUserInputValid()) {
-                Configuration newConfig = new Configuration(strGameName, intExpPoorScore, intExpGreatScore);
-                ConfigurationsManager manager = ConfigurationsManager.getInstance();
-                manager.add(newConfig);
-                Toast.makeText(this, "You saved the configuration", Toast.LENGTH_SHORT).show();
-                finish();
+            //if it is an add new config activity
+            if(b == null){
+                convertTxtToStr();
+                //Save game if all values are valid
+                if (isUserInputValid()) {
+                    Configuration newConfig = new Configuration(strGameName, intExpPoorScore, intExpGreatScore);
+                    ConfigurationsManager manager = ConfigurationsManager.getInstance();
+                    manager.add(newConfig);
+                    Toast.makeText(this, "You saved the configuration", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+            //if it an edit config activity
+            else{
+                if (isUserInputValid()) {
+                    int currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
+                    ConfigurationsManager manager = ConfigurationsManager.getInstance();
+                    Configuration currentConfig = manager.get(currentConfigPosition);
+                    currentConfig.setGameNameInConfig(strGameName);
+                    currentConfig.setMinPoorScoreInConfig(intExpPoorScore);
+                    currentConfig.setMaxBestScoreInConfig(intExpGreatScore);
+                    manager.set(currentConfigPosition, currentConfig);
+                    Toast.makeText(this, "You safely edited configuration", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
     }
@@ -104,6 +136,18 @@ public class AddConfiguration extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    private void setVariablesFromExistingConfig(String gameName,String minScoreStr, String maxScoreStr) {
+        //setting variables for the edit config activity
+        getUserInput();
+
+        gameNameTxt.setText(gameName);
+        expPoorScoreTxt.setText(minScoreStr);
+        expGreatScoreTxt.setText(maxScoreStr);
+
+        convertTxtToStr();
+        convertStringToInt();
     }
 
     //end of the class

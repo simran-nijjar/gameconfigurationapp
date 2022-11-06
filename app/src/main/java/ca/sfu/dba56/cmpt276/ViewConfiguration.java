@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +30,7 @@ public class ViewConfiguration extends AppCompatActivity {
 
     private TextView expPoorScoreEditTxt;
     private TextView expGreatScoreEditTxt;
+    private Button editConfigScreenBtn;
     private int currentConfigPosition;
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private SaveUsingGson toSaveUsingGsonAndSP = new SaveUsingGson();
@@ -40,6 +43,10 @@ public class ViewConfiguration extends AppCompatActivity {
         ActionBar bar = getSupportActionBar();
         bar.setDisplayHomeAsUpEnabled(true);
 
+        UpdateUI();
+    }
+
+    private void UpdateUI() {
         //check what position of configuration was selected
         Bundle b = getIntent().getExtras();
         if (b != null) {
@@ -56,6 +63,15 @@ public class ViewConfiguration extends AppCompatActivity {
         expPoorScoreEditTxt.setText(String.valueOf(currentConfig.getMinPoorScoreFromConfig()));
         expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMaxBestScoreFromConfig()));
 
+        //make edit button open edit configuration screen.
+        editConfigScreenBtn = findViewById(R.id.btnEditConfig);
+        editConfigScreenBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(ViewConfiguration.this,AddConfiguration.class);
+            intent.putExtra(getString(R.string.selected_config_position), currentConfigPosition);
+            startActivity(intent);
+        });
+
+        //set up buttons for new game and history
         setUpGameHistoryButton();
         setUpDeleteButton(currentConfigPosition);
         setUpAddGameButton();
