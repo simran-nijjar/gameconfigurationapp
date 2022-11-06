@@ -15,11 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
 
+import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,10 +38,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences newPrefs = getSharedPreferences("Save config manager",MODE_PRIVATE);
         String json = newPrefs.getString("MyObject", "no manager saved");
         ConfigurationsManager manager = ConfigurationsManager.getInstance();
+        Type listType = new TypeToken<List<Configuration>>() {}.getType();
         if (!Objects.equals(json, "no manager saved")) {
-            Toast.makeText(this, "There is a string in json", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, json, Toast.LENGTH_SHORT).show();
             manager = ConfigurationsManager.getInstance();
-            manager.setListOfConfigurations(gson.fromJson(json, ConfigurationsManager.class).getListOfConfigurations());
+            manager.setListOfConfigurations(gson.fromJson(json, listType));
         }
 
         setUpHelpButton();
@@ -49,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         //to save config manager
         SharedPreferences.Editor editor = newPrefs.edit();
-        json = gson.toJson(manager);
+        json = gson.toJson(manager.getListOfConfigurations());
         editor.putString("MyObject", json);
         editor.apply();
 
@@ -73,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = newPrefs.edit();
         Gson gson = new Gson();
         ConfigurationsManager manager = ConfigurationsManager.getInstance();
-        String json = gson.toJson(manager);
+        String json = gson.toJson(manager.getListOfConfigurations());
+        Toast.makeText(this, json,Toast.LENGTH_SHORT).show();
         editor.putString("MyObject", json);
         editor.apply();
     }
