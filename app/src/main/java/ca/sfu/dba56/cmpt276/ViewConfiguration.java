@@ -48,6 +48,7 @@ public class ViewConfiguration extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         UpdateUI();
+        setUpGameHistoryButton();
     }
 
     private void UpdateUI() {
@@ -119,13 +120,7 @@ public class ViewConfiguration extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUpGameHistoryButton();
-    }
-
-    private void setUpAddGameButton(){
+   private void setUpAddGameButton(){
         Button addBtn = findViewById(R.id.addGameBtn);
         addBtn.setOnClickListener(v -> {
             Intent intent = AddNewGame.makeIntent(ViewConfiguration.this);
