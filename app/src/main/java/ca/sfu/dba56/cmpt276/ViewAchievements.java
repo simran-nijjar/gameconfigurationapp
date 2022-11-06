@@ -111,6 +111,9 @@ public class ViewAchievements extends AppCompatActivity {
                 }
             });
             alertDialog.show();
+            //set num of player to the minimum
+            numPlayers = findViewById(R.id.userInputPlayers);
+            numPlayers.setText("1");
         }
     }
 
