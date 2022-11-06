@@ -146,6 +146,7 @@ public class ViewConfiguration extends AppCompatActivity {
         });
     }
 
+    //need to make it work
     private void deleteOrCancel(int currentConfigPosition){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to delete?")
