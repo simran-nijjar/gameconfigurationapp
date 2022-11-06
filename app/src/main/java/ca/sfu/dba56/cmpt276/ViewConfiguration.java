@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
+import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
 public class ViewConfiguration extends AppCompatActivity {
 
@@ -31,7 +32,8 @@ public class ViewConfiguration extends AppCompatActivity {
     private TextView expGreatScoreEditTxt;
     private Button editConfigScreenBtn;
     private int currentConfigPosition;
-    ConfigurationsManager manager = ConfigurationsManager.getInstance();
+    private ConfigurationsManager manager = ConfigurationsManager.getInstance();
+    private SaveUsingGson toSaveUsingGsonAndSP = new SaveUsingGson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,20 +46,13 @@ public class ViewConfiguration extends AppCompatActivity {
         UpdateUI();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        UpdateUI();
-        setUpGameHistoryButton();
-    }
-
     private void UpdateUI() {
         //check what position of configuration was selected
         Bundle b = getIntent().getExtras();
         if (b != null) {
             currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
         }
-        ConfigurationsManager manager = ConfigurationsManager.getInstance();
+        manager = ConfigurationsManager.getInstance();
         Configuration currentConfig = manager.get(currentConfigPosition);
         //Activity Name
         getSupportActionBar().setTitle("Game " + currentConfig.getGameNameFromConfig() + " Configuration");
@@ -80,9 +75,11 @@ public class ViewConfiguration extends AppCompatActivity {
         setUpGameHistoryButton();
         setUpDeleteButton(currentConfigPosition);
         setUpAddGameButton();
+        expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMaxBestScoreFromConfig()));
         //setUpAddGameButton();
-
         setUpViewAchievementsButton();
+        //to save config manager
+        toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
     }
 
     public static Intent makeIntent(Context context){
@@ -120,11 +117,19 @@ public class ViewConfiguration extends AppCompatActivity {
         }
     }
 
-   private void setUpAddGameButton(){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpGameHistoryButton();
+        //to save config manager
+        toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
+    }
+
+    private void setUpAddGameButton(){
         Button addBtn = findViewById(R.id.addGameBtn);
         addBtn.setOnClickListener(v -> {
             Intent intent = AddNewGame.makeIntent(ViewConfiguration.this);
-            ConfigurationsManager manager = ConfigurationsManager.getInstance();
+            manager = ConfigurationsManager.getInstance();
             Configuration currentConfig = manager.get(currentConfigPosition);
             intent.putExtra("game name", currentConfig.getGameNameFromConfig());
             startActivity(intent);
@@ -141,6 +146,7 @@ public class ViewConfiguration extends AppCompatActivity {
         });
     }
 
+    //need to make it work
     private void deleteOrCancel(int currentConfigPosition){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to delete?")
@@ -148,6 +154,8 @@ public class ViewConfiguration extends AppCompatActivity {
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         manager.remove(currentConfigPosition);
+                        //saves the change
+                        toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
                         Intent k = new Intent(ViewConfiguration.this, MainActivity.class);
                         startActivity(k);
 
