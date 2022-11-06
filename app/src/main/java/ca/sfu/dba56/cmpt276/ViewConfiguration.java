@@ -121,6 +121,7 @@ public class ViewConfiguration extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setUpGameHistoryButton();
+        UpdateUI();
         //to save config manager
         toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
     }
