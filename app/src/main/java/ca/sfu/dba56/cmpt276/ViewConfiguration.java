@@ -154,6 +154,8 @@ public class ViewConfiguration extends AppCompatActivity {
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         manager.remove(currentConfigPosition);
+                        //saves the change
+                        toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
                         Intent k = new Intent(ViewConfiguration.this, MainActivity.class);
                         startActivity(k);
 
