@@ -98,7 +98,7 @@ public class ViewAchievements extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s) {
             numPlayersStr = numPlayers.getText().toString();
-            if (numPlayersStr.startsWith("0") && numPlayersStr.length() > 1){
+            if (numPlayersStr.startsWith("0")){
                 numPlayers.setText("");
                 noAchievementsDisplayed.setText(R.string.invalid_players_msg);
             }
