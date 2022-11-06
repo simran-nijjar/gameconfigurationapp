@@ -3,6 +3,7 @@ package ca.sfu.dba56.cmpt276;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,12 +13,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.gson.Gson;
 
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,12 +28,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //retrieve config manager
+        Gson gson = new Gson();
+        SharedPreferences newPrefs = getSharedPreferences("Save config manager",MODE_PRIVATE);
+        String json = newPrefs.getString("MyObject", "no manager saved");
+        ConfigurationsManager manager = ConfigurationsManager.getInstance();
+        if (!Objects.equals(json, "no manager saved")) {
+            Toast.makeText(this, "There is a string in json", Toast.LENGTH_SHORT).show();
+            manager = ConfigurationsManager.getInstance();
+            manager.setListOfConfigurations(gson.fromJson(json, ConfigurationsManager.class).getListOfConfigurations());
+        }
+
         setUpHelpButton();
         getSupportActionBar().setTitle("Configurations");
         UpdateUI();
 
         registerClickCallBack();
         setUpAddConfigurationButton();
+
+        //to save config manager
+        SharedPreferences.Editor editor = newPrefs.edit();
+        json = gson.toJson(manager);
+        editor.putString("MyObject", json);
+        editor.apply();
+
     }
 
     private void setUpHelpButton() {
@@ -45,6 +67,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         UpdateUI();
+
+        //to save config manager
+        SharedPreferences newPrefs = getSharedPreferences("Save config manager",MODE_PRIVATE);
+        SharedPreferences.Editor editor = newPrefs.edit();
+        Gson gson = new Gson();
+        ConfigurationsManager manager = ConfigurationsManager.getInstance();
+        String json = gson.toJson(manager);
+        editor.putString("MyObject", json);
+        editor.apply();
     }
 
     private void UpdateUI() {
