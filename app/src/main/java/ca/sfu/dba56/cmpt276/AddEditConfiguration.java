@@ -21,6 +21,10 @@ import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
 /*
 * activity class addEditConfiguration
+* is a UI class for both add config and edit config activities
+* contains and manipulates user input in the corresponding activities
+* checks user input for validity and saves it into config manager
+* does not allow user to input into the fields if they exceed limits
  */
 
 public class AddEditConfiguration extends AppCompatActivity {
@@ -56,8 +60,9 @@ public class AddEditConfiguration extends AppCompatActivity {
             int currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
             ConfigurationsManager manager = ConfigurationsManager.getInstance();
             Configuration currentConfig = manager.getItemAtIndex(currentConfigPosition);
-            //Activity Name
+
             getSupportActionBar().setTitle("Edit Game " + currentConfig.getGameNameFromConfig() + " Configuration");
+
             //set variables from pre-existing config to the screen
             String gameName = String.valueOf(currentConfig.getGameNameFromConfig());
             String minScoreStr = String.valueOf(currentConfig.getMinPoorScoreFromConfig());
@@ -67,19 +72,28 @@ public class AddEditConfiguration extends AppCompatActivity {
         }
         else{
             //Add Game Config Activity
-            //Activity Name
             getSupportActionBar().setTitle("Add New Game Config");
             getUserInput();
             setUpSaveConfigButton();
         }
     }
 
-  //add new configuration methods
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
+    //makes intent to start an activity
     public static Intent makeIntent(Context context){
         return new Intent(context, AddEditConfiguration.class);
     }
 
+    //check user input for the validity
     private void checkUserInput(){
         gameNameTxt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -156,16 +170,7 @@ public class AddEditConfiguration extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
+    //give an alert dialog message if user exceeded limits for string fields input
     private void displayMaxNameLengthMsg(){
         AlertDialog alertDialog = new AlertDialog.Builder(AddEditConfiguration.this).create(); //Read Update
         alertDialog.setTitle("Game name is too long");
@@ -181,14 +186,13 @@ public class AddEditConfiguration extends AppCompatActivity {
         gameNameTxt.setText("");
     }
 
+    //give an alert dialog message if user exceeded limits for number fields input
     private void displayMaxScoreMsg(boolean isPoorScore){
         AlertDialog alertDialog = new AlertDialog.Builder(AddEditConfiguration.this).create(); //Read Update
         alertDialog.setTitle("Score length is too long");
         alertDialog.setMessage("Sorry, score length is too long. Please try a number of shorter length");
-        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                //Stay on ViewAchievement activity
-            }
+        alertDialog.setButton("Ok", (dialog, which) -> {
+            //Stay on ViewAchievement activity
         });
         alertDialog.show();
         //set num of player to the minimum
@@ -273,8 +277,8 @@ public class AddEditConfiguration extends AppCompatActivity {
         return true;
     }
 
+    //in the edit config sets variables from the existing config into the edit text fields
     private void setVariablesFromExistingConfig(String gameName,String minScoreStr, String maxScoreStr) {
-        //setting variables for the edit config activity
         getUserInput();
 
         gameNameTxt.setText(gameName);
