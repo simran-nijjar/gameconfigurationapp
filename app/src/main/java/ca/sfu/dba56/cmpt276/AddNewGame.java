@@ -139,7 +139,7 @@ public class AddNewGame extends AppCompatActivity {
             alertDialog.show();
             //set num of player to the minimum
             num_player = findViewById(R.id.num_players_input);
-            num_player.setText("");
+            num_player.setText("1");
 //        }
     }
 
@@ -181,8 +181,8 @@ public class AddNewGame extends AppCompatActivity {
                             isPlayerValid = false;
                             player_msg.setText("Invalid input: 1 player minimum");
                         }else if (players_int >= MAX_USER_INPUT) {
-                            isPlayerValid = false;
                             displayMaxPlayerMsg();
+                            isPlayerValid = false;
                         }else{
                             isPlayerValid = true;
                             player_msg.setText("");
