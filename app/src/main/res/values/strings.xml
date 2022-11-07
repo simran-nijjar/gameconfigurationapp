@@ -14,7 +14,9 @@
         \nThis app provides achievement goals to turn some competitive board games into a more co-operative experience.\n
         \nAt the end of a game, the combined score of all players is used to calculate a combined achievement level, with a higher total score earning a better achievement.\n
         \nSources:\n
-        <a href="https://www.idownloadblog.com/2021/05/09/multicolor-gradient-wallpapers-pack-iphone/">App Background</a>
+        \n<a href="https://www.idownloadblog.com/2021/05/09/multicolor-gradient-wallpapers-pack-iphone/">App Background</a>\n
+        \n<a href="https://www.miro.com/">ic_main_msg</a>\n
+        \n<a href="https://www.miro.com/">ic_history_msg</a>
     </string>
     <string name="achieve_content">
         \n
