@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Poor Score"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.257"
@@ -26,6 +27,7 @@
         android:layout_marginTop="32dp"
         android:text="Great Score"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="@+id/txtPoorScoreConfigView"
         app:layout_constraintStart_toStartOf="@+id/txtPoorScoreConfigView"
         app:layout_constraintTop_toBottomOf="@+id/txtPoorScoreConfigView" />
@@ -37,6 +39,7 @@
         android:layout_height="wrap_content"
         android:text="0"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtPoorScoreConfigView"
         app:layout_constraintTop_toTopOf="@+id/txtPoorScoreConfigView" />
@@ -47,6 +50,7 @@
         android:layout_height="wrap_content"
         android:text="0"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="@+id/textFillPoorScoreConfigView"
         app:layout_constraintStart_toStartOf="@+id/textFillPoorScoreConfigView"
         app:layout_constraintTop_toTopOf="@+id/txtGreatScoreConfigView" />
