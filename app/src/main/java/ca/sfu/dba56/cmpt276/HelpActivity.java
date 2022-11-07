@@ -28,22 +28,10 @@ public class HelpActivity extends AppCompatActivity {
         return new Intent(context, HelpActivity.class);
     }
 
-    private void displayCourseLink(){
-        TextView courseLink = findViewById(R.id.courseLink);
-        courseLink.setMovementMethod(LinkMovementMethod.getInstance());
-    }
-
-    private void displayBackgroundLink(){
-        TextView backgroundLink = findViewById(R.id.appBackgroundLink);
-        backgroundLink.setMovementMethod(LinkMovementMethod.getInstance());
-    }
-
     private void setInfo() {
         Button info = findViewById(R.id.info);
         TextView info_content = findViewById(R.id.info_content);
         info_content.setVisibility(View.GONE);
-        TextView courseLink = findViewById(R.id.courseLink);
-        courseLink.setVisibility(View.GONE);
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,14 +39,9 @@ public class HelpActivity extends AppCompatActivity {
                     info_content.setText(R.string.info_content);
                     info_content.setMovementMethod(LinkMovementMethod.getInstance());
                     info_content.setVisibility(View.VISIBLE);
-                    courseLink.setText(R.string.courseHyperlink);
-                    courseLink.setVisibility(View.VISIBLE);
-                    displayCourseLink();
                 }else if (info_content.getVisibility() == View.VISIBLE){
                     info_content.setText("");
                     info_content.setVisibility(View.GONE);
-                    courseLink.setText("");
-                    courseLink.setVisibility(View.GONE);
                 }
             }
         });
@@ -69,22 +52,16 @@ public class HelpActivity extends AppCompatActivity {
         Button description = findViewById(R.id.description);
         TextView description_content = findViewById(R.id.description_content);
         description_content.setVisibility(View.GONE);
-        TextView backgroundLink = findViewById(R.id.appBackgroundLink);
-        backgroundLink.setVisibility(View.GONE);
         description.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(description_content.getVisibility() == View.GONE) {
                     description_content.setText(R.string.description_content);
                     description_content.setVisibility(View.VISIBLE);
-                    backgroundLink.setText(R.string.appBackgroundHyperlink);
-                    backgroundLink.setVisibility(View.VISIBLE);
-                    displayBackgroundLink();
+                    description_content.setMovementMethod(LinkMovementMethod.getInstance());
                 }else if (description_content.getVisibility() == View.VISIBLE){
                     description_content.setText("");
                     description_content.setVisibility(View.GONE);
-                    backgroundLink.setText("");
-                    backgroundLink.setVisibility(View.GONE);
                 }
             }
         });
