@@ -1,9 +1,13 @@
 package ca.sfu.dba56.cmpt276.model;
 
-/* This class calculates the achievement level, expected min score and max score, and
-* the range and bounds of the scores in each level.
+/*
+* Class Achievements calculates the achievement level, expected min score and max score,
+* and the range and bounds of the scores in each level.
+* Keeps/populates the array of achievements names and allows to retrieve achievement names
  */
+
 public class Achievements {
+
     private int numOfBoundedLevels;
     private String achievements[];
     private int intAchievements[] = new int[10];
@@ -17,12 +21,15 @@ public class Achievements {
         this.numOfBoundedLevels = 8;
     }
 
+
     public int getNumOfBoundedLevels(){
         return numOfBoundedLevels;
     }
-
     public String getAchievementLevel(int index){
         return achievements[index];
+    }
+    public String getLevelAchieved() {
+        return levelAchieved;
     }
 
     public int calculateMinMaxScore(int score, int numPlayers){
@@ -32,10 +39,6 @@ public class Achievements {
     public int calculateLevelRange(int min, int max){
         int range = ((max - min)/8);
         return range;
-    }
-
-    public String getLevelAchieved() {
-        return levelAchieved;
     }
 
     public void setAchievementsBounds(int min, int max, int players) {

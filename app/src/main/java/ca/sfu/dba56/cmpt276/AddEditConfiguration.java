@@ -18,9 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
-import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
-public class AddConfiguration extends AppCompatActivity {
+/*
+* activity class addEditConfiguration
+ */
+
+public class AddEditConfiguration extends AppCompatActivity {
+
     private EditText gameNameTxt;
     private EditText expPoorScoreTxt;
     private EditText expGreatScoreTxt;
@@ -36,10 +40,10 @@ public class AddConfiguration extends AppCompatActivity {
     private final int MAX_POS_SCORE_INPUT = 100000000;
     private final int MAX_NEG_SCORE_INPUT = -100000000;
 
-    //comment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.add_configuration);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -49,12 +53,9 @@ public class AddConfiguration extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         if(b!= null){
             //Edit Game Config Activity
-            //Activity Name
-            getSupportActionBar().setTitle("Edit Game Config");
-            //check what position of configuration was selected
             int currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
             ConfigurationsManager manager = ConfigurationsManager.getInstance();
-            Configuration currentConfig = manager.get(currentConfigPosition);
+            Configuration currentConfig = manager.getItemAtIndex(currentConfigPosition);
             //Activity Name
             getSupportActionBar().setTitle("Edit Game " + currentConfig.getGameNameFromConfig() + " Configuration");
             //set variables from pre-existing config to the screen
@@ -76,7 +77,7 @@ public class AddConfiguration extends AppCompatActivity {
   //add new configuration methods
 
     public static Intent makeIntent(Context context){
-        return new Intent(context, AddConfiguration.class);
+        return new Intent(context, AddEditConfiguration.class);
     }
 
     private void checkUserInput(){
@@ -116,7 +117,7 @@ public class AddConfiguration extends AppCompatActivity {
                     }
                 }catch (NumberFormatException ex){
                     if (expPoorScoreTxt.length() == 0) {
-                        Toast.makeText(AddConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddEditConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -143,7 +144,7 @@ public class AddConfiguration extends AppCompatActivity {
                     }
                 }catch (NumberFormatException ex){
                     if (expGreatScoreTxt.length() == 0) {
-                        Toast.makeText(AddConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddEditConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -155,8 +156,18 @@ public class AddConfiguration extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void displayMaxNameLengthMsg(){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddConfiguration.this).create(); //Read Update
+        AlertDialog alertDialog = new AlertDialog.Builder(AddEditConfiguration.this).create(); //Read Update
         alertDialog.setTitle("Game name is too long");
         alertDialog.setMessage("Sorry, the game name is too long. Please try a shorter name");
         alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
@@ -171,7 +182,7 @@ public class AddConfiguration extends AppCompatActivity {
     }
 
     private void displayMaxScoreMsg(boolean isPoorScore){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddConfiguration.this).create(); //Read Update
+        AlertDialog alertDialog = new AlertDialog.Builder(AddEditConfiguration.this).create(); //Read Update
         alertDialog.setTitle("Score length is too long");
         alertDialog.setMessage("Sorry, score length is too long. Please try a number of shorter length");
         alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
@@ -222,11 +233,11 @@ public class AddConfiguration extends AppCompatActivity {
                 if (isUserInputValid()) {
                     int currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
                     ConfigurationsManager manager = ConfigurationsManager.getInstance();
-                    Configuration currentConfig = manager.get(currentConfigPosition);
+                    Configuration currentConfig = manager.getItemAtIndex(currentConfigPosition);
                     currentConfig.setGameNameInConfig(strGameName);
                     currentConfig.setMinPoorScoreInConfig(intExpPoorScore);
                     currentConfig.setMaxBestScoreInConfig(intExpGreatScore);
-                    manager.set(currentConfigPosition, currentConfig);
+                    manager.setItemAtIndex(currentConfigPosition, currentConfig);
                     Toast.makeText(this, "You safely edited configuration", Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -274,15 +285,5 @@ public class AddConfiguration extends AppCompatActivity {
         convertStringToInt();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    //
     //end of the class
 }

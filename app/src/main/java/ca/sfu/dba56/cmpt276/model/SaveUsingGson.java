@@ -39,6 +39,7 @@ public class SaveUsingGson {
         editor.putString("MyObject", json);
         editor.apply();
     }
+
     //retrieve config manager
     public void retrieveFromSharedPrefs(Context newContext){
         this.context = newContext;
@@ -49,4 +50,5 @@ public class SaveUsingGson {
             manager.setListOfConfigurations(gson.fromJson(json, listType));
         }
     }
+
 }

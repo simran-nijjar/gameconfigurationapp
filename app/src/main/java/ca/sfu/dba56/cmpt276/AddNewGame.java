@@ -88,7 +88,7 @@ public class AddNewGame extends AppCompatActivity {
         int count = 0;
         int defaultGameIndex = 0;
         while(count < manager.configListSize()){
-            String strResult = manager.get(count).getGameNameFromConfig();
+            String strResult = manager.getItemAtIndex(count).getGameNameFromConfig();
             items.add(strResult);
             if(Objects.equals(items.get(count), name)){
                 defaultGameIndex = count;
@@ -195,8 +195,8 @@ public class AddNewGame extends AppCompatActivity {
                     }else{
                         isPlayerValid = true;
                         player_msg.setText("");
-                        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
-                        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMinPoorScoreFromConfig(), players_int);
+                        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.getItemAtIndex(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
+                        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.getItemAtIndex(selectedGameInt).getMinPoorScoreFromConfig(), players_int);
                         if (Math.abs(adjustedMax - adjustedMin) > 8) {
                             isCalculatingRangeForLevels = true;
                         } else {
@@ -262,8 +262,8 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isPlayerValid && isScoresValid) {
-                    Game gamePlayed = new Game(players_int, scores_int, manager.get(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
-                    manager.get(selectedGameInt).add(gamePlayed);
+                    Game gamePlayed = new Game(players_int, scores_int, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
+                    manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
                     showResult(gamePlayed.getLevelAchieved());
                     Toast.makeText(AddNewGame.this, "scores " + scores_int, Toast.LENGTH_SHORT).show();
                 }else {

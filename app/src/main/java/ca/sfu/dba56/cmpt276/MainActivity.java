@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         //array of string config names
         int count = 0;
         while(count < manager.configListSize()){
-            String strResult = "\n" + manager.get(count).getGameNameFromConfig() + "\n";
+            String strResult = "\n" + manager.getItemAtIndex(count).getGameNameFromConfig() + "\n";
             items.add(strResult);
             count++;
         }
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     private void setUpAddConfigurationButton(){
         FloatingActionButton addConfigBtn = findViewById(R.id.addBtn);
         addConfigBtn.setOnClickListener(v ->{
-            Intent intent = AddConfiguration.makeIntent(MainActivity.this);
+            Intent intent = AddEditConfiguration.makeIntent(MainActivity.this);
             startActivity(intent);
         });
     }

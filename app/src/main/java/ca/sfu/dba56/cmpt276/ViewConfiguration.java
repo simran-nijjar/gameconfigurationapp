@@ -40,7 +40,7 @@ public class ViewConfiguration extends AppCompatActivity {
     private void UpdateUI() {
         currentConfigPosition = manager.getIndex();
         manager = ConfigurationsManager.getInstance();
-        Configuration currentConfig = manager.get(currentConfigPosition);
+        Configuration currentConfig = manager.getItemAtIndex(currentConfigPosition);
         //Activity Name
         getSupportActionBar().setTitle("Game " + currentConfig.getGameNameFromConfig() + " Configuration");
         //find locations
@@ -53,7 +53,7 @@ public class ViewConfiguration extends AppCompatActivity {
         //make edit button open edit configuration screen.
         editConfigScreenBtn = findViewById(R.id.btnEditConfig);
         editConfigScreenBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(ViewConfiguration.this,AddConfiguration.class);
+            Intent intent = new Intent(ViewConfiguration.this, AddEditConfiguration.class);
             intent.putExtra(getString(R.string.selected_config_position), currentConfigPosition);
             startActivity(intent);
         });
@@ -89,7 +89,7 @@ public class ViewConfiguration extends AppCompatActivity {
         // image made from miro
         // https://miro.com
         ImageView image = findViewById(R.id.image_history);
-        if(manager.get(currentConfigPosition).size() == 0){
+        if(manager.getItemAtIndex(currentConfigPosition).getSizeOfListOfConfigs() == 0){
             historyBtn.setVisibility(View.INVISIBLE);
             image.setVisibility(View.VISIBLE);
         }else {
@@ -118,7 +118,7 @@ public class ViewConfiguration extends AppCompatActivity {
         addBtn.setOnClickListener(v -> {
             Intent intent = AddNewGame.makeIntent(ViewConfiguration.this);
             manager = ConfigurationsManager.getInstance();
-            Configuration currentConfig = manager.get(currentConfigPosition);
+            Configuration currentConfig = manager.getItemAtIndex(currentConfigPosition);
             intent.putExtra("game name", currentConfig.getGameNameFromConfig());
             startActivity(intent);
         });

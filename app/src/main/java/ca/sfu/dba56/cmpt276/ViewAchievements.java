@@ -151,7 +151,7 @@ public class ViewAchievements extends AppCompatActivity {
                 achievementLevels += achievements.getAchievementLevel(i);
                 achievementLevels += " Range: [";
                 if (i == 1) {
-                    achievementLevels += achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
+                    achievementLevels += achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
                     achievementLevels += ", " + (minScore + range) + "]\n\n";
                     newStartRange = (minScore + range);
                 } else if (newStartRange + range > Math.abs(maxScore)){
@@ -185,7 +185,7 @@ public class ViewAchievements extends AppCompatActivity {
         for (int i = 1; i < (maxScore - minScore + 1); i++){
             achievementLevels += achievements.getAchievementLevel(i);
             achievementLevels += " Score : [";
-            achievementLevels += (achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt) + i - 1);
+            achievementLevels += (achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt) + i - 1);
             achievementLevels += "]\n\n";
         }
         achievementLevels += "Legendary Level: Score >= " + maxScore;
@@ -193,7 +193,7 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private void calculateMinAndMaxScore() {
-        minScore = achievements.calculateMinMaxScore(manager.get(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
-        maxScore = achievements.calculateMinMaxScore(manager.get(indexOfGame).getMaxBestScoreFromConfig(), numPlayersInt);
+        minScore = achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
+        maxScore = achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMaxBestScoreFromConfig(), numPlayersInt);
     }
 }
