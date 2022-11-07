@@ -139,7 +139,7 @@ public class AddNewGame extends AppCompatActivity {
             alertDialog.show();
             //set num of player to the minimum
             num_player = findViewById(R.id.num_players_input);
-            num_player.setText("1");
+            num_player.setText("");
 //        }
     }
 
@@ -174,29 +174,30 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 num_players_str = num_player.getText().toString();
-                if (!num_players_str.isEmpty()) {
-                    players_int = Integer.parseInt(num_players_str);
-                    if (players_int < 1) {
-                        isPlayerValid = false;
-                        player_msg.setText("Invalid input: 1 player minimum");
-                    }else if (players_int >= MAX_USER_INPUT) {
-                        isPlayerValid = false;
-                        displayMaxPlayerMsg();
-                    }else{
-                        isPlayerValid = true;
-                        player_msg.setText("");
-                        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
-                        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMinPoorScoreFromConfig(), players_int);
-                        if (Math.abs(adjustedMax - adjustedMin) > 8) {
-                            isCalculatingRangeForLevels = true;
-                        } else {
-                            isCalculatingRangeForLevels = false;
+                try{
+                    if (!num_players_str.isEmpty()) {
+                        players_int = Integer.parseInt(num_players_str);
+                        if (players_int < 1) {
+                            isPlayerValid = false;
+                            player_msg.setText("Invalid input: 1 player minimum");
+                        }else if (players_int >= MAX_USER_INPUT) {
+                            isPlayerValid = false;
+                            displayMaxPlayerMsg();
+                        }else{
+                            isPlayerValid = true;
+                            player_msg.setText("");
+                            adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
+                            adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMinPoorScoreFromConfig(), players_int);
+                            if (Math.abs(adjustedMax - adjustedMin) > 8) {
+                                isCalculatingRangeForLevels = true;
+                            } else {
+                                isCalculatingRangeForLevels = false;
+                            }
                         }
                     }
+                }catch (NumberFormatException ex){
+                    Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
                 }
-//                }catch (NumberFormatException ex){
-//                    Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
-//                }
             }
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
