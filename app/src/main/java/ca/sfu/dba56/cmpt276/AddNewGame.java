@@ -205,7 +205,7 @@ public class AddNewGame extends AppCompatActivity {
                     }
                 }catch (NumberFormatException ex){
                     isPlayerValid = false;
-                    Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -236,7 +236,7 @@ public class AddNewGame extends AppCompatActivity {
                 }catch (NumberFormatException ex){
                     isScoresValid = false;
                     if(combined_score.length() == 0) {
-                        Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

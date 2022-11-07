@@ -113,7 +113,7 @@ public class AddConfiguration extends AppCompatActivity {
                     }
                 }catch (NumberFormatException ex){
                     if (expPoorScoreTxt.length() == 0) {
-                        Toast.makeText(AddConfiguration.this, "Enter a valid value", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -140,7 +140,7 @@ public class AddConfiguration extends AppCompatActivity {
                     }
                 }catch (NumberFormatException ex){
                     if (expGreatScoreTxt.length() == 0) {
-                        Toast.makeText(AddConfiguration.this, "Enter a valid value", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
