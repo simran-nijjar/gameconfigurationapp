@@ -29,9 +29,9 @@ public class ViewAchievements extends AppCompatActivity {
 
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private Achievements achievements = new Achievements();
-    private EditText numPlayers;
-    private String numPlayersStr;
-    private int numPlayersInt;
+    private EditText numPlayersFromUser;
+    private String numPlayersAsStr;
+    private int numPlayers;
     private int indexOfGame;
     private TextView noAchievementsDisplayed;
     private TextView displayAchievements;
@@ -45,7 +45,7 @@ public class ViewAchievements extends AppCompatActivity {
         setContentView(R.layout.view_achievements);
 
         noAchievementsDisplayed = findViewById(R.id.emptyAchievementsList);
-        numPlayers = findViewById(R.id.userInputPlayers);
+        numPlayersFromUser = findViewById(R.id.userInputPlayers);
         updateUI();
         Bundle b = getIntent().getExtras();
         indexOfGame = b.getInt("Achievement Game Name");
@@ -74,7 +74,8 @@ public class ViewAchievements extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateUI() {numPlayers.addTextChangedListener(textWatcher);}
+    private void updateUI() {
+        numPlayersFromUser.addTextChangedListener(textWatcher);}
 
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -83,11 +84,11 @@ public class ViewAchievements extends AppCompatActivity {
         }
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            numPlayersStr = numPlayers.getText().toString();
-            if(!numPlayersStr.isEmpty()){
-                numPlayersInt = Integer.parseInt(numPlayersStr);
-                displayMaxPlayerMsg(numPlayersInt);
-                if (numPlayersInt < 1){
+            numPlayersAsStr = numPlayersFromUser.getText().toString();
+            if(!numPlayersAsStr.isEmpty()){
+                numPlayers = Integer.parseInt(numPlayersAsStr);
+                displayMaxPlayerMsg(numPlayers);
+                if (numPlayers < 1){
                     noAchievementsDisplayed.setText(R.string.invalid_players_msg);
                 }
                 else {
@@ -103,9 +104,9 @@ public class ViewAchievements extends AppCompatActivity {
         }
         @Override
         public void afterTextChanged(Editable s) {
-            numPlayersStr = numPlayers.getText().toString();
-            if (numPlayersStr.startsWith("0")){
-                numPlayers.setText("");
+            numPlayersAsStr = numPlayersFromUser.getText().toString();
+            if (numPlayersAsStr.startsWith("0")){
+                numPlayersFromUser.setText("");
                 noAchievementsDisplayed.setText(R.string.invalid_players_msg);
             }
         }
@@ -123,16 +124,16 @@ public class ViewAchievements extends AppCompatActivity {
             });
             alertDialog.show();
             //set num of player to the minimum
-            numPlayers = findViewById(R.id.userInputPlayers);
-            numPlayers.setText("1");
+            numPlayersFromUser = findViewById(R.id.userInputPlayers);
+            numPlayersFromUser.setText("1");
         }
     }
 
     private void displayAchievementLevels(){
         String achievementLevels = "";
-        numPlayers = findViewById(R.id.userInputPlayers);
-        numPlayersStr = numPlayers.getText().toString();
-        numPlayersInt = Integer.parseInt(numPlayersStr);
+        numPlayersFromUser = findViewById(R.id.userInputPlayers);
+        numPlayersAsStr = numPlayersFromUser.getText().toString();
+        numPlayers = Integer.parseInt(numPlayersAsStr);
 
         calculateMinAndMaxScore();
         int range = achievements.calculateLevelRange(minScore, maxScore);
@@ -157,7 +158,7 @@ public class ViewAchievements extends AppCompatActivity {
                 achievementLevels += achievements.getAchievementLevel(i);
                 achievementLevels += " Range: [";
                 if (i == 1) {
-                    achievementLevels += achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
+                    achievementLevels += achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayers);
                     achievementLevels += ", " + (minScore + range) + "]\n\n";
                     newStartRange = (minScore + range);
                 } else if (newStartRange + range > Math.abs(maxScore)) {
@@ -188,7 +189,7 @@ public class ViewAchievements extends AppCompatActivity {
         for (int i = 1; i < (maxScore - minScore + 1); i++){
             achievementLevels += achievements.getAchievementLevel(i);
             achievementLevels += " Score : [";
-            achievementLevels += (achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt) + i - 1);
+            achievementLevels += (achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayers) + i - 1);
             achievementLevels += "]\n\n";
         }
         achievementLevels += "Legendary Level: Score >= " + maxScore;
@@ -196,7 +197,7 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private void calculateMinAndMaxScore() {
-        minScore = achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
-        maxScore = achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMaxBestScoreFromConfig(), numPlayersInt);
+        minScore = achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayers);
+        maxScore = achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMaxBestScoreFromConfig(), numPlayers);
     }
 }

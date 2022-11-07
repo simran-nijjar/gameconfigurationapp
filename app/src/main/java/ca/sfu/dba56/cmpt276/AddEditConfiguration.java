@@ -29,16 +29,16 @@ import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
 public class AddEditConfiguration extends AppCompatActivity {
 
-    private EditText gameNameTxt;
-    private EditText expPoorScoreTxt;
-    private EditText expGreatScoreTxt;
+    private EditText gameNameFromUser;
+    private EditText expPoorScoreFromUser;
+    private EditText expGreatScoreFromUser;
 
-    private String strGameName;
-    private String strExpPoorScore;
-    private String strExpGreatScore;
+    private String gameNameAsStr;
+    private String expPoorScoreAsStr;
+    private String expGreatScoreAsStr;
 
-    private int intExpPoorScore;
-    private int intExpGreatScore;
+    private int expPoorScore;
+    private int expGreatScore;
 
     private final int MAX_NAME_LENGTH = 100;
     private final int MAX_POS_SCORE_INPUT = 100000000;
@@ -95,7 +95,7 @@ public class AddEditConfiguration extends AppCompatActivity {
 
     //check user input for the validity
     private void checkUserInput(){
-        gameNameTxt.addTextChangedListener(new TextWatcher() {
+        gameNameFromUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 //Does not do anything
@@ -103,8 +103,8 @@ public class AddEditConfiguration extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                strGameName = gameNameTxt.getText().toString();
-                if (strGameName.length() >= MAX_NAME_LENGTH){
+                gameNameAsStr = gameNameFromUser.getText().toString();
+                if (gameNameAsStr.length() >= MAX_NAME_LENGTH){
                     displayMaxNameLengthMsg();
                 }
             }
@@ -115,7 +115,7 @@ public class AddEditConfiguration extends AppCompatActivity {
             }
         });
 
-        expPoorScoreTxt.addTextChangedListener(new TextWatcher() {
+        expPoorScoreFromUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 //Does not do anything
@@ -123,14 +123,14 @@ public class AddEditConfiguration extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                strExpPoorScore = expPoorScoreTxt.getText().toString();
+                expPoorScoreAsStr = expPoorScoreFromUser.getText().toString();
                 try{
-                    intExpPoorScore = Integer.parseInt(strExpPoorScore);
-                     if (intExpPoorScore >= MAX_POS_SCORE_INPUT || intExpPoorScore <= MAX_NEG_SCORE_INPUT) {
+                    expPoorScore = Integer.parseInt(expPoorScoreAsStr);
+                     if (expPoorScore >= MAX_POS_SCORE_INPUT || expPoorScore <= MAX_NEG_SCORE_INPUT) {
                         displayMaxScoreMsg(true);
                     }
                 }catch (NumberFormatException ex){
-                    if (expPoorScoreTxt.length() == 0) {
+                    if (expPoorScoreFromUser.length() == 0) {
                         Toast.makeText(AddEditConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -142,7 +142,7 @@ public class AddEditConfiguration extends AppCompatActivity {
             }
         });
 
-        expGreatScoreTxt.addTextChangedListener(new TextWatcher() {
+        expGreatScoreFromUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 //Does not do anything
@@ -150,14 +150,14 @@ public class AddEditConfiguration extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                strExpGreatScore = expGreatScoreTxt.getText().toString();
+                expGreatScoreAsStr = expGreatScoreFromUser.getText().toString();
                 try{
-                    intExpGreatScore = Integer.parseInt(strExpGreatScore);
-                    if (intExpGreatScore >= MAX_POS_SCORE_INPUT || intExpGreatScore <= MAX_NEG_SCORE_INPUT){
+                    expGreatScore = Integer.parseInt(expGreatScoreAsStr);
+                    if (expGreatScore >= MAX_POS_SCORE_INPUT || expGreatScore <= MAX_NEG_SCORE_INPUT){
                         displayMaxScoreMsg(false);
                     }
                 }catch (NumberFormatException ex){
-                    if (expGreatScoreTxt.length() == 0) {
+                    if (expGreatScoreFromUser.length() == 0) {
                         Toast.makeText(AddEditConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -182,8 +182,8 @@ public class AddEditConfiguration extends AppCompatActivity {
         });
         alertDialog.show();
         //set num of player to the minimum
-        gameNameTxt = findViewById(R.id.inputName);
-        gameNameTxt.setText("");
+        gameNameFromUser = findViewById(R.id.inputName);
+        gameNameFromUser.setText("");
     }
 
     //give an alert dialog message if user exceeded limits for number fields input
@@ -197,20 +197,20 @@ public class AddEditConfiguration extends AppCompatActivity {
         alertDialog.show();
         //set num of player to the minimum
         if (isPoorScore) {
-            expPoorScoreTxt = findViewById(R.id.inputLowScore);
-            expPoorScoreTxt.setText("");
+            expPoorScoreFromUser = findViewById(R.id.inputLowScore);
+            expPoorScoreFromUser.setText("");
         }
         else{
-            expGreatScoreTxt = findViewById(R.id.inputHighScore);
-            expGreatScoreTxt.setText("");
+            expGreatScoreFromUser = findViewById(R.id.inputHighScore);
+            expGreatScoreFromUser.setText("");
         }
     }
 
     private void getUserInput(){
         //Input into TextEdit variables
-        gameNameTxt = findViewById(R.id.inputName);
-        expPoorScoreTxt = findViewById(R.id.inputLowScore);
-        expGreatScoreTxt = findViewById(R.id.inputHighScore);
+        gameNameFromUser = findViewById(R.id.inputName);
+        expPoorScoreFromUser = findViewById(R.id.inputLowScore);
+        expGreatScoreFromUser = findViewById(R.id.inputHighScore);
     }
 
     private void setUpSaveConfigButton(){
@@ -225,7 +225,7 @@ public class AddEditConfiguration extends AppCompatActivity {
                 convertTxtToStr();
                 //Save game if all values are valid
                 if (isUserInputValid()) {
-                    Configuration newConfig = new Configuration(strGameName, intExpPoorScore, intExpGreatScore);
+                    Configuration newConfig = new Configuration(gameNameAsStr, expPoorScore, expGreatScore);
                     ConfigurationsManager manager = ConfigurationsManager.getInstance();
                     manager.add(newConfig);
                     Toast.makeText(this, "You saved the configuration", Toast.LENGTH_SHORT).show();
@@ -238,9 +238,9 @@ public class AddEditConfiguration extends AppCompatActivity {
                     int currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
                     ConfigurationsManager manager = ConfigurationsManager.getInstance();
                     Configuration currentConfig = manager.getItemAtIndex(currentConfigPosition);
-                    currentConfig.setGameNameInConfig(strGameName);
-                    currentConfig.setMinPoorScoreInConfig(intExpPoorScore);
-                    currentConfig.setMaxBestScoreInConfig(intExpGreatScore);
+                    currentConfig.setGameNameInConfig(gameNameAsStr);
+                    currentConfig.setMinPoorScoreInConfig(expPoorScore);
+                    currentConfig.setMaxBestScoreInConfig(expGreatScore);
                     manager.setItemAtIndex(currentConfigPosition, currentConfig);
                     Toast.makeText(this, "You safely edited configuration", Toast.LENGTH_SHORT).show();
                     finish();
@@ -251,26 +251,26 @@ public class AddEditConfiguration extends AppCompatActivity {
 
     private void convertTxtToStr(){
         //Convert TextEdit into string
-        strGameName = gameNameTxt.getText().toString();
-        strExpPoorScore = expPoorScoreTxt.getText().toString();
-        strExpGreatScore = expGreatScoreTxt.getText().toString();
+        gameNameAsStr = gameNameFromUser.getText().toString();
+        expPoorScoreAsStr = expPoorScoreFromUser.getText().toString();
+        expGreatScoreAsStr = expGreatScoreFromUser.getText().toString();
     }
 
     private void convertStringToInt(){
-        intExpPoorScore = Integer.parseInt(strExpPoorScore);
-        intExpGreatScore = Integer.parseInt(strExpGreatScore);
+        expPoorScore = Integer.parseInt(expPoorScoreAsStr);
+        expGreatScore = Integer.parseInt(expGreatScoreAsStr);
     }
 
     private boolean isUserInputValid(){
-        if (TextUtils.isEmpty(strGameName)
-                || TextUtils.isEmpty(strExpPoorScore)
-                || TextUtils.isEmpty(strExpGreatScore)){
+        if (TextUtils.isEmpty(gameNameAsStr)
+                || TextUtils.isEmpty(expPoorScoreAsStr)
+                || TextUtils.isEmpty(expGreatScoreAsStr)){
             Toast.makeText(this, "ERROR: Text fields cannot be empty. Please enter correct values and try again",
                     Toast.LENGTH_SHORT).show();
             return false;
         }
         convertStringToInt();
-        if (intExpPoorScore >= intExpGreatScore){
+        if (expPoorScore >= expGreatScore){
             Toast.makeText(this, "Poor score must be less than great score. Try again", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -281,9 +281,9 @@ public class AddEditConfiguration extends AppCompatActivity {
     private void setVariablesFromExistingConfig(String gameName,String minScoreStr, String maxScoreStr) {
         getUserInput();
 
-        gameNameTxt.setText(gameName);
-        expPoorScoreTxt.setText(minScoreStr);
-        expGreatScoreTxt.setText(maxScoreStr);
+        gameNameFromUser.setText(gameName);
+        expPoorScoreFromUser.setText(minScoreStr);
+        expGreatScoreFromUser.setText(maxScoreStr);
 
         convertTxtToStr();
         convertStringToInt();
