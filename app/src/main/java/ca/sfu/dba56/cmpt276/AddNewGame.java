@@ -49,6 +49,7 @@ public class AddNewGame extends AppCompatActivity {
     private Achievements addNewGameAchievements = new Achievements();
     private boolean isCalculatingRangeForLevels;
     private final int MAX_USER_INPUT = 100000000;
+    private final int MIN_USER_INPUT = -100000000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,13 +138,28 @@ public class AddNewGame extends AppCompatActivity {
         alertDialog.show();
         //set num of player to the minimum
         num_player = findViewById(R.id.num_players_input);
-        num_player.setText("");
+        num_player.setText("1");
     }
 
     private void displayMaxCombinedScoreMsg(){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
         alertDialog.setTitle("Combined Score Too High");
         alertDialog.setMessage("Sorry, the combined score is too high. Please try a smaller number");
+        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                //Stay on ViewAchievement activity
+            }
+        });
+        alertDialog.show();
+        //set num of player to the minimum
+        combined_score = findViewById(R.id.combined_score_input);
+        combined_score.setText("");
+    }
+
+    private void displayMinCombinedScoreMsg(){
+        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
+        alertDialog.setTitle("Combined Score Too Low");
+        alertDialog.setMessage("Sorry, the combined score is too low. Please try a bigger number");
         alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //Stay on ViewAchievement activity
@@ -169,27 +185,26 @@ public class AddNewGame extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 num_players_str = num_player.getText().toString();
                 try{
-                    if (!num_players_str.isEmpty()) {
-                        players_int = Integer.parseInt(num_players_str);
-                        if (players_int < 1) {
-                            isPlayerValid = false;
-                            player_msg.setText("Invalid input: 1 player minimum");
-                        }else if (players_int >= MAX_USER_INPUT) {
-                            isPlayerValid = false;
-                            displayMaxPlayerMsg();
-                        }else{
-                            isPlayerValid = true;
-                            player_msg.setText("");
-                            adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
-                            adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMinPoorScoreFromConfig(), players_int);
-                            if (Math.abs(adjustedMax - adjustedMin) > 8) {
-                                isCalculatingRangeForLevels = true;
-                            } else {
-                                isCalculatingRangeForLevels = false;
-                            }
+                    players_int = Integer.parseInt(num_players_str);
+                    if (players_int < 1) {
+                        isPlayerValid = false;
+                        player_msg.setText("Invalid input: 1 player minimum");
+                    }else if (players_int >= MAX_USER_INPUT) {
+                        isPlayerValid = false;
+                        displayMaxPlayerMsg();
+                    }else{
+                        isPlayerValid = true;
+                        player_msg.setText("");
+                        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
+                        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMinPoorScoreFromConfig(), players_int);
+                        if (Math.abs(adjustedMax - adjustedMin) > 8) {
+                            isCalculatingRangeForLevels = true;
+                        } else {
+                            isCalculatingRangeForLevels = false;
                         }
                     }
                 }catch (NumberFormatException ex){
+                    isPlayerValid = false;
                     Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -211,11 +226,15 @@ public class AddNewGame extends AppCompatActivity {
                     }else if(scores_int >= MAX_USER_INPUT)  {
                         isScoresValid = false;
                         displayMaxCombinedScoreMsg();
+                    }else if(scores_int <= MIN_USER_INPUT)  {
+                        isScoresValid = false;
+                        displayMinCombinedScoreMsg();
                     }else {
                         isScoresValid = true;
                         score_msg.setText("");
                     }
                 }catch (NumberFormatException ex){
+                    isScoresValid = false;
                     Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
                 }
             }
