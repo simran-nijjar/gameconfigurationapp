@@ -143,9 +143,9 @@ public class AddNewGame extends AppCompatActivity {
         }
     }
 
-    private void displayMaxCombinedScoreMsg(int score){
-        if (score >= MAX_USER_INPUT) {
-            isScoresValid = false;
+    private void displayMaxCombinedScoreMsg(){
+//        if (score >= MAX_USER_INPUT) {
+//            isScoresValid = false;
             AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
             alertDialog.setTitle("Combined Score Too High");
             alertDialog.setMessage("Sorry, the combined score is too high. Please try a smaller number");
@@ -158,7 +158,7 @@ public class AddNewGame extends AppCompatActivity {
             //set num of player to the minimum
             combined_score = findViewById(R.id.combined_score_input);
             combined_score.setText("");
-        }
+//        }
     }
 
     // check if user input is valid
@@ -208,12 +208,13 @@ public class AddNewGame extends AppCompatActivity {
                 combined_scores_str = combined_score.getText().toString();
                 try {
                     scores_int = Integer.parseInt(combined_scores_str);
-                    displayMaxCombinedScoreMsg(scores_int);
-                        if (scores_int < 0 && adjustedMin > 0){
-                            isScoresValid = false;
-                            score_msg.setText(R.string.negCombinedScoresMsg);
-                        }
-                    else {
+                    if (scores_int < 0 && adjustedMin > 0){
+                        isScoresValid = false;
+                        score_msg.setText(R.string.negCombinedScoresMsg);
+                    }else if(scores_int >= MAX_USER_INPUT)  {
+                        isScoresValid = false;
+                        displayMaxCombinedScoreMsg();
+                    }else {
                         isScoresValid = true;
                         score_msg.setText("");
                     }
