@@ -20,9 +20,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+/*
+* main activity that shows the list of all the configs
+* list allows to click on items and go to view config activity
+* activity allows to add a new config
+* and main activity provides a help button to do to help activity
+*/
+
 public class MainActivity extends AppCompatActivity {
+
     private SaveUsingGson toSaveUsingGsonAndSP = new SaveUsingGson();
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,21 +51,21 @@ public class MainActivity extends AppCompatActivity {
         toSaveUsingGsonAndSP.saveToSharedRefs(this);
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UpdateUI();
+        //to save config manager
+        toSaveUsingGsonAndSP.saveToSharedRefs(this);
+    }
+
     private void setUpHelpButton() {
         Button helpBtn = (Button)findViewById(R.id.helpBtn);
         helpBtn.setOnClickListener(v -> {
             Intent intent = HelpActivity.makeIntent(MainActivity.this);
             startActivity(intent);
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        UpdateUI();
-
-        //to save config manager
-        toSaveUsingGsonAndSP.saveToSharedRefs(this);
     }
 
     private void UpdateUI() {
@@ -97,22 +106,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void registerClickCallBack() {
         ListView list = findViewById(R.id.configList);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                TextView textView = (TextView) viewClicked;
-                String massage = "You are selecting config #" + (position+1);
-                Toast.makeText(MainActivity.this, massage, Toast.LENGTH_SHORT).show();
-                manager.setIndex(position);
-                //make an intent for view configuration activity
-                Intent intent = ViewConfiguration.makeIntent(MainActivity.this);
-                startActivity(intent);
-            }
+        list.setOnItemClickListener((parent, viewClicked, position, id) -> {
+            TextView textView = (TextView) viewClicked;
+            String massage = "You are selecting config #" + (position+1);
+            Toast.makeText(MainActivity.this, massage, Toast.LENGTH_SHORT).show();
+            manager.setIndex(position);
+            //make an intent for view configuration activity
+            Intent intent = ViewConfiguration.makeIntent(MainActivity.this);
+            startActivity(intent);
         });
     }
 
 
-    private void setUpAddConfigurationButton(){
+    private void setUpAddConfigurationButton() {
         FloatingActionButton addConfigBtn = findViewById(R.id.addBtn);
         addConfigBtn.setOnClickListener(v ->{
             Intent intent = AddEditConfiguration.makeIntent(MainActivity.this);
