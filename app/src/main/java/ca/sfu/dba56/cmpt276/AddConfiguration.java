@@ -73,8 +73,6 @@ public class AddConfiguration extends AppCompatActivity {
         }
     }
 
-  //add new configuration methods
-
     public static Intent makeIntent(Context context){
         return new Intent(context, AddConfiguration.class);
     }
