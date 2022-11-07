@@ -10,36 +10,35 @@
         android:id="@+id/listOfAchievements"
         android:layout_width="318dp"
         android:layout_height="514dp"
+        android:layout_marginTop="32dp"
         android:text=""
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.365"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.677" />
+        app:layout_constraintEnd_toEndOf="@+id/userInputPlayers"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/userInputPlayers"
+        app:layout_constraintTop_toBottomOf="@+id/userInputPlayers" />
 
     <TextView
         android:id="@+id/txtEnterPlayers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="132dp"
         android:text="Enter players: "
         android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/listOfAchievements"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintHorizontal_bias="0.127"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/userInputPlayers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="132dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/listOfAchievements"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.352"
         app:layout_constraintStart_toEndOf="@+id/txtEnterPlayers"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,10 +49,10 @@
         android:text="@string/empty_achievements_msg"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userInputPlayers"
-        app:layout_constraintVertical_bias="0.321" />
+        app:layout_constraintEnd_toEndOf="@+id/userInputPlayers"
+        app:layout_constraintHorizontal_bias="0.826"
+        app:layout_constraintStart_toStartOf="@+id/userInputPlayers"
+        app:layout_constraintTop_toBottomOf="@+id/txtEnterPlayers"
+        app:layout_constraintVertical_bias="0.355" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
