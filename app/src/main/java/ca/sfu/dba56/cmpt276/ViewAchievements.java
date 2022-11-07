@@ -19,7 +19,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
+/*
+* class view achievements activity
+* activity displays achievements after entering the potential number of players
+* it gives a different achievement levels corresponding to the expected poor/great values from config
+* and limits the input of user if it goes over the limit
+*/
 public class ViewAchievements extends AppCompatActivity {
+
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private Achievements achievements = new Achievements();
     private EditText numPlayers;
@@ -36,6 +43,7 @@ public class ViewAchievements extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_achievements);
+
         noAchievementsDisplayed = findViewById(R.id.emptyAchievementsList);
         numPlayers = findViewById(R.id.userInputPlayers);
         updateUI();
@@ -52,11 +60,7 @@ public class ViewAchievements extends AppCompatActivity {
         updateUI();
     }
 
-    private void updateUI(){
-        numPlayers.addTextChangedListener(textWatcher);
-    }
-
-    public static Intent makeIntent(Context context){
+    public static Intent makeIntent(Context context) {
         return new Intent(context, ViewAchievements.class);
     }
 
@@ -69,6 +73,8 @@ public class ViewAchievements extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void updateUI() {numPlayers.addTextChangedListener(textWatcher);}
 
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -105,7 +111,7 @@ public class ViewAchievements extends AppCompatActivity {
         }
     };
 
-    private void displayMaxPlayerMsg(int players){
+    private void displayMaxPlayerMsg(int players) {
         if (players >= MAX_PLAYERS) {
             AlertDialog alertDialog = new AlertDialog.Builder(ViewAchievements.this).create(); //Read Update
             alertDialog.setTitle("Too many players");
@@ -154,26 +160,23 @@ public class ViewAchievements extends AppCompatActivity {
                     achievementLevels += achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayersInt);
                     achievementLevels += ", " + (minScore + range) + "]\n\n";
                     newStartRange = (minScore + range);
-                } else if (newStartRange + range > Math.abs(maxScore)){
+                } else if (newStartRange + range > Math.abs(maxScore)) {
                     achievementLevels += " " + (newStartRange + 1) + ", " + (maxScore) + "]\n\n";
                     newStartRange = maxScore;
                     lessThanEightLevels = true;
-                }
-                else if (i == achievements.getNumOfBoundedLevels()) {
+                } else if (i == achievements.getNumOfBoundedLevels()) {
                     achievementLevels += " " + (newStartRange) + ", " + (maxScore) + "]\n\n";
                 } else {
                     achievementLevels += " " + (newStartRange + 1) + ", " + (newStartRange + 1 + range) + "]\n\n";
                     newStartRange += 1 + range;
                 }
-            }
-            else{
+            } else{
                 lessThanEightLevels = true;
             }
         }
-        if (lessThanEightLevels){
+        if (lessThanEightLevels) {
             achievementLevels += "Legendary Level: Range >= " + (newStartRange + 1);
-        }
-        else {
+        } else {
             achievementLevels += "Legendary Level: Range > " + maxScore;
         }
         return achievementLevels;
