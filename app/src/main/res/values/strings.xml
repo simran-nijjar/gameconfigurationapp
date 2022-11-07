@@ -21,10 +21,16 @@
     </string>
     <string name="achieve_content">
         \n
-        Goofy Goblins \t\t\t\t\t Majestic Unicorns\n\n
-        Majestic Unicorns \t\t Fabulous Dragons\n\n
-        Fabulous Dragons \t\t Brilliant Pixies\n\n
-        Fabulous Dragons \t\t Brilliant Pixies\n\n
+        Worst Level\n\n
+        Bad Level\n\n
+        Okay Level\n\n
+        Alright Level\n\n
+        Better Level\n\n
+        Good Level\n\n
+        Almost There Level\n\n
+        Great Level\n\n
+        Best Level\n\n
+        Legendary Level\n\n
     </string>
     <string name="num_player">Enter the number of players:</string>
     <string name="combined_score">Enter the combined score of all players:</string>
