@@ -17,6 +17,12 @@ import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
+/*
+* view config activity class shows basic info of config after it was clicked from main activity
+* it has buttons for edit, delete, view achievements,
+* add new game and history (when there were played games)
+ */
+
 public class ViewConfiguration extends AppCompatActivity {
 
     private TextView expPoorScoreEditTxt;
@@ -35,6 +41,15 @@ public class ViewConfiguration extends AppCompatActivity {
         bar.setDisplayHomeAsUpEnabled(true);
 
         UpdateUI();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpGameHistoryButton();
+        UpdateUI();
+        //to save config manager
+        toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
     }
 
     private void UpdateUI() {
@@ -57,7 +72,6 @@ public class ViewConfiguration extends AppCompatActivity {
             intent.putExtra(getString(R.string.selected_config_position), currentConfigPosition);
             startActivity(intent);
         });
-
         //set up buttons for new game and history
         setUpGameHistoryButton();
         setUpDeleteButton(currentConfigPosition);
@@ -69,12 +83,11 @@ public class ViewConfiguration extends AppCompatActivity {
         toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
     }
 
-    public static Intent makeIntent(Context context){
+    public static Intent makeIntent(Context context) {
         return new Intent(context, ViewConfiguration.class);
     }
 
-
-    private void setUpViewAchievementsButton(){
+    private void setUpViewAchievementsButton() {
         Button achievementBtn = findViewById(R.id.viewAchievementsBtn);
         achievementBtn.setOnClickListener(v ->{
             Intent intent = ViewAchievements.makeIntent(ViewConfiguration.this);
@@ -83,8 +96,7 @@ public class ViewConfiguration extends AppCompatActivity {
         });
     }
 
-
-    private void setUpGameHistoryButton(){
+    private void setUpGameHistoryButton() {
         Button historyBtn = findViewById(R.id.btnHistoryConfig);
         // image made from miro
         // https://miro.com
@@ -104,16 +116,7 @@ public class ViewConfiguration extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUpGameHistoryButton();
-        UpdateUI();
-        //to save config manager
-        toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
-    }
-
-    private void setUpAddGameButton(){
+    private void setUpAddGameButton() {
         Button addBtn = findViewById(R.id.addGameBtn);
         addBtn.setOnClickListener(v -> {
             Intent intent = AddNewGame.makeIntent(ViewConfiguration.this);
@@ -124,7 +127,7 @@ public class ViewConfiguration extends AppCompatActivity {
         });
     }
 
-    private void setUpDeleteButton(int currentConfigPosition){
+    private void setUpDeleteButton(int currentConfigPosition) {
         Button deleteBtn = findViewById(R.id.btnDeleteConfig);
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +137,9 @@ public class ViewConfiguration extends AppCompatActivity {
         });
     }
 
-    private void deleteOrCancel(int currentConfigPosition){
+    //ask user on click of delete button
+    //if he intents to delete config or not
+    private void deleteOrCancel(int currentConfigPosition) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to delete?")
                 .setCancelable(false)
@@ -156,6 +161,6 @@ public class ViewConfiguration extends AppCompatActivity {
 
         AlertDialog alert = builder.create();
         alert.show();
-
     }
+
 }
