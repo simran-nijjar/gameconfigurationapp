@@ -168,29 +168,25 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 num_players_str = num_player.getText().toString();
-                try{
-                    if (!num_players_str.isEmpty()) {
-                        players_int = Integer.parseInt(num_players_str);
-                        if (players_int < 1) {
-                            isPlayerValid = false;
-                            player_msg.setText("Invalid input: 1 player minimum");
-                        }else if (players_int >= MAX_USER_INPUT) {
-                            isPlayerValid = false;
-                            displayMaxPlayerMsg();
-                        }else{
-                            isPlayerValid = true;
-                            player_msg.setText("");
-                            adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
-                            adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMinPoorScoreFromConfig(), players_int);
-                            if (Math.abs(adjustedMax - adjustedMin) > 8) {
-                                isCalculatingRangeForLevels = true;
-                            } else {
-                                isCalculatingRangeForLevels = false;
-                            }
+                if (!num_players_str.isEmpty()) {
+                    players_int = Integer.parseInt(num_players_str);
+                    if (players_int < 1) {
+                        isPlayerValid = false;
+                        player_msg.setText("Invalid input: 1 player minimum");
+                    }else if (players_int >= MAX_USER_INPUT) {
+                        isPlayerValid = false;
+                        displayMaxPlayerMsg();
+                    }else {
+                        isPlayerValid = true;
+                        player_msg.setText("");
+                        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
+                        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMinPoorScoreFromConfig(), players_int);
+                        if (Math.abs(adjustedMax - adjustedMin) > 8) {
+                            isCalculatingRangeForLevels = true;
+                        } else {
+                            isCalculatingRangeForLevels = false;
                         }
                     }
-                }catch (NumberFormatException ex){
-                    Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -203,20 +199,15 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 combined_scores_str = combined_score.getText().toString();
-                try {
+                if (!combined_scores_str.isEmpty()) {
                     scores_int = Integer.parseInt(combined_scores_str);
-                    if (scores_int < 0 && adjustedMin > 0){
-                        isScoresValid = false;
-                        score_msg.setText(R.string.negCombinedScoresMsg);
-                    }else if(scores_int >= MAX_USER_INPUT)  {
+                    if (scores_int >= MAX_USER_INPUT) {
                         isScoresValid = false;
                         displayMaxCombinedScoreMsg();
-                    }else {
+                    } else {
                         isScoresValid = true;
                         score_msg.setText("");
                     }
-                }catch (NumberFormatException ex){
-                    Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
