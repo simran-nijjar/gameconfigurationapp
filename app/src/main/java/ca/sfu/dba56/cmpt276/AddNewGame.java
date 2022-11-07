@@ -181,8 +181,8 @@ public class AddNewGame extends AppCompatActivity {
                             isPlayerValid = false;
                             player_msg.setText("Invalid input: 1 player minimum");
                         }else if (players_int >= MAX_USER_INPUT) {
-                            displayMaxPlayerMsg();
                             isPlayerValid = false;
+                            displayMaxPlayerMsg();
                         }else{
                             isPlayerValid = true;
                             player_msg.setText("");
