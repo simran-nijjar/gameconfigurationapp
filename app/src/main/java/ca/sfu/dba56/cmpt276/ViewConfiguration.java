@@ -1,5 +1,6 @@
 package ca.sfu.dba56.cmpt276;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ArrayAdapter;
@@ -147,7 +149,6 @@ public class ViewConfiguration extends AppCompatActivity {
         });
     }
 
-    //need to make it work
     private void deleteOrCancel(int currentConfigPosition){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to delete?")

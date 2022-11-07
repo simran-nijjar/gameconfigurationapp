@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
+import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
 public class AddConfiguration extends AppCompatActivity {
     private EditText gameNameTxt;
@@ -272,5 +274,15 @@ public class AddConfiguration extends AppCompatActivity {
         convertStringToInt();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    //
     //end of the class
 }
