@@ -8,16 +8,15 @@
     <string name="info_content">
         \nThe creators of this game are Sodium. For more information about this app,
         check out this resource:
-        <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">CMPT276</a>
+    </string>
+    <string name="courseHyperlink"><a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">CMPT276</a>
     </string>
     <string name="description_content">
         \nThis app provides achievement goals to turn some competitive board games into a more co-operative experience.\n
         \nAt the end of a game, the combined score of all players is used to calculate a combined achievement level, with a higher total score earning a better achievement.\n
         \nSources:\n
-        \n<a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a>
-        \n<a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a>
-        \n<a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a>
-        \n<a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a> \t\t <a href="https://google.com">Google</a>
+    </string>
+    <string name="appBackgroundHyperlink"><a href="https://www.idownloadblog.com/2021/05/09/multicolor-gradient-wallpapers-pack-iphone/">App Background</a> \t\t
     </string>
     <string name="achieve_content">
         \n
