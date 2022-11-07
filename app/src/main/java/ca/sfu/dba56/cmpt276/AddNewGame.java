@@ -139,7 +139,7 @@ public class AddNewGame extends AppCompatActivity {
             alertDialog.show();
             //set num of player to the minimum
             num_player = findViewById(R.id.num_players_input);
-            num_player.setText("1");
+            num_player.setText("");
 //        }
     }
 
@@ -182,7 +182,7 @@ public class AddNewGame extends AppCompatActivity {
                     }else if (players_int >= MAX_USER_INPUT) {
                         isPlayerValid = false;
                         displayMaxPlayerMsg();
-                    }else{
+                    }else {
                         isPlayerValid = true;
                         player_msg.setText("");
                         adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
@@ -194,9 +194,6 @@ public class AddNewGame extends AppCompatActivity {
                         }
                     }
                 }
-//                }catch (NumberFormatException ex){
-//                    Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
-//                }
             }
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -208,20 +205,15 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 combined_scores_str = combined_score.getText().toString();
-                try {
+                if (!combined_scores_str.isEmpty()) {
                     scores_int = Integer.parseInt(combined_scores_str);
-                    if (scores_int < 0 && adjustedMin > 0){
-                        isScoresValid = false;
-                        score_msg.setText(R.string.negCombinedScoresMsg);
-                    }else if(scores_int >= MAX_USER_INPUT)  {
+                    if (scores_int >= MAX_USER_INPUT) {
                         isScoresValid = false;
                         displayMaxCombinedScoreMsg();
-                    }else {
+                    } else {
                         isScoresValid = true;
                         score_msg.setText("");
                     }
-                }catch (NumberFormatException ex){
-                    Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
