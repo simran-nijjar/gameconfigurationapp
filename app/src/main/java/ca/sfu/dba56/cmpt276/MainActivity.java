@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 manager.setIndex(position);
                 //make an intent for view configuration activity
                 Intent intent = ViewConfiguration.makeIntent(MainActivity.this);
-//                intent.putExtra(getString(R.string.selected_config_position), position);
                 startActivity(intent);
             }
         });

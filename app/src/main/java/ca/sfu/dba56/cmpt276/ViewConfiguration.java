@@ -1,6 +1,5 @@
 package ca.sfu.dba56.cmpt276;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -40,11 +38,6 @@ public class ViewConfiguration extends AppCompatActivity {
     }
 
     private void UpdateUI() {
-        //check what position of configuration was selected
-//        Bundle b = getIntent().getExtras();
-//        if (b != null) {
-//            currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
-//        }
         currentConfigPosition = manager.getIndex();
         manager = ConfigurationsManager.getInstance();
         Configuration currentConfig = manager.get(currentConfigPosition);
