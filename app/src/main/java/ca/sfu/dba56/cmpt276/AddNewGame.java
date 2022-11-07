@@ -290,9 +290,4 @@ public class AddNewGame extends AppCompatActivity {
         alertDialog.show();
     }
 
-    //potential for deletion
-    protected void onResume(){
-        super.onResume();
-    }
-
 }

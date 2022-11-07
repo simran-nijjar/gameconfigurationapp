@@ -34,8 +34,4 @@ public class Game {
     public String getDateGamePlayed() {return dateGamePlayed;}
     public String getLevelAchieved() {return levelAchieved;}
 
-    //never used/for delete
-    public void setPlayers(int players) {this.players = players;}
-    public void setScores(int scores) {this.scores = scores;}
-
 }
