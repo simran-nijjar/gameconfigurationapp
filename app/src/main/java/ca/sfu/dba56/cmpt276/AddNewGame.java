@@ -237,8 +237,7 @@ public class AddNewGame extends AppCompatActivity {
                     isScoresValid = false;
                     if(combined_score.length() == 0) {
                         Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
-                    }else
-                        Toast.makeText(AddNewGame.this, "Your input is invalid", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
             @Override
