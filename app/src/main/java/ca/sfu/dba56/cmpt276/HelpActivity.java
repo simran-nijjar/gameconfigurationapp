@@ -11,15 +11,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+/*
+* Help activity class
+* provides a clickable buttons that give info about the course and app
+ */
 public class HelpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
-        setInfo();
-        setDescription();
-        setAchievement();
+        setInfoBtn();
+        setDescriptionBtn();
+        setAchievementBtn();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -28,7 +32,7 @@ public class HelpActivity extends AppCompatActivity {
         return new Intent(context, HelpActivity.class);
     }
 
-    private void setInfo() {
+    private void setInfoBtn() {
         Button info = findViewById(R.id.info);
         TextView info_content = findViewById(R.id.info_content);
         info_content.setVisibility(View.GONE);
@@ -48,7 +52,7 @@ public class HelpActivity extends AppCompatActivity {
 
     }
 
-    private void setDescription(){
+    private void setDescriptionBtn(){
         Button description = findViewById(R.id.description);
         TextView description_content = findViewById(R.id.description_content);
         description_content.setVisibility(View.GONE);
@@ -67,7 +71,7 @@ public class HelpActivity extends AppCompatActivity {
 
     }
 
-    private void setAchievement(){
+    private void setAchievementBtn(){
         Button achieve = findViewById(R.id.achieve);
         TextView achieve_content = findViewById(R.id.achieve_content);
         achieve_content.setVisibility(View.GONE);
