@@ -136,7 +136,7 @@ public class AddNewGame extends AppCompatActivity {
             }
         });
         alertDialog.show();
-        //set num of player to the minimum
+        //set num of player to the minimum default 1
         num_player = findViewById(R.id.num_players_input);
         num_player.setText("1");
     }
