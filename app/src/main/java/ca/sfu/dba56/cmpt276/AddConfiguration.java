@@ -1,15 +1,18 @@
 package ca.sfu.dba56.cmpt276;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,12 +32,19 @@ public class AddConfiguration extends AppCompatActivity {
     private int intExpPoorScore;
     private int intExpGreatScore;
 
+    private final int MAX_NAME_LENGTH = 100;
+    private final int MAX_POS_SCORE_INPUT = 100000000;
+    private final int MAX_NEG_SCORE_INPUT = -100000000;
+
+    //comment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_configuration);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        getUserInput();
+        checkUserInput();
 
         Bundle b = getIntent().getExtras();
         if(b!= null){
@@ -67,6 +77,118 @@ public class AddConfiguration extends AppCompatActivity {
 
     public static Intent makeIntent(Context context){
         return new Intent(context, AddConfiguration.class);
+    }
+
+    private void checkUserInput(){
+        gameNameTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //Does not do anything
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                strGameName = gameNameTxt.getText().toString();
+                if (strGameName.length() >= MAX_NAME_LENGTH){
+                    displayMaxNameLengthMsg();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //Does not do anything
+            }
+        });
+
+        expPoorScoreTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //Does not do anything
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                strExpPoorScore = expPoorScoreTxt.getText().toString();
+                try{
+                    intExpPoorScore = Integer.parseInt(strExpPoorScore);
+                     if (intExpPoorScore >= MAX_POS_SCORE_INPUT || intExpPoorScore <= MAX_NEG_SCORE_INPUT) {
+                        displayMaxScoreMsg(true);
+                    }
+                }catch (NumberFormatException ex){
+                    if (expPoorScoreTxt.length() == 0) {
+                        Toast.makeText(AddConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //Does not do anything
+            }
+        });
+
+        expGreatScoreTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //Does not do anything
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                strExpGreatScore = expGreatScoreTxt.getText().toString();
+                try{
+                    intExpGreatScore = Integer.parseInt(strExpGreatScore);
+                    if (intExpGreatScore >= MAX_POS_SCORE_INPUT || intExpGreatScore <= MAX_NEG_SCORE_INPUT){
+                        displayMaxScoreMsg(false);
+                    }
+                }catch (NumberFormatException ex){
+                    if (expGreatScoreTxt.length() == 0) {
+                        Toast.makeText(AddConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //Does not do anything
+            }
+        });
+    }
+
+    private void displayMaxNameLengthMsg(){
+        AlertDialog alertDialog = new AlertDialog.Builder(AddConfiguration.this).create(); //Read Update
+        alertDialog.setTitle("Game name is too long");
+        alertDialog.setMessage("Sorry, the game name is too long. Please try a shorter name");
+        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                //Stay on ViewAchievement activity
+            }
+        });
+        alertDialog.show();
+        //set num of player to the minimum
+        gameNameTxt = findViewById(R.id.inputName);
+        gameNameTxt.setText("");
+    }
+
+    private void displayMaxScoreMsg(boolean isPoorScore){
+        AlertDialog alertDialog = new AlertDialog.Builder(AddConfiguration.this).create(); //Read Update
+        alertDialog.setTitle("Score length is too long");
+        alertDialog.setMessage("Sorry, score length is too long. Please try a number of shorter length");
+        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                //Stay on ViewAchievement activity
+            }
+        });
+        alertDialog.show();
+        //set num of player to the minimum
+        if (isPoorScore) {
+            expPoorScoreTxt = findViewById(R.id.inputLowScore);
+            expPoorScoreTxt.setText("");
+        }
+        else{
+            expGreatScoreTxt = findViewById(R.id.inputHighScore);
+            expGreatScoreTxt.setText("");
+        }
     }
 
     private void getUserInput(){
@@ -153,7 +275,7 @@ public class AddConfiguration extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
