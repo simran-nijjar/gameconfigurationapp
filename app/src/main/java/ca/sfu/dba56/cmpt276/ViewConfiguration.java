@@ -12,18 +12,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
-import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
@@ -50,10 +41,11 @@ public class ViewConfiguration extends AppCompatActivity {
 
     private void UpdateUI() {
         //check what position of configuration was selected
-        Bundle b = getIntent().getExtras();
-        if (b != null) {
-            currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
-        }
+//        Bundle b = getIntent().getExtras();
+//        if (b != null) {
+//            currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
+//        }
+        currentConfigPosition = manager.getIndex();
         manager = ConfigurationsManager.getInstance();
         Configuration currentConfig = manager.get(currentConfigPosition);
         //Activity Name
