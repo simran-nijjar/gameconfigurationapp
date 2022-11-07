@@ -126,8 +126,6 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void displayMaxPlayerMsg(){
-//        if (players >= MAX_USER_INPUT) {
-//            isPlayerValid = false;
             AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
             alertDialog.setTitle("Too many players");
             alertDialog.setMessage("Sorry, that's too many players. Please try a smaller number");
@@ -139,13 +137,10 @@ public class AddNewGame extends AppCompatActivity {
             alertDialog.show();
             //set num of player to the minimum
             num_player = findViewById(R.id.num_players_input);
-            num_player.setText("1");
-//        }
+            num_player.setText("");
     }
 
     private void displayMaxCombinedScoreMsg(){
-//        if (score >= MAX_USER_INPUT) {
-//            isScoresValid = false;
             AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
             alertDialog.setTitle("Combined Score Too High");
             alertDialog.setMessage("Sorry, the combined score is too high. Please try a smaller number");
@@ -158,7 +153,6 @@ public class AddNewGame extends AppCompatActivity {
             //set num of player to the minimum
             combined_score = findViewById(R.id.combined_score_input);
             combined_score.setText("");
-//        }
     }
 
     // check if user input is valid
