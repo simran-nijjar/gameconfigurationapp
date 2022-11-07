@@ -30,7 +30,12 @@ import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.Game;
 
+/*
+* add new game activity class adds new game to the list of games in configuration
+* checks user input and gives warning in case input is bot valid
+ */
 public class AddNewGame extends AppCompatActivity {
+
     private int players_int; // int user input
     private int scores_int; // int user input
     private String dateGamePlayed; // date time
@@ -38,8 +43,8 @@ public class AddNewGame extends AppCompatActivity {
     private String combined_scores_str = ""; // String user input
     private EditText num_player;
     private EditText combined_score;
-    boolean isPlayerValid; // check if user input is valid
-    boolean isScoresValid; // check if user input is valid
+    private boolean isPlayerValid; // check if user input is valid
+    private boolean isScoresValid; // check if user input is valid
     private TextView player_msg; // alert message
     private TextView score_msg; // alert message
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
@@ -278,18 +283,16 @@ public class AddNewGame extends AppCompatActivity {
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
         alertDialog.setTitle("Achievement");
         alertDialog.setMessage("" + achievements);
-        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                manager.setIndex(selectedGameInt);
-                AddNewGame.this.finish(); // back to View Configuration page
-            }
+        alertDialog.setButton("Ok", (dialog, which) -> {
+            manager.setIndex(selectedGameInt);
+            AddNewGame.this.finish(); // back to View Configuration page
         });
         alertDialog.show();
     }
 
+    //potential for deletion
     protected void onResume(){
         super.onResume();
     }
-
 
 }
