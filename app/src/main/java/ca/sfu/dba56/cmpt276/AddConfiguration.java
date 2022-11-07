@@ -283,5 +283,6 @@ public class AddConfiguration extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    //
     //end of the class
 }
