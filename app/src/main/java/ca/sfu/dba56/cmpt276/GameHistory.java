@@ -12,10 +12,16 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
+/*
+* activity class GameHistory
+* populates and shows a none clickable list view of all the games played
+ */
+
 public class GameHistory extends AppCompatActivity {
-    ConfigurationsManager manager = ConfigurationsManager.getInstance();
-    int indexOfGame = 0;
-    ArrayAdapter<String> adapter;
+
+    private ConfigurationsManager manager = ConfigurationsManager.getInstance();
+    private int indexOfGame = 0;
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,7 @@ public class GameHistory extends AppCompatActivity {
         super.onResume();
     }
 
+    //populates a list view with all the games played before in the given config
     private void populateListView(ConfigurationsManager manager, int indexOfGame) {
         // creating list of games items
         ArrayList<String> items = new ArrayList<String>();
