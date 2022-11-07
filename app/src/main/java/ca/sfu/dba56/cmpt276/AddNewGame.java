@@ -138,7 +138,6 @@ public class AddNewGame extends AppCompatActivity {
             //set num of player to the minimum
             num_player = findViewById(R.id.num_players_input);
             num_player.setText("");
-//        }
     }
 
     private void displayMaxCombinedScoreMsg(){
