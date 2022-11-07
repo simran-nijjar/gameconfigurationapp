@@ -24,13 +24,11 @@ import android.widget.Toast;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.Game;
-import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
 public class AddNewGame extends AppCompatActivity {
     private int players_int; // int user input
@@ -50,6 +48,7 @@ public class AddNewGame extends AppCompatActivity {
     private int adjustedMin;
     private Achievements addNewGameAchievements = new Achievements();
     private boolean isCalculatingRangeForLevels;
+    private final int MAX_USER_INPUT = 100000000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +125,42 @@ public class AddNewGame extends AppCompatActivity {
         });
     }
 
+    private void displayMaxPlayerMsg(int players){
+        if (players >= MAX_USER_INPUT) {
+            isPlayerValid = false;
+            AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
+            alertDialog.setTitle("Too many players");
+            alertDialog.setMessage("Sorry, that's too many players. Please try a smaller number");
+            alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    //Stay on ViewAchievement activity
+                }
+            });
+            alertDialog.show();
+            //set num of player to the minimum
+            num_player = findViewById(R.id.num_players_input);
+            num_player.setText("1");
+        }
+    }
+
+    private void displayMaxCombinedScoreMsg(int score){
+        if (score >= MAX_USER_INPUT) {
+            isScoresValid = false;
+            AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
+            alertDialog.setTitle("Combined Score Too High");
+            alertDialog.setMessage("Sorry, the combined score is too high. Please try a smaller number");
+            alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    //Stay on ViewAchievement activity
+                }
+            });
+            alertDialog.show();
+            //set num of player to the minimum
+            combined_score = findViewById(R.id.combined_score_input);
+            combined_score.setText("");
+        }
+    }
+
     // check if user input is valid
     private void checkInput(int selectedGameInt){
         num_player = findViewById(R.id.num_players_input);
@@ -139,26 +174,27 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 num_players_str = num_player.getText().toString();
-                try {
+                if (!num_players_str.isEmpty()) {
                     players_int = Integer.parseInt(num_players_str);
+                    displayMaxPlayerMsg(players_int);
                     if (players_int < 1) {
                         isPlayerValid = false;
                         player_msg.setText("Invalid input: 1 player minimum");
-                    }else {
+                    } else {
                         isPlayerValid = true;
                         player_msg.setText("");
                         adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
                         adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMinPoorScoreFromConfig(), players_int);
-                        if (Math.abs(adjustedMax - adjustedMin) > 8){
+                        if (Math.abs(adjustedMax - adjustedMin) > 8) {
                             isCalculatingRangeForLevels = true;
-                        }
-                        else{
+                        } else {
                             isCalculatingRangeForLevels = false;
                         }
                     }
-                }catch (NumberFormatException ex){
-                    Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
                 }
+//                }catch (NumberFormatException ex){
+//                    Toast.makeText(AddNewGame.this, "Text field is empty", Toast.LENGTH_SHORT).show();
+//                }
             }
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -172,6 +208,7 @@ public class AddNewGame extends AppCompatActivity {
                 combined_scores_str = combined_score.getText().toString();
                 try {
                     scores_int = Integer.parseInt(combined_scores_str);
+                    displayMaxCombinedScoreMsg(scores_int);
                         if (scores_int < 0 && adjustedMin > 0){
                             isScoresValid = false;
                             score_msg.setText(R.string.negCombinedScoresMsg);
