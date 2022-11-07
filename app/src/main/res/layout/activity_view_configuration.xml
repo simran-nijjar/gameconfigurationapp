@@ -60,10 +60,9 @@
         android:id="@+id/btnEditConfig"
         android:layout_width="100dp"
         android:layout_height="55dp"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="35dp"
         android:text="Edit"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btnHistoryConfig"
         app:layout_constraintTop_toBottomOf="@+id/btnHistoryConfig" />
 
     <Button
@@ -81,10 +80,9 @@
         android:id="@+id/btnDeleteConfig"
         android:layout_width="100dp"
         android:layout_height="55dp"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="35dp"
         android:text="Delete"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btnHistoryConfig"
         app:layout_constraintTop_toBottomOf="@+id/btnEditConfig" />
 
     <Button
@@ -94,7 +92,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="35dp"
         android:text="Add New Game"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnHistoryConfig"
         app:layout_constraintHorizontal_bias="0.02"
         app:layout_constraintStart_toEndOf="@+id/btnEditConfig"
         app:layout_constraintTop_toBottomOf="@+id/btnHistoryConfig" />
@@ -106,7 +104,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="35dp"
         android:text="View Achievements"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/image_history"
         app:layout_constraintHorizontal_bias="0.02"
         app:layout_constraintStart_toEndOf="@+id/btnDeleteConfig"
         app:layout_constraintTop_toBottomOf="@+id/addGameBtn" />
