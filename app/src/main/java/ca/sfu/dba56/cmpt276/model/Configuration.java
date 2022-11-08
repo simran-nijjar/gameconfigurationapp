@@ -27,8 +27,7 @@ public class Configuration {
     public void add(Game game){listOfGames.add(game);}
     // get a string containing info for 1 game for the history
     public String get(int i){
-        return  "Players: " + listOfGames.get(i).getPlayers() + " Scores: " + listOfGames.get(i).getScores() + " " + listOfGames.get(i).getDateGamePlayed()
-                + " " + listOfGames.get(i).getLevelAchieved();
+        return listOfGames.get(i).getDateGamePlayed() + "  Players: " + listOfGames.get(i).getPlayers() + " Scores: " + listOfGames.get(i).getScores() + " " + listOfGames.get(i).getLevelAchieved();
     }
     //setters
     public void setGameNameInConfig(String newName){gameName = newName;}
