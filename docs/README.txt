@@ -23,12 +23,14 @@ To view achievement levels for the number of players, users who cannot enter 0 w
 with a message when done so and user input will be erased.
 Scores are displayed when expected max - min < 8 because not all levels will be calculated for
 or range may end up exceeding expected max in achievement levels.
+
 Example: expected min = 1 and expected max = 3 for 1 player
 Achievement Levels:
 Beautiful Bananas Score : < 1
 Wonderful Watermelons: [1]
 Outstanding Oranges: [2]
 Perfect Peaches: >=  3
+
 Less than 8 levels are sometimes shown when the range (max - min/8) may exceed expected max
 score when adjusting to 8 levels
 A decision was made to do this to prevent achievement level ranges from containing decimals
