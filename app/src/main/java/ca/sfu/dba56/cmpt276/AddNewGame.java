@@ -223,10 +223,7 @@ public class AddNewGame extends AppCompatActivity {
                 combinedScoresAsStr = combinedScoreFromUser.getText().toString();
                 try {
                     scores = Integer.parseInt(combinedScoresAsStr);
-                    if (scores < 0 && adjustedMin > 0){
-                        isScoresValid = false;
-                        scoreMsg.setText(R.string.negCombinedScoresMsg);
-                    }else if(scores >= MAX_USER_INPUT)  {
+                    if(scores >= MAX_USER_INPUT)  {
                         isScoresValid = false;
                         displayMaxCombinedScoreMsg();
                     }else if(scores <= MIN_USER_INPUT)  {
