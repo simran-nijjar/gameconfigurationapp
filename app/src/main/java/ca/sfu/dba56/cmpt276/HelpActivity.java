@@ -54,14 +54,17 @@ public class HelpActivity extends AppCompatActivity {
         Button description = findViewById(R.id.description);
         TextView description_content = findViewById(R.id.description_content);
         description_content.setVisibility(View.GONE);
-        description.setOnClickListener(v -> {
-
-            if(description_content.getVisibility() == View.GONE) {
-                description_content.setText(R.string.description_content);
-                description_content.setVisibility(View.VISIBLE);
-            }else if (description_content.getVisibility() == View.VISIBLE){
-                description_content.setText("");
-                description_content.setVisibility(View.GONE);
+        description.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(description_content.getVisibility() == View.GONE) {
+                    description_content.setText(R.string.description_content);
+                    description_content.setVisibility(View.VISIBLE);
+                    description_content.setMovementMethod(LinkMovementMethod.getInstance());
+                }else if (description_content.getVisibility() == View.VISIBLE){
+                    description_content.setText("");
+                    description_content.setVisibility(View.GONE);
+                }
             }
         });
 
