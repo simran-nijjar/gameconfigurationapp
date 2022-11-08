@@ -55,9 +55,3 @@ instead of the game selected from list of game configurations.
 However, if the user clicks the game from the drop-down menu and clicks the back button instead, the
 view configuration page will display details for the game selected from list of game configurations
 and NOT game selected from drop-down.
-
-
-
-
-
-
