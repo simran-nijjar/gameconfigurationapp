@@ -36,7 +36,6 @@ public class AddConfiguration extends AppCompatActivity {
     private final int MAX_POS_SCORE_INPUT = 100000000;
     private final int MAX_NEG_SCORE_INPUT = -100000000;
 
-    //comment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +71,6 @@ public class AddConfiguration extends AppCompatActivity {
             setUpSaveConfigButton();
         }
     }
-
-  //add new configuration methods
 
     public static Intent makeIntent(Context context){
         return new Intent(context, AddConfiguration.class);

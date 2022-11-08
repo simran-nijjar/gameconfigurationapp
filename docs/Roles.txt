@@ -1,4 +1,6 @@
 Simran - Product Owner
-Meiqi - Team member
+Meiqi(Jenna) - Team member
 Dmitrii - Repo manager 
 Gurdaan - Scrum master
+
+Additional Feature: Drop-down Menu on AddNewGame screen

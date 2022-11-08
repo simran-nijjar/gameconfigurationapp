@@ -58,6 +58,7 @@ public class HelpActivity extends AppCompatActivity {
                 if(description_content.getVisibility() == View.GONE) {
                     description_content.setText(R.string.description_content);
                     description_content.setVisibility(View.VISIBLE);
+                    description_content.setMovementMethod(LinkMovementMethod.getInstance());
                 }else if (description_content.getVisibility() == View.VISIBLE){
                     description_content.setText("");
                     description_content.setVisibility(View.GONE);
