@@ -152,7 +152,7 @@ public class ViewAchievements extends AppCompatActivity {
     @NonNull
     private String displayAchievementRanges(String achievementLevels, int range, boolean lessThanEightLevels) {
         int newStartRange = 0;
-        achievementLevels += getString(R.string.worst_game_level_range_boundary)
+        achievementLevels += getString(R.string.worst_game_level_range_boundary) //Add worse range than expected lowest range achievement level
                 + minScore + "\n\n";
         for (int i = 1; i < achievements.getNumOfBoundedLevels() + 1; i++) {
             if (newStartRange + 1 < Math.abs(maxScore)) {
@@ -177,10 +177,10 @@ public class ViewAchievements extends AppCompatActivity {
             }
         }
         if (lessThanEightLevels) {
-            achievementLevels += getString(R.string.legendary_level_range_boundary)
+            achievementLevels += getString(R.string.legendary_level_range_boundary) //Add best level range when not all levels can be calculated for
                     + (newStartRange + 1);
         } else {
-            achievementLevels += getString(R.string.legendary_level_range_boundary)
+            achievementLevels += getString(R.string.legendary_level_range_boundary) //Add best level range when all levels can be calculated for
                     + maxScore;
         }
         return achievementLevels;
@@ -188,7 +188,7 @@ public class ViewAchievements extends AppCompatActivity {
 
     @NonNull
     private String displayAchievementScores(String achievementLevels) {
-        achievementLevels += getString(R.string.worst_game_level_score_boundary)
+        achievementLevels += getString(R.string.worst_game_level_score_boundary) //Add worse than expected lowest score achievement level
                 + minScore +"\n\n";
         for (int i = 1; i < (maxScore - minScore + 1); i++){
             achievementLevels += achievements.getAchievementLevel(i);
@@ -196,7 +196,7 @@ public class ViewAchievements extends AppCompatActivity {
             achievementLevels += (achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayers) + i - 1);
             achievementLevels += getString(R.string.score_part2);
         }
-        achievementLevels += getString(R.string.legendary_level_score_boundary)
+        achievementLevels += getString(R.string.legendary_level_score_boundary) //Add best score level for scores
                 + maxScore;
         return achievementLevels;
     }
