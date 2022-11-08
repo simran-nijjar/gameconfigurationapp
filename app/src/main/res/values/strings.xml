@@ -41,6 +41,8 @@
     <string name="negCombinedScoresMsg">Invalid Input: Combined score cannot be negative for this game</string>
     <string name="greaterCombinedScoreMsg">Invalid input: Combined score can not be greater than the maximum score</string>
     <string name="achievement">Achievement</string>
+    <string name="descriptions">Descriptions</string>
+    <string name="info">Info</string>
     <string name="emptyOrInvalid">Your input is empty or invalid</string>
     <string name="OK">Ok</string>
     <string name="scoreTooHigh">Combined Score Too High</string>
