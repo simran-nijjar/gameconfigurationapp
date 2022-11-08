@@ -30,20 +30,25 @@ import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.Game;
 
+/*
+* add new game activity class adds new game to the list of games in configuration
+* checks user input and gives warning in case input is bot valid
+ */
 public class AddNewGame extends AppCompatActivity {
-    private int players_int; // int user input
-    private int scores_int; // int user input
+
+    private int numOfPlayers; // int user input
+    private int scores; // int user input
     private String dateGamePlayed; // date time
-    private String num_players_str = "";  // String user input
-    private String combined_scores_str = ""; // String user input
-    private EditText num_player;
-    private EditText combined_score;
-    boolean isPlayerValid; // check if user input is valid
-    boolean isScoresValid; // check if user input is valid
-    private TextView player_msg; // alert message
-    private TextView score_msg; // alert message
+    private String numOfPlayersAsStr = "";  // String user input
+    private String combinedScoresAsStr = ""; // String user input
+    private EditText numOfPlayerFromUser;
+    private EditText combinedScoreFromUser;
+    private boolean isPlayerValid; // check if user input is valid
+    private boolean isScoresValid; // check if user input is valid
+    private TextView playerMsg; // alert message
+    private TextView scoreMsg; // alert message
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
-    private int selectedGameInt; // user selected game config index
+    private int selectedGame; // user selected game config index
     private int adjustedMax;
     private int adjustedMin;
     private Achievements addNewGameAchievements = new Achievements();
@@ -78,7 +83,7 @@ public class AddNewGame extends AppCompatActivity {
     private void chooseGame() {
         // get selected game name from ViewConfiguration
         Bundle bundle = getIntent().getExtras();
-        String name = bundle.getString("game name");
+        String name = bundle.getString(getString(R.string.gameName));
 
         // drop down menu for games
         Spinner dropdown = findViewById(R.id.gameName);
@@ -88,7 +93,7 @@ public class AddNewGame extends AppCompatActivity {
         int count = 0;
         int defaultGameIndex = 0;
         while(count < manager.configListSize()){
-            String strResult = manager.get(count).getGameNameFromConfig();
+            String strResult = manager.getItemAtIndex(count).getGameNameFromConfig();
             items.add(strResult);
             if(Objects.equals(items.get(count), name)){
                 defaultGameIndex = count;
@@ -107,20 +112,20 @@ public class AddNewGame extends AppCompatActivity {
         Spinner dropdown = findViewById(R.id.gameName);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                selectedGameInt = dropdown.getSelectedItemPosition();
+                selectedGame = dropdown.getSelectedItemPosition();
 
                 // set text again when the user changes selection
-                num_player = findViewById(R.id.num_players_input);
-                combined_score = findViewById(R.id.combined_score_input);
-                player_msg = findViewById(R.id.player_msg);
-                score_msg = findViewById(R.id.score_msg);
-                num_player.setText("");
-                combined_score.setText("");
-                player_msg.setText("");
-                score_msg.setText("");
+                numOfPlayerFromUser = findViewById(R.id.num_players_input);
+                combinedScoreFromUser = findViewById(R.id.combined_score_input);
+                playerMsg = findViewById(R.id.player_msg);
+                scoreMsg = findViewById(R.id.score_msg);
+                numOfPlayerFromUser.setText("");
+                combinedScoreFromUser.setText("");
+                playerMsg.setText("");
+                scoreMsg.setText("");
                 // call function according to current selection
-                checkInput(selectedGameInt);
-                saveInput(selectedGameInt);
+                checkInput(selectedGame);
+                saveInput(selectedGame);
             }
             public void onNothingSelected(AdapterView<?> arg0) {}
         });
@@ -128,75 +133,73 @@ public class AddNewGame extends AppCompatActivity {
 
     private void displayMaxPlayerMsg(){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
-        alertDialog.setTitle("Too many players");
-        alertDialog.setMessage("Sorry, that's too many players. Please try a smaller number");
-        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+        alertDialog.setTitle(getString(R.string.tooManyPlayers));
+        alertDialog.setMessage(getString(R.string.sryTooManyPlayers));
+        alertDialog.setButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //Stay on ViewAchievement activity
             }
         });
         alertDialog.show();
         //set num of player to the minimum default 1
-        num_player = findViewById(R.id.num_players_input);
-        num_player.setText("1");
+        numOfPlayerFromUser = findViewById(R.id.num_players_input);
+        numOfPlayerFromUser.setText("1");
     }
 
     private void displayMaxCombinedScoreMsg(){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
-        alertDialog.setTitle("Combined Score Too High");
-        alertDialog.setMessage("Sorry, the combined score is too high. Please try a smaller number");
-        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+        alertDialog.setTitle(getString(R.string.scoreTooHigh));
+        alertDialog.setMessage(getString(R.string.scoreTooHighMsg));
+        alertDialog.setButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //Stay on ViewAchievement activity
             }
         });
         alertDialog.show();
         //set num of player to the minimum
-        combined_score = findViewById(R.id.combined_score_input);
-        combined_score.setText("");
+        combinedScoreFromUser = findViewById(R.id.combined_score_input);
+        combinedScoreFromUser.setText("");
     }
 
     private void displayMinCombinedScoreMsg(){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
-        alertDialog.setTitle("Combined Score Too Low");
-        alertDialog.setMessage("Sorry, the combined score is too low. Please try a bigger number");
-        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                //Stay on ViewAchievement activity
-            }
+        alertDialog.setTitle(getString(R.string.scoreTooLow));
+        alertDialog.setMessage(getString(R.string.scoreTooLowMsg));
+        alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
+            //Stay on ViewAchievement activity
         });
         alertDialog.show();
         //set num of player to the minimum
-        combined_score = findViewById(R.id.combined_score_input);
-        combined_score.setText("");
+        combinedScoreFromUser = findViewById(R.id.combined_score_input);
+        combinedScoreFromUser.setText("");
     }
 
     // check if user input is valid
     private void checkInput(int selectedGameInt){
-        num_player = findViewById(R.id.num_players_input);
-        combined_score = findViewById(R.id.combined_score_input);
-        player_msg = findViewById(R.id.player_msg); // alert message
-        player_msg.setTextColor(getResources().getColor(R.color.purple_700));
-        score_msg = findViewById(R.id.score_msg); // alert message
-        score_msg.setTextColor(getResources().getColor(R.color.purple_700));
+        numOfPlayerFromUser = findViewById(R.id.num_players_input);
+        combinedScoreFromUser = findViewById(R.id.combined_score_input);
+        playerMsg = findViewById(R.id.player_msg); // alert message
+        playerMsg.setTextColor(getResources().getColor(R.color.purple_700));
+        scoreMsg = findViewById(R.id.score_msg); // alert message
+        scoreMsg.setTextColor(getResources().getColor(R.color.purple_700));
 
-        num_player.addTextChangedListener(new TextWatcher() {
+        numOfPlayerFromUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                num_players_str = num_player.getText().toString();
+                numOfPlayersAsStr = numOfPlayerFromUser.getText().toString();
                 try{
-                    players_int = Integer.parseInt(num_players_str);
-                    if (players_int < 1) {
+                    numOfPlayers = Integer.parseInt(numOfPlayersAsStr);
+                    if (numOfPlayers < 1) {
                         isPlayerValid = false;
-                        player_msg.setText("Invalid input: 1 player minimum");
-                    }else if (players_int >= MAX_USER_INPUT) {
+                        playerMsg.setText(R.string.PlayerMinimum1);
+                    }else if (numOfPlayers >= MAX_USER_INPUT) {
                         isPlayerValid = false;
                         displayMaxPlayerMsg();
                     }else{
                         isPlayerValid = true;
-                        player_msg.setText("");
-                        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMaxBestScoreFromConfig(), players_int);
-                        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.get(selectedGameInt).getMinPoorScoreFromConfig(), players_int);
+                        playerMsg.setText("");
+                        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.getItemAtIndex(selectedGameInt).getMaxBestScoreFromConfig(), numOfPlayers);
+                        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.getItemAtIndex(selectedGameInt).getMinPoorScoreFromConfig(), numOfPlayers);
                         if (Math.abs(adjustedMax - adjustedMin) > 8) {
                             isCalculatingRangeForLevels = true;
                         } else {
@@ -205,7 +208,7 @@ public class AddNewGame extends AppCompatActivity {
                     }
                 }catch (NumberFormatException ex){
                     isPlayerValid = false;
-                    Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -214,29 +217,29 @@ public class AddNewGame extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-        combined_score.addTextChangedListener(new TextWatcher() {
+        combinedScoreFromUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                combined_scores_str = combined_score.getText().toString();
+                combinedScoresAsStr = combinedScoreFromUser.getText().toString();
                 try {
-                    scores_int = Integer.parseInt(combined_scores_str);
-                    if (scores_int < 0 && adjustedMin > 0){
+                    scores = Integer.parseInt(combinedScoresAsStr);
+                    if (scores < 0 && adjustedMin > 0){
                         isScoresValid = false;
-                        score_msg.setText(R.string.negCombinedScoresMsg);
-                    }else if(scores_int >= MAX_USER_INPUT)  {
+                        scoreMsg.setText(R.string.negCombinedScoresMsg);
+                    }else if(scores >= MAX_USER_INPUT)  {
                         isScoresValid = false;
                         displayMaxCombinedScoreMsg();
-                    }else if(scores_int <= MIN_USER_INPUT)  {
+                    }else if(scores <= MIN_USER_INPUT)  {
                         isScoresValid = false;
                         displayMinCombinedScoreMsg();
                     }else {
                         isScoresValid = true;
-                        score_msg.setText("");
+                        scoreMsg.setText("");
                     }
                 }catch (NumberFormatException ex){
                     isScoresValid = false;
-                    if(combined_score.length() == 0) {
-                        Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
+                    if(combinedScoreFromUser.length() == 0) {
+                        Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -249,7 +252,7 @@ public class AddNewGame extends AppCompatActivity {
 
     // get date time
     public String saveDatePlayed(){
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd, y @ h:mma");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(getString(R.string.date_format));
         LocalDateTime currentDate = LocalDateTime.now();
         dateGamePlayed = currentDate.format(dateFormat);
         return dateGamePlayed;
@@ -258,17 +261,13 @@ public class AddNewGame extends AppCompatActivity {
     // save input to the list
     private void saveInput(int selectedGameInt) {
         Button save = findViewById(R.id.save_btn);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isPlayerValid && isScoresValid) {
-                    Game gamePlayed = new Game(players_int, scores_int, manager.get(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
-                    manager.get(selectedGameInt).add(gamePlayed);
-                    showResult(gamePlayed.getLevelAchieved());
-                    Toast.makeText(AddNewGame.this, "scores " + scores_int, Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
-                }
+        save.setOnClickListener(v -> {
+            if (isPlayerValid && isScoresValid) {
+                Game gamePlayed = new Game(numOfPlayers, scores, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
+                manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
+                showResult(gamePlayed.getLevelAchieved());
+            }else {
+                Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -276,20 +275,13 @@ public class AddNewGame extends AppCompatActivity {
     // pop up a window to show achievement
     private void showResult(String achievements){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
-        alertDialog.setTitle("Achievement");
+        alertDialog.setTitle(getString(R.string.achievement));
         alertDialog.setMessage("" + achievements);
-        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                manager.setIndex(selectedGameInt);
-                AddNewGame.this.finish(); // back to View Configuration page
-            }
+        alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
+            manager.setIndex(selectedGame);
+            AddNewGame.this.finish(); // back to View Configuration page
         });
         alertDialog.show();
     }
-
-    protected void onResume(){
-        super.onResume();
-    }
-
 
 }

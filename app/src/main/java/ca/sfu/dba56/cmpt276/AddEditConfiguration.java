@@ -18,19 +18,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
-import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
-public class AddConfiguration extends AppCompatActivity {
-    private EditText gameNameTxt;
-    private EditText expPoorScoreTxt;
-    private EditText expGreatScoreTxt;
+/*
+* activity class addEditConfiguration
+* is a UI class for both add config and edit config activities
+* contains and manipulates user input in the corresponding activities
+* checks user input for validity and saves it into config manager
+* does not allow user to input into the fields if they exceed limits
+ */
 
-    private String strGameName;
-    private String strExpPoorScore;
-    private String strExpGreatScore;
+public class AddEditConfiguration extends AppCompatActivity {
 
-    private int intExpPoorScore;
-    private int intExpGreatScore;
+    private EditText gameNameFromUser;
+    private EditText expPoorScoreFromUser;
+    private EditText expGreatScoreFromUser;
+
+    private String gameNameAsStr;
+    private String expPoorScoreAsStr;
+    private String expGreatScoreAsStr;
+
+    private int expPoorScore;
+    private int expGreatScore;
 
     private final int MAX_NAME_LENGTH = 100;
     private final int MAX_POS_SCORE_INPUT = 100000000;
@@ -39,6 +47,7 @@ public class AddConfiguration extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.add_configuration);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -48,14 +57,12 @@ public class AddConfiguration extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         if(b!= null){
             //Edit Game Config Activity
-            //Activity Name
-            getSupportActionBar().setTitle("Edit Game Config");
-            //check what position of configuration was selected
             int currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
             ConfigurationsManager manager = ConfigurationsManager.getInstance();
-            Configuration currentConfig = manager.get(currentConfigPosition);
-            //Activity Name
-            getSupportActionBar().setTitle("Edit Game " + currentConfig.getGameNameFromConfig() + " Configuration");
+            Configuration currentConfig = manager.getItemAtIndex(currentConfigPosition);
+
+            getSupportActionBar().setTitle(getString(R.string.edit_game___configuration, currentConfig.getGameNameFromConfig()));
+
             //set variables from pre-existing config to the screen
             String gameName = String.valueOf(currentConfig.getGameNameFromConfig());
             String minScoreStr = String.valueOf(currentConfig.getMinPoorScoreFromConfig());
@@ -65,19 +72,30 @@ public class AddConfiguration extends AppCompatActivity {
         }
         else{
             //Add Game Config Activity
-            //Activity Name
-            getSupportActionBar().setTitle("Add New Game Config");
+            getSupportActionBar().setTitle(R.string.add_new_game_config);
             getUserInput();
             setUpSaveConfigButton();
         }
     }
 
-    public static Intent makeIntent(Context context){
-        return new Intent(context, AddConfiguration.class);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
+    //makes intent to start an activity
+    public static Intent makeIntent(Context context){
+        return new Intent(context, AddEditConfiguration.class);
+    }
+
+    //check user input for the validity
     private void checkUserInput(){
-        gameNameTxt.addTextChangedListener(new TextWatcher() {
+        gameNameFromUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 //Does not do anything
@@ -85,8 +103,8 @@ public class AddConfiguration extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                strGameName = gameNameTxt.getText().toString();
-                if (strGameName.length() >= MAX_NAME_LENGTH){
+                gameNameAsStr = gameNameFromUser.getText().toString();
+                if (gameNameAsStr.length() >= MAX_NAME_LENGTH){
                     displayMaxNameLengthMsg();
                 }
             }
@@ -97,7 +115,7 @@ public class AddConfiguration extends AppCompatActivity {
             }
         });
 
-        expPoorScoreTxt.addTextChangedListener(new TextWatcher() {
+        expPoorScoreFromUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 //Does not do anything
@@ -105,15 +123,15 @@ public class AddConfiguration extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                strExpPoorScore = expPoorScoreTxt.getText().toString();
+                expPoorScoreAsStr = expPoorScoreFromUser.getText().toString();
                 try{
-                    intExpPoorScore = Integer.parseInt(strExpPoorScore);
-                     if (intExpPoorScore >= MAX_POS_SCORE_INPUT || intExpPoorScore <= MAX_NEG_SCORE_INPUT) {
+                    expPoorScore = Integer.parseInt(expPoorScoreAsStr);
+                     if (expPoorScore >= MAX_POS_SCORE_INPUT || expPoorScore <= MAX_NEG_SCORE_INPUT) {
                         displayMaxScoreMsg(true);
                     }
                 }catch (NumberFormatException ex){
-                    if (expPoorScoreTxt.length() == 0) {
-                        Toast.makeText(AddConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
+                    if (expPoorScoreFromUser.length() == 0) {
+                        Toast.makeText(AddEditConfiguration.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -124,7 +142,7 @@ public class AddConfiguration extends AppCompatActivity {
             }
         });
 
-        expGreatScoreTxt.addTextChangedListener(new TextWatcher() {
+        expGreatScoreFromUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 //Does not do anything
@@ -132,15 +150,15 @@ public class AddConfiguration extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                strExpGreatScore = expGreatScoreTxt.getText().toString();
+                expGreatScoreAsStr = expGreatScoreFromUser.getText().toString();
                 try{
-                    intExpGreatScore = Integer.parseInt(strExpGreatScore);
-                    if (intExpGreatScore >= MAX_POS_SCORE_INPUT || intExpGreatScore <= MAX_NEG_SCORE_INPUT){
+                    expGreatScore = Integer.parseInt(expGreatScoreAsStr);
+                    if (expGreatScore >= MAX_POS_SCORE_INPUT || expGreatScore <= MAX_NEG_SCORE_INPUT){
                         displayMaxScoreMsg(false);
                     }
                 }catch (NumberFormatException ex){
-                    if (expGreatScoreTxt.length() == 0) {
-                        Toast.makeText(AddConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
+                    if (expGreatScoreFromUser.length() == 0) {
+                        Toast.makeText(AddEditConfiguration.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -152,47 +170,45 @@ public class AddConfiguration extends AppCompatActivity {
         });
     }
 
+    //give an alert dialog message if user exceeded limits for string fields input
     private void displayMaxNameLengthMsg(){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddConfiguration.this).create(); //Read Update
-        alertDialog.setTitle("Game name is too long");
-        alertDialog.setMessage("Sorry, the game name is too long. Please try a shorter name");
-        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                //Stay on ViewAchievement activity
-            }
+        AlertDialog alertDialog = new AlertDialog.Builder(AddEditConfiguration.this).create(); //Read Update
+        alertDialog.setTitle(getString(R.string.game_name_is_too_long));
+        alertDialog.setMessage(getString(R.string.sorry_game_name_is_too_long_try_shorter));
+        alertDialog.setButton(getString(R.string.Ok), (dialog, which) -> {
+            //Stay on ViewAchievement activity
         });
         alertDialog.show();
         //set num of player to the minimum
-        gameNameTxt = findViewById(R.id.inputName);
-        gameNameTxt.setText("");
+        gameNameFromUser = findViewById(R.id.inputName);
+        gameNameFromUser.setText("");
     }
 
+    //give an alert dialog message if user exceeded limits for number fields input
     private void displayMaxScoreMsg(boolean isPoorScore){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddConfiguration.this).create(); //Read Update
-        alertDialog.setTitle("Score length is too long");
-        alertDialog.setMessage("Sorry, score length is too long. Please try a number of shorter length");
-        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                //Stay on ViewAchievement activity
-            }
+        AlertDialog alertDialog = new AlertDialog.Builder(AddEditConfiguration.this).create(); //Read Update
+        alertDialog.setTitle(getString(R.string.game_score_is_too_long));
+        alertDialog.setMessage(getString(R.string.sorry_score_is_too_long_please_try_shorter));
+        alertDialog.setButton(getString(R.string.Ok), (dialog, which) -> {
+            //Stay on ViewAchievement activity
         });
         alertDialog.show();
         //set num of player to the minimum
         if (isPoorScore) {
-            expPoorScoreTxt = findViewById(R.id.inputLowScore);
-            expPoorScoreTxt.setText("");
+            expPoorScoreFromUser = findViewById(R.id.inputLowScore);
+            expPoorScoreFromUser.setText("");
         }
         else{
-            expGreatScoreTxt = findViewById(R.id.inputHighScore);
-            expGreatScoreTxt.setText("");
+            expGreatScoreFromUser = findViewById(R.id.inputHighScore);
+            expGreatScoreFromUser.setText("");
         }
     }
 
     private void getUserInput(){
         //Input into TextEdit variables
-        gameNameTxt = findViewById(R.id.inputName);
-        expPoorScoreTxt = findViewById(R.id.inputLowScore);
-        expGreatScoreTxt = findViewById(R.id.inputHighScore);
+        gameNameFromUser = findViewById(R.id.inputName);
+        expPoorScoreFromUser = findViewById(R.id.inputLowScore);
+        expGreatScoreFromUser = findViewById(R.id.inputHighScore);
     }
 
     private void setUpSaveConfigButton(){
@@ -207,10 +223,9 @@ public class AddConfiguration extends AppCompatActivity {
                 convertTxtToStr();
                 //Save game if all values are valid
                 if (isUserInputValid()) {
-                    Configuration newConfig = new Configuration(strGameName, intExpPoorScore, intExpGreatScore);
+                    Configuration newConfig = new Configuration(gameNameAsStr, expPoorScore, expGreatScore);
                     ConfigurationsManager manager = ConfigurationsManager.getInstance();
                     manager.add(newConfig);
-                    Toast.makeText(this, "You saved the configuration", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
@@ -219,12 +234,11 @@ public class AddConfiguration extends AppCompatActivity {
                 if (isUserInputValid()) {
                     int currentConfigPosition = b.getInt(getString(R.string.selected_config_position));
                     ConfigurationsManager manager = ConfigurationsManager.getInstance();
-                    Configuration currentConfig = manager.get(currentConfigPosition);
-                    currentConfig.setGameNameInConfig(strGameName);
-                    currentConfig.setMinPoorScoreInConfig(intExpPoorScore);
-                    currentConfig.setMaxBestScoreInConfig(intExpGreatScore);
-                    manager.set(currentConfigPosition, currentConfig);
-                    Toast.makeText(this, "You safely edited configuration", Toast.LENGTH_SHORT).show();
+                    Configuration currentConfig = manager.getItemAtIndex(currentConfigPosition);
+                    currentConfig.setGameNameInConfig(gameNameAsStr);
+                    currentConfig.setMinPoorScoreInConfig(expPoorScore);
+                    currentConfig.setMaxBestScoreInConfig(expGreatScore);
+                    manager.setItemAtIndex(currentConfigPosition, currentConfig);
                     finish();
                 }
             }
@@ -233,53 +247,42 @@ public class AddConfiguration extends AppCompatActivity {
 
     private void convertTxtToStr(){
         //Convert TextEdit into string
-        strGameName = gameNameTxt.getText().toString();
-        strExpPoorScore = expPoorScoreTxt.getText().toString();
-        strExpGreatScore = expGreatScoreTxt.getText().toString();
+        gameNameAsStr = gameNameFromUser.getText().toString();
+        expPoorScoreAsStr = expPoorScoreFromUser.getText().toString();
+        expGreatScoreAsStr = expGreatScoreFromUser.getText().toString();
     }
 
     private void convertStringToInt(){
-        intExpPoorScore = Integer.parseInt(strExpPoorScore);
-        intExpGreatScore = Integer.parseInt(strExpGreatScore);
+        expPoorScore = Integer.parseInt(expPoorScoreAsStr);
+        expGreatScore = Integer.parseInt(expGreatScoreAsStr);
     }
 
     private boolean isUserInputValid(){
-        if (TextUtils.isEmpty(strGameName)
-                || TextUtils.isEmpty(strExpPoorScore)
-                || TextUtils.isEmpty(strExpGreatScore)){
-            Toast.makeText(this, "ERROR: Text fields cannot be empty. Please enter correct values and try again",
-                    Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(gameNameAsStr)
+                || TextUtils.isEmpty(expPoorScoreAsStr)
+                || TextUtils.isEmpty(expGreatScoreAsStr)){
+            Toast.makeText(this, R.string.ERROR_text_fields_cannot_be_empty, Toast.LENGTH_SHORT).show();
             return false;
         }
         convertStringToInt();
-        if (intExpPoorScore >= intExpGreatScore){
-            Toast.makeText(this, "Poor score must be less than great score. Try again", Toast.LENGTH_SHORT).show();
+        if (expPoorScore >= expGreatScore){
+            Toast.makeText(this, R.string.poor_score_must_be_less_than_great_score_try_again, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
+    //in the edit config sets variables from the existing config into the edit text fields
     private void setVariablesFromExistingConfig(String gameName,String minScoreStr, String maxScoreStr) {
-        //setting variables for the edit config activity
         getUserInput();
 
-        gameNameTxt.setText(gameName);
-        expPoorScoreTxt.setText(minScoreStr);
-        expGreatScoreTxt.setText(maxScoreStr);
+        gameNameFromUser.setText(gameName);
+        expPoorScoreFromUser.setText(minScoreStr);
+        expGreatScoreFromUser.setText(maxScoreStr);
 
         convertTxtToStr();
         convertStringToInt();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    //
     //end of the class
 }

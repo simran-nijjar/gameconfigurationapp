@@ -13,6 +13,8 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Objects;
 
+import ca.sfu.dba56.cmpt276.R;
+
 /*
 * class SaveUsingGson
 * takes context from an activity
@@ -33,20 +35,22 @@ public class SaveUsingGson {
     //to save config manager
     public void saveToSharedRefs(Context newContext){
         this.context = newContext;
-        newPrefs = context.getSharedPreferences("Save config manager",MODE_PRIVATE);
+        newPrefs = context.getSharedPreferences(context.getString(R.string.save_config_manager),MODE_PRIVATE);
         editor = newPrefs.edit();
         json = gson.toJson(manager.getListOfConfigurations());
-        editor.putString("MyObject", json);
+        editor.putString(context.getString(R.string.my_object), json);
         editor.apply();
     }
+
     //retrieve config manager
     public void retrieveFromSharedPrefs(Context newContext){
         this.context = newContext;
-        newPrefs = context.getSharedPreferences("Save config manager",MODE_PRIVATE);
+        newPrefs = context.getSharedPreferences(context.getString(R.string.save_config_manager),MODE_PRIVATE);
         editor = newPrefs.edit();
-        json = newPrefs.getString("MyObject", "no manager saved");
-        if (!Objects.equals(json, "no manager saved")) {
+        json = newPrefs.getString(context.getString(R.string.my_object), context.getString(R.string.no_manager_saved));
+        if (!Objects.equals(json, context.getString(R.string.no_manager_saved))) {
             manager.setListOfConfigurations(gson.fromJson(json, listType));
         }
     }
+
 }

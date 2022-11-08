@@ -1,9 +1,13 @@
 package ca.sfu.dba56.cmpt276.model;
 
-/* This class calculates the achievement level, expected min score and max score, and
-* the range and bounds of the scores in each level.
+/*
+* Class Achievements calculates the achievement level, expected min score and max score,
+* and the range and bounds of the scores in each level.
+* Keeps/populates the array of achievements names and allows to retrieve achievement names
  */
+
 public class Achievements {
+
     private int numOfBoundedLevels;
     private String achievements[];
     private int intAchievements[] = new int[10];
@@ -12,17 +16,38 @@ public class Achievements {
     private int maxScore;
 
     public Achievements(){
-        this.achievements = new String[]{"Worst Level","Bad Level","Okay Level","Alright Level",
-                "Better Level","Good Level","Almost There Level","Great Level","Best Level", "Legendary Level"};
+        this.achievements = new String[]{//"Worst Level",
+                                        "Beautiful Bananas",
+                                        //"Bad Level",
+                                        "Wonderful Watermelons",
+                                        //"Okay Level",
+                                        "Okay Oranges",
+                                        //"Alright Level",
+                                        "Admirable Apricots",
+                                        //"Better Level",
+                                        "Good Grapefruits",
+                                        //"Good Level",
+                                        "Amazing Apples",
+                                        //"Almost There Level",
+                                        "Great Grapes",
+                                        //"Great Level",
+                                        "Better Blueberries",
+                                        //"Best Level",
+                                        "Super Strawberries",
+                                        //"Legendary Level"
+                                        "Perfect Peaches"};
         this.numOfBoundedLevels = 8;
     }
+
 
     public int getNumOfBoundedLevels(){
         return numOfBoundedLevels;
     }
-
     public String getAchievementLevel(int index){
         return achievements[index];
+    }
+    public String getLevelAchieved() {
+        return levelAchieved;
     }
 
     public int calculateMinMaxScore(int score, int numPlayers){
@@ -32,10 +57,6 @@ public class Achievements {
     public int calculateLevelRange(int min, int max){
         int range = ((max - min)/8);
         return range;
-    }
-
-    public String getLevelAchieved() {
-        return levelAchieved;
     }
 
     public void setAchievementsBounds(int min, int max, int players) {

@@ -1,26 +1,19 @@
 package ca.sfu.dba56.cmpt276.model;
 
-/*
-* Class Configuration Description
-* works as pseudo GameManager Class
-*/
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+/*
+ * Class Configuration contains information of the game
+ * like game name, expected poor/great score and list of games played (history)
+ * allows to add new games to the list, get/set min/max scores and name, and string with played games info
+ */
 public class Configuration {
 
-    //variables
-    //name of the game
+
     private String gameName;
-    //range for poor score
     private int minPoorScore;
-    //range for best score
     private int maxBestScore;
-    //min num of players (2)
-    private final int minNumOfPlayers = 1;
-    //list of games (history)
     private List<Game> listOfGames = new ArrayList<>();
 
     //constructor
@@ -30,20 +23,13 @@ public class Configuration {
         maxBestScore = newMaxScore;
     }
 
-    //methods
     //add new game (to the list)
     public void add(Game game){listOfGames.add(game);}
-    //delete a game (from list on position i)
-    public void remove(int i){listOfGames.remove(i);}
-    // show the list in game history screen
+    // get a string containing info for 1 game for the history
     public String get(int i){
         return  "Players: " + listOfGames.get(i).getPlayers() + " Scores: " + listOfGames.get(i).getScores() + " " + listOfGames.get(i).getDateGamePlayed()
                 + " " + listOfGames.get(i).getLevelAchieved();
     }
-    public int size(){
-        return listOfGames.size();
-    }
-
     //setters
     public void setGameNameInConfig(String newName){gameName = newName;}
     public void setMinPoorScoreInConfig(int newScore){minPoorScore = newScore;}
@@ -52,5 +38,7 @@ public class Configuration {
     public String getGameNameFromConfig(){return gameName;}
     public int getMinPoorScoreFromConfig(){return minPoorScore;}
     public int getMaxBestScoreFromConfig(){return maxBestScore;}
-
+    public int getSizeOfListOfConfigs(){
+        return listOfGames.size();
+    }
 }

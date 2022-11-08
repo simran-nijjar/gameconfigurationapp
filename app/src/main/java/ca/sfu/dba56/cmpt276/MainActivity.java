@@ -20,9 +20,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+/*
+* main activity that shows the list of all the configs
+* list allows to click on items and go to view config activity
+* activity allows to add a new config
+* and main activity provides a help button to do to help activity
+*/
+
 public class MainActivity extends AppCompatActivity {
+
     private SaveUsingGson toSaveUsingGsonAndSP = new SaveUsingGson();
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +41,20 @@ public class MainActivity extends AppCompatActivity {
         toSaveUsingGsonAndSP.retrieveFromSharedPrefs(this);
 
         setUpHelpButton();
-        getSupportActionBar().setTitle("Configurations");
         UpdateUI();
 
         registerClickCallBack();
         setUpAddConfigurationButton();
 
+        //to save config manager
+        toSaveUsingGsonAndSP.saveToSharedRefs(this);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UpdateUI();
         //to save config manager
         toSaveUsingGsonAndSP.saveToSharedRefs(this);
     }
@@ -48,15 +65,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = HelpActivity.makeIntent(MainActivity.this);
             startActivity(intent);
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        UpdateUI();
-
-        //to save config manager
-        toSaveUsingGsonAndSP.saveToSharedRefs(this);
     }
 
     private void UpdateUI() {
@@ -81,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         //array of string config names
         int count = 0;
         while(count < manager.configListSize()){
-            String strResult = "\n" + manager.get(count).getGameNameFromConfig() + "\n";
+            String strResult = "\n" + manager.getItemAtIndex(count).getGameNameFromConfig() + "\n";
             items.add(strResult);
             count++;
         }
@@ -97,25 +105,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void registerClickCallBack() {
         ListView list = findViewById(R.id.configList);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                TextView textView = (TextView) viewClicked;
-                String massage = "You are selecting config #" + (position+1);
-                Toast.makeText(MainActivity.this, massage, Toast.LENGTH_SHORT).show();
-                manager.setIndex(position);
-                //make an intent for view configuration activity
-                Intent intent = ViewConfiguration.makeIntent(MainActivity.this);
-                startActivity(intent);
-            }
+        list.setOnItemClickListener((parent, viewClicked, position, id) -> {
+
+            manager.setIndex(position);
+            //make an intent for view configuration activity
+            Intent intent = ViewConfiguration.makeIntent(MainActivity.this);
+            startActivity(intent);
         });
     }
 
 
-    private void setUpAddConfigurationButton(){
+    private void setUpAddConfigurationButton() {
         FloatingActionButton addConfigBtn = findViewById(R.id.addBtn);
         addConfigBtn.setOnClickListener(v ->{
-            Intent intent = AddConfiguration.makeIntent(MainActivity.this);
+            Intent intent = AddEditConfiguration.makeIntent(MainActivity.this);
             startActivity(intent);
         });
     }
