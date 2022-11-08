@@ -133,8 +133,8 @@ public class AddNewGame extends AppCompatActivity {
 
     private void displayMaxPlayerMsg(){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
-        alertDialog.setTitle(getString(R.string.tooManyPlayers));
-        alertDialog.setMessage(getString(R.string.sryTooManyPlayers));
+        alertDialog.setTitle(getString(R.string.too_many_players));
+        alertDialog.setMessage(getString(R.string.Sorry_too_many_players));
         alertDialog.setButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //Stay on ViewAchievement activity
