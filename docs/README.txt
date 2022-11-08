@@ -38,7 +38,6 @@ which user cannot enter and displayed numbers greater than max before reaching P
 Worst level is always Beautiful Bananas with less than expected min score and best level is always
 Perfect Peaches >= expected max score
 
-
 Game Plays:
 When a user clicks a game from the game configuration list, they are taken to view configuration
 where they have the buttons when clicked to add a new game, view achievement levels for number of
