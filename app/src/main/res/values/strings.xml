@@ -11,9 +11,11 @@
     <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">CMPT276</a>
     </string>
     <string name="description_content">
-        \nThis app provides achievement goals to turn some competitive games into a more co-operative experience.\n
-        \nAt the end of a game, the combined score of all players is used to calculate a combined achievement level, with a higher total score earning a better achievement.\n
-        \nSources:\n
+        \nWe have an easy way to save your plays for the competitive games you play with your friends!\n
+        \nTo get started, click on the ‘plus’ button in the Configurations screen and add your favourite games.\n
+        \nWhen you want to add a game play, press the game from the list and click add new game where you can add the number of players for a game and the combined score and see the achievement level you earned.\n
+        \nYou can also view history, view expecting achievement levels for a game, edit and delete a game configuration.\n
+        \n\nSources:\n
         \n<a href="https://www.idownloadblog.com/2021/05/09/multicolor-gradient-wallpapers-pack-iphone/">App Background</a>\n
         \n<a href="https://www.miro.com/">ic_main_msg</a>\n
         \n<a href="https://www.miro.com/">ic_history_msg</a>
