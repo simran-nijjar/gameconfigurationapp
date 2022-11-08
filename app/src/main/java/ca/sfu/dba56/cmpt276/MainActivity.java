@@ -107,9 +107,7 @@ public class MainActivity extends AppCompatActivity {
     private void registerClickCallBack() {
         ListView list = findViewById(R.id.configList);
         list.setOnItemClickListener((parent, viewClicked, position, id) -> {
-            TextView textView = (TextView) viewClicked;
-            String message = "You are selecting config #" + (position+1);
-            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+
             manager.setIndex(position);
             //make an intent for view configuration activity
             Intent intent = ViewConfiguration.makeIntent(MainActivity.this);

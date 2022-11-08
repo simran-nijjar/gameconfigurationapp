@@ -270,7 +270,6 @@ public class AddNewGame extends AppCompatActivity {
                     Game gamePlayed = new Game(numOfPlayers, scores, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
                     manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
                     showResult(gamePlayed.getLevelAchieved());
-                    Toast.makeText(AddNewGame.this, "scores " + scores, Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
                 }
@@ -281,7 +280,7 @@ public class AddNewGame extends AppCompatActivity {
     // pop up a window to show achievement
     private void showResult(String achievements){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
-        alertDialog.setTitle("Achievement");
+        alertDialog.setTitle(getString(R.string.achievement));
         alertDialog.setMessage("" + achievements);
         alertDialog.setButton("Ok", (dialog, which) -> {
             manager.setIndex(selectedGame);

@@ -228,7 +228,6 @@ public class AddEditConfiguration extends AppCompatActivity {
                     Configuration newConfig = new Configuration(gameNameAsStr, expPoorScore, expGreatScore);
                     ConfigurationsManager manager = ConfigurationsManager.getInstance();
                     manager.add(newConfig);
-                    Toast.makeText(this, "You saved the configuration", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
@@ -242,7 +241,6 @@ public class AddEditConfiguration extends AppCompatActivity {
                     currentConfig.setMinPoorScoreInConfig(expPoorScore);
                     currentConfig.setMaxBestScoreInConfig(expGreatScore);
                     manager.setItemAtIndex(currentConfigPosition, currentConfig);
-                    Toast.makeText(this, "You safely edited configuration", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

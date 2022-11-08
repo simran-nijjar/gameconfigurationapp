@@ -33,4 +33,5 @@
     <string name="invalid_players_msg">Number of players cannot be less than 1. Please try again.</string>
     <string name="negCombinedScoresMsg">Invalid Input: Combined score cannot be negative for this game</string>
     <string name="greaterCombinedScoreMsg">Invalid input: Combined score can not be greater than the maximum score</string>
+    <string name="achievement">Achievement</string>
 </resources>
