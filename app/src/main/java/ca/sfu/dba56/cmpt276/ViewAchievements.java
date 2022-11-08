@@ -114,7 +114,7 @@ public class ViewAchievements extends AppCompatActivity {
 
     private void displayMaxPlayerMsg(int players) {
         if (players >= MAX_PLAYERS) {
-            AlertDialog alertDialog = new AlertDialog.Builder(ViewAchievements.this).create(); //Read Update
+            AlertDialog alertDialog = new AlertDialog.Builder(ViewAchievements.this).create();
             alertDialog.setTitle(getString(R.string.too_many_players));
             alertDialog.setMessage(getString(R.string.Sorry_too_many_players));
             alertDialog.setButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
@@ -152,7 +152,7 @@ public class ViewAchievements extends AppCompatActivity {
     @NonNull
     private String displayAchievementRanges(String achievementLevels, int range, boolean lessThanEightLevels) {
         int newStartRange = 0;
-        achievementLevels += getString(R.string.worst_game_level_score_boundary) //"Worst Game Level: Range < "
+        achievementLevels += getString(R.string.worst_game_level_range_boundary)
                 + minScore + "\n\n";
         for (int i = 1; i < achievements.getNumOfBoundedLevels() + 1; i++) {
             if (newStartRange + 1 < Math.abs(maxScore)) {
@@ -177,10 +177,10 @@ public class ViewAchievements extends AppCompatActivity {
             }
         }
         if (lessThanEightLevels) {
-            achievementLevels += getString(R.string.legendary_level_range_boundary) //"Legendary Level: Range >= "
+            achievementLevels += getString(R.string.legendary_level_range_boundary)
                     + (newStartRange + 1);
         } else {
-            achievementLevels += getString(R.string.legendary_level_range_boundary) //"Legendary Level: Range > "
+            achievementLevels += getString(R.string.legendary_level_range_boundary)
                     + maxScore;
         }
         return achievementLevels;
@@ -188,7 +188,7 @@ public class ViewAchievements extends AppCompatActivity {
 
     @NonNull
     private String displayAchievementScores(String achievementLevels) {
-        achievementLevels += getString(R.string.worst_game_level_score_boundary) //"Worst Game Level: Score < "
+        achievementLevels += getString(R.string.worst_game_level_score_boundary)
                 + minScore +"\n\n";
         for (int i = 1; i < (maxScore - minScore + 1); i++){
             achievementLevels += achievements.getAchievementLevel(i);
@@ -196,7 +196,7 @@ public class ViewAchievements extends AppCompatActivity {
             achievementLevels += (achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayers) + i - 1);
             achievementLevels += getString(R.string.score_part2);
         }
-        achievementLevels += getString(R.string.legendary_level_score_boundary) //"Legendary Level: Score >= "
+        achievementLevels += getString(R.string.legendary_level_score_boundary)
                 + maxScore;
         return achievementLevels;
     }

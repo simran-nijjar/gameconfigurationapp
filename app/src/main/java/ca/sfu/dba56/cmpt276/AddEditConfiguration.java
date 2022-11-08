@@ -172,7 +172,7 @@ public class AddEditConfiguration extends AppCompatActivity {
 
     //give an alert dialog message if user exceeded limits for string fields input
     private void displayMaxNameLengthMsg(){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddEditConfiguration.this).create(); //Read Update
+        AlertDialog alertDialog = new AlertDialog.Builder(AddEditConfiguration.this).create();
         alertDialog.setTitle(getString(R.string.game_name_is_too_long));
         alertDialog.setMessage(getString(R.string.sorry_game_name_is_too_long_try_shorter));
         alertDialog.setButton(getString(R.string.Ok), (dialog, which) -> {
@@ -186,7 +186,7 @@ public class AddEditConfiguration extends AppCompatActivity {
 
     //give an alert dialog message if user exceeded limits for number fields input
     private void displayMaxScoreMsg(boolean isPoorScore){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddEditConfiguration.this).create(); //Read Update
+        AlertDialog alertDialog = new AlertDialog.Builder(AddEditConfiguration.this).create();
         alertDialog.setTitle(getString(R.string.game_score_is_too_long));
         alertDialog.setMessage(getString(R.string.sorry_score_is_too_long_please_try_shorter));
         alertDialog.setButton(getString(R.string.Ok), (dialog, which) -> {

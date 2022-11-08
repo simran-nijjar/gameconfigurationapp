@@ -132,7 +132,7 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void displayMaxPlayerMsg(){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
+        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
         alertDialog.setTitle(getString(R.string.too_many_players));
         alertDialog.setMessage(getString(R.string.Sorry_too_many_players));
         alertDialog.setButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
@@ -147,7 +147,7 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void displayMaxCombinedScoreMsg(){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
+        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
         alertDialog.setTitle(getString(R.string.scoreTooHigh));
         alertDialog.setMessage(getString(R.string.scoreTooHighMsg));
         alertDialog.setButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
@@ -162,7 +162,7 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void displayMinCombinedScoreMsg(){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
+        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
         alertDialog.setTitle(getString(R.string.scoreTooLow));
         alertDialog.setMessage(getString(R.string.scoreTooLowMsg));
         alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
@@ -274,7 +274,7 @@ public class AddNewGame extends AppCompatActivity {
 
     // pop up a window to show achievement
     private void showResult(String achievements){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
+        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
         alertDialog.setTitle(getString(R.string.achievement));
         alertDialog.setMessage("" + achievements);
         alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
