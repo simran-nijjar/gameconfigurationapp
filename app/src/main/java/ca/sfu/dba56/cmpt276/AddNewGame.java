@@ -165,10 +165,8 @@ public class AddNewGame extends AppCompatActivity {
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
         alertDialog.setTitle(getString(R.string.scoreTooLow));
         alertDialog.setMessage(getString(R.string.scoreTooLowMsg));
-        alertDialog.setButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                //Stay on ViewAchievement activity
-            }
+        alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
+            //Stay on ViewAchievement activity
         });
         alertDialog.show();
         //set num of player to the minimum
@@ -254,7 +252,7 @@ public class AddNewGame extends AppCompatActivity {
 
     // get date time
     public String saveDatePlayed(){
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd, y @ h:mma");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(getString(R.string.date_format));
         LocalDateTime currentDate = LocalDateTime.now();
         dateGamePlayed = currentDate.format(dateFormat);
         return dateGamePlayed;
@@ -263,16 +261,13 @@ public class AddNewGame extends AppCompatActivity {
     // save input to the list
     private void saveInput(int selectedGameInt) {
         Button save = findViewById(R.id.save_btn);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isPlayerValid && isScoresValid) {
-                    Game gamePlayed = new Game(numOfPlayers, scores, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
-                    manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
-                    showResult(gamePlayed.getLevelAchieved());
-                }else {
-                    Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
-                }
+        save.setOnClickListener(v -> {
+            if (isPlayerValid && isScoresValid) {
+                Game gamePlayed = new Game(numOfPlayers, scores, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
+                manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
+                showResult(gamePlayed.getLevelAchieved());
+            }else {
+                Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
             }
         });
     }

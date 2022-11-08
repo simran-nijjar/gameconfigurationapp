@@ -48,4 +48,27 @@
     <string name="delete">Delete</string>
     <string name="gameName">game name</string>
     <string name="gameName2">game name2</string>
+    <string name="save_config_manager">Save config manager</string>
+    <string name="my_object">MyObject</string>
+    <string name="no_manager_saved">no manager saved</string>
+    <string name="edit_game___configuration">\Edit Game %1$s Configuration\</string>
+    <string name="game___configuration">\Game %1$s Configuration\</string>
+    <string name="add_new_game_config">Add New Game Config</string>
+    <string name="game_name_is_too_long">Game name is too long</string>
+    <string name="sorry_game_name_is_too_long_try_shorter">Sorry, the game name is too long. Please try a shorter name</string>
+    <string name="Ok">Ok</string>
+    <string name="game_score_is_too_long">Score length is too long</string>
+    <string name="sorry_score_is_too_long_please_try_shorter">Sorry, score length is too long. Please try a number of shorter length</string>
+    <string name="ERROR_text_fields_cannot_be_empty">ERROR: Text fields cannot be empty. Please enter correct values and try again</string>
+    <string name="poor_score_must_be_less_than_great_score_try_again">Poor score must be less than great score. Try again</string>
+    <string name="date_format">MMM dd, y @ h:mma</string>
+    <string name="game_name_2">game name2</string>
+    <string name="too_many_players">Too many players</string>
+    <string name="Sorry_too_many_players">Sorry, that\'s too many players. Please try a smaller number</string>
+    <string name="worst_game_level_score_boundary"><![CDATA[\ Beautiful Bananas : Score < \]]></string>
+    <string name="worst_game_level_range_boundary"><![CDATA[\ Beautiful Bananas : Range < \]]></string>
+    <string name="legendary_level_score_boundary"><![CDATA[\ Perfect Peaches: Score >= \]]></string>
+    <string name="legendary_level_range_boundary"><![CDATA[\ Perfect Peaches: Range >= \]]></string>
+    <string name="score_part1">\ Score : [\</string>
+    <string name="score_part2"> ]\n\n</string>
 </resources>

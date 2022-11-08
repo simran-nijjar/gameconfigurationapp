@@ -57,7 +57,7 @@ public class ViewConfiguration extends AppCompatActivity {
         manager = ConfigurationsManager.getInstance();
         Configuration currentConfig = manager.getItemAtIndex(currentConfigPosition);
         //Activity Name
-        getSupportActionBar().setTitle("Game " + currentConfig.getGameNameFromConfig() + " Configuration");
+        getSupportActionBar().setTitle(getString(R.string.game___configuration, currentConfig.getGameNameFromConfig()));
         //find locations
         expPoorScoreEditTxt = findViewById(R.id.textFillPoorScoreConfigView);
         expGreatScoreEditTxt = findViewById(R.id.textFillGreatScoreConfigView);
@@ -129,12 +129,7 @@ public class ViewConfiguration extends AppCompatActivity {
 
     private void setUpDeleteButton(int currentConfigPosition) {
         Button deleteBtn = findViewById(R.id.btnDeleteConfig);
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteOrCancel(currentConfigPosition);
-            }
-        });
+        deleteBtn.setOnClickListener(v -> deleteOrCancel(currentConfigPosition));
     }
 
     //ask user on click of delete button
@@ -143,21 +138,15 @@ public class ViewConfiguration extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.delete_msg))
                 .setCancelable(false)
-                .setPositiveButton(getString(R.string.delete), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        manager.remove(currentConfigPosition);
-                        //saves the change
-                        toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
-                        Intent k = new Intent(ViewConfiguration.this, MainActivity.class);
-                        startActivity(k);
+                .setPositiveButton(getString(R.string.delete), (dialog, id) -> {
+                    manager.remove(currentConfigPosition);
+                    //saves the change
+                    toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
+                    Intent k = new Intent(ViewConfiguration.this, MainActivity.class);
+                    startActivity(k);
 
-                    }
                 })
-                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                .setNegativeButton(getString(R.string.cancel), (dialog, id) -> dialog.cancel());
 
         AlertDialog alert = builder.create();
         alert.show();

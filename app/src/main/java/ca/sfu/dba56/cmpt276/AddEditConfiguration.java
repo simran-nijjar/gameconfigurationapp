@@ -61,7 +61,7 @@ public class AddEditConfiguration extends AppCompatActivity {
             ConfigurationsManager manager = ConfigurationsManager.getInstance();
             Configuration currentConfig = manager.getItemAtIndex(currentConfigPosition);
 
-            getSupportActionBar().setTitle("Edit Game " + currentConfig.getGameNameFromConfig() + " Configuration");
+            getSupportActionBar().setTitle(getString(R.string.edit_game___configuration, currentConfig.getGameNameFromConfig()));
 
             //set variables from pre-existing config to the screen
             String gameName = String.valueOf(currentConfig.getGameNameFromConfig());
@@ -72,7 +72,7 @@ public class AddEditConfiguration extends AppCompatActivity {
         }
         else{
             //Add Game Config Activity
-            getSupportActionBar().setTitle("Add New Game Config");
+            getSupportActionBar().setTitle(R.string.add_new_game_config);
             getUserInput();
             setUpSaveConfigButton();
         }
@@ -158,7 +158,7 @@ public class AddEditConfiguration extends AppCompatActivity {
                     }
                 }catch (NumberFormatException ex){
                     if (expGreatScoreFromUser.length() == 0) {
-                        Toast.makeText(AddEditConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddEditConfiguration.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -173,12 +173,10 @@ public class AddEditConfiguration extends AppCompatActivity {
     //give an alert dialog message if user exceeded limits for string fields input
     private void displayMaxNameLengthMsg(){
         AlertDialog alertDialog = new AlertDialog.Builder(AddEditConfiguration.this).create(); //Read Update
-        alertDialog.setTitle("Game name is too long");
-        alertDialog.setMessage("Sorry, the game name is too long. Please try a shorter name");
-        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                //Stay on ViewAchievement activity
-            }
+        alertDialog.setTitle(getString(R.string.game_name_is_too_long));
+        alertDialog.setMessage(getString(R.string.sorry_game_name_is_too_long_try_shorter));
+        alertDialog.setButton(getString(R.string.Ok), (dialog, which) -> {
+            //Stay on ViewAchievement activity
         });
         alertDialog.show();
         //set num of player to the minimum
@@ -189,9 +187,9 @@ public class AddEditConfiguration extends AppCompatActivity {
     //give an alert dialog message if user exceeded limits for number fields input
     private void displayMaxScoreMsg(boolean isPoorScore){
         AlertDialog alertDialog = new AlertDialog.Builder(AddEditConfiguration.this).create(); //Read Update
-        alertDialog.setTitle("Score length is too long");
-        alertDialog.setMessage("Sorry, score length is too long. Please try a number of shorter length");
-        alertDialog.setButton("Ok", (dialog, which) -> {
+        alertDialog.setTitle(getString(R.string.game_score_is_too_long));
+        alertDialog.setMessage(getString(R.string.sorry_score_is_too_long_please_try_shorter));
+        alertDialog.setButton(getString(R.string.Ok), (dialog, which) -> {
             //Stay on ViewAchievement activity
         });
         alertDialog.show();
@@ -263,13 +261,12 @@ public class AddEditConfiguration extends AppCompatActivity {
         if (TextUtils.isEmpty(gameNameAsStr)
                 || TextUtils.isEmpty(expPoorScoreAsStr)
                 || TextUtils.isEmpty(expGreatScoreAsStr)){
-            Toast.makeText(this, "ERROR: Text fields cannot be empty. Please enter correct values and try again",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.ERROR_text_fields_cannot_be_empty, Toast.LENGTH_SHORT).show();
             return false;
         }
         convertStringToInt();
         if (expPoorScore >= expGreatScore){
-            Toast.makeText(this, "Poor score must be less than great score. Try again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.poor_score_must_be_less_than_great_score_try_again, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

@@ -16,8 +16,26 @@ public class Achievements {
     private int maxScore;
 
     public Achievements(){
-        this.achievements = new String[]{"Worst Level","Bad Level","Okay Level","Alright Level",
-                "Better Level","Good Level","Almost There Level","Great Level","Best Level", "Legendary Level"};
+        this.achievements = new String[]{//"Worst Level",
+                                        "Beautiful Bananas",
+                                        //"Bad Level",
+                                        "Wonderful Watermelons",
+                                        //"Okay Level",
+                                        "Okay Oranges",
+                                        //"Alright Level",
+                                        "Admirable Apricots",
+                                        //"Better Level",
+                                        "Good Grapefruits",
+                                        //"Good Level",
+                                        "Amazing Apples",
+                                        //"Almost There Level",
+                                        "Great Grapes",
+                                        //"Great Level",
+                                        "Better Blueberries",
+                                        //"Best Level",
+                                        "Super Strawberries",
+                                        //"Legendary Level"
+                                        "Perfect Peaches"};
         this.numOfBoundedLevels = 8;
     }
 
