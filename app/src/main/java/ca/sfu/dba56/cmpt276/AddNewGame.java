@@ -280,6 +280,7 @@ public class AddNewGame extends AppCompatActivity {
         alertDialog.setMessage("" + achievements);
         alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                manager.setIndex(selectedGameInt);
                 AddNewGame.this.finish(); // back to View Configuration page
             }
         });

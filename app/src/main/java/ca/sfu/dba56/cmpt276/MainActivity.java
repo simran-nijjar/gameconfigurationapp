@@ -3,7 +3,6 @@ package ca.sfu.dba56.cmpt276;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,23 +12,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.gson.Gson;
 
-import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private SaveUsingGson toSaveUsingGsonAndSP = new SaveUsingGson();
-
+    private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,10 +103,9 @@ public class MainActivity extends AppCompatActivity {
                 TextView textView = (TextView) viewClicked;
                 String massage = "You are selecting config #" + (position+1);
                 Toast.makeText(MainActivity.this, massage, Toast.LENGTH_SHORT).show();
-
+                manager.setIndex(position);
                 //make an intent for view configuration activity
                 Intent intent = ViewConfiguration.makeIntent(MainActivity.this);
-                intent.putExtra(getString(R.string.selected_config_position), position);
                 startActivity(intent);
             }
         });
