@@ -133,9 +133,9 @@ public class AddNewGame extends AppCompatActivity {
 
     private void displayMaxPlayerMsg(){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
-        alertDialog.setTitle("Too many players");
-        alertDialog.setMessage("Sorry, that's too many players. Please try a smaller number");
-        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+        alertDialog.setTitle(getString(R.string.tooManyPlayers));
+        alertDialog.setMessage(getString(R.string.sryTooManyPlayers));
+        alertDialog.setButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //Stay on ViewAchievement activity
             }
@@ -148,9 +148,9 @@ public class AddNewGame extends AppCompatActivity {
 
     private void displayMaxCombinedScoreMsg(){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
-        alertDialog.setTitle("Combined Score Too High");
-        alertDialog.setMessage("Sorry, the combined score is too high. Please try a smaller number");
-        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+        alertDialog.setTitle(getString(R.string.scoreTooHigh));
+        alertDialog.setMessage(getString(R.string.scoreTooHighMsg));
+        alertDialog.setButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //Stay on ViewAchievement activity
             }
@@ -163,9 +163,9 @@ public class AddNewGame extends AppCompatActivity {
 
     private void displayMinCombinedScoreMsg(){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
-        alertDialog.setTitle("Combined Score Too Low");
-        alertDialog.setMessage("Sorry, the combined score is too low. Please try a bigger number");
-        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+        alertDialog.setTitle(getString(R.string.scoreTooLow));
+        alertDialog.setMessage(getString(R.string.scoreTooLowMsg));
+        alertDialog.setButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //Stay on ViewAchievement activity
             }
@@ -193,7 +193,7 @@ public class AddNewGame extends AppCompatActivity {
                     numOfPlayers = Integer.parseInt(numOfPlayersAsStr);
                     if (numOfPlayers < 1) {
                         isPlayerValid = false;
-                        playerMsg.setText("Invalid input: 1 player minimum");
+                        playerMsg.setText(R.string.PlayerMinimum1);
                     }else if (numOfPlayers >= MAX_USER_INPUT) {
                         isPlayerValid = false;
                         displayMaxPlayerMsg();
@@ -210,7 +210,7 @@ public class AddNewGame extends AppCompatActivity {
                     }
                 }catch (NumberFormatException ex){
                     isPlayerValid = false;
-                    Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -241,7 +241,7 @@ public class AddNewGame extends AppCompatActivity {
                 }catch (NumberFormatException ex){
                     isScoresValid = false;
                     if(combinedScoreFromUser.length() == 0) {
-                        Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -271,7 +271,7 @@ public class AddNewGame extends AppCompatActivity {
                     manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
                     showResult(gamePlayed.getLevelAchieved());
                 }else {
-                    Toast.makeText(AddNewGame.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -282,7 +282,7 @@ public class AddNewGame extends AppCompatActivity {
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create(); //Read Update
         alertDialog.setTitle(getString(R.string.achievement));
         alertDialog.setMessage("" + achievements);
-        alertDialog.setButton("Ok", (dialog, which) -> {
+        alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
             manager.setIndex(selectedGame);
             AddNewGame.this.finish(); // back to View Configuration page
         });

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         toSaveUsingGsonAndSP.retrieveFromSharedPrefs(this);
 
         setUpHelpButton();
-        getSupportActionBar().setTitle("Configurations");
+        //getSupportActionBar().setTitle("Configurations");
         UpdateUI();
 
         registerClickCallBack();

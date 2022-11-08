@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CMPT276</string>
+    <string name="app_name">Configurations</string>
     <string name="help">Help</string>
     <string name="addNewGame">Add New Game</string>
     <string name="gameHistory">Game History</string>
@@ -34,4 +34,13 @@
     <string name="negCombinedScoresMsg">Invalid Input: Combined score cannot be negative for this game</string>
     <string name="greaterCombinedScoreMsg">Invalid input: Combined score can not be greater than the maximum score</string>
     <string name="achievement">Achievement</string>
+    <string name="emptyOrInvalid">Your input is empty or invalid</string>
+    <string name="tooManyPlayers">Too many players</string>
+    <string name="sryTooManyPlayers">Sorry, that\'s too many players. Please try a smaller number</string>
+    <string name="OK">Ok</string>
+    <string name="scoreTooHigh">Combined Score Too High</string>
+    <string name="scoreTooLow">Combined Score Too Low</string>
+    <string name="scoreTooHighMsg">Sorry, the combined score is too high. Please try a smaller number</string>
+    <string name="scoreTooLowMsg">Sorry, the combined score is too low. Please try a bigger number</string>
+    <string name="PlayerMinimum1">Invalid input: 1 player minimum</string>
 </resources>
