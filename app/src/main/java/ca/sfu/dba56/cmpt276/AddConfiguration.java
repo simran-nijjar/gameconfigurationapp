@@ -36,7 +36,6 @@ public class AddConfiguration extends AppCompatActivity {
     private final int MAX_POS_SCORE_INPUT = 100000000;
     private final int MAX_NEG_SCORE_INPUT = -100000000;
 
-    //comment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
