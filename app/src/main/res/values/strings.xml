@@ -43,4 +43,9 @@
     <string name="scoreTooHighMsg">Sorry, the combined score is too high. Please try a smaller number</string>
     <string name="scoreTooLowMsg">Sorry, the combined score is too low. Please try a bigger number</string>
     <string name="PlayerMinimum1">Invalid input: 1 player minimum</string>
+    <string name="delete_msg">Are you sure you want to delete?</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="gameName">game name</string>
+    <string name="gameName2">game name2</string>
 </resources>

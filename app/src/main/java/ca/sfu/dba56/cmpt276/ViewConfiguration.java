@@ -110,7 +110,7 @@ public class ViewConfiguration extends AppCompatActivity {
             historyBtn.setVisibility(View.VISIBLE);
             historyBtn.setOnClickListener(v -> {
                 Intent intent2 = GameHistory.makeIntent(ViewConfiguration.this);
-                intent2.putExtra("game name2", currentConfigPosition);
+                intent2.putExtra(getString(R.string.gameName2), currentConfigPosition);
                 startActivity(intent2);
             });
         }
@@ -122,7 +122,7 @@ public class ViewConfiguration extends AppCompatActivity {
             Intent intent = AddNewGame.makeIntent(ViewConfiguration.this);
             manager = ConfigurationsManager.getInstance();
             Configuration currentConfig = manager.getItemAtIndex(currentConfigPosition);
-            intent.putExtra("game name", currentConfig.getGameNameFromConfig());
+            intent.putExtra(getString(R.string.gameName), currentConfig.getGameNameFromConfig());
             startActivity(intent);
         });
     }
@@ -141,9 +141,9 @@ public class ViewConfiguration extends AppCompatActivity {
     //if he intents to delete config or not
     private void deleteOrCancel(int currentConfigPosition) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to delete?")
+        builder.setMessage(getString(R.string.delete_msg))
                 .setCancelable(false)
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.delete), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         manager.remove(currentConfigPosition);
                         //saves the change
@@ -153,7 +153,7 @@ public class ViewConfiguration extends AppCompatActivity {
 
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }

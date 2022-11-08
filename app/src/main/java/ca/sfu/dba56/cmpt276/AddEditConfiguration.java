@@ -131,7 +131,7 @@ public class AddEditConfiguration extends AppCompatActivity {
                     }
                 }catch (NumberFormatException ex){
                     if (expPoorScoreFromUser.length() == 0) {
-                        Toast.makeText(AddEditConfiguration.this, "Your input is empty or invalid", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddEditConfiguration.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
