@@ -44,6 +44,7 @@ where they have the buttons when clicked to add a new game, view achievement lev
 players inputted, edit, and delete game configuration. Users can see the history of a game when
 there is at least one game played.
 Combined scores can be whole numbers and negative numbers. Decimals are not allowed.
+User can enter scores less than expected min score resulting in them achieving the worst level.
 Displays alert dialog when user enters number of players greater than 100000000 and resets value
 to 1 and erases combined score when it is greater than 100000000 or less than -100000000
 A drop-down menu is added in add new game for convenience. This allows the user to change the game
