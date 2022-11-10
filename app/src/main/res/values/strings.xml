@@ -71,10 +71,19 @@
     <string name="game_name_2">game name2</string>
     <string name="too_many_players">Too many players</string>
     <string name="Sorry_too_many_players">Sorry, that\'s too many players. Please try a smaller number</string>
-    <string name="worst_game_level_score_boundary"><![CDATA[\ Beautiful Bananas : Score < \]]></string>
-    <string name="worst_game_level_range_boundary"><![CDATA[\ Beautiful Bananas : Range < \]]></string>
-    <string name="legendary_level_score_boundary"><![CDATA[\ Perfect Peaches: Score >= \]]></string>
-    <string name="legendary_level_range_boundary"><![CDATA[\ Perfect Peaches: Range >= \]]></string>
+    <string name="worst_game_level_score_boundary_fruits"><![CDATA[\ Beautiful Bananas : Score < \]]></string>
+    <string name="worst_game_level_range_boundary_fruits"><![CDATA[\ Beautiful Bananas : Range < \]]></string>
+    <string name="legendary_level_score_boundary_fruits"><![CDATA[\ Perfect Peaches : Score >= \]]></string>
+    <string name="legendary_level_range_boundary_fruits"><![CDATA[\ Perfect Peaches : Range >= \]]></string>
+    <string name="worst_game_level_score_boundary_second"><![CDATA[\ Worst : Score < \]]></string>
+    <string name="worst_game_level_range_boundary_second"><![CDATA[\ Worst : Range < \]]></string>
+    <string name="legendary_level_score_boundary_second"><![CDATA[\ Legendary : Score >= \]]></string>
+    <string name="legendary_level_range_boundary_second"><![CDATA[\ Legendary : Range >= \]]></string>
+    <string name="worst_game_level_score_boundary_third"><![CDATA[\ Not the best : Score < \]]></string>
+    <string name="worst_game_level_range_boundary_third"><![CDATA[\ Not the best : Range < \]]></string>
+    <string name="legendary_level_score_boundary_third"><![CDATA[\ Not the worst : Score >= \]]></string>
+    <string name="legendary_level_range_boundary_third"><![CDATA[\ Not the worst : Range >= \]]></string>
     <string name="score_part1">\ Score : [\</string>
     <string name="score_part2"> ]\n\n</string>
+    <string name="display_string_option">"%1s "</string>
 </resources>
