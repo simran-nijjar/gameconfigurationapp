@@ -68,7 +68,6 @@
     <string name="ERROR_text_fields_cannot_be_empty">ERROR: Text fields cannot be empty. Please enter correct values and try again</string>
     <string name="poor_score_must_be_less_than_great_score_try_again">Poor score must be less than great score. Try again</string>
     <string name="date_format">MMM dd, y @ h:mma</string>
-    <string name="game_name_2">game name2</string>
     <string name="too_many_players">Too many players</string>
     <string name="Sorry_too_many_players">Sorry, that\'s too many players. Please try a smaller number</string>
     <string name="worst_game_level_score_boundary"><![CDATA[\ Beautiful Bananas : Score < \]]></string>

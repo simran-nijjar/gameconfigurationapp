@@ -29,7 +29,7 @@ public class GameHistory extends AppCompatActivity {
         setContentView(R.layout.activity_game_history);
         // get selected game name from ViewConfiguration
         Bundle b = getIntent().getExtras();
-        indexOfGame = b.getInt(getString(R.string.game_name_2));
+        indexOfGame = b.getInt(getString(R.string.gameName2));
         populateListView(manager, indexOfGame);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
