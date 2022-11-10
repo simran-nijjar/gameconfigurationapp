@@ -14,8 +14,8 @@
         android:text=""
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="@+id/userInputPlayers"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/userInputPlayers"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtEnterPlayers"
         app:layout_constraintTop_toBottomOf="@+id/userInputPlayers" />
 
     <TextView

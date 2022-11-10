@@ -6,6 +6,9 @@ package ca.sfu.dba56.cmpt276.model;
 * Keeps/populates the array of achievements names and allows to retrieve achievement names
  */
 
+import android.util.Log;
+import android.view.View;
+
 import ca.sfu.dba56.cmpt276.ViewAchievements;
 
 public class Achievements {
@@ -20,19 +23,21 @@ public class Achievements {
     private int maxScore;
     private String theme;
 
-    public Achievements(){
+    public Achievements(String theme){
         this.achievementsFruits = new String[]{"Beautiful Bananas", "Wonderful Watermelons",
                 "Outstanding Oranges", "Admirable Apricots", "Good Grapefruits", "Amazing Apples",
                 "Great Grapes", "Better Blueberries", "Super Strawberries", "Perfect Peaches"};
         this.achievementsTwo = new String[]{"Worst","A","B","C","D","E","F","G","H","Legendary"};
         this.achievementsThree = new String[]{"Not the best","1","2","3","4","5","6","7","8", "Not the worst"};
         this.numOfBoundedLevels = 8;
+        this.theme = theme;
     }
 
     public int getNumOfBoundedLevels(){
         return numOfBoundedLevels;
     }
     public String getAchievementLevel(int index){
+        Log.d("SAVED_THEME", this.theme);
         if (this.theme.equals("Second")){
             return achievementsTwo[index];
         }

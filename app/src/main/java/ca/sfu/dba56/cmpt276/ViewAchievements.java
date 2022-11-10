@@ -32,7 +32,7 @@ import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 public class ViewAchievements extends AppCompatActivity {
 
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
-    private Achievements achievements = new Achievements();
+    private Achievements achievements;
     private EditText numPlayersFromUser;
     private String numPlayersAsStr;
     private int numPlayers;
@@ -46,6 +46,7 @@ public class ViewAchievements extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        achievements = new Achievements(getAchievementTheme(this));
         setContentView(R.layout.view_achievements);
 
         noAchievementsDisplayed = findViewById(R.id.emptyAchievementsList);
@@ -223,7 +224,7 @@ public class ViewAchievements extends AppCompatActivity {
             return getString(R.string.worst_game_level_score_boundary_third)
                     + minScore +"\n\n";
         }
-        return getString(R.string.worst_game_level_score_boundary_second)
+        return getString(R.string.worst_game_level_score_boundary_fruits)
                 + minScore +"\n\n";
     }
 
@@ -245,7 +246,6 @@ public class ViewAchievements extends AppCompatActivity {
         int newStartRange = 0;
         achievementLevels += getWorstRangeOfTheme(getAchievementTheme());
         for (int i = 1; i < achievements.getNumOfBoundedLevels() + 1; i++) {
-            Toast.makeText(this, " less than < greater than " + (newStartRange+1) + " " + Math.abs(maxScore), Toast.LENGTH_SHORT).show();
             if (newStartRange + 1 < Math.abs(maxScore)) {
                 achievementLevels += achievements.getAchievementLevel(i);
                 achievementLevels += " Range: [";
@@ -268,9 +268,9 @@ public class ViewAchievements extends AppCompatActivity {
             }
         }
         if (lessThanEightLevels) { //Add best level range when not all levels can be calculated for
-            achievementLevels = getLegendaryRangeOfTheme(getAchievementTheme(), (newStartRange + 1));
+            achievementLevels += getLegendaryRangeOfTheme(getAchievementTheme(), (newStartRange + 1));
         } else { //Add best level range when all levels can be calculated for
-            achievementLevels = getLegendaryRangeOfTheme(getAchievementTheme(), maxScore);
+            achievementLevels += getLegendaryRangeOfTheme(getAchievementTheme(), maxScore);
         }
         return achievementLevels;
     }

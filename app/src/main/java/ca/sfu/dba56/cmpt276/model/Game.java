@@ -10,11 +10,11 @@ public class Game {
     private int players;
     private int scores;
     private String dateGamePlayed;
-    private Achievements achievements = new Achievements();
+    private Achievements achievements;
     private String levelAchieved;
 
-    public Game(int players, int scores, Configuration manager, String dateGamePlayed, boolean isCalculatingRangeLevels) {
-
+    public Game(int players, int scores, Configuration manager, String dateGamePlayed, boolean isCalculatingRangeLevels, String theme) {
+        achievements = new Achievements(theme);
         this.players = players;
         this.scores = scores;
 

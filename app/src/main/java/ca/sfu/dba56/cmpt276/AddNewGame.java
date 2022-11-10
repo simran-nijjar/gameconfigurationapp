@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +18,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +54,7 @@ public class AddNewGame extends AppCompatActivity {
     private int selectedGame; // user selected game config index
     private int adjustedMax;
     private int adjustedMin;
-    private Achievements addNewGameAchievements = new Achievements();
+    private Achievements addNewGameAchievements;
     private boolean isCalculatingRangeForLevels;
     private final int MAX_USER_INPUT = 100000000;
     private final int MIN_USER_INPUT = -100000000;
@@ -59,9 +62,11 @@ public class AddNewGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addNewGameAchievements = new Achievements(getAchievementTheme(this));
         setContentView(R.layout.activity_add_new_game);
         chooseGame();
         storeSelectedGame();
+        displayThemeRadioButtons();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -260,7 +265,8 @@ public class AddNewGame extends AppCompatActivity {
         Button save = findViewById(R.id.save_btn);
         save.setOnClickListener(v -> {
             if (isPlayerValid && isScoresValid) {
-                Game gamePlayed = new Game(numOfPlayers, scores, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
+                Game gamePlayed = new Game(numOfPlayers, scores, manager.getItemAtIndex(selectedGameInt),
+                        saveDatePlayed(), isCalculatingRangeForLevels, ViewAchievements.getAchievementTheme(this));
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
                 showResult(gamePlayed.getLevelAchieved());
             }else {
@@ -279,6 +285,40 @@ public class AddNewGame extends AppCompatActivity {
             AddNewGame.this.finish(); // back to View Configuration page
         });
         alertDialog.show();
+    }
+
+    private void displayThemeRadioButtons(){
+        RadioGroup themeGroup = findViewById(R.id.radioBtnsThemes);
+        String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
+
+        for (int i = 0; i < themesArray.length; i++){
+            final String achievementTheme = themesArray[i];
+
+            RadioButton btn = new RadioButton(this);
+            btn.setText(getString(R.string.display_string_option, achievementTheme));
+            btn.setOnClickListener(v ->{
+                saveAchievementTheme(achievementTheme);
+                addNewGameAchievements.setAchievementTheme(achievementTheme);
+            });
+            themeGroup.addView(btn);
+            if (achievementTheme.equals(getAchievementTheme(this))){
+                addNewGameAchievements.setAchievementTheme(achievementTheme);
+                btn.setChecked(true);
+            }
+        }
+    }
+
+    private void saveAchievementTheme(String theme){
+        SharedPreferences preferences = this.getSharedPreferences("Theme Preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("Achievement Theme", theme);
+        editor.apply();
+    }
+
+    static public String getAchievementTheme(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("Theme Preferences", MODE_PRIVATE);
+        String defaultTheme = context.getResources().getString(R.string.defaultTheme);
+        return preferences.getString("Achievement Theme",defaultTheme);
     }
 
 }
