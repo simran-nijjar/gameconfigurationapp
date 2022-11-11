@@ -284,7 +284,7 @@ public class AddNewGame extends AppCompatActivity {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         et.setLayoutParams(lp);
         et.setText("");
-        et.setInputType(InputType.TYPE_CLASS_NUMBER);
+        et.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
         et.setTextSize(17);
         et.setTextColor(getColor(R.color.white));
         et.setId(indexOfScore + 1);
