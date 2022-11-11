@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -47,6 +46,7 @@ public class ViewAchievements extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         achievements = new Achievements(getAchievementTheme(this));
+        changeTheme();
         setContentView(R.layout.view_achievements);
 
         noAchievementsDisplayed = findViewById(R.id.emptyAchievementsList);
@@ -70,10 +70,22 @@ public class ViewAchievements extends AppCompatActivity {
         return new Intent(context, ViewAchievements.class);
     }
 
+    private void changeTheme(){
+        if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+            setTheme(R.style.fruitsTheme);
+        }if (AddNewGame.getAchievementTheme(this).equals("Second")){
+            setTheme(R.style.fantasyTheme);
+        } if (AddNewGame.getAchievementTheme(this).equals("Third")){
+            setTheme(R.style.thirdTheme);
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                Intent intent = ViewConfiguration.makeIntent(ViewAchievements.this);
+                startActivity(intent);
                 this.finish();
                 return true;
         }
@@ -95,6 +107,7 @@ public class ViewAchievements extends AppCompatActivity {
             btn.setOnClickListener(v ->{
                 saveAchievementTheme(achievementTheme);
                 achievements.setAchievementTheme(achievementTheme);
+                ViewAchievements.this.recreate();
             });
             themeGroup.addView(btn);
             if (achievementTheme.equals(getAchievementTheme(this))){
@@ -190,8 +203,8 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private String getWorstRangeOfTheme(String theme){
-        if (theme.equals("Second")){
-            return getString(R.string.worst_game_level_range_boundary_second) //Add worse range than expected lowest range achievement level
+        if (theme.equals("Fantasy")){
+            return getString(R.string.worst_game_level_range_boundary_fantasy) //Add worse range than expected lowest range achievement level
                     + minScore + "\n\n";
         }
         if (theme.equals("Third")){
@@ -203,8 +216,8 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private String getLegendaryRangeOfTheme(String theme, int newStartRange){
-        if (theme.equals("Second")){
-            return getString(R.string.legendary_level_range_boundary_second) //Add best level range when not all levels can be calculated for
+        if (theme.equals("Fantasy")){
+            return getString(R.string.legendary_level_range_boundary_fantasy) //Add best level range when not all levels can be calculated for
                     + (newStartRange);
         }
         if (theme.equals("Third")){
@@ -216,8 +229,8 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private String getWorstScoreOfTheme(String theme){
-        if (theme.equals("Second")){
-            return getString(R.string.worst_game_level_score_boundary_second)
+        if (theme.equals("Fantasy")){
+            return getString(R.string.worst_game_level_score_boundary_fantasy)
                     + minScore +"\n\n";
         }
         if (theme.equals("Third")){
@@ -229,8 +242,8 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private String getLegendaryScoreOfTheme(String theme){
-        if (theme.equals("Second")){
-            return getString(R.string.legendary_level_score_boundary_second)
+        if (theme.equals("Fantasy")){
+            return getString(R.string.legendary_level_score_boundary_fantasy)
                     + maxScore;
         }
         if (theme.equals("Third")){

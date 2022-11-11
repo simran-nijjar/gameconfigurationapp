@@ -62,6 +62,7 @@ public class AddNewGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeTheme();
         addNewGameAchievements = new Achievements(getAchievementTheme(this));
         setContentView(R.layout.activity_add_new_game);
         chooseGame();
@@ -71,14 +72,31 @@ public class AddNewGame extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     public static Intent makeIntent(Context context){
         return new Intent(context, AddNewGame.class);
+    }
+
+    private void changeTheme(){
+        if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+            setTheme(R.style.fruitsTheme);
+        }if (AddNewGame.getAchievementTheme(this).equals("Fantasy")){
+            setTheme(R.style.fantasyTheme);
+        } if (AddNewGame.getAchievementTheme(this).equals("Third")){
+            setTheme(R.style.thirdTheme);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                Intent intent = ViewConfiguration.makeIntent(AddNewGame.this);
+                startActivity(intent);
                 this.finish();
                 return true;
         }
@@ -269,6 +287,8 @@ public class AddNewGame extends AppCompatActivity {
                         saveDatePlayed(), isCalculatingRangeForLevels, ViewAchievements.getAchievementTheme(this));
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
                 showResult(gamePlayed.getLevelAchieved());
+                Intent intent = ViewConfiguration.makeIntent(AddNewGame.this);
+                startActivity(intent);
             }else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
             }
@@ -299,6 +319,7 @@ public class AddNewGame extends AppCompatActivity {
             btn.setOnClickListener(v ->{
                 saveAchievementTheme(achievementTheme);
                 addNewGameAchievements.setAchievementTheme(achievementTheme);
+                AddNewGame.this.recreate();
             });
             themeGroup.addView(btn);
             if (achievementTheme.equals(getAchievementTheme(this))){

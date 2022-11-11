@@ -6,16 +6,11 @@ package ca.sfu.dba56.cmpt276.model;
 * Keeps/populates the array of achievements names and allows to retrieve achievement names
  */
 
-import android.util.Log;
-import android.view.View;
-
-import ca.sfu.dba56.cmpt276.ViewAchievements;
-
 public class Achievements {
 
     private int numOfBoundedLevels;
     private String achievementsFruits[];
-    private String achievementsTwo[];
+    private String achievementsFantasy[];
     private String achievementsThree[];
     private int intAchievements[] = new int[10];
     private String levelAchieved;
@@ -27,7 +22,7 @@ public class Achievements {
         this.achievementsFruits = new String[]{"Beautiful Bananas", "Wonderful Watermelons",
                 "Outstanding Oranges", "Admirable Apricots", "Good Grapefruits", "Amazing Apples",
                 "Great Grapes", "Better Blueberries", "Super Strawberries", "Perfect Peaches"};
-        this.achievementsTwo = new String[]{"Worst","A","B","C","D","E","F","G","H","Legendary"};
+        this.achievementsFantasy = new String[]{"Worst","A","B","C","D","E","F","G","H","Legendary"};
         this.achievementsThree = new String[]{"Not the best","1","2","3","4","5","6","7","8", "Not the worst"};
         this.numOfBoundedLevels = 8;
         this.theme = theme;
@@ -35,16 +30,6 @@ public class Achievements {
 
     public int getNumOfBoundedLevels(){
         return numOfBoundedLevels;
-    }
-    public String getAchievementLevel(int index){
-        Log.d("SAVED_THEME", this.theme);
-        if (this.theme.equals("Second")){
-            return achievementsTwo[index];
-        }
-        if (this.theme.equals("Third")){
-            return achievementsThree[index];
-        }
-        return achievementsFruits[index];
     }
     public String getLevelAchieved() {
         return levelAchieved;
@@ -54,6 +39,16 @@ public class Achievements {
     }
     public String getAchievementTheme(){
         return theme;
+    }
+
+    public String getAchievementLevel(int index){
+        if (this.theme.equals("Fantasy")){
+            return achievementsFantasy[index];
+        }
+        if (this.theme.equals("Third")){
+            return achievementsThree[index];
+        }
+        return achievementsFruits[index];
     }
 
     public int calculateMinMaxScore(int score, int numPlayers){

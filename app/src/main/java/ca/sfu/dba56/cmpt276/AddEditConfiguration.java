@@ -2,7 +2,6 @@ package ca.sfu.dba56.cmpt276;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -47,7 +46,7 @@ public class AddEditConfiguration extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        changeTheme();
         setContentView(R.layout.add_configuration);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -75,6 +74,21 @@ public class AddEditConfiguration extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.add_new_game_config);
             getUserInput();
             setUpSaveConfigButton();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    private void changeTheme(){
+        if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+            setTheme(R.style.fruitsTheme);
+        }if (AddNewGame.getAchievementTheme(this).equals("Second")){
+            setTheme(R.style.fantasyTheme);
+        } if (AddNewGame.getAchievementTheme(this).equals("Third")){
+            setTheme(R.style.thirdTheme);
         }
     }
 

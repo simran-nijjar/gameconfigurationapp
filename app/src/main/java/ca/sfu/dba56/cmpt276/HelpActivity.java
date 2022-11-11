@@ -20,6 +20,7 @@ public class HelpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeTheme();
         setContentView(R.layout.activity_help);
         setInfoBtn();
         setDescriptionBtn();
@@ -28,8 +29,23 @@ public class HelpActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     public static Intent makeIntent(Context context){
         return new Intent(context, HelpActivity.class);
+    }
+
+    private void changeTheme(){
+        if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+            setTheme(R.style.fruitsTheme);
+        }if (AddNewGame.getAchievementTheme(this).equals("Fantasy")){
+            setTheme(R.style.fantasyTheme);
+        } if (AddNewGame.getAchievementTheme(this).equals("Third")){
+            setTheme(R.style.thirdTheme);
+        }
     }
 
     private void setInfoBtn() {
@@ -74,7 +90,13 @@ public class HelpActivity extends AppCompatActivity {
         achieve.setOnClickListener(v -> {
 
             if(achieve_content.getVisibility() == View.GONE) {
-                achieve_content.setText(R.string.achieve_content);
+                if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+                    achieve_content.setText(R.string.achieve_fruit_content);
+                } if (AddNewGame.getAchievementTheme(this).equals("Fantasy")){
+                    achieve_content.setText(R.string.achieve_fantasy_content);
+                } if (AddNewGame.getAchievementTheme(this).equals("Third")){
+                    achieve_content.setText(R.string.achieve_third_content);
+                }
                 achieve_content.setVisibility(View.VISIBLE);
             }else if (achieve_content.getVisibility() == View.VISIBLE){
                 achieve_content.setText("");

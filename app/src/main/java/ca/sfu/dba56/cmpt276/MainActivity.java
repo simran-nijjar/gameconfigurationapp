@@ -2,22 +2,22 @@ package ca.sfu.dba56.cmpt276;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.lang.ref.Reference;
 import java.util.ArrayList;
 
 /*
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        changeTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -57,6 +58,20 @@ public class MainActivity extends AppCompatActivity {
         UpdateUI();
         //to save config manager
         toSaveUsingGsonAndSP.saveToSharedRefs(this);
+    }
+
+    private void changeTheme(){
+        if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+            setTheme(R.style.fruitsTheme);
+        }if (AddNewGame.getAchievementTheme(this).equals("Second")){
+            setTheme(R.style.fantasyTheme);
+        } if (AddNewGame.getAchievementTheme(this).equals("Third")){
+            setTheme(R.style.thirdTheme);
+        }
+    }
+
+    public static Intent makeIntent(Context context){
+        return new Intent(context, MainActivity.class);
     }
 
     private void setUpHelpButton() {

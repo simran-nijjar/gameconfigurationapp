@@ -26,6 +26,7 @@ public class GameHistory extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeTheme();
         setContentView(R.layout.activity_game_history);
         // get selected game name from ViewConfiguration
         Bundle b = getIntent().getExtras();
@@ -37,6 +38,16 @@ public class GameHistory extends AppCompatActivity {
 
     public static Intent makeIntent(Context context){
         return new Intent(context, GameHistory.class);
+    }
+
+    private void changeTheme(){
+        if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+            setTheme(R.style.fruitsTheme);
+        }if (AddNewGame.getAchievementTheme(this).equals("Second")){
+            setTheme(R.style.fantasyTheme);
+        } if (AddNewGame.getAchievementTheme(this).equals("Third")){
+            setTheme(R.style.thirdTheme);
+        }
     }
 
     @Override

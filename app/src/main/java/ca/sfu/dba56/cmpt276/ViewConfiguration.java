@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -35,6 +34,7 @@ public class ViewConfiguration extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeTheme();
         setContentView(R.layout.activity_view_configuration);
 
         ActionBar bar = getSupportActionBar();
@@ -46,10 +46,29 @@ public class ViewConfiguration extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        changeTheme();
         setUpGameHistoryButton();
         UpdateUI();
         //to save config manager
         toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus){
+            changeTheme();
+        }
+    }
+
+    private void changeTheme(){
+        if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+            setTheme(R.style.fruitsTheme);
+        }if (AddNewGame.getAchievementTheme(this).equals("Second")){
+            setTheme(R.style.fantasyTheme);
+        } if (AddNewGame.getAchievementTheme(this).equals("Third")){
+            setTheme(R.style.thirdTheme);
+        }
     }
 
     private void UpdateUI() {
