@@ -80,6 +80,7 @@ public class AddNewGame extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         Spinner dropdown = findViewById(R.id.gameName);
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
+        TextView tv = findViewById(R.id.num_players);
         Button setBtn = findViewById(R.id.set_btn);
         if(bundle != null){
             getSupportActionBar().setTitle("Edit Game");
@@ -88,6 +89,7 @@ public class AddNewGame extends AppCompatActivity {
             numOfPlayerFromUser.setFocusable(false);
             numOfPlayerFromUser.setClickable(false);
             setBtn.setVisibility(View.INVISIBLE);
+            tv.setText("Number of Player:");
             setVariablesFromExistingGame(indexOfGame);
         }else {
             getSupportActionBar().setTitle("Add New Game");
@@ -96,6 +98,7 @@ public class AddNewGame extends AppCompatActivity {
             numOfPlayerFromUser.setClickable(true);
             numOfPlayerFromUser.setText("");
             setBtn.setVisibility(View.VISIBLE);
+            tv.setText(R.string.num_player);
         }
     }
 
@@ -417,6 +420,7 @@ public class AddNewGame extends AppCompatActivity {
                     storeScores();
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setListOfValues(scoreList);
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setScores(combinedScores);
+                    // set achievement
                     showResultForEditGame(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getLevelAchieved());
                 }else {
                     Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
