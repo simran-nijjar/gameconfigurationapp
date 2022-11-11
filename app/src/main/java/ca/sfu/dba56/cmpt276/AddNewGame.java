@@ -10,13 +10,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +28,7 @@ import android.widget.Toast;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import ca.sfu.dba56.cmpt276.model.Achievements;
@@ -38,15 +43,16 @@ public class AddNewGame extends AppCompatActivity {
 
     private int numOfPlayers; // int user input
     private int scores; // int user input
+    private int combinedScores = 0;
     private String dateGamePlayed; // date time
     private String numOfPlayersAsStr = "";  // String user input
-    private String combinedScoresAsStr = ""; // String user input
+    private String scoresAsStr = ""; // String user input
     private EditText numOfPlayerFromUser;
-    private EditText combinedScoreFromUser;
+    //private EditText combinedScoreFromUser;
     private boolean isPlayerValid; // check if user input is valid
     private boolean isScoresValid; // check if user input is valid
     private TextView playerMsg; // alert message
-    private TextView scoreMsg; // alert message
+    //private TextView scoreMsg; // alert message
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private int selectedGame; // user selected game config index
     private int adjustedMax;
@@ -55,6 +61,10 @@ public class AddNewGame extends AppCompatActivity {
     private boolean isCalculatingRangeForLevels;
     private final int MAX_USER_INPUT = 100000000;
     private final int MIN_USER_INPUT = -100000000;
+    private int indexOfPlayer = 0;
+    private int indexOfScore = 0;
+    private EditText[] edList;
+    List<Integer> score_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,15 +126,20 @@ public class AddNewGame extends AppCompatActivity {
 
                 // set text again when the user changes selection
                 numOfPlayerFromUser = findViewById(R.id.num_players_input);
-                combinedScoreFromUser = findViewById(R.id.combined_score_input);
+                //combinedScoreFromUser = findViewById(R.id.combined_score_input);
                 playerMsg = findViewById(R.id.player_msg);
-                scoreMsg = findViewById(R.id.score_msg);
+                //scoreMsg = findViewById(R.id.score_msg);
                 numOfPlayerFromUser.setText("");
-                combinedScoreFromUser.setText("");
+                //combinedScoreFromUser.setText("");
                 playerMsg.setText("");
-                scoreMsg.setText("");
+                //scoreMsg.setText("");
+                LinearLayout ll_left = (LinearLayout)findViewById(R.id.left_layout_tv);
+                ll_left.removeAllViewsInLayout();
+                LinearLayout ll_right = (LinearLayout)findViewById(R.id.right_layout_et);
+                ll_right.removeAllViewsInLayout();
                 // call function according to current selection
                 checkInput(selectedGame);
+                setSetBtn();
                 saveInput(selectedGame);
             }
             public void onNothingSelected(AdapterView<?> arg0) {}
@@ -157,8 +172,8 @@ public class AddNewGame extends AppCompatActivity {
         });
         alertDialog.show();
         //set num of player to the minimum
-        combinedScoreFromUser = findViewById(R.id.combined_score_input);
-        combinedScoreFromUser.setText("");
+//        combinedScoreFromUser = findViewById(R.id.combined_score_input);
+//        combinedScoreFromUser.setText("");
     }
 
     private void displayMinCombinedScoreMsg(){
@@ -170,18 +185,18 @@ public class AddNewGame extends AppCompatActivity {
         });
         alertDialog.show();
         //set num of player to the minimum
-        combinedScoreFromUser = findViewById(R.id.combined_score_input);
-        combinedScoreFromUser.setText("");
+//        combinedScoreFromUser = findViewById(R.id.combined_score_input);
+//        combinedScoreFromUser.setText("");
     }
 
     // check if user input is valid
     private void checkInput(int selectedGameInt){
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
-        combinedScoreFromUser = findViewById(R.id.combined_score_input);
+        //combinedScoreFromUser = findViewById(R.id.combined_score_input);
         playerMsg = findViewById(R.id.player_msg); // alert message
         playerMsg.setTextColor(getResources().getColor(R.color.purple_700));
-        scoreMsg = findViewById(R.id.score_msg); // alert message
-        scoreMsg.setTextColor(getResources().getColor(R.color.purple_700));
+        //scoreMsg = findViewById(R.id.score_msg); // alert message
+        //scoreMsg.setTextColor(getResources().getColor(R.color.purple_700));
 
         numOfPlayerFromUser.addTextChangedListener(new TextWatcher() {
             @Override
@@ -217,34 +232,157 @@ public class AddNewGame extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-        combinedScoreFromUser.addTextChangedListener(new TextWatcher() {
+//        combinedScoreFromUser.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                combinedScoresAsStr = combinedScoreFromUser.getText().toString();
+//                try {
+//                    scores = Integer.parseInt(combinedScoresAsStr);
+//                    if(scores >= MAX_USER_INPUT)  {
+//                        isScoresValid = false;
+//                        displayMaxCombinedScoreMsg();
+//                    }else if(scores <= MIN_USER_INPUT)  {
+//                        isScoresValid = false;
+//                        displayMinCombinedScoreMsg();
+//                    }else {
+//                        isScoresValid = true;
+//                        //scoreMsg.setText("");
+//                    }
+//                }catch (NumberFormatException ex){
+//                    isScoresValid = false;
+//                    if(combinedScoreFromUser.length() == 0) {
+//                        Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            }
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+//            @Override
+//            public void afterTextChanged(Editable s) {}
+//        });
+    }
+
+    private void createLeftFields(){
+        LinearLayout ll_left = (LinearLayout)findViewById(R.id.left_layout_tv);
+        // add edittext
+        TextView tv = new TextView(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(50,62,0,0);
+        tv.setLayoutParams(lp);
+        indexOfPlayer++;
+        tv.setText("Player " + indexOfPlayer + ":");
+        tv.setTextColor(getColor(R.color.white));
+        //tv.setId(indexOfPlayer + 10);
+        //tv.setTag("Player" + indexOfPlayer);
+        ll_left.addView(tv);
+    }
+
+    private EditText createRightFields(){
+        LinearLayout ll_right = (LinearLayout)findViewById(R.id.right_layout_et);
+        // add edittext
+        EditText et = new EditText(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        et.setLayoutParams(lp);
+        et.setText("");
+        et.setInputType(InputType.TYPE_CLASS_NUMBER);
+        et.setTextSize(17);
+        et.setTextColor(getColor(R.color.white));
+        et.setId(indexOfScore + 1);
+        ll_right.addView(et);
+        indexOfScore++;
+        return et;
+    }
+
+    private void setSetBtn(){
+        Button setBtn = findViewById(R.id.set_btn);
+        setBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                combinedScoresAsStr = combinedScoreFromUser.getText().toString();
+            public void onClick(View v) {
+                if (isPlayerValid && edList == null){
+                   createFields();
+                }else if(isPlayerValid){
+                    LinearLayout ll_left = (LinearLayout)findViewById(R.id.left_layout_tv);
+                    ll_left.removeAllViewsInLayout();
+                    LinearLayout ll_right = (LinearLayout)findViewById(R.id.right_layout_et);
+                    ll_right.removeAllViewsInLayout();
+                    createFields();
+                }
+            }
+        });
+    }
+
+    private void createFields(){
+        edList = new EditText[numOfPlayers];
+        for (int i = 0; i < numOfPlayers; i++) {
+            createLeftFields();
+            edList[i] = createRightFields();
+        }
+
+        indexOfPlayer = 0;
+        indexOfScore = 0;
+
+        textWatcher tw = new textWatcher(edList);
+        for (EditText editText : edList) editText.addTextChangedListener(tw);
+    }
+
+
+    public class textWatcher implements TextWatcher {
+
+        EditText[] edList;
+
+        public textWatcher(EditText[] edList) {
+            this.edList = edList;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        @Override
+        public void afterTextChanged(Editable s) {
+//            for (EditText editText : edList) {
+//                if(editText.getText().toString().length() < 1){
+//                    final View focusView = editText;
+//                    editText.setError(getString(R.string.emptyOrInvalid));
+//                    focusView.requestFocus();
+//                    isScoresValid = false;
+//                    //break;
+//                }
+//            }
+
+            isScoresValid = true;
+            for (EditText editText : edList) {
+                scoresAsStr = editText.getText().toString();
                 try {
-                    scores = Integer.parseInt(combinedScoresAsStr);
+                    scores = Integer.parseInt(scoresAsStr);
                     if(scores >= MAX_USER_INPUT)  {
                         isScoresValid = false;
                         displayMaxCombinedScoreMsg();
+                        editText.setText("");
                     }else if(scores <= MIN_USER_INPUT)  {
                         isScoresValid = false;
                         displayMinCombinedScoreMsg();
-                    }else {
-                        isScoresValid = true;
-                        scoreMsg.setText("");
+                        editText.setText("");
                     }
                 }catch (NumberFormatException ex){
                     isScoresValid = false;
-                    if(combinedScoreFromUser.length() == 0) {
-                        Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
+                    if(scoresAsStr.length() == 0) {
+                        editText.setError("Must enter value");
+                        //Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
+        }
+    }
+
+    private void storeScores(){
+        score_list = new ArrayList<>();
+        int score;
+        for (EditText editText : edList) {
+            score = Integer.parseInt(editText.getText().toString());
+            score_list.add(score);
+            combinedScores += score;
+        }
     }
 
     // get date time
@@ -260,7 +398,8 @@ public class AddNewGame extends AppCompatActivity {
         Button save = findViewById(R.id.save_btn);
         save.setOnClickListener(v -> {
             if (isPlayerValid && isScoresValid) {
-                Game gamePlayed = new Game(numOfPlayers, scores, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
+                storeScores();
+                Game gamePlayed = new Game(numOfPlayers, combinedScores, score_list, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
                 showResult(gamePlayed.getLevelAchieved());
             }else {
