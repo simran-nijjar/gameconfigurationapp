@@ -40,4 +40,8 @@ public class Configuration {
     public int getSizeOfListOfConfigs(){
         return listOfGames.size();
     }
+    public int getPlayer(int i){return listOfGames.get(i).getPlayers();}
+    public List<Integer> getListOfValues(int i){return listOfGames.get(i).getListOfValues();}
+    public Game getGame(int i){return listOfGames.get(i);}
+
 }

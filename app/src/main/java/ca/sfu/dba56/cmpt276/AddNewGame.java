@@ -64,7 +64,9 @@ public class AddNewGame extends AppCompatActivity {
     private int indexOfPlayer = 0;
     private int indexOfScore = 0;
     private EditText[] edList;
-    List<Integer> score_list;
+    List<Integer> scoreList;
+    int indexOfGame = -1;
+    int currentConfigPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,27 @@ public class AddNewGame extends AppCompatActivity {
         storeSelectedGame();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        Bundle bundle = getIntent().getExtras();
+        Spinner dropdown = findViewById(R.id.gameName);
+        numOfPlayerFromUser = findViewById(R.id.num_players_input);
+        Button setBtn = findViewById(R.id.set_btn);
+        if(bundle != null){
+            getSupportActionBar().setTitle("Edit Game");
+            indexOfGame = bundle.getInt("selected game");
+            dropdown.setVisibility(View.GONE);
+            numOfPlayerFromUser.setFocusable(false);
+            numOfPlayerFromUser.setClickable(false);
+            setBtn.setVisibility(View.INVISIBLE);
+            setVariablesFromExistingGame(indexOfGame);
+        }else {
+            getSupportActionBar().setTitle("Add New Game");
+            dropdown.setVisibility(View.VISIBLE);
+            numOfPlayerFromUser.setFocusable(true);
+            numOfPlayerFromUser.setClickable(true);
+            numOfPlayerFromUser.setText("");
+            setBtn.setVisibility(View.VISIBLE);
+        }
     }
 
     public static Intent makeIntent(Context context){
@@ -92,9 +115,9 @@ public class AddNewGame extends AppCompatActivity {
 
     private void chooseGame() {
         // get selected game name from ViewConfiguration
-        Bundle bundle = getIntent().getExtras();
-        String name = bundle.getString(getString(R.string.gameName));
-
+//        Bundle bundle = getIntent().getExtras();
+//        String name = bundle.getString(getString(R.string.gameName));
+        String name = manager.getItemAtIndex(manager.getIndex()).getGameNameFromConfig();
         // drop down menu for games
         Spinner dropdown = findViewById(R.id.gameName);
 
@@ -172,8 +195,6 @@ public class AddNewGame extends AppCompatActivity {
         });
         alertDialog.show();
         //set num of player to the minimum
-//        combinedScoreFromUser = findViewById(R.id.combined_score_input);
-//        combinedScoreFromUser.setText("");
     }
 
     private void displayMinCombinedScoreMsg(){
@@ -185,8 +206,6 @@ public class AddNewGame extends AppCompatActivity {
         });
         alertDialog.show();
         //set num of player to the minimum
-//        combinedScoreFromUser = findViewById(R.id.combined_score_input);
-//        combinedScoreFromUser.setText("");
     }
 
     // check if user input is valid
@@ -231,35 +250,6 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-//        combinedScoreFromUser.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                combinedScoresAsStr = combinedScoreFromUser.getText().toString();
-//                try {
-//                    scores = Integer.parseInt(combinedScoresAsStr);
-//                    if(scores >= MAX_USER_INPUT)  {
-//                        isScoresValid = false;
-//                        displayMaxCombinedScoreMsg();
-//                    }else if(scores <= MIN_USER_INPUT)  {
-//                        isScoresValid = false;
-//                        displayMinCombinedScoreMsg();
-//                    }else {
-//                        isScoresValid = true;
-//                        //scoreMsg.setText("");
-//                    }
-//                }catch (NumberFormatException ex){
-//                    isScoresValid = false;
-//                    if(combinedScoreFromUser.length() == 0) {
-//                        Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            }
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-//            @Override
-//            public void afterTextChanged(Editable s) {}
-//        });
     }
 
     private void createLeftFields(){
@@ -299,19 +289,19 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isPlayerValid && edList == null){
-                   createFields();
+                   createFields(numOfPlayers);
                 }else if(isPlayerValid){
                     LinearLayout ll_left = (LinearLayout)findViewById(R.id.left_layout_tv);
                     ll_left.removeAllViewsInLayout();
                     LinearLayout ll_right = (LinearLayout)findViewById(R.id.right_layout_et);
                     ll_right.removeAllViewsInLayout();
-                    createFields();
+                    createFields(numOfPlayers);
                 }
             }
         });
     }
 
-    private void createFields(){
+    private void createFields(int numOfPlayers){
         edList = new EditText[numOfPlayers];
         for (int i = 0; i < numOfPlayers; i++) {
             createLeftFields();
@@ -335,7 +325,11 @@ public class AddNewGame extends AppCompatActivity {
         }
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            for (EditText editText : edList) {
+                editText.setError(null);
+            }
+        }
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {}
         @Override
@@ -376,11 +370,11 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void storeScores(){
-        score_list = new ArrayList<>();
+        scoreList = new ArrayList<>();
         int score;
         for (EditText editText : edList) {
             score = Integer.parseInt(editText.getText().toString());
-            score_list.add(score);
+            scoreList.add(score);
             combinedScores += score;
         }
     }
@@ -393,13 +387,63 @@ public class AddNewGame extends AppCompatActivity {
         return dateGamePlayed;
     }
 
+    private void setVariablesFromExistingGame(int indexOfGame){
+        numOfPlayerFromUser = findViewById(R.id.num_players_input);
+        currentConfigPosition = manager.getIndex();
+        numOfPlayerFromUser.setText("" + manager.getItemAtIndex(currentConfigPosition).getPlayer(indexOfGame));
+        numOfPlayers = manager.getItemAtIndex(currentConfigPosition).getPlayer(indexOfGame);
+//        indexOfPlayer = 0;
+//        indexOfScore = 0;
+        LinearLayout ll_left = (LinearLayout)findViewById(R.id.left_layout_tv);
+        ll_left.removeAllViewsInLayout();
+        LinearLayout ll_right = (LinearLayout)findViewById(R.id.right_layout_et);
+        ll_right.removeAllViewsInLayout();
+        createFields(numOfPlayers);
+
+        for (int i = 0; i < edList.length; i++) {
+            edList[i].setText("" + manager.getItemAtIndex(currentConfigPosition).getListOfValues(indexOfGame).get(i));
+        }
+
+        saveInputForEditGame(currentConfigPosition);
+    }
+
+    private void saveInputForEditGame(int currentConfigPosition){
+        Button save = findViewById(R.id.save_btn);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isScoresValid) {
+                    combinedScores = 0;
+                    storeScores();
+                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setListOfValues(scoreList);
+                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setScores(combinedScores);
+                    showResultForEditGame(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getLevelAchieved());
+                }else {
+                    Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void showResultForEditGame(String achievements){
+        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
+        alertDialog.setTitle(getString(R.string.achievement));
+        alertDialog.setMessage("" + achievements);
+        alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
+            Intent refresh = new Intent(AddNewGame.this, GameHistory.class);
+            startActivity(refresh);
+        });
+        alertDialog.show();
+    }
+
+
     // save input to the list
     private void saveInput(int selectedGameInt) {
         Button save = findViewById(R.id.save_btn);
         save.setOnClickListener(v -> {
             if (isPlayerValid && isScoresValid) {
                 storeScores();
-                Game gamePlayed = new Game(numOfPlayers, combinedScores, score_list, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
+                Game gamePlayed = new Game(numOfPlayers, combinedScores, scoreList, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
                 showResult(gamePlayed.getLevelAchieved());
             }else {

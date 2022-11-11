@@ -110,7 +110,7 @@ public class ViewConfiguration extends AppCompatActivity {
             historyBtn.setVisibility(View.VISIBLE);
             historyBtn.setOnClickListener(v -> {
                 Intent intent2 = GameHistory.makeIntent(ViewConfiguration.this);
-                intent2.putExtra(getString(R.string.gameName2), currentConfigPosition);
+                //intent2.putExtra(getString(R.string.gameName2), currentConfigPosition);
                 startActivity(intent2);
             });
         }
@@ -120,9 +120,9 @@ public class ViewConfiguration extends AppCompatActivity {
         Button addBtn = findViewById(R.id.addGameBtn);
         addBtn.setOnClickListener(v -> {
             Intent intent = AddNewGame.makeIntent(ViewConfiguration.this);
-            manager = ConfigurationsManager.getInstance();
-            Configuration currentConfig = manager.getItemAtIndex(currentConfigPosition);
-            intent.putExtra(getString(R.string.gameName), currentConfig.getGameNameFromConfig());
+//            manager = ConfigurationsManager.getInstance();
+//            Configuration currentConfig = manager.getItemAtIndex(currentConfigPosition);
+//            intent.putExtra(getString(R.string.gameName), currentConfig.getGameNameFromConfig());
             startActivity(intent);
         });
     }

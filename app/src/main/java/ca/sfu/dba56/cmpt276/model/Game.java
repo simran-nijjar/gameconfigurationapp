@@ -15,7 +15,7 @@ public class Game {
     private String dateGamePlayed;
     private Achievements achievements = new Achievements();
     private String levelAchieved;
-    private List<Integer> listOfValues = new ArrayList<>();
+    private List<Integer> listOfValues;
 
     public Game(int players, int scores, List<Integer> listOfValues, Configuration manager, String dateGamePlayed, boolean isCalculatingRangeLevels) {
 
@@ -34,9 +34,11 @@ public class Game {
         this.dateGamePlayed = dateGamePlayed;
     }
 
+    public void setScores(int scores) {this.scores = scores;}
+    public void setListOfValues(List<Integer> listOfValues) {this.listOfValues = listOfValues;}
+    public List<Integer> getListOfValues() {return listOfValues;}
     public int getPlayers() {return players;}
     public int getScores() {return scores;}
-    public List<Integer> getListOfValues() {return listOfValues;}
     public String getDateGamePlayed() {return dateGamePlayed;}
     public String getLevelAchieved() {return levelAchieved;}
 
