@@ -87,6 +87,7 @@ public class AddNewGame extends AppCompatActivity {
             dropdown.setVisibility(View.GONE);
             numOfPlayerFromUser.setFocusable(false);
             numOfPlayerFromUser.setClickable(false);
+            numOfPlayerFromUser.setBackground(null);
             setBtn.setVisibility(View.INVISIBLE);
             tv_numOfPlayer.setText("Number of Player:");
             setVariablesFromExistingGame(indexOfGame);
