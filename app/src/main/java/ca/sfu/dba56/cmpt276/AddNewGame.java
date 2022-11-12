@@ -85,11 +85,12 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void changeTheme(){
-        if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
+        //Change theme depending on click radio button for theme
+        if (getAchievementTheme(this).equals(FRUITS)) {
             setTheme(R.style.fruitsTheme);
-        }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
+        }if (getAchievementTheme(this).equals(FANTASY)){
             setTheme(R.style.fantasyTheme);
-        } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
+        } if (getAchievementTheme(this).equals(STAR_WARS)){
             setTheme(R.style.starWarsTheme);
         }
     }
@@ -98,6 +99,7 @@ public class AddNewGame extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                //Change theme in view config if back button is clicked
                 Intent intent = ViewConfiguration.makeIntent(AddNewGame.this);
                 startActivity(intent);
                 this.finish();

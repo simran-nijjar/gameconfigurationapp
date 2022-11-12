@@ -74,6 +74,7 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private void changeTheme(){
+        //Change theme depending on click radio button for theme
         if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
             setTheme(R.style.fruitsTheme);
         }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
@@ -87,6 +88,7 @@ public class ViewAchievements extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                //Change theme in view config if back button is clicked
                 Intent intent = ViewConfiguration.makeIntent(ViewAchievements.this);
                 startActivity(intent);
                 this.finish();
@@ -121,6 +123,7 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private void saveAchievementTheme(String theme){
+        //Saves the achievement theme in shared preferences
         SharedPreferences preferences = this.getSharedPreferences("Theme Preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("Achievement Theme", theme);
@@ -128,6 +131,7 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     static public String getAchievementTheme(Context context){
+        //Gets the saved achievement theme depending on clicked radio button
         SharedPreferences preferences = context.getSharedPreferences("Theme Preferences", MODE_PRIVATE);
         String defaultTheme = context.getResources().getString(R.string.defaultTheme);
         return preferences.getString("Achievement Theme",defaultTheme);
@@ -206,6 +210,7 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private String getWorstRangeOfTheme(String theme){
+        //Worst range level depends on selected theme in radio button
         if (theme.equals("Fantasy")){
             return getString(R.string.worst_game_level_range_boundary_fantasy) //Add worse range than expected lowest range achievement level
                     + minScore + "\n\n";
@@ -218,20 +223,22 @@ public class ViewAchievements extends AppCompatActivity {
                 + minScore + "\n\n";
     }
 
-    private String getLegendaryRangeOfTheme(String theme, int newStartRange){
+    private String getBestRangeOfTheme(String theme, int newStartRange){
+        //Best range level depends on selected theme in radio button
         if (theme.equals(FANTASY)){
-            return getString(R.string.legendary_level_range_boundary_fantasy) //Add best level range when not all levels can be calculated for
+            return getString(R.string.best_level_range_boundary_fantasy) //Add best level range when not all levels can be calculated for
                     + (newStartRange);
         }
         if (theme.equals(STAR_WARS)){
-            return getString(R.string.legendary_level_range_boundary_starwars) //Add best level range when not all levels can be calculated for
+            return getString(R.string.best_level_range_boundary_starwars) //Add best level range when not all levels can be calculated for
                     + (newStartRange);
         }
-        return getString(R.string.legendary_level_range_boundary_fruits) //Add best level range when not all levels can be calculated for
+        return getString(R.string.best_level_range_boundary_fruits) //Add best level range when not all levels can be calculated for
                 + (newStartRange);
     }
 
     private String getWorstScoreOfTheme(String theme){
+        //Worst score level depends on selected theme in radio button
         if (theme.equals(FANTASY)){
             return getString(R.string.worst_game_level_score_boundary_fantasy)
                     + minScore +"\n\n";
@@ -244,23 +251,24 @@ public class ViewAchievements extends AppCompatActivity {
                 + minScore +"\n\n";
     }
 
-    private String getLegendaryScoreOfTheme(String theme){
+    private String getBestScoreOfTheme(String theme){
+        //Best score level depends on selected theme in radio button
         if (theme.equals(FANTASY)){
-            return getString(R.string.legendary_level_score_boundary_fantasy)
+            return getString(R.string.best_level_score_boundary_fantasy)
                     + maxScore;
         }
         if (theme.equals(STAR_WARS)){
-            return getString(R.string.legendary_level_score_boundary_starwars)
+            return getString(R.string.best_level_score_boundary_starwars)
                     + maxScore;
         }
-        return getString(R.string.legendary_level_score_boundary_fruits)
+        return getString(R.string.best_level_score_boundary_fruits)
                 + maxScore;
     }
 
     @NonNull
     private String displayAchievementRanges(String achievementLevels, int range, boolean lessThanEightLevels) {
         int newStartRange = 0;
-        achievementLevels += getWorstRangeOfTheme(getAchievementTheme());
+        achievementLevels += getWorstRangeOfTheme(getSavedAchievementTheme());
         for (int i = 1; i < achievements.getNumOfBoundedLevels() + 1; i++) {
             if (newStartRange + 1 < Math.abs(maxScore)) {
                 achievementLevels += achievements.getAchievementLevel(i);
@@ -284,27 +292,28 @@ public class ViewAchievements extends AppCompatActivity {
             }
         }
         if (lessThanEightLevels) { //Add best level range when not all levels can be calculated for
-            achievementLevels += getLegendaryRangeOfTheme(getAchievementTheme(), (newStartRange + 1));
+            achievementLevels += getBestRangeOfTheme(getSavedAchievementTheme(), (newStartRange + 1));
         } else { //Add best level range when all levels can be calculated for
-            achievementLevels += getLegendaryRangeOfTheme(getAchievementTheme(), maxScore);
+            achievementLevels += getBestRangeOfTheme(getSavedAchievementTheme(), maxScore);
         }
         return achievementLevels;
     }
 
-    private String getAchievementTheme() {
+    private String getSavedAchievementTheme() {
+        //Gets the string of saved achievement
         return achievements.getAchievementTheme();
     }
 
     @NonNull
     private String displayAchievementScores(String achievementLevels) {
-        achievementLevels += getWorstScoreOfTheme(getAchievementTheme()); //Add worse than expected lowest score achievement level
+        achievementLevels += getWorstScoreOfTheme(getSavedAchievementTheme()); //Add worse than expected lowest score achievement level
         for (int i = 1; i < (maxScore - minScore + 1); i++){
             achievementLevels += achievements.getAchievementLevel(i);
             achievementLevels += getString(R.string.score_part1);
             achievementLevels += (achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayers) + i - 1);
             achievementLevels += getString(R.string.score_part2);
         }
-        achievementLevels += getLegendaryScoreOfTheme(getAchievementTheme()); //Add best score level for scores
+        achievementLevels += getBestScoreOfTheme(getSavedAchievementTheme()); //Add best score level for scores
         return achievementLevels;
     }
 

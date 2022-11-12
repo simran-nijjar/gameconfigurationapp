@@ -21,6 +21,7 @@ public class Achievements {
     private String theme;
 
     public Achievements(String theme){
+        //Three different arrays for three themes
         this.achievementsFruits = new String[]{"Beautiful Bananas", "Wonderful Watermelons",
                 "Outstanding Oranges", "Admirable Apricots", "Good Grapefruits", "Amazing Apples",
                 "Great Grapes", "Better Blueberries", "Super Strawberries", "Perfect Peaches"};
@@ -47,6 +48,7 @@ public class Achievements {
     }
 
     public String getAchievementLevel(int index){
+        //Get the achievement level for the theme selected in radio button
         if (this.theme.equals(FANTASY)){
             return achievementsFantasy[index];
         }

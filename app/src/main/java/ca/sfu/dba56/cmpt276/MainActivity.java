@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeTheme(){
+        //Change theme depending on click radio button for theme
         if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
             setTheme(R.style.fruitsTheme);
         }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){

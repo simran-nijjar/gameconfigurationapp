@@ -104,16 +104,16 @@
     <string name="Sorry_too_many_players">Sorry, that\'s too many players. Please try a smaller number</string>
     <string name="worst_game_level_score_boundary_fruits"><![CDATA[\Beautiful Bananas : Score < \]]></string>
     <string name="worst_game_level_range_boundary_fruits"><![CDATA[\Beautiful Bananas : Range < \]]></string>
-    <string name="legendary_level_score_boundary_fruits"><![CDATA[\Perfect Peaches : Score >= \]]></string>
-    <string name="legendary_level_range_boundary_fruits"><![CDATA[\Perfect Peaches : Range >= \]]></string>
+    <string name="best_level_score_boundary_fruits"><![CDATA[\Perfect Peaches : Score >= \]]></string>
+    <string name="best_level_range_boundary_fruits"><![CDATA[\Perfect Peaches : Range >= \]]></string>
     <string name="worst_game_level_score_boundary_fantasy"><![CDATA[\Stinky Orc : Score < \]]></string>
     <string name="worst_game_level_range_boundary_fantasy"><![CDATA[\Stinky Orc : Range < \]]></string>
-    <string name="legendary_level_score_boundary_fantasy"><![CDATA[\Azure Dragon : Score >= \]]></string>
-    <string name="legendary_level_range_boundary_fantasy"><![CDATA[\Azure Dragon : Range >= \]]></string>
+    <string name="best_level_score_boundary_fantasy"><![CDATA[\Azure Dragon : Score >= \]]></string>
+    <string name="best_level_range_boundary_fantasy"><![CDATA[\Azure Dragon : Range >= \]]></string>
     <string name="worst_game_level_score_boundary_starwars"><![CDATA[\Grogu : Score < \]]></string>
     <string name="worst_game_level_range_boundary_starwars"><![CDATA[\Grogu : Range < \]]></string>
-    <string name="legendary_level_score_boundary_starwars"><![CDATA[\Leia Organa : Score >= \]]></string>
-    <string name="legendary_level_range_boundary_starwars"><![CDATA[\Leia Organa : Range >= \]]></string>
+    <string name="best_level_score_boundary_starwars"><![CDATA[\Leia Organa : Score >= \]]></string>
+    <string name="best_level_range_boundary_starwars"><![CDATA[\Leia Organa : Range >= \]]></string>
     <string name="score_part1">\ Score : [\</string>
     <string name="score_part2"> ]\n\n</string>
     <string name="display_string_option">"%1s "</string>
