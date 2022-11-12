@@ -35,6 +35,7 @@ public class Game {
     }
 
     public void setScores(int scores) {this.scores = scores;}
+    public void setLevelAchieved(String levelAchieved) {this.levelAchieved = levelAchieved;}
     public void setListOfValues(List<Integer> listOfValues) {this.listOfValues = listOfValues;}
     public List<Integer> getListOfValues() {return listOfValues;}
     public int getPlayers() {return players;}

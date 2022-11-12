@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import java.util.ArrayList;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
@@ -77,7 +76,6 @@ public class GameHistory extends AppCompatActivity {
         //adapter
         adapter = new ArrayAdapter<String>(this, R.layout.game_items, items);
         ListView list = findViewById(R.id.HistoryList);
-        //list.setSelector(android.R.color.transparent);
         list.setAdapter(adapter);
     }
 
@@ -93,7 +91,7 @@ public class GameHistory extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent refresh = new Intent(GameHistory.this, ViewConfiguration.class);
+        Intent refresh = new Intent(GameHistory.this, ViewConfiguration.class); // back to View Config screen
         startActivity(refresh);
     }
 }

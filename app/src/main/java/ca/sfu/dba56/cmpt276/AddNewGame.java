@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,11 +47,9 @@ public class AddNewGame extends AppCompatActivity {
     private String numOfPlayersAsStr = "";  // String user input
     private String scoresAsStr = ""; // String user input
     private EditText numOfPlayerFromUser;
-    //private EditText combinedScoreFromUser;
+    private TextView playerMsg; // alert message
     private boolean isPlayerValid; // check if user input is valid
     private boolean isScoresValid; // check if user input is valid
-    private TextView playerMsg; // alert message
-    //private TextView scoreMsg; // alert message
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private int selectedGame; // user selected game config index
     private int adjustedMax;
@@ -61,12 +58,12 @@ public class AddNewGame extends AppCompatActivity {
     private boolean isCalculatingRangeForLevels;
     private final int MAX_USER_INPUT = 100000000;
     private final int MIN_USER_INPUT = -100000000;
-    private int indexOfPlayer = 0;
-    private int indexOfScore = 0;
+    private int indexOfPlayer = 0; // textview player index
+    private int indexOfScore = 0; // edittext score index
     private EditText[] edList;
-    List<Integer> scoreList;
-    int indexOfGame = -1;
-    int currentConfigPosition = 0;
+    private List<Integer> scoreList;
+    private int indexOfGame = -1; // selected game index in game history
+    private int currentConfigPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,29 +74,33 @@ public class AddNewGame extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        Bundle bundle = getIntent().getExtras();
+        Bundle bundle = getIntent().getExtras(); // from game history
         Spinner dropdown = findViewById(R.id.gameName);
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
-        TextView tv = findViewById(R.id.num_players);
+        TextView tv_numOfPlayer = findViewById(R.id.num_players);
         Button setBtn = findViewById(R.id.set_btn);
+
         if(bundle != null){
+            // go to edit game screen
             getSupportActionBar().setTitle("Edit Game");
-            indexOfGame = bundle.getInt("selected game");
+            indexOfGame = bundle.getInt("selected game"); // get selected game position from game history
             dropdown.setVisibility(View.GONE);
             numOfPlayerFromUser.setFocusable(false);
             numOfPlayerFromUser.setClickable(false);
             setBtn.setVisibility(View.INVISIBLE);
-            tv.setText("Number of Player:");
+            tv_numOfPlayer.setText("Number of Player:");
             setVariablesFromExistingGame(indexOfGame);
         }else {
+            // go to add new game screen
             getSupportActionBar().setTitle("Add New Game");
             dropdown.setVisibility(View.VISIBLE);
             numOfPlayerFromUser.setFocusable(true);
             numOfPlayerFromUser.setClickable(true);
             numOfPlayerFromUser.setText("");
             setBtn.setVisibility(View.VISIBLE);
-            tv.setText(R.string.num_player);
+            tv_numOfPlayer.setText(R.string.num_player);
         }
+
     }
 
     public static Intent makeIntent(Context context){
@@ -117,7 +118,7 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void chooseGame() {
-        // get selected game name from ViewConfiguration
+        // get selected game config index
 //        Bundle bundle = getIntent().getExtras();
 //        String name = bundle.getString(getString(R.string.gameName));
         String name = manager.getItemAtIndex(manager.getIndex()).getGameNameFromConfig();
@@ -152,17 +153,14 @@ public class AddNewGame extends AppCompatActivity {
 
                 // set text again when the user changes selection
                 numOfPlayerFromUser = findViewById(R.id.num_players_input);
-                //combinedScoreFromUser = findViewById(R.id.combined_score_input);
                 playerMsg = findViewById(R.id.player_msg);
-                //scoreMsg = findViewById(R.id.score_msg);
                 numOfPlayerFromUser.setText("");
-                //combinedScoreFromUser.setText("");
                 playerMsg.setText("");
-                //scoreMsg.setText("");
                 LinearLayout ll_left = (LinearLayout)findViewById(R.id.left_layout_tv);
                 ll_left.removeAllViewsInLayout();
                 LinearLayout ll_right = (LinearLayout)findViewById(R.id.right_layout_et);
                 ll_right.removeAllViewsInLayout();
+
                 // call function according to current selection
                 checkInput(selectedGame);
                 setSetBtn();
@@ -178,7 +176,7 @@ public class AddNewGame extends AppCompatActivity {
         alertDialog.setMessage(getString(R.string.Sorry_too_many_players));
         alertDialog.setButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                //Stay on ViewAchievement activity
+                //Stay on AddNewGame activity
             }
         });
         alertDialog.show();
@@ -193,11 +191,10 @@ public class AddNewGame extends AppCompatActivity {
         alertDialog.setMessage(getString(R.string.scoreTooHighMsg));
         alertDialog.setButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                //Stay on ViewAchievement activity
+                // Stay on AddNewGame activity
             }
         });
         alertDialog.show();
-        //set num of player to the minimum
     }
 
     private void displayMinCombinedScoreMsg(){
@@ -205,20 +202,16 @@ public class AddNewGame extends AppCompatActivity {
         alertDialog.setTitle(getString(R.string.scoreTooLow));
         alertDialog.setMessage(getString(R.string.scoreTooLowMsg));
         alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
-            //Stay on ViewAchievement activity
+            // Stay on AddNewGame activity
         });
         alertDialog.show();
-        //set num of player to the minimum
     }
 
-    // check if user input is valid
+    // check if user input player is valid
     private void checkInput(int selectedGameInt){
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
-        //combinedScoreFromUser = findViewById(R.id.combined_score_input);
         playerMsg = findViewById(R.id.player_msg); // alert message
         playerMsg.setTextColor(getResources().getColor(R.color.purple_700));
-        //scoreMsg = findViewById(R.id.score_msg); // alert message
-        //scoreMsg.setTextColor(getResources().getColor(R.color.purple_700));
 
         numOfPlayerFromUser.addTextChangedListener(new TextWatcher() {
             @Override
@@ -255,9 +248,10 @@ public class AddNewGame extends AppCompatActivity {
         });
     }
 
+    // create textview
     private void createLeftFields(){
         LinearLayout ll_left = (LinearLayout)findViewById(R.id.left_layout_tv);
-        // add edittext
+        // add textview
         TextView tv = new TextView(this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.setMargins(50,62,0,0);
@@ -270,6 +264,7 @@ public class AddNewGame extends AppCompatActivity {
         ll_left.addView(tv);
     }
 
+    // create edittext and return edittext
     private EditText createRightFields(){
         LinearLayout ll_right = (LinearLayout)findViewById(R.id.right_layout_et);
         // add edittext
@@ -286,6 +281,13 @@ public class AddNewGame extends AppCompatActivity {
         return et;
     }
 
+    private void removeViewsInLinearLayout(){
+        LinearLayout ll_left = (LinearLayout)findViewById(R.id.left_layout_tv);
+        ll_left.removeAllViewsInLayout();
+        LinearLayout ll_right = (LinearLayout)findViewById(R.id.right_layout_et);
+        ll_right.removeAllViewsInLayout();
+    }
+
     private void setSetBtn(){
         Button setBtn = findViewById(R.id.set_btn);
         setBtn.setOnClickListener(new View.OnClickListener() {
@@ -294,10 +296,7 @@ public class AddNewGame extends AppCompatActivity {
                 if (isPlayerValid && edList == null){
                    createFields(numOfPlayers);
                 }else if(isPlayerValid){
-                    LinearLayout ll_left = (LinearLayout)findViewById(R.id.left_layout_tv);
-                    ll_left.removeAllViewsInLayout();
-                    LinearLayout ll_right = (LinearLayout)findViewById(R.id.right_layout_et);
-                    ll_right.removeAllViewsInLayout();
+                    removeViewsInLinearLayout();
                     createFields(numOfPlayers);
                 }
             }
@@ -310,15 +309,13 @@ public class AddNewGame extends AppCompatActivity {
             createLeftFields();
             edList[i] = createRightFields();
         }
-
         indexOfPlayer = 0;
         indexOfScore = 0;
-
         textWatcher tw = new textWatcher(edList);
         for (EditText editText : edList) editText.addTextChangedListener(tw);
     }
 
-
+    // check if user input scores is valid
     public class textWatcher implements TextWatcher {
 
         EditText[] edList;
@@ -337,16 +334,6 @@ public class AddNewGame extends AppCompatActivity {
         public void onTextChanged(CharSequence s, int start, int before, int count) {}
         @Override
         public void afterTextChanged(Editable s) {
-//            for (EditText editText : edList) {
-//                if(editText.getText().toString().length() < 1){
-//                    final View focusView = editText;
-//                    editText.setError(getString(R.string.emptyOrInvalid));
-//                    focusView.requestFocus();
-//                    isScoresValid = false;
-//                    //break;
-//                }
-//            }
-
             isScoresValid = true;
             for (EditText editText : edList) {
                 scoresAsStr = editText.getText().toString();
@@ -365,7 +352,6 @@ public class AddNewGame extends AppCompatActivity {
                     isScoresValid = false;
                     if(scoresAsStr.length() == 0) {
                         editText.setError("Must enter value");
-                        //Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -395,12 +381,7 @@ public class AddNewGame extends AppCompatActivity {
         currentConfigPosition = manager.getIndex();
         numOfPlayerFromUser.setText("" + manager.getItemAtIndex(currentConfigPosition).getPlayer(indexOfGame));
         numOfPlayers = manager.getItemAtIndex(currentConfigPosition).getPlayer(indexOfGame);
-//        indexOfPlayer = 0;
-//        indexOfScore = 0;
-        LinearLayout ll_left = (LinearLayout)findViewById(R.id.left_layout_tv);
-        ll_left.removeAllViewsInLayout();
-        LinearLayout ll_right = (LinearLayout)findViewById(R.id.right_layout_et);
-        ll_right.removeAllViewsInLayout();
+        removeViewsInLinearLayout();
         createFields(numOfPlayers);
 
         for (int i = 0; i < edList.length; i++) {
@@ -410,6 +391,23 @@ public class AddNewGame extends AppCompatActivity {
         saveInputForEditGame(currentConfigPosition);
     }
 
+    private void resetAchievementLevel(int selectedGameInt, int numOfPlayers){
+        adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.getItemAtIndex(selectedGameInt).getMaxBestScoreFromConfig(), numOfPlayers);
+        adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.getItemAtIndex(selectedGameInt).getMinPoorScoreFromConfig(), numOfPlayers);
+        if (Math.abs(adjustedMax - adjustedMin) > 8) {
+            isCalculatingRangeForLevels = true;
+        } else {
+            isCalculatingRangeForLevels = false;
+        }
+        if (isCalculatingRangeForLevels) {
+            addNewGameAchievements.setAchievementsBounds(manager.getItemAtIndex(currentConfigPosition).getMinPoorScoreFromConfig(), manager.getItemAtIndex(currentConfigPosition).getMaxBestScoreFromConfig(), numOfPlayers);
+            addNewGameAchievements.calculateLevelAchieved(combinedScores);
+        } else {
+            addNewGameAchievements.setAchievementsScores(manager.getItemAtIndex(currentConfigPosition).getMinPoorScoreFromConfig(), manager.getItemAtIndex(currentConfigPosition).getMaxBestScoreFromConfig(), numOfPlayers);
+            addNewGameAchievements.calculateScoreAchieved(combinedScores);
+        }
+    }
+
     private void saveInputForEditGame(int currentConfigPosition){
         Button save = findViewById(R.id.save_btn);
         save.setOnClickListener(new View.OnClickListener() {
@@ -417,10 +415,21 @@ public class AddNewGame extends AppCompatActivity {
             public void onClick(View v) {
                 if (isScoresValid) {
                     combinedScores = 0;
+
+                    // set combined score
                     storeScores();
+
+                    // reset scoreList
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setListOfValues(scoreList);
+
+                    // reset combined score
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setScores(combinedScores);
-                    // set achievement
+
+                    // reset achievement
+                    resetAchievementLevel(currentConfigPosition, manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getPlayers());
+                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(addNewGameAchievements.getLevelAchieved());
+
+                    // show alertdialog for edit game screen
                     showResultForEditGame(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getLevelAchieved());
                 }else {
                     Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
@@ -439,7 +448,6 @@ public class AddNewGame extends AppCompatActivity {
         });
         alertDialog.show();
     }
-
 
     // save input to the list
     private void saveInput(int selectedGameInt) {

@@ -43,10 +43,10 @@
     <string name="info">Info</string>
     <string name="emptyOrInvalid">Your input is empty or invalid</string>
     <string name="OK">Ok</string>
-    <string name="scoreTooHigh">Combined Score Too High</string>
-    <string name="scoreTooLow">Combined Score Too Low</string>
-    <string name="scoreTooHighMsg">Sorry, the combined score is too high. Please try a smaller number</string>
-    <string name="scoreTooLowMsg">Sorry, the combined score is too low. Please try a bigger number</string>
+    <string name="scoreTooHigh">Score Too High</string>
+    <string name="scoreTooLow">Score Too Low</string>
+    <string name="scoreTooHighMsg">Sorry, the score is too high. Please try a smaller number</string>
+    <string name="scoreTooLowMsg">Sorry, the score is too low. Please try a bigger number</string>
     <string name="PlayerMinimum1">Invalid input: 1 player minimum</string>
     <string name="delete_msg">Are you sure you want to delete?</string>
     <string name="cancel">Cancel</string>
