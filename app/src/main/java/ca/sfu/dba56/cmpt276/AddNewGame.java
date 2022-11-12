@@ -358,6 +358,7 @@ public class AddNewGame extends AppCompatActivity {
         }
     }
 
+    // store score list and update combined score
     private void storeScores(){
         scoreList = new ArrayList<>();
         int score;
@@ -368,7 +369,7 @@ public class AddNewGame extends AppCompatActivity {
         }
     }
 
-    // get date time
+    // get date time in add new game screen
     public String saveDatePlayed(){
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(getString(R.string.date_format));
         LocalDateTime currentDate = LocalDateTime.now();
@@ -391,6 +392,7 @@ public class AddNewGame extends AppCompatActivity {
         saveInputForEditGame(currentConfigPosition);
     }
 
+    // reset Achievement level in edit game screen
     private void resetAchievementLevel(int selectedGameInt, int numOfPlayers){
         adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.getItemAtIndex(selectedGameInt).getMaxBestScoreFromConfig(), numOfPlayers);
         adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.getItemAtIndex(selectedGameInt).getMinPoorScoreFromConfig(), numOfPlayers);
@@ -408,6 +410,7 @@ public class AddNewGame extends AppCompatActivity {
         }
     }
 
+    // save input to the list in edit game screen
     private void saveInputForEditGame(int currentConfigPosition){
         Button save = findViewById(R.id.save_btn);
         save.setOnClickListener(new View.OnClickListener() {
@@ -418,19 +421,18 @@ public class AddNewGame extends AppCompatActivity {
 
                     // set combined score
                     storeScores();
-
                     // reset scoreList
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setListOfValues(scoreList);
-
                     // reset combined score
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setScores(combinedScores);
-
                     // reset achievement
                     resetAchievementLevel(currentConfigPosition, manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getPlayers());
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(addNewGameAchievements.getLevelAchieved());
 
-                    // show alertdialog for edit game screen
+                    // show alertdialog in edit game screen
+                    // pass achievement level to showResultForEditGame in edit game screen
                     showResultForEditGame(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getLevelAchieved());
+
                 }else {
                     Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                 }
@@ -438,6 +440,7 @@ public class AddNewGame extends AppCompatActivity {
         });
     }
 
+    // pop up a window to show achievement level in edit game screen
     private void showResultForEditGame(String achievements){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
         alertDialog.setTitle(getString(R.string.achievement));
@@ -449,7 +452,7 @@ public class AddNewGame extends AppCompatActivity {
         alertDialog.show();
     }
 
-    // save input to the list
+    // save input to the list in add new game screen
     private void saveInput(int selectedGameInt) {
         Button save = findViewById(R.id.save_btn);
         save.setOnClickListener(v -> {
@@ -457,14 +460,18 @@ public class AddNewGame extends AppCompatActivity {
                 storeScores();
                 Game gamePlayed = new Game(numOfPlayers, combinedScores, scoreList, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
+
+                // show alertdialog in add new game screen
+                // pass achievement level to showResult in add new game screen
                 showResult(gamePlayed.getLevelAchieved());
+
             }else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // pop up a window to show achievement
+    // pop up a window to show achievement level in add new game screen
     private void showResult(String achievements){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
         alertDialog.setTitle(getString(R.string.achievement));
