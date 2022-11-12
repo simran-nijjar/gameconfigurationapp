@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,7 +16,6 @@ import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.ref.Reference;
 import java.util.ArrayList;
 
 /*
@@ -29,6 +27,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String FRUITS = "Fruits";
+    private final String FANTASY = "Fantasy";
+    private final String STAR_WARS = "Star Wars";
     private SaveUsingGson toSaveUsingGsonAndSP = new SaveUsingGson();
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
 
@@ -61,12 +62,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeTheme(){
-        if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+        if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
             setTheme(R.style.fruitsTheme);
-        }if (AddNewGame.getAchievementTheme(this).equals("Second")){
+        }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
             setTheme(R.style.fantasyTheme);
-        } if (AddNewGame.getAchievementTheme(this).equals("Third")){
-            setTheme(R.style.thirdTheme);
+        } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
+            setTheme(R.style.starWarsTheme);
         }
     }
 

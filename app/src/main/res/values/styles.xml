@@ -4,9 +4,9 @@
         <item name="android:windowBackground">@drawable/fruitsbackground</item>
     </style>
     <style name="fantasyTheme">
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@drawable/fantasybackground</item>
     </style>
-    <style name="thirdTheme">
-        <item name="android:windowBackground">@drawable/appbackground</item>
+    <style name="starWarsTheme">
+        <item name="android:windowBackground">@drawable/starwarsbackground</item>
     </style>
 </resources>

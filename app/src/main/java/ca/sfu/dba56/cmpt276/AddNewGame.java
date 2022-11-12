@@ -39,6 +39,9 @@ import ca.sfu.dba56.cmpt276.model.Game;
  */
 public class AddNewGame extends AppCompatActivity {
 
+    private final String FRUITS = "Fruits";
+    private final String FANTASY = "Fantasy";
+    private final String STAR_WARS = "Star Wars";
     private int numOfPlayers; // int user input
     private int scores; // int user input
     private String dateGamePlayed; // date time
@@ -82,12 +85,12 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void changeTheme(){
-        if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+        if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
             setTheme(R.style.fruitsTheme);
-        }if (AddNewGame.getAchievementTheme(this).equals("Fantasy")){
+        }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
             setTheme(R.style.fantasyTheme);
-        } if (AddNewGame.getAchievementTheme(this).equals("Third")){
-            setTheme(R.style.thirdTheme);
+        } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
+            setTheme(R.style.starWarsTheme);
         }
     }
 

@@ -16,12 +16,15 @@
         \nWhen you want to add a game play, press the game from the list and click add new game where you can add the number of players for a game and the combined score and see the achievement level you earned.\n
         \nYou can also view history, view expecting achievement levels for a game, edit and delete a game configuration.\n
         \n\nSources:\n
-        \n<a href="https://www.idownloadblog.com/2021/05/09/multicolor-gradient-wallpapers-pack-iphone/">App Background</a>\n
+        \n<a href="https://www.pinterest.ca/pin/759701030882552315/">fruitsbackground.png</a>\n
+        \n<a href="https://linasidorova.com/projects/lVdbn5?album_id=795886">fantasybackground.png</a>\n
+        \n<a href="https://coolwallpapers.me/6106355-rogue-one-a-star-wars-story-movies-star-wars-stormtrooper.html">starwarsbackground.png</a>\n
         \n<a href="https://www.miro.com/">ic_main_msg</a>\n
         \n<a href="https://www.miro.com/">ic_history_msg</a>
     </string>
     <string name="achieve_fruit_content">
         \n
+        Fruits Theme:\n\n
         Beautiful Bananas\n\n
         Wonderful Watermelons\n\n
         Outstanding Oranges\n\n
@@ -35,29 +38,31 @@
     </string>
     <string name="achieve_fantasy_content">
         \n
-        Worst\n\n
-        A\n\n
-        B\n\n
-        C\n\n
-        D\n\n
-        E\n\n
-        F\n\n
-        G\n\n
-        H\n\n
-        Legendary\n\n
+        Fantasy Theme: \n\n
+        Stinky Orc\n\n
+        Friendly Troll\n\n
+        Grumpy Dwarf\n\n
+        High Elf\n\n
+        Powerful Lich\n\n
+        Golden Pegasus\n\n
+        Ferocious Minotaur\n\n
+        Majestic Unicorn\n\n
+        Shadow Wyvern\n\n
+        Azure Dragon\n\n
     </string>
-    <string name="achieve_third_content">
+    <string name="achieve_starwars_content">
         \n
-        Not the best\n\n
-        1\n\n
-        2\n\n
-        3\n\n
-        4\n\n
-        5\n\n
-        6\n\n
-        7\n\n
-        8\n\n
-        Not the worst\n\n
+        Star Wars Theme: \n\n
+        Grogu\n\n
+        Chewbacca\n\n
+        Anakin\n\n
+        Cara Dune\n\n
+        Ahsoka Tano\n\n
+        Luke Skywalker\n\n
+        Yoda\n\n
+        Darth Vader\n\n
+        Asajj Ventress\n\n
+        Leia Organa\n\n
     </string>
     <string name="num_player">Enter the number of players:</string>
     <string name="combined_score">Enter the combined score of all players:</string>
@@ -101,14 +106,14 @@
     <string name="worst_game_level_range_boundary_fruits"><![CDATA[\Beautiful Bananas : Range < \]]></string>
     <string name="legendary_level_score_boundary_fruits"><![CDATA[\Perfect Peaches : Score >= \]]></string>
     <string name="legendary_level_range_boundary_fruits"><![CDATA[\Perfect Peaches : Range >= \]]></string>
-    <string name="worst_game_level_score_boundary_fantasy"><![CDATA[\Worst : Score < \]]></string>
-    <string name="worst_game_level_range_boundary_fantasy"><![CDATA[\Worst : Range < \]]></string>
-    <string name="legendary_level_score_boundary_fantasy"><![CDATA[\Legendary : Score >= \]]></string>
-    <string name="legendary_level_range_boundary_fantasy"><![CDATA[\Legendary : Range >= \]]></string>
-    <string name="worst_game_level_score_boundary_third"><![CDATA[\Not the best : Score < \]]></string>
-    <string name="worst_game_level_range_boundary_third"><![CDATA[\Not the best : Range < \]]></string>
-    <string name="legendary_level_score_boundary_third"><![CDATA[\Not the worst : Score >= \]]></string>
-    <string name="legendary_level_range_boundary_third"><![CDATA[\Not the worst : Range >= \]]></string>
+    <string name="worst_game_level_score_boundary_fantasy"><![CDATA[\Stinky Orc : Score < \]]></string>
+    <string name="worst_game_level_range_boundary_fantasy"><![CDATA[\Stinky Orc : Range < \]]></string>
+    <string name="legendary_level_score_boundary_fantasy"><![CDATA[\Azure Dragon : Score >= \]]></string>
+    <string name="legendary_level_range_boundary_fantasy"><![CDATA[\Azure Dragon : Range >= \]]></string>
+    <string name="worst_game_level_score_boundary_starwars"><![CDATA[\Grogu : Score < \]]></string>
+    <string name="worst_game_level_range_boundary_starwars"><![CDATA[\Grogu : Range < \]]></string>
+    <string name="legendary_level_score_boundary_starwars"><![CDATA[\Leia Organa : Score >= \]]></string>
+    <string name="legendary_level_range_boundary_starwars"><![CDATA[\Leia Organa : Range >= \]]></string>
     <string name="score_part1">\ Score : [\</string>
     <string name="score_part2"> ]\n\n</string>
     <string name="display_string_option">"%1s "</string>

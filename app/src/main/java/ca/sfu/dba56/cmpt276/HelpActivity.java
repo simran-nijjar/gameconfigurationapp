@@ -17,6 +17,10 @@ import android.widget.TextView;
  */
 public class HelpActivity extends AppCompatActivity {
 
+    private final String FRUITS = "Fruits";
+    private final String FANTASY = "Fantasy";
+    private final String STAR_WARS = "Star Wars";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,12 +43,12 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     private void changeTheme(){
-        if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+        if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
             setTheme(R.style.fruitsTheme);
-        }if (AddNewGame.getAchievementTheme(this).equals("Fantasy")){
+        }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
             setTheme(R.style.fantasyTheme);
-        } if (AddNewGame.getAchievementTheme(this).equals("Third")){
-            setTheme(R.style.thirdTheme);
+        } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
+            setTheme(R.style.starWarsTheme);
         }
     }
 
@@ -90,12 +94,12 @@ public class HelpActivity extends AppCompatActivity {
         achieve.setOnClickListener(v -> {
 
             if(achieve_content.getVisibility() == View.GONE) {
-                if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+                if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
                     achieve_content.setText(R.string.achieve_fruit_content);
-                } if (AddNewGame.getAchievementTheme(this).equals("Fantasy")){
+                } if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
                     achieve_content.setText(R.string.achieve_fantasy_content);
-                } if (AddNewGame.getAchievementTheme(this).equals("Third")){
-                    achieve_content.setText(R.string.achieve_third_content);
+                } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
+                    achieve_content.setText(R.string.achieve_starwars_content);
                 }
                 achieve_content.setVisibility(View.VISIBLE);
             }else if (achieve_content.getVisibility() == View.VISIBLE){

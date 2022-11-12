@@ -24,6 +24,9 @@ import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
 public class ViewConfiguration extends AppCompatActivity {
 
+    private final String FRUITS = "Fruits";
+    private final String FANTASY = "Fantasy";
+    private final String STAR_WARS = "Star Wars";
     private TextView expPoorScoreEditTxt;
     private TextView expGreatScoreEditTxt;
     private Button editConfigScreenBtn;
@@ -53,21 +56,13 @@ public class ViewConfiguration extends AppCompatActivity {
         toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus){
-            changeTheme();
-        }
-    }
-
     private void changeTheme(){
-        if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+        if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
             setTheme(R.style.fruitsTheme);
-        }if (AddNewGame.getAchievementTheme(this).equals("Second")){
+        }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
             setTheme(R.style.fantasyTheme);
-        } if (AddNewGame.getAchievementTheme(this).equals("Third")){
-            setTheme(R.style.thirdTheme);
+        } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
+            setTheme(R.style.starWarsTheme);
         }
     }
 

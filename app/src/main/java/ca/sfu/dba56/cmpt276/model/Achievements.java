@@ -8,10 +8,12 @@ package ca.sfu.dba56.cmpt276.model;
 
 public class Achievements {
 
+    private final String FANTASY = "Fantasy";
+    private final String STAR_WARS = "Star Wars";
     private int numOfBoundedLevels;
     private String achievementsFruits[];
     private String achievementsFantasy[];
-    private String achievementsThree[];
+    private String achievementsStarWars[];
     private int intAchievements[] = new int[10];
     private String levelAchieved;
     private int minScore;
@@ -22,8 +24,11 @@ public class Achievements {
         this.achievementsFruits = new String[]{"Beautiful Bananas", "Wonderful Watermelons",
                 "Outstanding Oranges", "Admirable Apricots", "Good Grapefruits", "Amazing Apples",
                 "Great Grapes", "Better Blueberries", "Super Strawberries", "Perfect Peaches"};
-        this.achievementsFantasy = new String[]{"Worst","A","B","C","D","E","F","G","H","Legendary"};
-        this.achievementsThree = new String[]{"Not the best","1","2","3","4","5","6","7","8", "Not the worst"};
+        this.achievementsFantasy = new String[]{"Stinky Orc", "Friendly Troll", "Grumpy Dwarf",
+                "High Elf", "Powerful Lich", "Golden Pegasus", "Ferocious Minotaur", "Majestic Unicorn",
+                "Shadow Wyvern", "Azure Dragon"};
+        this.achievementsStarWars = new String[]{"Grogu", "Chewbacca", "Anakin", "Cara Dune", "Ahsoka Tano",
+                "Luke Skywalker", "Yoda", "Darth Vader", "Asajj Ventress", "Leia Organa"};
         this.numOfBoundedLevels = 8;
         this.theme = theme;
     }
@@ -42,11 +47,11 @@ public class Achievements {
     }
 
     public String getAchievementLevel(int index){
-        if (this.theme.equals("Fantasy")){
+        if (this.theme.equals(FANTASY)){
             return achievementsFantasy[index];
         }
-        if (this.theme.equals("Third")){
-            return achievementsThree[index];
+        if (this.theme.equals(STAR_WARS)){
+            return achievementsStarWars[index];
         }
         return achievementsFruits[index];
     }

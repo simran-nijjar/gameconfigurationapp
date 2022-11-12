@@ -30,6 +30,9 @@ import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 */
 public class ViewAchievements extends AppCompatActivity {
 
+    private final String FRUITS = "Fruits";
+    private final String FANTASY = "Fantasy";
+    private final String STAR_WARS = "Star Wars";
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private Achievements achievements;
     private EditText numPlayersFromUser;
@@ -71,12 +74,12 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private void changeTheme(){
-        if (AddNewGame.getAchievementTheme(this).equals("Fruits")) {
+        if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
             setTheme(R.style.fruitsTheme);
-        }if (AddNewGame.getAchievementTheme(this).equals("Second")){
+        }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
             setTheme(R.style.fantasyTheme);
-        } if (AddNewGame.getAchievementTheme(this).equals("Third")){
-            setTheme(R.style.thirdTheme);
+        } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
+            setTheme(R.style.starWarsTheme);
         }
     }
 
@@ -207,8 +210,8 @@ public class ViewAchievements extends AppCompatActivity {
             return getString(R.string.worst_game_level_range_boundary_fantasy) //Add worse range than expected lowest range achievement level
                     + minScore + "\n\n";
         }
-        if (theme.equals("Third")){
-            return  getString(R.string.worst_game_level_range_boundary_third) //Add worse range than expected lowest range achievement level
+        if (theme.equals("Star Wars")){
+            return  getString(R.string.worst_game_level_range_boundary_starwars) //Add worse range than expected lowest range achievement level
                     + minScore + "\n\n";
         }
         return getString(R.string.worst_game_level_range_boundary_fruits) //Add worse range than expected lowest range achievement level
@@ -216,12 +219,12 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private String getLegendaryRangeOfTheme(String theme, int newStartRange){
-        if (theme.equals("Fantasy")){
+        if (theme.equals(FANTASY)){
             return getString(R.string.legendary_level_range_boundary_fantasy) //Add best level range when not all levels can be calculated for
                     + (newStartRange);
         }
-        if (theme.equals("Third")){
-            return getString(R.string.legendary_level_range_boundary_third) //Add best level range when not all levels can be calculated for
+        if (theme.equals(STAR_WARS)){
+            return getString(R.string.legendary_level_range_boundary_starwars) //Add best level range when not all levels can be calculated for
                     + (newStartRange);
         }
         return getString(R.string.legendary_level_range_boundary_fruits) //Add best level range when not all levels can be calculated for
@@ -229,12 +232,12 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private String getWorstScoreOfTheme(String theme){
-        if (theme.equals("Fantasy")){
+        if (theme.equals(FANTASY)){
             return getString(R.string.worst_game_level_score_boundary_fantasy)
                     + minScore +"\n\n";
         }
-        if (theme.equals("Third")){
-            return getString(R.string.worst_game_level_score_boundary_third)
+        if (theme.equals(STAR_WARS)){
+            return getString(R.string.worst_game_level_score_boundary_starwars)
                     + minScore +"\n\n";
         }
         return getString(R.string.worst_game_level_score_boundary_fruits)
@@ -242,12 +245,12 @@ public class ViewAchievements extends AppCompatActivity {
     }
 
     private String getLegendaryScoreOfTheme(String theme){
-        if (theme.equals("Fantasy")){
+        if (theme.equals(FANTASY)){
             return getString(R.string.legendary_level_score_boundary_fantasy)
                     + maxScore;
         }
-        if (theme.equals("Third")){
-            return getString(R.string.legendary_level_score_boundary_third)
+        if (theme.equals(STAR_WARS)){
+            return getString(R.string.legendary_level_score_boundary_starwars)
                     + maxScore;
         }
         return getString(R.string.legendary_level_score_boundary_fruits)

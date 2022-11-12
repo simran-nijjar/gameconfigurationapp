@@ -3,7 +3,7 @@
     <string-array name="achievementThemes">
         <item>Fruits</item>
         <item>Fantasy</item>
-        <item>Third</item>
+        <item>Star Wars</item>
     </string-array>
     <string name = "defaultTheme">Fruits</string>
 </resources>
