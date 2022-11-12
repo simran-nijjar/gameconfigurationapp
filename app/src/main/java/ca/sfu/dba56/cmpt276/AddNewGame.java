@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -67,6 +68,7 @@ public class AddNewGame extends AppCompatActivity {
     List<Integer> scoreList;
     int indexOfGame = -1;
     int currentConfigPosition = 0;
+    MediaPlayer mediaplayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -449,12 +451,22 @@ public class AddNewGame extends AppCompatActivity {
                 storeScores();
                 Game gamePlayed = new Game(numOfPlayers, combinedScores, scoreList, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
+                PlaySound();
                 showResult(gamePlayed.getLevelAchieved());
             }else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
             }
         });
     }
+    //makes audio play for achievement sound
+    private void PlaySound(){
+        if(mediaplayer == null){
+            mediaplayer = MediaPlayer.create(this, R.raw.achievement1);
+        }
+        mediaplayer.start();
+
+    }
+
 
     // pop up a window to show achievement
     private void showResult(String achievements){
