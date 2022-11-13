@@ -28,9 +28,6 @@ import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
 public class AddEditConfiguration extends AppCompatActivity {
 
-    private final String FRUITS = "Fruits";
-    private final String FANTASY = "Fantasy";
-    private final String STAR_WARS = "Star Wars";
     private EditText gameNameFromUser;
     private EditText expPoorScoreFromUser;
     private EditText expGreatScoreFromUser;
@@ -46,10 +43,12 @@ public class AddEditConfiguration extends AppCompatActivity {
     private final int MAX_POS_SCORE_INPUT = 100000000;
     private final int MAX_NEG_SCORE_INPUT = -100000000;
 
+    private ConfigurationsManager manager = ConfigurationsManager.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        manager.changeTheme(this);
         super.onCreate(savedInstanceState);
-        changeTheme();
         setContentView(R.layout.add_configuration);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -83,17 +82,6 @@ public class AddEditConfiguration extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-    }
-
-    private void changeTheme(){
-        //Change theme depending on click radio button for theme
-        if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
-            setTheme(R.style.fruitsTheme);
-        }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
-            setTheme(R.style.fantasyTheme);
-        } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
-            setTheme(R.style.starWarsTheme);
-        }
     }
 
     @Override

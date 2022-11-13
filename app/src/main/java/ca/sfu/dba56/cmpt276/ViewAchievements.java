@@ -30,9 +30,9 @@ import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 */
 public class ViewAchievements extends AppCompatActivity {
 
-    private final String FRUITS = "Fruits";
     private final String FANTASY = "Fantasy";
     private final String STAR_WARS = "Star Wars";
+
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private Achievements achievements;
     private EditText numPlayersFromUser;
@@ -47,9 +47,9 @@ public class ViewAchievements extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        manager.changeTheme(this);
         super.onCreate(savedInstanceState);
         achievements = new Achievements(getAchievementTheme(this));
-        changeTheme();
         setContentView(R.layout.view_achievements);
 
         noAchievementsDisplayed = findViewById(R.id.emptyAchievementsList);
@@ -71,17 +71,6 @@ public class ViewAchievements extends AppCompatActivity {
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, ViewAchievements.class);
-    }
-
-    private void changeTheme(){
-        //Change theme depending on click radio button for theme
-        if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
-            setTheme(R.style.fruitsTheme);
-        }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
-            setTheme(R.style.fantasyTheme);
-        } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
-            setTheme(R.style.starWarsTheme);
-        }
     }
 
     @Override
@@ -211,11 +200,11 @@ public class ViewAchievements extends AppCompatActivity {
 
     private String getWorstRangeOfTheme(String theme){
         //Worst range level depends on selected theme in radio button
-        if (theme.equals("Fantasy")){
+        if (theme.equals(FANTASY)){
             return getString(R.string.worst_game_level_range_boundary_fantasy) //Add worse range than expected lowest range achievement level
                     + minScore + "\n\n";
         }
-        if (theme.equals("Star Wars")){
+        if (theme.equals(STAR_WARS)){
             return  getString(R.string.worst_game_level_range_boundary_starwars) //Add worse range than expected lowest range achievement level
                     + minScore + "\n\n";
         }

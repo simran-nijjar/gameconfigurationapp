@@ -19,17 +19,14 @@ import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
 public class GameHistory extends AppCompatActivity {
 
-    private final String FRUITS = "Fruits";
-    private final String FANTASY = "Fantasy";
-    private final String STAR_WARS = "Star Wars";
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private int indexOfGame = 0;
     private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        manager.changeTheme(this);
         super.onCreate(savedInstanceState);
-        changeTheme();
         setContentView(R.layout.activity_game_history);
         // get selected game name from ViewConfiguration
         Bundle b = getIntent().getExtras();
@@ -41,17 +38,6 @@ public class GameHistory extends AppCompatActivity {
 
     public static Intent makeIntent(Context context){
         return new Intent(context, GameHistory.class);
-    }
-
-    private void changeTheme(){
-        //Change theme depending on click radio button for theme
-        if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
-            setTheme(R.style.fruitsTheme);
-        }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
-            setTheme(R.style.fantasyTheme);
-        } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
-            setTheme(R.style.starWarsTheme);
-        }
     }
 
     @Override

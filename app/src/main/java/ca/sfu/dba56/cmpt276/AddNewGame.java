@@ -39,9 +39,6 @@ import ca.sfu.dba56.cmpt276.model.Game;
  */
 public class AddNewGame extends AppCompatActivity {
 
-    private final String FRUITS = "Fruits";
-    private final String FANTASY = "Fantasy";
-    private final String STAR_WARS = "Star Wars";
     private int numOfPlayers; // int user input
     private int scores; // int user input
     private String dateGamePlayed; // date time
@@ -64,8 +61,8 @@ public class AddNewGame extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        manager.changeTheme(this);
         super.onCreate(savedInstanceState);
-        changeTheme();
         addNewGameAchievements = new Achievements(getAchievementTheme(this));
         setContentView(R.layout.activity_add_new_game);
         chooseGame();
@@ -82,17 +79,6 @@ public class AddNewGame extends AppCompatActivity {
 
     public static Intent makeIntent(Context context){
         return new Intent(context, AddNewGame.class);
-    }
-
-    private void changeTheme(){
-        //Change theme depending on click radio button for theme
-        if (getAchievementTheme(this).equals(FRUITS)) {
-            setTheme(R.style.fruitsTheme);
-        }if (getAchievementTheme(this).equals(FANTASY)){
-            setTheme(R.style.fantasyTheme);
-        } if (getAchievementTheme(this).equals(STAR_WARS)){
-            setTheme(R.style.starWarsTheme);
-        }
     }
 
     @Override

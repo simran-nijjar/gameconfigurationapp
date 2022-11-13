@@ -27,15 +27,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String FRUITS = "Fruits";
-    private final String FANTASY = "Fantasy";
-    private final String STAR_WARS = "Star Wars";
     private SaveUsingGson toSaveUsingGsonAndSP = new SaveUsingGson();
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        changeTheme();
+        manager.changeTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -59,17 +56,6 @@ public class MainActivity extends AppCompatActivity {
         UpdateUI();
         //to save config manager
         toSaveUsingGsonAndSP.saveToSharedRefs(this);
-    }
-
-    private void changeTheme(){
-        //Change theme depending on click radio button for theme
-        if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
-            setTheme(R.style.fruitsTheme);
-        }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
-            setTheme(R.style.fantasyTheme);
-        } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
-            setTheme(R.style.starWarsTheme);
-        }
     }
 
     public static Intent makeIntent(Context context){

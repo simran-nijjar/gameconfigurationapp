@@ -24,9 +24,6 @@ import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
 public class ViewConfiguration extends AppCompatActivity {
 
-    private final String FRUITS = "Fruits";
-    private final String FANTASY = "Fantasy";
-    private final String STAR_WARS = "Star Wars";
     private TextView expPoorScoreEditTxt;
     private TextView expGreatScoreEditTxt;
     private Button editConfigScreenBtn;
@@ -36,8 +33,8 @@ public class ViewConfiguration extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        manager.changeTheme(this);
         super.onCreate(savedInstanceState);
-        changeTheme();
         setContentView(R.layout.activity_view_configuration);
 
         ActionBar bar = getSupportActionBar();
@@ -48,23 +45,14 @@ public class ViewConfiguration extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        manager.changeTheme(this);
         super.onResume();
-        changeTheme();
         setUpGameHistoryButton();
         UpdateUI();
         //to save config manager
         toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
     }
 
-    private void changeTheme(){
-        if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
-            setTheme(R.style.fruitsTheme);
-        }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
-            setTheme(R.style.fantasyTheme);
-        } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
-            setTheme(R.style.starWarsTheme);
-        }
-    }
 
     private void UpdateUI() {
         currentConfigPosition = manager.getIndex();
@@ -91,7 +79,6 @@ public class ViewConfiguration extends AppCompatActivity {
         setUpDeleteButton(currentConfigPosition);
         setUpAddGameButton();
         expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMaxBestScoreFromConfig()));
-        //setUpAddGameButton();
         setUpViewAchievementsButton();
         //to save config manager
         toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);

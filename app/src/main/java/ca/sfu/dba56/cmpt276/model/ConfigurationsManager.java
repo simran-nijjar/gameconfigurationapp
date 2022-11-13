@@ -1,7 +1,12 @@
 package ca.sfu.dba56.cmpt276.model;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import ca.sfu.dba56.cmpt276.AddNewGame;
+import ca.sfu.dba56.cmpt276.R;
 
 /*
  * Singleton class ConfigurationsManager
@@ -9,6 +14,10 @@ import java.util.List;
  * allows add and remove items in the array as well as items access to get and set them
  */
 public class ConfigurationsManager {
+
+    private final String FRUITS = "Fruits";
+    private final String FANTASY = "Fantasy";
+    private final String STAR_WARS = "Star Wars";
 
     private static ConfigurationsManager instance;
     private int index;
@@ -39,5 +48,14 @@ public class ConfigurationsManager {
     public Configuration getItemAtIndex(int i){return ListOfConfigurations.get(i);}
     public int getIndex() {return index;}
 
-
+    public void changeTheme(Context context){
+        //Change theme depending on click radio button for theme
+        if (AddNewGame.getAchievementTheme(context).equals(FRUITS)) {
+            context.setTheme(R.style.fruitsTheme);
+        }if (AddNewGame.getAchievementTheme(context).equals(FANTASY)){
+            context.setTheme(R.style.fantasyTheme);
+        } if (AddNewGame.getAchievementTheme(context).equals(STAR_WARS)){
+            context.setTheme(R.style.starWarsTheme);
+        }
+    }
 }

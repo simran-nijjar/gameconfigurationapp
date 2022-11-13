@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
+
 /*
 * Help activity class
 * provides a clickable buttons that give info about the course and app
@@ -21,10 +23,12 @@ public class HelpActivity extends AppCompatActivity {
     private final String FANTASY = "Fantasy";
     private final String STAR_WARS = "Star Wars";
 
+    private ConfigurationsManager manager = ConfigurationsManager.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        manager.changeTheme(this);
         super.onCreate(savedInstanceState);
-        changeTheme();
         setContentView(R.layout.activity_help);
         setInfoBtn();
         setDescriptionBtn();
@@ -40,17 +44,6 @@ public class HelpActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context context){
         return new Intent(context, HelpActivity.class);
-    }
-
-    private void changeTheme(){
-        //Change theme depending on click radio button for theme
-        if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
-            setTheme(R.style.fruitsTheme);
-        }if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
-            setTheme(R.style.fantasyTheme);
-        } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
-            setTheme(R.style.starWarsTheme);
-        }
     }
 
     private void setInfoBtn() {
