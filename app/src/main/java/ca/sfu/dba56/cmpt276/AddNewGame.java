@@ -239,7 +239,6 @@ public class AddNewGame extends AppCompatActivity {
                     }
                 }catch (NumberFormatException ex){
                     isPlayerValid = false;
-                    Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -352,7 +351,7 @@ public class AddNewGame extends AppCompatActivity {
                 }catch (NumberFormatException ex){
                     isScoresValid = false;
                     if(scoresAsStr.length() == 0) {
-                        editText.setError("Must enter value");
+                        editText.setError("Must enter score");
                     }
                 }
             }
