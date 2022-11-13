@@ -278,8 +278,6 @@ public class AddNewGame extends AppCompatActivity {
                         saveDatePlayed(), isCalculatingRangeForLevels, ViewAchievements.getAchievementTheme(this));
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
                 showResult(gamePlayed.getLevelAchieved());
-                Intent intent = ViewConfiguration.makeIntent(AddNewGame.this);
-                startActivity(intent);
             }else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
             }
@@ -293,6 +291,8 @@ public class AddNewGame extends AppCompatActivity {
         alertDialog.setMessage("" + achievements);
         alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
             manager.setIndex(selectedGame);
+            Intent intent = ViewConfiguration.makeIntent(AddNewGame.this);
+            startActivity(intent);
             AddNewGame.this.finish(); // back to View Configuration page
         });
         alertDialog.show();
