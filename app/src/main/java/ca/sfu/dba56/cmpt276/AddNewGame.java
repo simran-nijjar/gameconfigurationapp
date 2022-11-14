@@ -58,6 +58,7 @@ public class AddNewGame extends AppCompatActivity {
     private boolean isCalculatingRangeForLevels;
     private final int MAX_USER_INPUT = 100000000;
     private final int MIN_USER_INPUT = -100000000;
+    private final int MAX_PLAYERS = 1000;
     private int indexOfPlayer = 0; // textview player index
     private int indexOfScore = 0; // edittext score index
     private EditText[] edList;
@@ -223,7 +224,7 @@ public class AddNewGame extends AppCompatActivity {
                     if (numOfPlayers < 1) {
                         isPlayerValid = false;
                         playerMsg.setText(R.string.PlayerMinimum1);
-                    }else if (numOfPlayers >= MAX_USER_INPUT) {
+                    }else if (numOfPlayers >= MAX_PLAYERS) {
                         isPlayerValid = false;
                         displayMaxPlayerMsg();
                     }else{
