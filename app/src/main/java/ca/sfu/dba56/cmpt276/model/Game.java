@@ -1,5 +1,8 @@
 package ca.sfu.dba56.cmpt276.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
 * Game class stores info about one game played
 * that includes num of players, their overall score,
@@ -12,11 +15,13 @@ public class Game {
     private String dateGamePlayed;
     private Achievements achievements = new Achievements();
     private String levelAchieved;
+    private List<Integer> listOfValues;
 
-    public Game(int players, int scores, Configuration manager, String dateGamePlayed, boolean isCalculatingRangeLevels) {
+    public Game(int players, int scores, List<Integer> listOfValues, Configuration manager, String dateGamePlayed, boolean isCalculatingRangeLevels) {
 
         this.players = players;
         this.scores = scores;
+        this.listOfValues = listOfValues;
 
         if (isCalculatingRangeLevels) {
             achievements.setAchievementsBounds(manager.getMinPoorScoreFromConfig(), manager.getMaxBestScoreFromConfig(), players);
@@ -29,6 +34,10 @@ public class Game {
         this.dateGamePlayed = dateGamePlayed;
     }
 
+    public void setScores(int scores) {this.scores = scores;}
+    public void setLevelAchieved(String levelAchieved) {this.levelAchieved = levelAchieved;}
+    public void setListOfValues(List<Integer> listOfValues) {this.listOfValues = listOfValues;}
+    public List<Integer> getListOfValues() {return listOfValues;}
     public int getPlayers() {return players;}
     public int getScores() {return scores;}
     public String getDateGamePlayed() {return dateGamePlayed;}
