@@ -167,10 +167,7 @@ public class AddNewGame extends AppCompatActivity {
                 playerMsg = findViewById(R.id.player_msg);
                 numOfPlayerFromUser.setText("");
                 playerMsg.setText("");
-                LinearLayout ll_left = (LinearLayout)findViewById(R.id.left_layout_tv);
-                ll_left.removeAllViewsInLayout();
-                LinearLayout ll_right = (LinearLayout)findViewById(R.id.right_layout_et);
-                ll_right.removeAllViewsInLayout();
+                removeViewsInLinearLayout();
 
                 // call function according to current selection
                 checkInput(selectedGame);
