@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,7 @@ public class ViewAchievements extends AppCompatActivity {
         displayAchievements = findViewById(R.id.listOfAchievements);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        createDifficultyRadioButtons();
     }
 
     @Override
@@ -204,5 +206,12 @@ public class ViewAchievements extends AppCompatActivity {
     private void calculateMinAndMaxScore() {
         minScore = achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayers);
         maxScore = achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMaxBestScoreFromConfig(), numPlayers);
+    }
+
+    // create radio buttons for the achievement view that will change the levels of achievement
+    // according to selected difficulty level
+    private void createDifficultyRadioButtons() {
+        RadioGroup difficultiesGroup = findViewById(R.id.radioGroupDifficulty);
+
     }
 }
