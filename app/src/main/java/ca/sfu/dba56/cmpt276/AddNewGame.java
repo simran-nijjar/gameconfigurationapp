@@ -185,50 +185,27 @@ public class AddNewGame extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(AddNewGame.this, R.array.achievementThemes, android.R.layout.simple_spinner_dropdown_item);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedTheme = dropdown.getSelectedItemPosition();
                 String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
                 for (int i = 0; i < themesArray.length; i++){
-                    final String achievementTheme = themesArray[i];
-                    if (i == selectedTheme){
+                    if (i == selectedTheme && !addNewGameAchievements.getAchievementTheme().equals(themesArray[i])) {
+                        final String achievementTheme = themesArray[i];
                         saveAchievementTheme(achievementTheme);
                         addNewGameAchievements.setAchievementTheme(achievementTheme);
+                        AddNewGame.this.recreate();
                     }
                 }
-                manager.changeTheme(AddNewGame.this);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                //Do nothing
             }
         });
-
     }
-
-//    private void displayThemeRadioButtons(){
-//        RadioGroup themeGroup = findViewById(R.id.dropdownTheme);
-//        String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
-//
-//        for (int i = 0; i < themesArray.length; i++){
-//            final String achievementTheme = themesArray[i];
-//
-//            RadioButton btn = new RadioButton(this);
-//            btn.setText(getString(R.string.display_string_option, achievementTheme));
-//            btn.setOnClickListener(v ->{
-//                saveAchievementTheme(achievementTheme);
-//                addNewGameAchievements.setAchievementTheme(achievementTheme);
-//                AddNewGame.this.recreate();
-//            });
-//            themeGroup.addView(btn);
-//            if (achievementTheme.equals(getAchievementTheme(this))){
-//                addNewGameAchievements.setAchievementTheme(achievementTheme);
-//                btn.setChecked(true);
-//            }
-//        }
-//    }
-
 
     private void displayMaxPlayerMsg(){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();

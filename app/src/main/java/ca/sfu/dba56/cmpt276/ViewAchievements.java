@@ -10,9 +10,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ public class ViewAchievements extends AppCompatActivity {
     private String numPlayersAsStr;
     private int numPlayers;
     private int indexOfGame;
+    private int selectedTheme;
     private TextView noAchievementsDisplayed;
     private TextView displayAchievements;
     private int minScore;
@@ -51,10 +53,10 @@ public class ViewAchievements extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         achievements = new Achievements(getAchievementTheme(this));
         setContentView(R.layout.view_achievements);
+        storeSelectedAchievementTheme();
 
         noAchievementsDisplayed = findViewById(R.id.emptyAchievementsList);
         numPlayersFromUser = findViewById(R.id.userInputPlayers);
-        displayThemeRadioButtons();
         updateUI();
         Bundle b = getIntent().getExtras();
         indexOfGame = b.getInt("Achievement Game Name");
@@ -89,26 +91,31 @@ public class ViewAchievements extends AppCompatActivity {
     private void updateUI() {
         numPlayersFromUser.addTextChangedListener(textWatcher);}
 
-    private void displayThemeRadioButtons(){
-        RadioGroup themeGroup = findViewById(R.id.dropdownTheme);
-        String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
+    private void storeSelectedAchievementTheme(){
+        Spinner dropdown = findViewById(R.id.dropdownThemeAchievements);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ViewAchievements.this, R.array.achievementThemes, android.R.layout.simple_spinner_dropdown_item);
+        dropdown.setAdapter(adapter);
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-        for (int i = 0; i < themesArray.length; i++){
-            final String achievementTheme = themesArray[i];
-
-            RadioButton btn = new RadioButton(this);
-            btn.setText(getString(R.string.display_string_option, achievementTheme));
-            btn.setOnClickListener(v ->{
-                saveAchievementTheme(achievementTheme);
-                achievements.setAchievementTheme(achievementTheme);
-                ViewAchievements.this.recreate();
-            });
-            themeGroup.addView(btn);
-            if (achievementTheme.equals(getAchievementTheme(this))){
-                achievements.setAchievementTheme(achievementTheme);
-                btn.setChecked(true);
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedTheme = dropdown.getSelectedItemPosition();
+                String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
+                for (int i = 0; i < themesArray.length; i++){
+                    if (i == selectedTheme && !achievements.getAchievementTheme().equals(themesArray[i])) {
+                        final String achievementTheme = themesArray[i];
+                        saveAchievementTheme(achievementTheme);
+                        achievements.setAchievementTheme(achievementTheme);
+                        ViewAchievements.this.recreate();
+                    }
+                }
             }
-        }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //Do nothing
+            }
+        });
     }
 
     private void saveAchievementTheme(String theme){

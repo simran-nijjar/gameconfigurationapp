@@ -16,43 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!--        <Spinner-->
-            <!--            android:id="@+id/gameName"-->
-            <!--            android:layout_width="100dp"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:background="@android:drawable/btn_dropdown"-->
-            <!--            android:spinnerMode="dropdown"/>-->
-
-
-            <!--            <Spinner-->
-            <!--                android:id="@+id/radioBtnsThemes"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:background="@android:drawable/btn_dropdown"-->
-            <!--                android:spinnerMode="dropdown"/>-->
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/txtSelectTheme2"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginTop="20dp"-->
-            <!--                android:text="Select a theme:"-->
-            <!--                android:textColor="#000000"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintHorizontal_bias="0.117"-->
-            <!--                app:layout_constraintStart_toStartOf="@+id/gameName"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/gameName" />-->
-
-            <!--            <RadioGroup-->
-            <!--                android:id="@+id/radioBtnsThemes"-->
-            <!--                android:layout_width="315dp"-->
-            <!--                android:layout_height="90dp"-->
-            <!--                android:layout_marginTop="32dp"-->
-            <!--                app:layout_constraintEnd_toEndOf="@+id/txtSelectTheme2"-->
-            <!--                app:layout_constraintHorizontal_bias="0.0"-->
-            <!--                app:layout_constraintStart_toStartOf="@+id/txtSelectTheme2"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/txtSelectTheme2" />-->
-
             <LinearLayout
                 android:id="@+id/center_point"
                 android:layout_width="wrap_content"
@@ -98,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="Save" />
+                    android:text="Save Game" />
 
                 <LinearLayout
                     android:id="@+id/left_layout_tv"
@@ -140,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
                     android:layout_marginTop="25dp"
-                    android:text="Set" />
+                    android:text="Set Players" />
 
                 <LinearLayout
                     android:id="@+id/right_layout_et"
