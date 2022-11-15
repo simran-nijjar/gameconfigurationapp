@@ -28,9 +28,11 @@ public class GameHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_history);
         // get selected game name from ViewConfiguration
-        Bundle b = getIntent().getExtras();
-        indexOfGame = b.getInt(getString(R.string.game_name_2));
+//        Bundle b = getIntent().getExtras();
+//        indexOfGame = b.getInt(getString(R.string.gameName2));
+        indexOfGame = manager.getIndex();
         populateListView(manager, indexOfGame);
+        registerClickCallBack();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
@@ -39,14 +41,20 @@ public class GameHistory extends AppCompatActivity {
         return new Intent(context, GameHistory.class);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                this.finish();
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), ViewConfiguration.class);
+        startActivityForResult(myIntent, 0);
+        return true;
     }
 
     @Override
@@ -68,9 +76,22 @@ public class GameHistory extends AppCompatActivity {
         //adapter
         adapter = new ArrayAdapter<String>(this, R.layout.game_items, items);
         ListView list = findViewById(R.id.HistoryList);
-        list.setSelector(android.R.color.transparent);
         list.setAdapter(adapter);
     }
 
+    private void registerClickCallBack() {
+        ListView list = findViewById(R.id.HistoryList);
+        list.setOnItemClickListener((parent, viewClicked, position, id) -> {
+            Intent intent = AddNewGame.makeIntent(GameHistory.this);
+            intent.putExtra("selected game", position);
+            startActivity(intent);
+        });
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent refresh = new Intent(GameHistory.this, ViewConfiguration.class); // back to View Config screen
+        startActivity(refresh);
+    }
 }

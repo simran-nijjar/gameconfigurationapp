@@ -62,7 +62,6 @@
         Leia Organa\n\n
     </string>
     <string name="num_player">Enter the number of players:</string>
-    <string name="combined_score">Enter the combined score of all players:</string>
     <string name="selected_config_position">selected position</string>
     <string name="empty_achievements_msg">Enter number of players to see achievement levels with range</string>
     <string name="invalid_players_msg">Number of players cannot be less than 1. Please try again.</string>
@@ -72,10 +71,10 @@
     <string name="info">Info</string>
     <string name="emptyOrInvalid">Your input is empty or invalid</string>
     <string name="OK">Ok</string>
-    <string name="scoreTooHigh">Combined Score Too High</string>
-    <string name="scoreTooLow">Combined Score Too Low</string>
-    <string name="scoreTooHighMsg">Sorry, the combined score is too high. Please try a smaller number</string>
-    <string name="scoreTooLowMsg">Sorry, the combined score is too low. Please try a bigger number</string>
+    <string name="scoreTooHigh">Score Too High</string>
+    <string name="scoreTooLow">Score Too Low</string>
+    <string name="scoreTooHighMsg">Sorry, the score is too high. Please try a smaller number</string>
+    <string name="scoreTooLowMsg">Sorry, the score is too low. Please try a bigger number</string>
     <string name="PlayerMinimum1">Invalid input: 1 player minimum</string>
     <string name="delete_msg">Are you sure you want to delete?</string>
     <string name="cancel">Cancel</string>
@@ -96,7 +95,6 @@
     <string name="ERROR_text_fields_cannot_be_empty">ERROR: Text fields cannot be empty. Please enter correct values and try again</string>
     <string name="poor_score_must_be_less_than_great_score_try_again">Poor score must be less than great score. Try again</string>
     <string name="date_format">MMM dd, y @ h:mma</string>
-    <string name="game_name_2">game name2</string>
     <string name="too_many_players">Too many players</string>
     <string name="Sorry_too_many_players">Sorry, that\'s too many players. Please try a smaller number</string>
     <string name="worst_game_level_score_boundary_fruits"><![CDATA[\Beautiful Bananas : Score < \]]></string>
