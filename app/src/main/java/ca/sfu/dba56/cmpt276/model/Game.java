@@ -17,9 +17,8 @@ public class Game {
     private String levelAchieved;
     private List<Integer> listOfValues;
 
-    public Game(int players, int scores, Configuration manager, String dateGamePlayed, boolean isCalculatingRangeLevels, String theme) {
+    public Game(int players, int scores, List<Integer> listOfValues, Configuration manager, String dateGamePlayed, boolean isCalculatingRangeLevels, String theme) {
         achievements = new Achievements(theme);
-    public Game(int players, int scores, List<Integer> listOfValues, Configuration manager, String dateGamePlayed, boolean isCalculatingRangeLevels) {
 
         this.players = players;
         this.scores = scores;

@@ -21,8 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +53,7 @@ public class AddNewGame extends AppCompatActivity {
     private boolean isScoresValid; // check if user input is valid
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private int selectedGame; // user selected game config index
+    private int selectedTheme;
     private int adjustedMax;
     private int adjustedMin;
     private Achievements addNewGameAchievements;
@@ -77,7 +76,7 @@ public class AddNewGame extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_game);
         chooseGame();
         storeSelectedGame();
-        displayThemeRadioButtons();
+        storeSelectedAchievementTheme();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -180,6 +179,56 @@ public class AddNewGame extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> arg0) {}
         });
     }
+
+    private void storeSelectedAchievementTheme(){
+        Spinner dropdown = findViewById(R.id.dropdownTheme);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(AddNewGame.this, R.array.achievementThemes, android.R.layout.simple_spinner_dropdown_item);
+        dropdown.setAdapter(adapter);
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedTheme = dropdown.getSelectedItemPosition();
+                String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
+                for (int i = 0; i < themesArray.length; i++){
+                    final String achievementTheme = themesArray[i];
+                    if (i == selectedTheme){
+                        saveAchievementTheme(achievementTheme);
+                        addNewGameAchievements.setAchievementTheme(achievementTheme);
+                    }
+                }
+                manager.changeTheme(AddNewGame.this);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+//    private void displayThemeRadioButtons(){
+//        RadioGroup themeGroup = findViewById(R.id.dropdownTheme);
+//        String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
+//
+//        for (int i = 0; i < themesArray.length; i++){
+//            final String achievementTheme = themesArray[i];
+//
+//            RadioButton btn = new RadioButton(this);
+//            btn.setText(getString(R.string.display_string_option, achievementTheme));
+//            btn.setOnClickListener(v ->{
+//                saveAchievementTheme(achievementTheme);
+//                addNewGameAchievements.setAchievementTheme(achievementTheme);
+//                AddNewGame.this.recreate();
+//            });
+//            themeGroup.addView(btn);
+//            if (achievementTheme.equals(getAchievementTheme(this))){
+//                addNewGameAchievements.setAchievementTheme(achievementTheme);
+//                btn.setChecked(true);
+//            }
+//        }
+//    }
+
 
     private void displayMaxPlayerMsg(){
         AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
@@ -468,7 +517,7 @@ public class AddNewGame extends AppCompatActivity {
         save.setOnClickListener(v -> {
             if (isPlayerValid && isScoresValid) {
                 storeScores();
-                Game gamePlayed = new Game(numOfPlayers, combinedScores, scoreList, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels);
+                Game gamePlayed = new Game(numOfPlayers, combinedScores, scoreList, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme());
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
 
                 // show alertdialog in add new game screen
@@ -491,28 +540,6 @@ public class AddNewGame extends AppCompatActivity {
             AddNewGame.this.finish(); // back to View Configuration page
         });
         alertDialog.show();
-    }
-
-    private void displayThemeRadioButtons(){
-        RadioGroup themeGroup = findViewById(R.id.radioBtnsThemes);
-        String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
-
-        for (int i = 0; i < themesArray.length; i++){
-            final String achievementTheme = themesArray[i];
-
-            RadioButton btn = new RadioButton(this);
-            btn.setText(getString(R.string.display_string_option, achievementTheme));
-            btn.setOnClickListener(v ->{
-                saveAchievementTheme(achievementTheme);
-                addNewGameAchievements.setAchievementTheme(achievementTheme);
-                AddNewGame.this.recreate();
-            });
-            themeGroup.addView(btn);
-            if (achievementTheme.equals(getAchievementTheme(this))){
-                addNewGameAchievements.setAchievementTheme(achievementTheme);
-                btn.setChecked(true);
-            }
-        }
     }
 
     private void saveAchievementTheme(String theme){

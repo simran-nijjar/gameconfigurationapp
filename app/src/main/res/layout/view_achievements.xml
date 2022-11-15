@@ -26,8 +26,8 @@
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/radioBtnsThemes"
-        app:layout_constraintTop_toBottomOf="@+id/radioBtnsThemes" />
+        app:layout_constraintStart_toStartOf="@+id/dropdownTheme"
+        app:layout_constraintTop_toBottomOf="@+id/dropdownTheme" />
 
     <EditText
         android:id="@+id/userInputPlayers"
@@ -36,10 +36,10 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="@+id/radioBtnsThemes"
+        app:layout_constraintEnd_toEndOf="@+id/dropdownTheme"
         app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toEndOf="@+id/txtEnterPlayers"
-        app:layout_constraintTop_toBottomOf="@+id/radioBtnsThemes" />
+        app:layout_constraintTop_toBottomOf="@+id/dropdownTheme" />
 
     <TextView
         android:id="@+id/emptyAchievementsList"
@@ -55,7 +55,7 @@
         app:layout_constraintVertical_bias="0.355" />
 
     <RadioGroup
-        android:id="@+id/radioBtnsThemes"
+        android:id="@+id/dropdownTheme"
         android:layout_width="315dp"
         android:layout_height="90dp"
         android:layout_marginTop="20dp"

@@ -16,96 +16,141 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <Spinner
-            android:id="@+id/gameName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"/>
+            <!--        <Spinner-->
+            <!--            android:id="@+id/gameName"-->
+            <!--            android:layout_width="100dp"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:background="@android:drawable/btn_dropdown"-->
+            <!--            android:spinnerMode="dropdown"/>-->
 
-        <LinearLayout
-            android:id="@+id/center_point"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
 
-        <LinearLayout
-            android:id="@+id/left_layout"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignRight="@+id/center_point">
+            <!--            <Spinner-->
+            <!--                android:id="@+id/radioBtnsThemes"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:background="@android:drawable/btn_dropdown"-->
+            <!--                android:spinnerMode="dropdown"/>-->
 
-            <TextView
-                android:id="@+id/num_players"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="120dp"
-                android:text="@string/num_player"
-                android:textColor="#000000" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/txtSelectTheme2"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="20dp"-->
+            <!--                android:text="Select a theme:"-->
+            <!--                android:textColor="#000000"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintHorizontal_bias="0.117"-->
+            <!--                app:layout_constraintStart_toStartOf="@+id/gameName"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/gameName" />-->
 
-            <TextView
-                android:id="@+id/player_msg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text=""/>
-
-            <Button
-                android:id="@+id/save_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:text="Save Game" />
+            <!--            <RadioGroup-->
+            <!--                android:id="@+id/radioBtnsThemes"-->
+            <!--                android:layout_width="315dp"-->
+            <!--                android:layout_height="90dp"-->
+            <!--                android:layout_marginTop="32dp"-->
+            <!--                app:layout_constraintEnd_toEndOf="@+id/txtSelectTheme2"-->
+            <!--                app:layout_constraintHorizontal_bias="0.0"-->
+            <!--                app:layout_constraintStart_toStartOf="@+id/txtSelectTheme2"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/txtSelectTheme2" />-->
 
             <LinearLayout
-                android:id="@+id/left_layout_tv"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </LinearLayout>
-
-            </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/right_layout"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_alignLeft="@+id/center_point">
-
-            <EditText
-                android:id="@+id/num_players_input"
+                android:id="@+id/center_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="110dp"
-                android:inputType="number" />
-
-            <Button
-                android:id="@+id/set_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="25dp"
-                android:text="Set Players" />
+                android:layout_centerInParent="true" />
 
             <LinearLayout
-                android:id="@+id/right_layout_et"
+                android:id="@+id/left_layout"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@+id/center_point">
+
+                <Spinner
+                    android:id="@+id/gameName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown"/>
+
+
+                <TextView
+                    android:id="@+id/num_players"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="120dp"
+                    android:text="@string/num_player"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/player_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text=""/>
+
+                <Button
+                    android:id="@+id/save_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Save" />
+
+                <LinearLayout
+                    android:id="@+id/left_layout_tv"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </LinearLayout>
 
             </LinearLayout>
-        </LinearLayout>
 
-    </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/right_layout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_alignLeft="@+id/center_point">
+
+                <Spinner
+                    android:id="@+id/dropdownTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown"/>
+
+                <EditText
+                    android:id="@+id/num_players_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="110dp"
+                    android:inputType="number" />
+
+                <Button
+                    android:id="@+id/set_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Set" />
+
+                <LinearLayout
+                    android:id="@+id/right_layout_et"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

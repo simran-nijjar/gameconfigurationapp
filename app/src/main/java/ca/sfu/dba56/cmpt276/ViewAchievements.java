@@ -90,7 +90,7 @@ public class ViewAchievements extends AppCompatActivity {
         numPlayersFromUser.addTextChangedListener(textWatcher);}
 
     private void displayThemeRadioButtons(){
-        RadioGroup themeGroup = findViewById(R.id.radioBtnsThemes);
+        RadioGroup themeGroup = findViewById(R.id.dropdownTheme);
         String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
 
         for (int i = 0; i < themesArray.length; i++){
