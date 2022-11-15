@@ -16,15 +16,16 @@
         \nWhen you want to add a game play, press the game from the list and click add new game where you can add the number of players for a game and the combined score and see the achievement level you earned.\n
         \nYou can also view history, view expecting achievement levels for a game, edit and delete a game configuration.\n
         \n\nSources:\n
+        \n<a href="https://www.idownloadblog.com/2021/05/09/multicolor-gradient-wallpapers-pack-iphone/">appbackground.png</a>\n
         \n<a href="https://www.pinterest.ca/pin/759701030882552315/">fruitsbackground.png</a>\n
         \n<a href="https://linasidorova.com/projects/lVdbn5?album_id=795886">fantasybackground.png</a>\n
         \n<a href="https://coolwallpapers.me/6106355-rogue-one-a-star-wars-story-movies-star-wars-stormtrooper.html">starwarsbackground.png</a>\n
         \n<a href="https://www.miro.com/">ic_main_msg</a>\n
         \n<a href="https://www.miro.com/">ic_history_msg</a>
     </string>
-    <string name="achieve_fruit_content">
+    <string name="achievement_themes_plus_levels_content">
         \n
-        Fruits Theme:\n\n
+        Fruits Theme:\n\n\n
         Beautiful Bananas\n\n
         Wonderful Watermelons\n\n
         Outstanding Oranges\n\n
@@ -34,11 +35,9 @@
         Great Grapes\n\n
         Better Blueberries\n\n
         Super Strawberries\n\n
-        Perfect Peaches\n\n
-    </string>
-    <string name="achieve_fantasy_content">
-        \n
-        Fantasy Theme: \n\n
+        Perfect Peaches\n\n\n
+
+        Fantasy Theme: \n\n\n
         Stinky Orc\n\n
         Friendly Troll\n\n
         Grumpy Dwarf\n\n
@@ -48,11 +47,9 @@
         Ferocious Minotaur\n\n
         Majestic Unicorn\n\n
         Shadow Wyvern\n\n
-        Azure Dragon\n\n
-    </string>
-    <string name="achieve_starwars_content">
-        \n
-        Star Wars Theme: \n\n
+        Azure Dragon\n\n\n
+
+        Star Wars Theme: \n\n\n
         Grogu\n\n
         Chewbacca\n\n
         Anakin\n\n

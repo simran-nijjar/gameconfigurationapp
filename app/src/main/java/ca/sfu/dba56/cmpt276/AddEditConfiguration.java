@@ -43,11 +43,8 @@ public class AddEditConfiguration extends AppCompatActivity {
     private final int MAX_POS_SCORE_INPUT = 100000000;
     private final int MAX_NEG_SCORE_INPUT = -100000000;
 
-    private ConfigurationsManager manager = ConfigurationsManager.getInstance();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        manager.changeTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_configuration);
         ActionBar actionBar = getSupportActionBar();

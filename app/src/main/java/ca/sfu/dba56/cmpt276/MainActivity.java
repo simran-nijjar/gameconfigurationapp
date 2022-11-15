@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        manager.changeTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -71,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void UpdateUI() {
-        ConfigurationsManager manager = ConfigurationsManager.getInstance();
         // image made from miro
         // https://miro.com
         ImageView image = findViewById(R.id.image_main);

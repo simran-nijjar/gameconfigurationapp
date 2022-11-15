@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
-
 /*
 * Help activity class
 * provides a clickable buttons that give info about the course and app
@@ -23,11 +21,8 @@ public class HelpActivity extends AppCompatActivity {
     private final String FANTASY = "Fantasy";
     private final String STAR_WARS = "Star Wars";
 
-    private ConfigurationsManager manager = ConfigurationsManager.getInstance();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        manager.changeTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
         setInfoBtn();
@@ -86,20 +81,8 @@ public class HelpActivity extends AppCompatActivity {
         TextView achieve_content = findViewById(R.id.achieve_content);
         achieve_content.setVisibility(View.GONE);
         achieve.setOnClickListener(v -> {
-
-            if(achieve_content.getVisibility() == View.GONE) {
-                if (AddNewGame.getAchievementTheme(this).equals(FRUITS)) {
-                    achieve_content.setText(R.string.achieve_fruit_content);
-                } if (AddNewGame.getAchievementTheme(this).equals(FANTASY)){
-                    achieve_content.setText(R.string.achieve_fantasy_content);
-                } if (AddNewGame.getAchievementTheme(this).equals(STAR_WARS)){
-                    achieve_content.setText(R.string.achieve_starwars_content);
-                }
-                achieve_content.setVisibility(View.VISIBLE);
-            }else if (achieve_content.getVisibility() == View.VISIBLE){
-                achieve_content.setText("");
-                achieve_content.setVisibility(View.GONE);
-            }
+            achieve_content.setText(R.string.achievement_themes_plus_levels_content);
+            achieve_content.setVisibility(View.VISIBLE);
         });
     }
 

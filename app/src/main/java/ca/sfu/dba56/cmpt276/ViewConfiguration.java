@@ -33,7 +33,6 @@ public class ViewConfiguration extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        manager.changeTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_configuration);
 
@@ -45,7 +44,6 @@ public class ViewConfiguration extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        manager.changeTheme(this);
         super.onResume();
         setUpGameHistoryButton();
         UpdateUI();
