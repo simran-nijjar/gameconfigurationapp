@@ -66,7 +66,7 @@
     <string name="empty_achievements_msg">Enter number of players to see achievement levels with range</string>
     <string name="invalid_players_msg">Number of players cannot be less than 1. Please try again.</string>
     <string name="greaterCombinedScoreMsg">Invalid input: Combined score can not be greater than the maximum score</string>
-    <string name="achievement">Achievement</string>
+    <string name="achievement">Achievements</string>
     <string name="descriptions">Descriptions</string>
     <string name="info">Info</string>
     <string name="emptyOrInvalid">Your input is empty or invalid</string>
@@ -112,4 +112,5 @@
     <string name="score_part1">\ Score : [\</string>
     <string name="score_part2"> ]\n\n</string>
     <string name="display_string_option">"%1s "</string>
+    <string name="select_theme_prompt">Select a theme</string>
 </resources>

@@ -93,21 +93,31 @@ public class ViewAchievements extends AppCompatActivity {
 
     private void storeSelectedAchievementTheme(){
         Spinner dropdown = findViewById(R.id.dropdownThemeAchievements);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ViewAchievements.this, R.array.achievementThemes, android.R.layout.simple_spinner_dropdown_item);
+        String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item, themesArray);
         dropdown.setAdapter(adapter);
+        //Display Set a Theme prompt
+        dropdown.setPrompt(getResources().getString(R.string.select_theme_prompt));
+
+        //Set the dropdown item to start from last selected theme
+        for (int i = 0; i < themesArray.length; i++){
+            if (themesArray[i].equals(getAchievementTheme(ViewAchievements.this))){
+                dropdown.setSelection(i);
+            }
+        }
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //When user selects a new theme, recreate activity to display theme levels and background
                 selectedTheme = dropdown.getSelectedItemPosition();
-                String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
-                for (int i = 0; i < themesArray.length; i++){
-                    if (i == selectedTheme && !achievements.getAchievementTheme().equals(themesArray[i])) {
-                        final String achievementTheme = themesArray[i];
-                        saveAchievementTheme(achievementTheme);
-                        achievements.setAchievementTheme(achievementTheme);
-                        ViewAchievements.this.recreate();
-                    }
+                    for (int i = 0; i < themesArray.length; i++) {
+                        if (i == selectedTheme && !achievements.getAchievementTheme().equals(themesArray[i])) {
+                            final String achievementTheme = themesArray[i];
+                            saveAchievementTheme(achievementTheme);
+                            achievements.setAchievementTheme(achievementTheme);
+                            ViewAchievements.this.recreate();
+                        }
                 }
             }
 
@@ -274,13 +284,13 @@ public class ViewAchievements extends AppCompatActivity {
                     achievementLevels += ", " + (minScore + range) + "]\n\n";
                     newStartRange = (minScore + range);
                 } else if (newStartRange + range > Math.abs(maxScore)) {
-                    achievementLevels += " " + (newStartRange + 1) + ", " + (maxScore) + "]\n\n";
+                    achievementLevels += "" + (newStartRange + 1) + ", " + (maxScore) + "]\n\n";
                     newStartRange = maxScore;
                     lessThanEightLevels = true;
                 } else if (i == achievements.getNumOfBoundedLevels()) {
-                    achievementLevels += " " + (newStartRange) + ", " + (maxScore) + "]\n\n";
+                    achievementLevels += "" + (newStartRange) + ", " + (maxScore) + "]\n\n";
                 } else {
-                    achievementLevels += " " + (newStartRange + 1) + ", " + (newStartRange + 1 + range) + "]\n\n";
+                    achievementLevels += "" + (newStartRange + 1) + ", " + (newStartRange + 1 + range) + "]\n\n";
                     newStartRange += 1 + range;
                 }
             } else{

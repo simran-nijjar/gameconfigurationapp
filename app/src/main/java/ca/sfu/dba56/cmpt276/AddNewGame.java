@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -182,12 +183,23 @@ public class AddNewGame extends AppCompatActivity {
 
     private void storeSelectedAchievementTheme(){
         Spinner dropdown = findViewById(R.id.dropdownTheme);
+        String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(AddNewGame.this, R.array.achievementThemes, android.R.layout.simple_spinner_dropdown_item);
         dropdown.setAdapter(adapter);
+        //Display Set a Theme prompt
+        dropdown.setPrompt(getResources().getString(R.string.select_theme_prompt));
+
+        //Set the dropdown item to start from the last selected item
+        for (int i = 0; i < themesArray.length; i++){
+            if (themesArray[i].equals(getAchievementTheme(AddNewGame.this))){
+                dropdown.setSelection(i);
+            }
+        }
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //When user selects a new theme, recreate activity to display theme levels and achievements
                 selectedTheme = dropdown.getSelectedItemPosition();
                 String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
                 for (int i = 0; i < themesArray.length; i++){
@@ -294,7 +306,7 @@ public class AddNewGame extends AppCompatActivity {
         tv.setLayoutParams(lp);
         indexOfPlayer++;
         tv.setText("Player " + indexOfPlayer + ":");
-        tv.setTextColor(getColor(R.color.white));
+        tv.setTextColor(getColor(R.color.black));
         //tv.setId(indexOfPlayer + 10);
         //tv.setTag("Player" + indexOfPlayer);
         ll_left.addView(tv);
@@ -310,7 +322,7 @@ public class AddNewGame extends AppCompatActivity {
         et.setText("");
         et.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
         et.setTextSize(17);
-        et.setTextColor(getColor(R.color.white));
+        et.setTextColor(getColor(R.color.black));
         et.setId(indexOfScore + 1);
         ll_right.addView(et);
         indexOfScore++;

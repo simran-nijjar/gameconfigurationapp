@@ -9,7 +9,9 @@
     <ScrollView
         android:id="@+id/scrollInAddGame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <RelativeLayout
             android:id="@+id/top"
@@ -24,18 +26,18 @@
 
             <LinearLayout
                 android:id="@+id/left_layout"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_alignRight="@+id/center_point"
                 android:layout_alignParentLeft="true"
-                android:layout_alignRight="@+id/center_point">
+                android:orientation="vertical">
 
                 <Spinner
                     android:id="@+id/gameName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"/>
+                    android:spinnerMode="dropdown" />
 
 
                 <TextView
@@ -53,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:text=""/>
+                    android:text="" />
 
                 <Button
                     android:id="@+id/save_btn"
@@ -65,9 +67,9 @@
 
                 <LinearLayout
                     android:id="@+id/left_layout_tv"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                 </LinearLayout>
 
@@ -76,18 +78,18 @@
 
             <LinearLayout
                 android:id="@+id/right_layout"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_alignLeft="@+id/center_point"
                 android:layout_alignParentRight="true"
-                android:layout_alignLeft="@+id/center_point">
+                android:orientation="vertical">
 
                 <Spinner
                     android:id="@+id/dropdownTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown"/>
+                    android:spinnerMode="dialog" />
 
                 <EditText
                     android:id="@+id/num_players_input"
@@ -107,9 +109,9 @@
 
                 <LinearLayout
                     android:id="@+id/right_layout_et"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                 </LinearLayout>
             </LinearLayout>
