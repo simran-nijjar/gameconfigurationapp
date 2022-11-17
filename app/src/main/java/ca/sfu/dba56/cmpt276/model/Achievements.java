@@ -6,6 +6,8 @@ package ca.sfu.dba56.cmpt276.model;
 * Keeps/populates the array of achievements names and allows to retrieve achievement names
  */
 
+import ca.sfu.dba56.cmpt276.R;
+
 public class Achievements {
 
     private int numOfBoundedLevels;
@@ -14,6 +16,8 @@ public class Achievements {
     private String levelAchieved;
     private int minScore;
     private int maxScore;
+    //difLevels: 0 - Easy; 1 - Normal; 2 - Hard
+    private int currentDifLevel = 1;
 
     public Achievements(){
         this.achievements = new String[]{"Beautiful Bananas", "Wonderful Watermelons",
@@ -42,6 +46,8 @@ public class Achievements {
         return range;
     }
 
+    //used in: ViewAchievements, AddNewGame
+    //Gets the lower and upper bound for each level
     public void setAchievementsBounds(int min, int max, int players) {
         minScore = calculateMinMaxScore(min, players);
         maxScore = calculateMinMaxScore(max, players);
@@ -108,5 +114,12 @@ public class Achievements {
                 }
             }
         }
+    }
+
+    public void setDifficultyLevel(int newLevel){
+        this.currentDifLevel = newLevel;
+    }
+    public int getDifficultyLevel(){
+        return this.currentDifLevel;
     }
 }

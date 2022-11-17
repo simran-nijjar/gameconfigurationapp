@@ -10,8 +10,10 @@ import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -137,7 +139,20 @@ public class ViewAchievements extends AppCompatActivity {
         numPlayersAsStr = numPlayersFromUser.getText().toString();
         numPlayers = Integer.parseInt(numPlayersAsStr);
 
-        calculateMinAndMaxScore();
+
+        resetMinAndMaxScoreFromConfig();
+        switch(achievements.getDifficultyLevel()){
+            case 0:
+                minScore *= 0.75;
+                maxScore *= 0.75;
+                break;
+            case 1:
+                break;
+            case 2:
+                minScore *= 1.25;
+                maxScore *= 1.25;
+                break;
+        }
         int range = achievements.calculateLevelRange(minScore, maxScore);
         boolean lessLevels = false;
         //Achievement levels will be displayed in ranges when max - min > 8
@@ -161,7 +176,7 @@ public class ViewAchievements extends AppCompatActivity {
                 achievementLevels += achievements.getAchievementLevel(i);
                 achievementLevels += " Range: [";
                 if (i == 1) {
-                    achievementLevels += achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayers);
+                    achievementLevels += minScore;
                     achievementLevels += ", " + (minScore + range) + "]\n\n";
                     newStartRange = (minScore + range);
                 } else if (newStartRange + range > Math.abs(maxScore)) {
@@ -195,7 +210,7 @@ public class ViewAchievements extends AppCompatActivity {
         for (int i = 1; i < (maxScore - minScore + 1); i++){
             achievementLevels += achievements.getAchievementLevel(i);
             achievementLevels += getString(R.string.score_part1);
-            achievementLevels += (achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayers) + i - 1);
+            achievementLevels += (minScore + i - 1);
             achievementLevels += getString(R.string.score_part2);
         }
         achievementLevels += getString(R.string.legendary_level_score_boundary) //Add best score level for scores
@@ -203,7 +218,7 @@ public class ViewAchievements extends AppCompatActivity {
         return achievementLevels;
     }
 
-    private void calculateMinAndMaxScore() {
+    private void resetMinAndMaxScoreFromConfig() {
         minScore = achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayers);
         maxScore = achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMaxBestScoreFromConfig(), numPlayers);
     }
@@ -213,5 +228,37 @@ public class ViewAchievements extends AppCompatActivity {
     private void createDifficultyRadioButtons() {
         RadioGroup difficultiesGroup = findViewById(R.id.radioGroupDifficulty);
 
+        RadioButton easyDifBtn = findViewById(R.id.radioBtnDifEasy);
+        RadioButton normalDifBtn = findViewById(R.id.radioBtnDifNormal);
+        RadioButton hardDifBtn = findViewById(R.id.radioBtnDifHard);
+
+        difficultyButtonClicked(easyDifBtn);
+        difficultyButtonClicked(normalDifBtn);
+        difficultyButtonClicked(hardDifBtn);
+    }
+
+    private void difficultyButtonClicked(RadioButton diffBtn) {
+        diffBtn.setOnClickListener(view -> {
+            switch (diffBtn.getText().toString()) {
+                case "Easy":
+                    Toast.makeText(ViewAchievements.this, "you selected Difficulty Easy", Toast.LENGTH_SHORT).show();
+                    achievements.setDifficultyLevel(0);
+                    if(!numPlayersFromUser.getText().toString().isEmpty()){displayAchievementLevels();}
+                    break;
+                case "Normal":
+                    Toast.makeText(ViewAchievements.this, "you selected Difficulty Normal", Toast.LENGTH_SHORT).show();
+                    achievements.setDifficultyLevel(1);
+                    if(!numPlayersFromUser.getText().toString().isEmpty()){displayAchievementLevels();}
+
+                    break;
+                case "Hard":
+                    Toast.makeText(ViewAchievements.this, "you selected Difficulty Hard", Toast.LENGTH_SHORT).show();
+                    achievements.setDifficultyLevel(2);
+                    if(!numPlayersFromUser.getText().toString().isEmpty()){displayAchievementLevels();}
+                    break;
+
+            }
+
+        });
     }
 }
