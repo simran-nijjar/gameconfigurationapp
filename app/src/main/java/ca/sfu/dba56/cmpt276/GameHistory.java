@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import java.util.ArrayList;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
@@ -29,8 +28,6 @@ public class GameHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_history);
         // get selected game name from ViewConfiguration
-//        Bundle b = getIntent().getExtras();
-//        indexOfGame = b.getInt(getString(R.string.gameName2));
         indexOfGame = manager.getIndex();
         populateListView(manager, indexOfGame);
         registerClickCallBack();
@@ -41,16 +38,6 @@ public class GameHistory extends AppCompatActivity {
     public static Intent makeIntent(Context context){
         return new Intent(context, GameHistory.class);
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                this.finish();
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     public boolean onOptionsItemSelected(MenuItem item){
         Intent myIntent = new Intent(getApplicationContext(), ViewConfiguration.class);
@@ -77,7 +64,6 @@ public class GameHistory extends AppCompatActivity {
         //adapter
         adapter = new ArrayAdapter<String>(this, R.layout.game_items, items);
         ListView list = findViewById(R.id.HistoryList);
-        //list.setSelector(android.R.color.transparent);
         list.setAdapter(adapter);
     }
 
@@ -93,7 +79,7 @@ public class GameHistory extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent refresh = new Intent(GameHistory.this, ViewConfiguration.class);
+        Intent refresh = new Intent(GameHistory.this, ViewConfiguration.class); // back to View Config screen
         startActivity(refresh);
     }
 }

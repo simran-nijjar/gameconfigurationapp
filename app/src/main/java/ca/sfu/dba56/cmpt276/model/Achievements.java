@@ -8,29 +8,54 @@ package ca.sfu.dba56.cmpt276.model;
 
 public class Achievements {
 
+    private final String FANTASY = "Fantasy";
+    private final String STAR_WARS = "Star Wars";
     private int numOfBoundedLevels;
-    private String achievements[];
+    private String achievementsFruits[];
+    private String achievementsFantasy[];
+    private String achievementsStarWars[];
     private int intAchievements[] = new int[10];
     private String levelAchieved;
     private int minScore;
     private int maxScore;
+    private String theme;
 
-    public Achievements(){
-        this.achievements = new String[]{"Beautiful Bananas", "Wonderful Watermelons",
+    public Achievements(String theme){
+        //Three different arrays for three themes
+        this.achievementsFruits = new String[]{"Beautiful Bananas", "Wonderful Watermelons",
                 "Outstanding Oranges", "Admirable Apricots", "Good Grapefruits", "Amazing Apples",
                 "Great Grapes", "Better Blueberries", "Super Strawberries", "Perfect Peaches"};
+        this.achievementsFantasy = new String[]{"Stinky Orc", "Friendly Troll", "Grumpy Dwarf",
+                "High Elf", "Powerful Lich", "Golden Pegasus", "Ferocious Minotaur", "Majestic Unicorn",
+                "Shadow Wyvern", "Azure Dragon"};
+        this.achievementsStarWars = new String[]{"Grogu", "Chewbacca", "Anakin", "Cara Dune", "Ahsoka Tano",
+                "Luke Skywalker", "Yoda", "Darth Vader", "Asajj Ventress", "Leia Organa"};
         this.numOfBoundedLevels = 8;
+        this.theme = theme;
     }
-
 
     public int getNumOfBoundedLevels(){
         return numOfBoundedLevels;
     }
-    public String getAchievementLevel(int index){
-        return achievements[index];
-    }
     public String getLevelAchieved() {
         return levelAchieved;
+    }
+    public void setAchievementTheme(String theme){
+        this.theme = theme;
+    }
+    public String getAchievementTheme(){
+        return theme;
+    }
+
+    public String getAchievementLevel(int index){
+        //Get the achievement level for the theme selected in radio button
+        if (this.theme.equals(FANTASY)){
+            return achievementsFantasy[index];
+        }
+        if (this.theme.equals(STAR_WARS)){
+            return achievementsStarWars[index];
+        }
+        return achievementsFruits[index];
     }
 
     public int calculateMinMaxScore(int score, int numPlayers){
