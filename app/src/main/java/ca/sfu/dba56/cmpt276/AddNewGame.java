@@ -71,6 +71,7 @@ public class AddNewGame extends AppCompatActivity {
     private int indexOfGame = -1; // selected game index in game history
     private int currentConfigPosition = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         manager.changeTheme(this);
@@ -483,6 +484,7 @@ public class AddNewGame extends AppCompatActivity {
                 }else {
                     Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                 }
+                PlaySound();
             }
         });
     }
@@ -520,9 +522,16 @@ public class AddNewGame extends AppCompatActivity {
     }
     //makes audio play for achievement sound
     private void PlaySound(){
-        if(mediaplayer == null){
-            mediaplayer = MediaPlayer.create(this, R.raw.achievement1);
+        if(selectedTheme == 0){
+            mediaplayer = MediaPlayer.create(this, R.raw.fruitslice);
         }
+        if(selectedTheme == 1){
+            mediaplayer = MediaPlayer.create(this, R.raw.fairysound);
+        }
+        if(selectedTheme == 2){
+            mediaplayer = MediaPlayer.create(this, R.raw.lightsaber);
+        }
+
         mediaplayer.start();
 
     }
