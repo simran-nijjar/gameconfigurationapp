@@ -21,7 +21,16 @@
         \n<a href="https://linasidorova.com/projects/lVdbn5?album_id=795886">fantasybackground.png</a>\n
         \n<a href="https://coolwallpapers.me/6106355-rogue-one-a-star-wars-story-movies-star-wars-stormtrooper.html">starwarsbackground.png</a>\n
         \n<a href="https://www.miro.com/">ic_main_msg</a>\n
-        \n<a href="https://www.miro.com/">ic_history_msg</a>
+        \n<a href="https://www.miro.com/">ic_history_msg</a>\n
+        \n<a href="https://pixabay.com/sound-effects/fairy-sound-6469/">fairysound.mp3</a>\n
+        \n<a href="https://www.youtube.com/watch?v=RQELlsfcZAM">fairysound.mp3</a>\n
+        \n<a href="https://pixabay.com/sound-effects/lightsaber-ignition-6816/">lightsaber.mp3</a>\n
+        \n<a href="https://www.vecteezy.com/vector-art/2794353-cartoon-vector-illustration-isolated-object-fresh-food-fruit-red-apple">appleicon.png</a>\n
+        \n<a href="https://www.pngall.com/dragon-png/download/30290#google_vignette">dragonimage.png</a>\n
+        \n<a href="https://uxwing.com/star-icon/">staricon.png</a>\n
+        \n<a href="https://www.kindpng.com/downpng/boTTiT_darth-vader-fictional-star-wars-characters-png-transparent/">darthvaderimage.png</a>\n
+        \n<a href="https://www.clipartmax.com/download/m2i8G6A0K9N4d3m2_yoda-chewbacca-anakin-skywalker-luke-skywalker-star-wars-cute-cartoons/">yodaicon.png</a>\n
+
     </string>
     <string name="achievement_themes_plus_levels_content">
         \n
@@ -113,4 +122,5 @@
     <string name="score_part2"> ]\n\n</string>
     <string name="display_string_option">"%1s "</string>
     <string name="select_theme_prompt">Select a theme</string>
+    <string name="achievement_title">Your achievement is...</string>
 </resources>
