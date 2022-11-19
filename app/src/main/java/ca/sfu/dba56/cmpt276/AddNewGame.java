@@ -10,18 +10,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -70,7 +73,8 @@ public class AddNewGame extends AppCompatActivity {
     private List<Integer> scoreList;
     private int indexOfGame = -1; // selected game index in game history
     private int currentConfigPosition = 0;
-
+    private Animation fadeOut;
+    private ImageView achievementAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -484,7 +488,7 @@ public class AddNewGame extends AppCompatActivity {
                 }else {
                     Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                 }
-                PlaySound();
+//                playSound();
             }
         });
     }
@@ -511,17 +515,24 @@ public class AddNewGame extends AppCompatActivity {
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
 
                 // show alertdialog in add new game screen
-                // pass achievement level to showResult in add new game screen
-                PlaySound();
-                showResult(gamePlayed.getLevelAchieved());
-
+                // pass achievement level to showFruitsResult in add new game screen
+                if (selectedTheme == 0) {
+                    showFruitsResult(gamePlayed.getLevelAchieved(), false);
+                }
+                if (selectedTheme == 1){
+                    showFantasyResult(gamePlayed.getLevelAchieved(), false);
+                }
+                if (selectedTheme == 2){
+                    showStarWarsResult(gamePlayed.getLevelAchieved(), false);
+                }
             }else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     //makes audio play for achievement sound
-    private void PlaySound(){
+    private void playSound(){
         if(selectedTheme == 0){
             mediaplayer = MediaPlayer.create(this, R.raw.fruitslice);
         }
@@ -531,22 +542,167 @@ public class AddNewGame extends AppCompatActivity {
         if(selectedTheme == 2){
             mediaplayer = MediaPlayer.create(this, R.raw.lightsaber);
         }
-
         mediaplayer.start();
-
     }
 
 
-    // pop up a window to show achievement level in add new game screen
-    private void showResult(String achievements){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
-        alertDialog.setTitle(getString(R.string.achievement));
-        alertDialog.setMessage("" + achievements);
-        alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
-            manager.setIndex(selectedGame);
-            AddNewGame.this.finish(); // back to View Configuration page
+    // pop up a window to show achievement level for fruits theme
+    private void showFruitsResult(String achievements, boolean isEditing){
+        //Play sound
+        playSound();
+
+        //Display the fruits achievement layout
+        LayoutInflater inflater = LayoutInflater.from(AddNewGame.this);
+        final View fruitsAchievement = inflater.inflate(R.layout.fruitsalertdialog, null);
+
+        //Display the animation
+        fadeOut = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+        achievementAnim = fruitsAchievement.findViewById(R.id.celebrationAlertsImage);
+        achievementAnim.startAnimation(fadeOut);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                //Don't have animation code here, animation will not end properly
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                //End the animation
+                achievementAnim.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                //Do nothing
+            }
         });
-        alertDialog.show();
+
+        //Create custom alert dialog
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddNewGame.this);
+        alertDialog.setView(fruitsAchievement);
+        alertDialog.setMessage("" + achievements);
+        alertDialog.setTitle(R.string.achievement_title);
+
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
+
+        Button okBtn = fruitsAchievement.findViewById(R.id.appleOkBtn);
+        okBtn.setOnClickListener(v -> {
+            //If adding a new game, go to game config
+            if (!isEditing) {
+                manager.setIndex(selectedGame);
+                AddNewGame.this.finish();
+            } else{ //If editing a game, go to history
+                Intent refresh = new Intent(AddNewGame.this, GameHistory.class);
+                startActivity(refresh);
+            }
+        });
+    }
+
+    // pop up a window to show achievement level for fantasy theme
+    private void showFantasyResult(String achievements, boolean isEditing){
+        //Play sound
+        playSound();
+
+        //Display the fantasy achievement layout
+        LayoutInflater inflater = LayoutInflater.from(AddNewGame.this);
+        final View fantasyAchievement = inflater.inflate(R.layout.fantasyalertdialog, null);
+
+        //Display the animation
+        fadeOut = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+        achievementAnim = fantasyAchievement.findViewById(R.id.celebrationAlertsImage);
+        achievementAnim.startAnimation(fadeOut);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                //Don't have animation code here, animation will not end properly
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                //End the animation
+                achievementAnim.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                //Do nothing
+            }
+        });
+
+        //Create custom alert dialog
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddNewGame.this);
+        alertDialog.setView(fantasyAchievement);
+        alertDialog.setMessage("" + achievements);
+        alertDialog.setTitle(R.string.achievement_title);
+
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
+
+        Button okBtn = fantasyAchievement.findViewById(R.id.starOkBtn);
+        okBtn.setOnClickListener(v -> {
+            //If adding a new game, go to game config
+            if(!isEditing) {
+                manager.setIndex(selectedGame);
+                AddNewGame.this.finish();
+            } else { //If editing a game, go to history
+                Intent refresh = new Intent(AddNewGame.this, GameHistory.class);
+                startActivity(refresh);
+            }
+        });
+    }
+
+    // pop up a window to show achievement level for starwars theme
+    private void showStarWarsResult(String achievements, boolean isEditing){
+        //Play sound
+        playSound();
+
+        //Display the star wars achievement layout
+        LayoutInflater inflater = LayoutInflater.from(AddNewGame.this);
+        final View starWarsAchievement = inflater.inflate(R.layout.starwarsalertdialog, null);
+
+        //Display the animation
+        fadeOut = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+        achievementAnim = starWarsAchievement.findViewById(R.id.celebrationAlertsImage);
+        achievementAnim.startAnimation(fadeOut);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                //Don't have animation code here, animation will not end properly
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                //End the animation
+                achievementAnim.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                //Do nothing
+            }
+        });
+
+        //Create custom alert dialog
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddNewGame.this);
+        alertDialog.setView(starWarsAchievement);
+        alertDialog.setMessage("" + achievements);
+        alertDialog.setTitle(R.string.achievement_title);
+
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
+
+        Button okBtn = starWarsAchievement.findViewById(R.id.yodaOkBtn);
+        okBtn.setOnClickListener(v -> {
+            //If adding a new game, go to game config
+            if (!isEditing) {
+                manager.setIndex(selectedGame);
+                AddNewGame.this.finish();
+            } else { //If editing a game, go to history
+                Intent refresh = new Intent(AddNewGame.this, GameHistory.class);
+                startActivity(refresh);
+            }
+        });
     }
 
     private void saveAchievementTheme(String theme){
@@ -561,5 +717,4 @@ public class AddNewGame extends AppCompatActivity {
         String defaultTheme = context.getResources().getString(R.string.defaultTheme);
         return preferences.getString("Achievement Theme",defaultTheme);
     }
-
 }
