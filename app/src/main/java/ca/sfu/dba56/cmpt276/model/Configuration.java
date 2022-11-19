@@ -43,5 +43,6 @@ public class Configuration {
     public int getPlayer(int i){return listOfGames.get(i).getPlayers();}
     public List<Integer> getListOfValues(int i){return listOfGames.get(i).getListOfValues();}
     public Game getGame(int i){return listOfGames.get(i);}
+    public String getTheme(int i){return listOfGames.get(i).getTheme();}
 
 }

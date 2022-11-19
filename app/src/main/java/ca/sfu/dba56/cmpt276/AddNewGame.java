@@ -46,6 +46,9 @@ import ca.sfu.dba56.cmpt276.model.Game;
  */
 public class AddNewGame extends AppCompatActivity {
 
+    private final String FRUITS = "Fruits";
+    private final String FANTASY = "Fantasy";
+    private final String STAR_WARS = "Star Wars";
     private int numOfPlayers; // int user input
     private int scores; // int user input
     private int combinedScores = 0;
@@ -75,6 +78,8 @@ public class AddNewGame extends AppCompatActivity {
     private int currentConfigPosition = 0;
     private Animation fadeOut;
     private ImageView achievementAnim;
+    private String gameTheme;
+    private boolean isEditing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +89,6 @@ public class AddNewGame extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_game);
         chooseGame();
         storeSelectedGame();
-        storeSelectedAchievementTheme();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -96,6 +100,7 @@ public class AddNewGame extends AppCompatActivity {
 
         if(bundle != null){
             // go to edit game screen
+            isEditing = true;
             getSupportActionBar().setTitle("Edit Game");
             indexOfGame = bundle.getInt("selected game"); // get selected game position from game history
             dropdown.setVisibility(View.GONE);
@@ -105,8 +110,9 @@ public class AddNewGame extends AppCompatActivity {
             setBtn.setVisibility(View.INVISIBLE);
             tv_numOfPlayer.setText("Number of Player:");
             setVariablesFromExistingGame(indexOfGame);
-        }else {
+        } else {
             // go to add new game screen
+            isEditing = false;
             getSupportActionBar().setTitle("Add New Game");
             dropdown.setVisibility(View.VISIBLE);
             numOfPlayerFromUser.setFocusable(true);
@@ -115,7 +121,7 @@ public class AddNewGame extends AppCompatActivity {
             setBtn.setVisibility(View.VISIBLE);
             tv_numOfPlayer.setText(R.string.num_player);
         }
-
+        storeSelectedAchievementTheme();
     }
 
     public static Intent makeIntent(Context context){
@@ -126,10 +132,13 @@ public class AddNewGame extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //Change theme in view config if back button is clicked
-                Intent intent = ViewConfiguration.makeIntent(AddNewGame.this);
-                startActivity(intent);
-                this.finish();
+                // On new game page, going back goes to view configuration
+                if (!isEditing) {
+                    this.finish();
+                } else { //On edit game page, going back goes to game history
+                    Intent refresh = new Intent(AddNewGame.this, GameHistory.class);
+                    startActivity(refresh);
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -194,9 +203,18 @@ public class AddNewGame extends AppCompatActivity {
         dropdown.setPrompt(getResources().getString(R.string.select_theme_prompt));
 
         //Set the dropdown item to start from the last selected item
-        for (int i = 0; i < themesArray.length; i++){
-            if (themesArray[i].equals(getAchievementTheme(AddNewGame.this))){
-                dropdown.setSelection(i);
+        if (!isEditing) { //If new game is being added, achievement theme is last selected theme
+            for (int i = 0; i < themesArray.length; i++) {
+                if (themesArray[i].equals(getAchievementTheme(AddNewGame.this))) {
+                    dropdown.setSelection(i);
+                }
+            }
+        }
+        else { //If game is being edited, achievement theme is saved theme in game being edited
+            for (int i = 0; i < themesArray.length; i++) {
+                if (themesArray[i].equals(gameTheme)) {
+                    dropdown.setSelection(i);
+                }
             }
         }
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -432,6 +450,17 @@ public class AddNewGame extends AppCompatActivity {
     private void setVariablesFromExistingGame(int indexOfGame){
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
         currentConfigPosition = manager.getIndex();
+        //Get the theme from the game that is being edited
+        gameTheme = manager.getItemAtIndex(currentConfigPosition).getTheme(indexOfGame);
+        if (gameTheme.equals(FRUITS)){
+            selectedTheme = 0;
+        }
+        if (gameTheme.equals(FANTASY)){
+            selectedTheme = 1;
+        }
+        if (gameTheme.equals(STAR_WARS)){
+            selectedTheme = 2;
+        }
         numOfPlayerFromUser.setText("" + manager.getItemAtIndex(currentConfigPosition).getPlayer(indexOfGame));
         numOfPlayers = manager.getItemAtIndex(currentConfigPosition).getPlayer(indexOfGame);
         removeViewsInLinearLayout();
@@ -480,6 +509,8 @@ public class AddNewGame extends AppCompatActivity {
                     // reset achievement
                     resetAchievementLevel(currentConfigPosition, manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getPlayers());
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(addNewGameAchievements.getLevelAchieved());
+                    // reset theme
+                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setTheme(addNewGameAchievements.getAchievementTheme());
 
                     // show alertdialog in edit game screen
                     // pass achievement level to showResultForEditGame in edit game screen
@@ -488,21 +519,22 @@ public class AddNewGame extends AppCompatActivity {
                 }else {
                     Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                 }
-//                playSound();
             }
         });
     }
 
     // pop up a window to show achievement level in edit game screen
     private void showResultForEditGame(String achievements){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
-        alertDialog.setTitle(getString(R.string.achievement));
-        alertDialog.setMessage("" + achievements);
-        alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
-            Intent refresh = new Intent(AddNewGame.this, GameHistory.class);
-            startActivity(refresh);
-        });
-        alertDialog.show();
+        if (selectedTheme == 0){
+            showFruitsResult(achievements, false);
+        }
+        if (selectedTheme == 1){
+            showFantasyResult(achievements, false);
+        }
+        if (selectedTheme == 2){
+            showStarWarsResult(achievements, false);
+        }
+
     }
 
     // save input to the list in add new game screen
@@ -515,15 +547,15 @@ public class AddNewGame extends AppCompatActivity {
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
 
                 // show alertdialog in add new game screen
-                // pass achievement level to showFruitsResult in add new game screen
+                // pass achievement level to appropriate theme layout in add new game screen
                 if (selectedTheme == 0) {
-                    showFruitsResult(gamePlayed.getLevelAchieved(), false);
+                    showFruitsResult(gamePlayed.getLevelAchieved(), true);
                 }
                 if (selectedTheme == 1){
-                    showFantasyResult(gamePlayed.getLevelAchieved(), false);
+                    showFantasyResult(gamePlayed.getLevelAchieved(), true);
                 }
                 if (selectedTheme == 2){
-                    showStarWarsResult(gamePlayed.getLevelAchieved(), false);
+                    showStarWarsResult(gamePlayed.getLevelAchieved(), true);
                 }
             }else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
@@ -547,7 +579,7 @@ public class AddNewGame extends AppCompatActivity {
 
 
     // pop up a window to show achievement level for fruits theme
-    private void showFruitsResult(String achievements, boolean isEditing){
+    private void showFruitsResult(String achievements, boolean isNewGame){
         //Play sound
         playSound();
 
@@ -589,7 +621,7 @@ public class AddNewGame extends AppCompatActivity {
         Button okBtn = fruitsAchievement.findViewById(R.id.appleOkBtn);
         okBtn.setOnClickListener(v -> {
             //If adding a new game, go to game config
-            if (!isEditing) {
+            if (isNewGame) {
                 manager.setIndex(selectedGame);
                 AddNewGame.this.finish();
             } else{ //If editing a game, go to history
@@ -600,7 +632,7 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     // pop up a window to show achievement level for fantasy theme
-    private void showFantasyResult(String achievements, boolean isEditing){
+    private void showFantasyResult(String achievements, boolean isNewGame){
         //Play sound
         playSound();
 
@@ -642,7 +674,7 @@ public class AddNewGame extends AppCompatActivity {
         Button okBtn = fantasyAchievement.findViewById(R.id.starOkBtn);
         okBtn.setOnClickListener(v -> {
             //If adding a new game, go to game config
-            if(!isEditing) {
+            if(isNewGame) {
                 manager.setIndex(selectedGame);
                 AddNewGame.this.finish();
             } else { //If editing a game, go to history
@@ -653,7 +685,7 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     // pop up a window to show achievement level for starwars theme
-    private void showStarWarsResult(String achievements, boolean isEditing){
+    private void showStarWarsResult(String achievements, boolean isNewGame){
         //Play sound
         playSound();
 
@@ -695,7 +727,7 @@ public class AddNewGame extends AppCompatActivity {
         Button okBtn = starWarsAchievement.findViewById(R.id.yodaOkBtn);
         okBtn.setOnClickListener(v -> {
             //If adding a new game, go to game config
-            if (!isEditing) {
+            if (isNewGame) {
                 manager.setIndex(selectedGame);
                 AddNewGame.this.finish();
             } else { //If editing a game, go to history
