@@ -293,44 +293,45 @@ public class AddNewGame extends AppCompatActivity {
         });
     }
 
-    // create textview
-    private void createLeftFields(){
-        LinearLayout ll_left = (LinearLayout)findViewById(R.id.left_layout_tv);
+
+    // create textview // create edittext and return edittext
+    private EditText createRightFields(){
         // add textview
+        LinearLayout ll_test = findViewById(R.id.ll_test);
+        LinearLayout ll_both = new LinearLayout(this);
+        ll_both.setOrientation(LinearLayout.HORIZONTAL);
+        ll_both.setWeightSum(2);
+
         TextView tv = new TextView(this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(50,62,0,0);
-        tv.setLayoutParams(lp);
         indexOfPlayer++;
         tv.setText("Player " + indexOfPlayer + ":");
         tv.setTextColor(getColor(R.color.black));
-        //tv.setId(indexOfPlayer + 10);
-        //tv.setTag("Player" + indexOfPlayer);
-        ll_left.addView(tv);
-    }
+        ll_both.addView(tv);
 
-    // create edittext and return edittext
-    private EditText createRightFields(){
-        LinearLayout ll_right = (LinearLayout)findViewById(R.id.right_layout_et);
+
         // add edittext
         EditText et = new EditText(this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        et.setLayoutParams(lp);
         et.setText("");
+        et.setWidth(30);
         et.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
-        et.setTextSize(17);
         et.setTextColor(getColor(R.color.black));
         et.setId(indexOfScore + 1);
-        ll_right.addView(et);
+        LinearLayout.LayoutParams lp_et = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp_et.setMargins(10, 0, 5, 0);
+        et.setLayoutParams(lp_et);
+        ll_both.addView(et);
+
+        LinearLayout.LayoutParams lp_both = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp_both.setMargins(10, 2, 10, 10);
+        ll_both.setLayoutParams(lp_both);
+        ll_test.addView(ll_both);
         indexOfScore++;
         return et;
     }
 
     private void removeViewsInLinearLayout(){
-        LinearLayout ll_left = (LinearLayout)findViewById(R.id.left_layout_tv);
-        ll_left.removeAllViewsInLayout();
-        LinearLayout ll_right = (LinearLayout)findViewById(R.id.right_layout_et);
-        ll_right.removeAllViewsInLayout();
+        LinearLayout ll_test = findViewById(R.id.ll_test);
+        ll_test.removeAllViewsInLayout();
     }
 
     private void setSetBtn(){
@@ -351,7 +352,6 @@ public class AddNewGame extends AppCompatActivity {
     private void createFields(int numOfPlayers){
         edList = new EditText[numOfPlayers];
         for (int i = 0; i < numOfPlayers; i++) {
-            createLeftFields();
             edList[i] = createRightFields();
         }
         indexOfPlayer = 0;

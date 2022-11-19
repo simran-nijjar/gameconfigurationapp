@@ -43,88 +43,118 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/center_point"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
+                android:orientation="horizontal"
+                android:layout_marginTop="60dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/black"
+                    android:text="Difficulty: "/>
+
+                <RadioGroup
+                    android:id="@+id/radioGroupDifficulty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioBtnDifEasy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Easy" />
+
+                    <RadioButton
+                        android:id="@+id/radioBtnDifNormal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Normal" />
+
+                    <RadioButton
+                        android:id="@+id/radioBtnDifHard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Hard" />
+                </RadioGroup>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/left_layout"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_alignRight="@+id/center_point"
-                android:layout_alignParentLeft="true"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <TextView
                     android:id="@+id/num_players"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="120dp"
                     android:text="@string/num_player"
                     android:textColor="#000000" />
 
-                <TextView
-                    android:id="@+id/player_msg"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/num_players_input"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="" />
-
-                <Button
-                    android:id="@+id/save_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Save Game" />
-
-                <LinearLayout
-                    android:id="@+id/left_layout_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                </LinearLayout>
+                    android:layout_weight="1"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="120dp"
+                    android:inputType="number" />
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/player_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="160dp"
+                android:text="" />
 
             <LinearLayout
                 android:id="@+id/right_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignLeft="@+id/center_point"
-                android:layout_alignParentRight="true"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-
-
-                <EditText
-                    android:id="@+id/num_players_input"
-                    android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/save_btn"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="110dp"
-                    android:inputType="number" />
+                    android:layout_weight="1"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="200dp"
+                    android:text="Save Game" />
 
                 <Button
                     android:id="@+id/set_btn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="200dp"
                     android:text="Set Players" />
 
-                <LinearLayout
-                    android:id="@+id/right_layout_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+            </LinearLayout>
 
-                </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_test"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="vertical"
+                android:layout_marginTop="250dp">
+
             </LinearLayout>
 
         </RelativeLayout>

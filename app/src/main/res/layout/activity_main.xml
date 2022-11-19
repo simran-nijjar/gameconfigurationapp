@@ -10,10 +10,10 @@
     <ListView
         android:id="@+id/configList"
         android:layout_width="0dp"
-        android:layout_height="489dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/addBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -45,10 +45,10 @@
 
     <ImageView
         android:id="@+id/image_main"
-        android:layout_width="360dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="145dp"
-        android:layout_marginBottom="65dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.45"
+        app:layout_constraintWidth_percent="0.8"
         android:adjustViewBounds="true"
         android:background="@null"
         android:scaleType="fitXY"
