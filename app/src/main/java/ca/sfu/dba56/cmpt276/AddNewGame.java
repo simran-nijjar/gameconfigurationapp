@@ -312,7 +312,7 @@ public class AddNewGame extends AppCompatActivity {
         // add edittext
         EditText et = new EditText(this);
         et.setText("");
-        et.setWidth(30);
+        //et.setWidth(30);
         et.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
         et.setTextColor(getColor(R.color.black));
         et.setId(indexOfScore + 1);
