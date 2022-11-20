@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="15dp"
                     android:textColor="@color/black"
                     android:text="Difficulty: "/>
 
@@ -94,7 +94,7 @@
                     android:id="@+id/num_players"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.05"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="120dp"
                     android:text="@string/num_player"
@@ -104,10 +104,10 @@
                     android:id="@+id/num_players_input"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="125dp"
                     android:layout_marginEnd="15dp"
+                    android:layout_weight="0.95"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -140,10 +140,10 @@
                     android:id="@+id/set_btn"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="200dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
                     android:text="Set Players" />
 
             </LinearLayout>
