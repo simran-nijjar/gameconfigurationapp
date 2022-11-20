@@ -8,19 +8,23 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -42,6 +46,9 @@ import ca.sfu.dba56.cmpt276.model.Game;
  */
 public class AddNewGame extends AppCompatActivity {
 
+    private final String FRUITS = "Fruits";
+    private final String FANTASY = "Fantasy";
+    private final String STAR_WARS = "Star Wars";
     private int numOfPlayers; // int user input
     private int scores; // int user input
     private int combinedScores = 0;
@@ -65,9 +72,14 @@ public class AddNewGame extends AppCompatActivity {
     private int indexOfPlayer = 0; // textview player index
     private int indexOfScore = 0; // edittext score index
     private EditText[] edList;
+    MediaPlayer mediaplayer;
     private List<Integer> scoreList;
     private int indexOfGame = -1; // selected game index in game history
     private int currentConfigPosition = 0;
+    private Animation fadeOut;
+    private ImageView achievementAnim;
+    private String gameTheme;
+    private boolean isEditing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +89,6 @@ public class AddNewGame extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_game);
         chooseGame();
         storeSelectedGame();
-        storeSelectedAchievementTheme();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -89,6 +100,7 @@ public class AddNewGame extends AppCompatActivity {
 
         if(bundle != null){
             // go to edit game screen
+            isEditing = true;
             getSupportActionBar().setTitle("Edit Game");
             indexOfGame = bundle.getInt("selected game"); // get selected game position from game history
             dropdown.setVisibility(View.GONE);
@@ -98,8 +110,9 @@ public class AddNewGame extends AppCompatActivity {
             setBtn.setVisibility(View.INVISIBLE);
             tv_numOfPlayer.setText("Number of Player:");
             setVariablesFromExistingGame(indexOfGame);
-        }else {
+        } else {
             // go to add new game screen
+            isEditing = false;
             getSupportActionBar().setTitle("Add New Game");
             dropdown.setVisibility(View.VISIBLE);
             numOfPlayerFromUser.setFocusable(true);
@@ -108,7 +121,7 @@ public class AddNewGame extends AppCompatActivity {
             setBtn.setVisibility(View.VISIBLE);
             tv_numOfPlayer.setText(R.string.num_player);
         }
-
+        storeSelectedAchievementTheme();
     }
 
     public static Intent makeIntent(Context context){
@@ -119,10 +132,13 @@ public class AddNewGame extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                //Change theme in view config if back button is clicked
-                Intent intent = ViewConfiguration.makeIntent(AddNewGame.this);
-                startActivity(intent);
-                this.finish();
+                // On new game page, going back goes to view configuration
+                if (!isEditing) {
+                    this.finish();
+                } else { //On edit game page, going back goes to game history
+                    Intent refresh = new Intent(AddNewGame.this, GameHistory.class);
+                    startActivity(refresh);
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -187,9 +203,18 @@ public class AddNewGame extends AppCompatActivity {
         dropdown.setPrompt(getResources().getString(R.string.select_theme_prompt));
 
         //Set the dropdown item to start from the last selected item
-        for (int i = 0; i < themesArray.length; i++){
-            if (themesArray[i].equals(getAchievementTheme(AddNewGame.this))){
-                dropdown.setSelection(i);
+        if (!isEditing) { //If new game is being added, achievement theme is last selected theme
+            for (int i = 0; i < themesArray.length; i++) {
+                if (themesArray[i].equals(getAchievementTheme(AddNewGame.this))) {
+                    dropdown.setSelection(i);
+                }
+            }
+        }
+        else { //If game is being edited, achievement theme is saved theme in game being edited
+            for (int i = 0; i < themesArray.length; i++) {
+                if (themesArray[i].equals(gameTheme)) {
+                    dropdown.setSelection(i);
+                }
             }
         }
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -425,6 +450,17 @@ public class AddNewGame extends AppCompatActivity {
     private void setVariablesFromExistingGame(int indexOfGame){
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
         currentConfigPosition = manager.getIndex();
+        //Get the theme from the game that is being edited
+        gameTheme = manager.getItemAtIndex(currentConfigPosition).getTheme(indexOfGame);
+        if (gameTheme.equals(FRUITS)){
+            selectedTheme = 0;
+        }
+        if (gameTheme.equals(FANTASY)){
+            selectedTheme = 1;
+        }
+        if (gameTheme.equals(STAR_WARS)){
+            selectedTheme = 2;
+        }
         numOfPlayerFromUser.setText("" + manager.getItemAtIndex(currentConfigPosition).getPlayer(indexOfGame));
         numOfPlayers = manager.getItemAtIndex(currentConfigPosition).getPlayer(indexOfGame);
         removeViewsInLinearLayout();
@@ -473,6 +509,8 @@ public class AddNewGame extends AppCompatActivity {
                     // reset achievement
                     resetAchievementLevel(currentConfigPosition, manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getPlayers());
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(addNewGameAchievements.getLevelAchieved());
+                    // reset theme
+                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setTheme(addNewGameAchievements.getAchievementTheme());
 
                     // show alertdialog in edit game screen
                     // pass achievement level to showResultForEditGame in edit game screen
@@ -487,14 +525,16 @@ public class AddNewGame extends AppCompatActivity {
 
     // pop up a window to show achievement level in edit game screen
     private void showResultForEditGame(String achievements){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
-        alertDialog.setTitle(getString(R.string.achievement));
-        alertDialog.setMessage("" + achievements);
-        alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
-            Intent refresh = new Intent(AddNewGame.this, GameHistory.class);
-            startActivity(refresh);
-        });
-        alertDialog.show();
+        if (selectedTheme == 0){
+            showFruitsResult(achievements, false);
+        }
+        if (selectedTheme == 1){
+            showFantasyResult(achievements, false);
+        }
+        if (selectedTheme == 2){
+            showStarWarsResult(achievements, false);
+        }
+
     }
 
     // save input to the list in add new game screen
@@ -507,25 +547,194 @@ public class AddNewGame extends AppCompatActivity {
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
 
                 // show alertdialog in add new game screen
-                // pass achievement level to showResult in add new game screen
-                showResult(gamePlayed.getLevelAchieved());
-
+                // pass achievement level to appropriate theme layout in add new game screen
+                if (selectedTheme == 0) {
+                    showFruitsResult(gamePlayed.getLevelAchieved(), true);
+                }
+                if (selectedTheme == 1){
+                    showFantasyResult(gamePlayed.getLevelAchieved(), true);
+                }
+                if (selectedTheme == 2){
+                    showStarWarsResult(gamePlayed.getLevelAchieved(), true);
+                }
             }else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // pop up a window to show achievement level in add new game screen
-    private void showResult(String achievements){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
-        alertDialog.setTitle(getString(R.string.achievement));
-        alertDialog.setMessage("" + achievements);
-        alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
-            manager.setIndex(selectedGame);
-            AddNewGame.this.finish(); // back to View Configuration page
+    //makes audio play for achievement sound
+    private void playSound(){
+        if(selectedTheme == 0){
+            mediaplayer = MediaPlayer.create(this, R.raw.fruitslice);
+        }
+        if(selectedTheme == 1){
+            mediaplayer = MediaPlayer.create(this, R.raw.fairysound);
+        }
+        if(selectedTheme == 2){
+            mediaplayer = MediaPlayer.create(this, R.raw.lightsaber);
+        }
+        mediaplayer.start();
+    }
+
+
+    // pop up a window to show achievement level for fruits theme
+    private void showFruitsResult(String achievements, boolean isNewGame){
+        //Play sound
+        playSound();
+
+        //Display the fruits achievement layout
+        LayoutInflater inflater = LayoutInflater.from(AddNewGame.this);
+        final View fruitsAchievement = inflater.inflate(R.layout.fruitsalertdialog, null);
+
+        //Display the animation
+        fadeOut = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+        achievementAnim = fruitsAchievement.findViewById(R.id.celebrationAlertsImage);
+        achievementAnim.startAnimation(fadeOut);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                //Don't have animation code here, animation will not end properly
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                //End the animation
+                achievementAnim.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                //Do nothing
+            }
         });
-        alertDialog.show();
+
+        //Create custom alert dialog
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddNewGame.this);
+        alertDialog.setView(fruitsAchievement);
+        alertDialog.setMessage("" + achievements);
+        alertDialog.setTitle(R.string.achievement_title);
+
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
+
+        Button okBtn = fruitsAchievement.findViewById(R.id.appleOkBtn);
+        okBtn.setOnClickListener(v -> {
+            //If adding a new game, go to game config
+            if (isNewGame) {
+                manager.setIndex(selectedGame);
+                AddNewGame.this.finish();
+            } else{ //If editing a game, go to history
+                Intent refresh = new Intent(AddNewGame.this, GameHistory.class);
+                startActivity(refresh);
+            }
+        });
+    }
+
+    // pop up a window to show achievement level for fantasy theme
+    private void showFantasyResult(String achievements, boolean isNewGame){
+        //Play sound
+        playSound();
+
+        //Display the fantasy achievement layout
+        LayoutInflater inflater = LayoutInflater.from(AddNewGame.this);
+        final View fantasyAchievement = inflater.inflate(R.layout.fantasyalertdialog, null);
+
+        //Display the animation
+        fadeOut = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+        achievementAnim = fantasyAchievement.findViewById(R.id.celebrationAlertsImage);
+        achievementAnim.startAnimation(fadeOut);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                //Don't have animation code here, animation will not end properly
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                //End the animation
+                achievementAnim.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                //Do nothing
+            }
+        });
+
+        //Create custom alert dialog
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddNewGame.this);
+        alertDialog.setView(fantasyAchievement);
+        alertDialog.setMessage("" + achievements);
+        alertDialog.setTitle(R.string.achievement_title);
+
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
+
+        Button okBtn = fantasyAchievement.findViewById(R.id.starOkBtn);
+        okBtn.setOnClickListener(v -> {
+            //If adding a new game, go to game config
+            if(isNewGame) {
+                manager.setIndex(selectedGame);
+                AddNewGame.this.finish();
+            } else { //If editing a game, go to history
+                Intent refresh = new Intent(AddNewGame.this, GameHistory.class);
+                startActivity(refresh);
+            }
+        });
+    }
+
+    // pop up a window to show achievement level for starwars theme
+    private void showStarWarsResult(String achievements, boolean isNewGame){
+        //Play sound
+        playSound();
+
+        //Display the star wars achievement layout
+        LayoutInflater inflater = LayoutInflater.from(AddNewGame.this);
+        final View starWarsAchievement = inflater.inflate(R.layout.starwarsalertdialog, null);
+
+        //Display the animation
+        fadeOut = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+        achievementAnim = starWarsAchievement.findViewById(R.id.celebrationAlertsImage);
+        achievementAnim.startAnimation(fadeOut);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                //Don't have animation code here, animation will not end properly
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                //End the animation
+                achievementAnim.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                //Do nothing
+            }
+        });
+
+        //Create custom alert dialog
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddNewGame.this);
+        alertDialog.setView(starWarsAchievement);
+        alertDialog.setMessage("" + achievements);
+        alertDialog.setTitle(R.string.achievement_title);
+
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
+
+        Button okBtn = starWarsAchievement.findViewById(R.id.yodaOkBtn);
+        okBtn.setOnClickListener(v -> {
+            //If adding a new game, go to game config
+            if (isNewGame) {
+                manager.setIndex(selectedGame);
+                AddNewGame.this.finish();
+            } else { //If editing a game, go to history
+                Intent refresh = new Intent(AddNewGame.this, GameHistory.class);
+                startActivity(refresh);
+            }
+        });
     }
 
     private void saveAchievementTheme(String theme){
@@ -540,5 +749,4 @@ public class AddNewGame extends AppCompatActivity {
         String defaultTheme = context.getResources().getString(R.string.defaultTheme);
         return preferences.getString("Achievement Theme",defaultTheme);
     }
-
 }
