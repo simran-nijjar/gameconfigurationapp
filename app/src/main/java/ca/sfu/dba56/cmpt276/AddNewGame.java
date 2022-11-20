@@ -146,8 +146,6 @@ public class AddNewGame extends AppCompatActivity {
 
     private void chooseGame() {
         // get selected game config index
-//        Bundle bundle = getIntent().getExtras();
-//        String name = bundle.getString(getString(R.string.gameName));
         String name = manager.getItemAtIndex(manager.getIndex()).getGameNameFromConfig();
         // drop down menu for games
         Spinner dropdown = findViewById(R.id.gameName);
