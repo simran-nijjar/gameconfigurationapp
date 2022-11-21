@@ -99,7 +99,7 @@ public class AddNewGame extends AppCompatActivity {
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
         TextView tv_numOfPlayer = findViewById(R.id.num_players);
         Button setBtn = findViewById(R.id.set_btn);
-        createDifficultyRadioButtons();
+//        createDifficultyRadioButtons();
 
         if(bundle != null){
             // go to edit game screen
@@ -113,6 +113,7 @@ public class AddNewGame extends AppCompatActivity {
             setBtn.setVisibility(View.INVISIBLE);
             tv_numOfPlayer.setText("Number of Player:");
             setVariablesFromExistingGame(indexOfGame);
+            resetDifficultyRadioButtons(indexOfGame);
         } else {
             // go to add new game screen
             isEditing = false;
@@ -123,6 +124,7 @@ public class AddNewGame extends AppCompatActivity {
             numOfPlayerFromUser.setText("");
             setBtn.setVisibility(View.VISIBLE);
             tv_numOfPlayer.setText(R.string.num_player);
+            createDifficultyRadioButtons();
         }
         storeSelectedAchievementTheme();
     }
@@ -526,13 +528,6 @@ public class AddNewGame extends AppCompatActivity {
         } else {
             isCalculatingRangeForLevels = false;
         }
-        if (isCalculatingRangeForLevels) {
-            addNewGameAchievements.setAchievementsBounds(adjustedMin, adjustedMax, numOfPlayers);
-            addNewGameAchievements.calculateLevelAchieved(combinedScores);
-        } else {
-            addNewGameAchievements.setAchievementsScores(adjustedMin, adjustedMax, numOfPlayers);
-            addNewGameAchievements.calculateScoreAchieved(combinedScores);
-        }
     }
 
     // save input to the list in edit game screen
@@ -552,7 +547,8 @@ public class AddNewGame extends AppCompatActivity {
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setScores(combinedScores);
                     // reset achievement
                     resetAchievementLevel(currentConfigPosition, manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getPlayers());
-                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(addNewGameAchievements.getLevelAchieved());
+                    manager.getItemAtIndex(manager.getIndex()).getGame(indexOfGame).setDifficulty(addNewGameAchievements.getDifficultyLevel());
+                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setAchievementForEditGame(numOfPlayers, combinedScores, manager.getItemAtIndex(currentConfigPosition), isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme(), addNewGameAchievements.getDifficultyLevel()));
                     // reset theme
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setTheme(addNewGameAchievements.getAchievementTheme());
                     // show alertdialog in edit game screen
@@ -799,6 +795,8 @@ public class AddNewGame extends AppCompatActivity {
     private void createDifficultyRadioButtons() {
         RadioGroup difficultiesGroup = findViewById(R.id.radioGroupDifficulty);
         String[] difficultyLevels = getResources().getStringArray(R.array.difficultyLevels);
+        LinearLayout.LayoutParams radio_lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        radio_lp.setMargins(5, 20, 5, 5);
 
         for (int i = 0; i < difficultyLevels.length; i++){
             final int selectedDifficulty = i;
@@ -810,9 +808,35 @@ public class AddNewGame extends AppCompatActivity {
                     //Set difficulty for this game
                     addNewGameAchievements.setDifficultyLevel(selectedDifficulty);
             });
+            btn.setLayoutParams(radio_lp);
             difficultiesGroup.addView(btn);
             //Set Normal as default difficulty
             if (difficulty.equals(getSavedDifficultyLevel(this))){
+                btn.setChecked(true);
+            }
+        }
+    }
+
+    private void resetDifficultyRadioButtons(int indexOfGame){
+        RadioGroup difficultiesGroup = findViewById(R.id.radioGroupDifficulty);
+        String[] difficultyLevels = getResources().getStringArray(R.array.difficultyLevels);
+        LinearLayout.LayoutParams radio_lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        radio_lp.setMargins(5, 20, 5, 5);
+
+        for (int i = 0; i < difficultyLevels.length; i++){
+            final int selectedDifficulty = i;
+            final String difficulty = difficultyLevels[i];
+
+            RadioButton btn = new RadioButton(this);
+            btn.setText(difficulty);
+            btn.setOnClickListener(v -> {
+                //Set difficulty for this game
+                addNewGameAchievements.setDifficultyLevel(selectedDifficulty);
+            });
+            btn.setLayoutParams(radio_lp);
+            difficultiesGroup.addView(btn);
+            //Set user selection as default difficulty
+            if (i == manager.getItemAtIndex(manager.getIndex()).getGame(indexOfGame).getDifficulty()){
                 btn.setChecked(true);
             }
         }
