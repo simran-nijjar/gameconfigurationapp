@@ -317,7 +317,6 @@ public class AddNewGame extends AppCompatActivity {
                                 adjustedMax *= 1.25;
                                 break;
                         }
-                        Toast.makeText(AddNewGame.this, "poor " + adjustedMin + " great " + adjustedMax, Toast.LENGTH_SHORT).show();
                         //Range will be calculated for each achievement level if great score - poor score is > 8
                         if (Math.abs(adjustedMax - adjustedMin) > 8) {
                             isCalculatingRangeForLevels = true;
@@ -452,18 +451,6 @@ public class AddNewGame extends AppCompatActivity {
         int score;
         for (EditText editText : edList) {
             score = Integer.parseInt(editText.getText().toString());
-            switch(addNewGameAchievements.getDifficultyLevel()) {
-                case 0:
-                    score *= 0.75;
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    score *= 1.25;
-                    break;
-                default:
-                    break;
-            }
             scoreList.add(score);
             combinedScores += score;
         }
@@ -588,7 +575,10 @@ public class AddNewGame extends AppCompatActivity {
                 storeScores();
                 Game gamePlayed = new Game(numOfPlayers, combinedScores, scoreList, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(),
                         isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme(), addNewGameAchievements.getDifficultyLevel());
-                manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
+//                Toast.makeText(this, "difficulty " + addNewGameAchievements.getDifficultyLevel(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "min " + manager.getItemAtIndex(selectedGameInt).getMinPoorScoreFromConfig(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "combined scores " + combinedScores, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "" + addNewGameAchievements.getIntArray(), Toast.LENGTH_SHORT).show();
 
                 // show alertdialog in add new game screen
                 // pass achievement level to appropriate theme layout in add new game screen

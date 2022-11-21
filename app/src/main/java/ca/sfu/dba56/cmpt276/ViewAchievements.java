@@ -207,13 +207,13 @@ public class ViewAchievements extends AppCompatActivity {
 
         resetMinAndMaxScoreFromConfig();
         switch(achievements.getDifficultyLevel()){
-            case 0:
+            case 0: //Easy level
                 minScore *= 0.75;
                 maxScore *= 0.75;
                 break;
             case 1:
                 break;
-            case 2:
+            case 2: //Hard level
                 minScore *= 1.25;
                 maxScore *= 1.25;
                 break;
@@ -369,6 +369,7 @@ public class ViewAchievements extends AppCompatActivity {
             difficultiesGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    //Erase user input and make them re-enter
                     numPlayersFromUser.getText().clear();
                 }
             });

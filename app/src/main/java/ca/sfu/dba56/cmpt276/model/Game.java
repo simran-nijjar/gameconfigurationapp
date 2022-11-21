@@ -64,7 +64,7 @@ public class Game {
         }
         return NORMAL;
     }
-    public void setDifficultyLevelAdjuster(){
+    public void setDifficultyLevelAdjuster(){ //Sets the value to adjust the expected poor and great scores by
         if (this.difficulty == 0){
             this.adjustDifficulty *= 0.75;
         }
