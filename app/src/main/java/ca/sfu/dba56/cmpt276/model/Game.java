@@ -13,15 +13,18 @@ public class Game {
     private int players;
     private int scores;
     private String dateGamePlayed;
-    private Achievements achievements = new Achievements();
+    private Achievements achievements;
     private String levelAchieved;
     private List<Integer> listOfValues;
+    private String theme;
 
-    public Game(int players, int scores, List<Integer> listOfValues, Configuration manager, String dateGamePlayed, boolean isCalculatingRangeLevels) {
+    public Game(int players, int scores, List<Integer> listOfValues, Configuration manager, String dateGamePlayed, boolean isCalculatingRangeLevels, String theme) {
+        achievements = new Achievements(theme);
 
         this.players = players;
         this.scores = scores;
         this.listOfValues = listOfValues;
+        this.theme = achievements.getAchievementTheme();
 
         if (isCalculatingRangeLevels) {
             achievements.setAchievementsBounds(manager.getMinPoorScoreFromConfig(), manager.getMaxBestScoreFromConfig(), players);
@@ -42,5 +45,6 @@ public class Game {
     public int getScores() {return scores;}
     public String getDateGamePlayed() {return dateGamePlayed;}
     public String getLevelAchieved() {return levelAchieved;}
-
+    public String getTheme() {return theme;}
+    public void setTheme(String theme) {this.theme = theme;}
 }
