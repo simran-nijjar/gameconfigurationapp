@@ -205,7 +205,6 @@ public class ViewAchievements extends AppCompatActivity {
         numPlayersAsStr = numPlayersFromUser.getText().toString();
         numPlayers = Integer.parseInt(numPlayersAsStr);
 
-
         resetMinAndMaxScoreFromConfig();
         switch(achievements.getDifficultyLevel()){
             case 0:
@@ -366,6 +365,13 @@ public class ViewAchievements extends AppCompatActivity {
             if (difficulty.equals(getSavedDifficultyLevel(this))){
                 btn.setChecked(true);
             }
+
+            difficultiesGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    numPlayersFromUser.getText().clear();
+                }
+            });
         }
     }
 
