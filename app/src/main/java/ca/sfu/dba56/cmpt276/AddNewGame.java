@@ -806,16 +806,11 @@ public class AddNewGame extends AppCompatActivity {
 
             RadioButton btn = new RadioButton(this);
             btn.setText(difficulty);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            btn.setOnClickListener(v -> {
                     //Set difficulty for this game
                     addNewGameAchievements.setDifficultyLevel(selectedDifficulty);
-                    Toast.makeText(AddNewGame.this, " " + selectedDifficulty, Toast.LENGTH_SHORT).show();
-                }
             });
             difficultiesGroup.addView(btn);
-
             //Set Normal as default difficulty
             if (difficulty.equals(getSavedDifficultyLevel(this))){
                 btn.setChecked(true);
@@ -823,13 +818,6 @@ public class AddNewGame extends AppCompatActivity {
         }
     }
 
-//    private void saveDifficultyLevel(String difficulty){
-//        SharedPreferences preferences = this.getSharedPreferences("Difficulty Preferences", MODE_PRIVATE);
-//        SharedPreferences.Editor editor = preferences.edit();
-//        editor.putString("Difficulty level",difficulty);
-//        editor.apply();
-//    }
-//
     public static String getSavedDifficultyLevel(Context context){
         SharedPreferences preferences = context.getSharedPreferences("Difficulty Preferences", MODE_PRIVATE);
         String defaultDifficulty = context.getResources().getString(R.string.defaultLevel);

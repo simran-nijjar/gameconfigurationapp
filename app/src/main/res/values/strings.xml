@@ -123,4 +123,7 @@
     <string name="display_string_option">"%1s "</string>
     <string name="select_theme_prompt">Select a theme</string>
     <string name="achievement_title">Your achievement is...</string>
+    <string name="easyDifficulty">Easy</string>
+    <string name="normalDifficulty">Normal</string>
+    <string name="hardDifficulty">Hard</string>
 </resources>

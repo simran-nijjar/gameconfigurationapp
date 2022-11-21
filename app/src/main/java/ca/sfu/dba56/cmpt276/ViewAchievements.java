@@ -359,9 +359,7 @@ public class ViewAchievements extends AppCompatActivity {
             btn.setText(difficulty);
             btn.setOnClickListener(v -> {
                 //Set difficulty for this game
-              saveDifficultyLevel(difficulty);
               achievements.setDifficultyLevel(selectedDifficulty);
-                Toast.makeText(this, " " + difficulty + " " + selectedDifficulty, Toast.LENGTH_SHORT).show();
             });
             difficultiesGroup.addView(btn);
             //Set Normal as default difficulty
@@ -369,13 +367,6 @@ public class ViewAchievements extends AppCompatActivity {
                 btn.setChecked(true);
             }
         }
-    }
-
-    private void saveDifficultyLevel(String difficulty){
-        SharedPreferences preferences = this.getSharedPreferences("Difficulty Preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("Difficulty level",difficulty);
-        editor.apply();
     }
 
     public static String getSavedDifficultyLevel(Context context){
