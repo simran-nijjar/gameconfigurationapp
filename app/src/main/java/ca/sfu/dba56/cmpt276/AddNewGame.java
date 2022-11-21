@@ -26,6 +26,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,6 +99,7 @@ public class AddNewGame extends AppCompatActivity {
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
         TextView tv_numOfPlayer = findViewById(R.id.num_players);
         Button setBtn = findViewById(R.id.set_btn);
+        createDifficultyRadioButtons();
 
         if(bundle != null){
             // go to edit game screen
@@ -432,6 +435,18 @@ public class AddNewGame extends AppCompatActivity {
         int score;
         for (EditText editText : edList) {
             score = Integer.parseInt(editText.getText().toString());
+//            switch(addNewGameAchievements.getDifficultyLevel()) {
+//                case 0:
+//                    score *= 1.25;
+//                    break;
+//                case 1:
+//                    break;
+//                case 2:
+//                    score *= 0.75;
+//                    break;
+//                default:
+//                    break;
+//            }
             scoreList.add(score);
             combinedScores += score;
         }
@@ -475,6 +490,20 @@ public class AddNewGame extends AppCompatActivity {
     private void resetAchievementLevel(int selectedGameInt, int numOfPlayers){
         adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.getItemAtIndex(selectedGameInt).getMaxBestScoreFromConfig(), numOfPlayers);
         adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.getItemAtIndex(selectedGameInt).getMinPoorScoreFromConfig(), numOfPlayers);
+        switch(addNewGameAchievements.getDifficultyLevel()){
+            case 0:
+                adjustedMin *= 0.75;
+                adjustedMax *= 0.75;
+                break;
+            case 1:
+                break;
+            case 2:
+                adjustedMin *= 1.25;
+                adjustedMax *= 1.25;
+                break;
+            default:
+                break;
+        }
         if (Math.abs(adjustedMax - adjustedMin) > 8) {
             isCalculatingRangeForLevels = true;
         } else {
@@ -747,4 +776,41 @@ public class AddNewGame extends AppCompatActivity {
         String defaultTheme = context.getResources().getString(R.string.defaultTheme);
         return preferences.getString("Achievement Theme",defaultTheme);
     }
+
+    // create radio buttons for the activity that will change the levels of achievement
+    // according to selected difficulty level
+    private void createDifficultyRadioButtons() {
+        RadioGroup difficultiesGroup = findViewById(R.id.radioGroupDifficulty);
+
+        RadioButton easyDifBtn = findViewById(R.id.radioBtnDifEasy);
+        RadioButton normalDifBtn = findViewById(R.id.radioBtnDifNormal);
+        RadioButton hardDifBtn = findViewById(R.id.radioBtnDifHard);
+
+        difficultyButtonClicked(easyDifBtn);
+        difficultyButtonClicked(normalDifBtn);
+        difficultyButtonClicked(hardDifBtn);
+    }
+
+    private void difficultyButtonClicked(RadioButton diffBtn) {
+        diffBtn.setOnClickListener(view -> {
+            switch (diffBtn.getText().toString()) {
+                case "Easy":
+                    Toast.makeText(AddNewGame.this, "you selected Difficulty Easy", Toast.LENGTH_SHORT).show();
+                    addNewGameAchievements.setDifficultyLevel(0);
+                    break;
+                case "Normal":
+                    Toast.makeText(AddNewGame.this, "you selected Difficulty Normal", Toast.LENGTH_SHORT).show();
+                    addNewGameAchievements.setDifficultyLevel(1);
+
+                    break;
+                case "Hard":
+                    Toast.makeText(AddNewGame.this, "you selected Difficulty Hard", Toast.LENGTH_SHORT).show();
+                    addNewGameAchievements.setDifficultyLevel(2);
+                    break;
+
+            }
+
+        });
+    }
+
 }
