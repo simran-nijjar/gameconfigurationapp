@@ -571,11 +571,7 @@ public class AddNewGame extends AppCompatActivity {
                 storeScores();
                 Game gamePlayed = new Game(numOfPlayers, combinedScores, scoreList, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(),
                         isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme(), addNewGameAchievements.getDifficultyLevel());
-//                Toast.makeText(this, "difficulty " + addNewGameAchievements.getDifficultyLevel(), Toast.LENGTH_SHORT).show();
-//                Toast.makeText(this, "min " + manager.getItemAtIndex(selectedGameInt).getMinPoorScoreFromConfig(), Toast.LENGTH_SHORT).show();
-//                Toast.makeText(this, "combined scores " + combinedScores, Toast.LENGTH_SHORT).show();
-//                Toast.makeText(this, "" + addNewGameAchievements.getIntArray(), Toast.LENGTH_SHORT).show();
-
+                manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
                 // show alertdialog in add new game screen
                 // pass achievement level to appropriate theme layout in add new game screen
                 if (selectedTheme == 0) {
