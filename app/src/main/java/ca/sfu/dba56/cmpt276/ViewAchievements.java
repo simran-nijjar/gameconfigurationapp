@@ -349,38 +349,38 @@ public class ViewAchievements extends AppCompatActivity {
     // according to selected difficulty level
     private void createDifficultyRadioButtons() {
         RadioGroup difficultiesGroup = findViewById(R.id.radioGroupDifficulty);
+        String[] difficultyLevels = getResources().getStringArray(R.array.difficultyLevels);
 
-        RadioButton easyDifBtn = findViewById(R.id.radioBtnDifEasy);
-        RadioButton normalDifBtn = findViewById(R.id.radioBtnDifNormal);
-        RadioButton hardDifBtn = findViewById(R.id.radioBtnDifHard);
+        for (int i = 0; i < difficultyLevels.length; i++){
+            final int selectedDifficulty = i;
+            final String difficulty = difficultyLevels[i];
 
-        difficultyButtonClicked(easyDifBtn);
-        difficultyButtonClicked(normalDifBtn);
-        difficultyButtonClicked(hardDifBtn);
+            RadioButton btn = new RadioButton(this);
+            btn.setText(difficulty);
+            btn.setOnClickListener(v -> {
+                //Set difficulty for this game
+              saveDifficultyLevel(difficulty);
+              achievements.setDifficultyLevel(selectedDifficulty);
+                Toast.makeText(this, " " + difficulty + " " + selectedDifficulty, Toast.LENGTH_SHORT).show();
+            });
+            difficultiesGroup.addView(btn);
+            //Set Normal as default difficulty
+            if (difficulty.equals(getSavedDifficultyLevel(this))){
+                btn.setChecked(true);
+            }
+        }
     }
 
-    private void difficultyButtonClicked(RadioButton diffBtn) {
-        diffBtn.setOnClickListener(view -> {
-            switch (diffBtn.getText().toString()) {
-                case "Easy":
-                    Toast.makeText(ViewAchievements.this, "you selected Difficulty Easy", Toast.LENGTH_SHORT).show();
-                    achievements.setDifficultyLevel(0);
-                    if(!numPlayersFromUser.getText().toString().isEmpty()){displayAchievementLevels();}
-                    break;
-                case "Normal":
-                    Toast.makeText(ViewAchievements.this, "you selected Difficulty Normal", Toast.LENGTH_SHORT).show();
-                    achievements.setDifficultyLevel(1);
-                    if(!numPlayersFromUser.getText().toString().isEmpty()){displayAchievementLevels();}
+    private void saveDifficultyLevel(String difficulty){
+        SharedPreferences preferences = this.getSharedPreferences("Difficulty Preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("Difficulty level",difficulty);
+        editor.apply();
+    }
 
-                    break;
-                case "Hard":
-                    Toast.makeText(ViewAchievements.this, "you selected Difficulty Hard", Toast.LENGTH_SHORT).show();
-                    achievements.setDifficultyLevel(2);
-                    if(!numPlayersFromUser.getText().toString().isEmpty()){displayAchievementLevels();}
-                    break;
-
-            }
-
-        });
+    public static String getSavedDifficultyLevel(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("Difficulty Preferences", MODE_PRIVATE);
+        String defaultDifficulty = context.getResources().getString(R.string.defaultLevel);
+        return preferences.getString("Difficulty level", defaultDifficulty);
     }
 }

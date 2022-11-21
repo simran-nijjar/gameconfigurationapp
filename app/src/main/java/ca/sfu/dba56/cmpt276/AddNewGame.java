@@ -300,11 +300,28 @@ public class AddNewGame extends AppCompatActivity {
                     }else{
                         isPlayerValid = true;
                         playerMsg.setText("");
+                        //Calculate the expected poor and expected great score for the total number of players
                         adjustedMax = addNewGameAchievements.calculateMinMaxScore(manager.getItemAtIndex(selectedGameInt).getMaxBestScoreFromConfig(), numOfPlayers);
                         adjustedMin = addNewGameAchievements.calculateMinMaxScore(manager.getItemAtIndex(selectedGameInt).getMinPoorScoreFromConfig(), numOfPlayers);
+
+                        //Adjust the poor and great score depending on difficulty selected
+                        switch(addNewGameAchievements.getDifficultyLevel()){
+                            case 0:
+                                adjustedMax *= 0.75;
+                                adjustedMin *= 0.75;
+                                break;
+                            case 1:
+                                break;
+                            case 2:
+                                adjustedMin *= 1.25;
+                                adjustedMax *= 1.25;
+                                break;
+                        }
+                        Toast.makeText(AddNewGame.this, "poor " + adjustedMin + " great " + adjustedMax, Toast.LENGTH_SHORT).show();
+                        //Range will be calculated for each achievement level if great score - poor score is > 8
                         if (Math.abs(adjustedMax - adjustedMin) > 8) {
                             isCalculatingRangeForLevels = true;
-                        } else {
+                        } else { //One score will be calculated for each achievement level otherwise
                             isCalculatingRangeForLevels = false;
                         }
                     }
@@ -435,18 +452,18 @@ public class AddNewGame extends AppCompatActivity {
         int score;
         for (EditText editText : edList) {
             score = Integer.parseInt(editText.getText().toString());
-//            switch(addNewGameAchievements.getDifficultyLevel()) {
-//                case 0:
-//                    score *= 1.25;
-//                    break;
-//                case 1:
-//                    break;
-//                case 2:
-//                    score *= 0.75;
-//                    break;
-//                default:
-//                    break;
-//            }
+            switch(addNewGameAchievements.getDifficultyLevel()) {
+                case 0:
+                    score *= 0.75;
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    score *= 1.25;
+                    break;
+                default:
+                    break;
+            }
             scoreList.add(score);
             combinedScores += score;
         }
@@ -510,10 +527,10 @@ public class AddNewGame extends AppCompatActivity {
             isCalculatingRangeForLevels = false;
         }
         if (isCalculatingRangeForLevels) {
-            addNewGameAchievements.setAchievementsBounds(manager.getItemAtIndex(currentConfigPosition).getMinPoorScoreFromConfig(), manager.getItemAtIndex(currentConfigPosition).getMaxBestScoreFromConfig(), numOfPlayers);
+            addNewGameAchievements.setAchievementsBounds(adjustedMin, adjustedMax, numOfPlayers);
             addNewGameAchievements.calculateLevelAchieved(combinedScores);
         } else {
-            addNewGameAchievements.setAchievementsScores(manager.getItemAtIndex(currentConfigPosition).getMinPoorScoreFromConfig(), manager.getItemAtIndex(currentConfigPosition).getMaxBestScoreFromConfig(), numOfPlayers);
+            addNewGameAchievements.setAchievementsScores(adjustedMin, adjustedMax, numOfPlayers);
             addNewGameAchievements.calculateScoreAchieved(combinedScores);
         }
     }
@@ -538,7 +555,6 @@ public class AddNewGame extends AppCompatActivity {
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(addNewGameAchievements.getLevelAchieved());
                     // reset theme
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setTheme(addNewGameAchievements.getAchievementTheme());
-
                     // show alertdialog in edit game screen
                     // pass achievement level to showResultForEditGame in edit game screen
                     showResultForEditGame(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getLevelAchieved());
@@ -570,7 +586,8 @@ public class AddNewGame extends AppCompatActivity {
         save.setOnClickListener(v -> {
             if (isPlayerValid && isScoresValid) {
                 storeScores();
-                Game gamePlayed = new Game(numOfPlayers, combinedScores, scoreList, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(), isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme());
+                Game gamePlayed = new Game(numOfPlayers, combinedScores, scoreList, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(),
+                        isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme(), addNewGameAchievements.getDifficultyLevel());
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
 
                 // show alertdialog in add new game screen
@@ -781,36 +798,42 @@ public class AddNewGame extends AppCompatActivity {
     // according to selected difficulty level
     private void createDifficultyRadioButtons() {
         RadioGroup difficultiesGroup = findViewById(R.id.radioGroupDifficulty);
+        String[] difficultyLevels = getResources().getStringArray(R.array.difficultyLevels);
 
-        RadioButton easyDifBtn = findViewById(R.id.radioBtnDifEasy);
-        RadioButton normalDifBtn = findViewById(R.id.radioBtnDifNormal);
-        RadioButton hardDifBtn = findViewById(R.id.radioBtnDifHard);
+        for (int i = 0; i < difficultyLevels.length; i++){
+            final int selectedDifficulty = i;
+            final String difficulty = difficultyLevels[i];
 
-        difficultyButtonClicked(easyDifBtn);
-        difficultyButtonClicked(normalDifBtn);
-        difficultyButtonClicked(hardDifBtn);
+            RadioButton btn = new RadioButton(this);
+            btn.setText(difficulty);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Set difficulty for this game
+                    addNewGameAchievements.setDifficultyLevel(selectedDifficulty);
+                    Toast.makeText(AddNewGame.this, " " + selectedDifficulty, Toast.LENGTH_SHORT).show();
+                }
+            });
+            difficultiesGroup.addView(btn);
+
+            //Set Normal as default difficulty
+            if (difficulty.equals(getSavedDifficultyLevel(this))){
+                btn.setChecked(true);
+            }
+        }
     }
 
-    private void difficultyButtonClicked(RadioButton diffBtn) {
-        diffBtn.setOnClickListener(view -> {
-            switch (diffBtn.getText().toString()) {
-                case "Easy":
-                    Toast.makeText(AddNewGame.this, "you selected Difficulty Easy", Toast.LENGTH_SHORT).show();
-                    addNewGameAchievements.setDifficultyLevel(0);
-                    break;
-                case "Normal":
-                    Toast.makeText(AddNewGame.this, "you selected Difficulty Normal", Toast.LENGTH_SHORT).show();
-                    addNewGameAchievements.setDifficultyLevel(1);
-
-                    break;
-                case "Hard":
-                    Toast.makeText(AddNewGame.this, "you selected Difficulty Hard", Toast.LENGTH_SHORT).show();
-                    addNewGameAchievements.setDifficultyLevel(2);
-                    break;
-
-            }
-
-        });
+//    private void saveDifficultyLevel(String difficulty){
+//        SharedPreferences preferences = this.getSharedPreferences("Difficulty Preferences", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = preferences.edit();
+//        editor.putString("Difficulty level",difficulty);
+//        editor.apply();
+//    }
+//
+    public static String getSavedDifficultyLevel(Context context){
+        SharedPreferences preferences = context.getSharedPreferences("Difficulty Preferences", MODE_PRIVATE);
+        String defaultDifficulty = context.getResources().getString(R.string.defaultLevel);
+        return preferences.getString("Difficulty level", defaultDifficulty);
     }
 
 }

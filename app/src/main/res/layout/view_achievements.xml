@@ -72,26 +72,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textViewDifficultyLevel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewDifficultyLevel"
-        app:layout_constraintTop_toTopOf="@+id/textViewDifficultyLevel">
-
-        <RadioButton
-            android:id="@+id/radioBtnDifEasy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Easy" />
-
-        <RadioButton
-            android:id="@+id/radioBtnDifNormal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Normal" />
-
-        <RadioButton
-            android:id="@+id/radioBtnDifHard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hard" />
-    </RadioGroup>
+        app:layout_constraintTop_toTopOf="@+id/textViewDifficultyLevel"/>
 
     <TextView
         android:id="@+id/textViewDifficultyLevel"

@@ -1,6 +1,5 @@
 package ca.sfu.dba56.cmpt276.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -10,6 +9,9 @@ import java.util.List;
  */
 public class Game {
 
+    public static final String EASY = "Easy";
+    public static final String HARD = "Hard";
+    public static final String NORMAL = "Normal";
     private int players;
     private int scores;
     private String dateGamePlayed;
@@ -17,20 +19,26 @@ public class Game {
     private String levelAchieved;
     private List<Integer> listOfValues;
     private String theme;
+    private int difficulty;
+    private int adjustDifficulty = 1;
 
-    public Game(int players, int scores, List<Integer> listOfValues, Configuration manager, String dateGamePlayed, boolean isCalculatingRangeLevels, String theme) {
+    public Game(int players, int scores, List<Integer> listOfValues, Configuration manager,
+                String dateGamePlayed, boolean isCalculatingRangeLevels, String theme, int difficultyLevel) {
         achievements = new Achievements(theme);
 
         this.players = players;
         this.scores = scores;
         this.listOfValues = listOfValues;
         this.theme = achievements.getAchievementTheme();
+        this.difficulty = difficultyLevel;
+        setDifficultyLevelAdjuster();
 
         if (isCalculatingRangeLevels) {
-            achievements.setAchievementsBounds(manager.getMinPoorScoreFromConfig(), manager.getMaxBestScoreFromConfig(), players);
+            //Set the achievement level range bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
+            achievements.setAchievementsBounds(manager.getPoorDifficultyScore(getAdjustDifficulty()), manager.getGreatDifficultyScore(getAdjustDifficulty()), players);
             achievements.calculateLevelAchieved(scores);
-        } else {
-            achievements.setAchievementsScores(manager.getMinPoorScoreFromConfig(), manager.getMaxBestScoreFromConfig(), players);
+        } else { //Set the achievement level score bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
+            achievements.setAchievementsScores(manager.getPoorDifficultyScore(getAdjustDifficulty()), manager.getGreatDifficultyScore(getAdjustDifficulty()), players);
             achievements.calculateScoreAchieved(scores);
         }
         this.levelAchieved = achievements.getLevelAchieved();
@@ -47,4 +55,27 @@ public class Game {
     public String getLevelAchieved() {return levelAchieved;}
     public String getTheme() {return theme;}
     public void setTheme(String theme) {this.theme = theme;}
+    public String getDifficultyLevelTitle(){ //Returns the string difficulty name
+        if (this.difficulty == 0){
+            return EASY;
+        }
+        if (this.difficulty == 2){
+            return HARD;
+        }
+        return NORMAL;
+    }
+    public void setDifficultyLevelAdjuster(){
+        if (this.difficulty == 0){
+            this.adjustDifficulty *= 0.75;
+        }
+        if (this.difficulty == 1){
+            this.adjustDifficulty *= 1;
+        }
+        if (this.difficulty == 2){
+            this.adjustDifficulty *= 1.25;
+        }
+    }
+    public int getAdjustDifficulty(){ //Returns the value to adjust difficulty by
+        return adjustDifficulty;
+    }
 }
