@@ -45,6 +45,25 @@ public class Game {
         this.dateGamePlayed = dateGamePlayed;
     }
 
+    public String setAchievementForEditGame(int players, int combined_scores, Configuration manager, boolean isCalculatingRangeLevels, String theme, int difficultyLevel){
+        achievements = new Achievements(theme);
+        this.players = players;
+        this.scores = combined_scores;
+        this.difficulty = difficultyLevel;
+        setDifficultyLevelAdjuster();
+
+        if (isCalculatingRangeLevels) {
+            //Set the achievement level range bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
+            achievements.setAchievementsBounds(manager.getPoorDifficultyScore(getAdjustDifficulty()), manager.getGreatDifficultyScore(getAdjustDifficulty()), players);
+            achievements.calculateLevelAchieved(combined_scores);
+        } else { //Set the achievement level score bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
+            achievements.setAchievementsScores(manager.getPoorDifficultyScore(getAdjustDifficulty()), manager.getGreatDifficultyScore(getAdjustDifficulty()), players);
+            achievements.calculateScoreAchieved(combined_scores);
+        }
+        this.levelAchieved = achievements.getLevelAchieved();
+        return this.levelAchieved;
+    }
+
     public void setScores(int scores) {this.scores = scores;}
     public void setLevelAchieved(String levelAchieved) {this.levelAchieved = levelAchieved;}
     public void setListOfValues(List<Integer> listOfValues) {this.listOfValues = listOfValues;}
@@ -64,7 +83,16 @@ public class Game {
         }
         return NORMAL;
     }
-    public void setDifficultyLevelAdjuster(){ //Sets the value to adjust the expected poor and great scores by
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficultyLevelAdjuster(){
         if (this.difficulty == 0){
             this.adjustDifficulty *= 0.75;
         }
