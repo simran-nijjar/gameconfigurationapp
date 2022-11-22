@@ -99,7 +99,6 @@ public class AddNewGame extends AppCompatActivity {
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
         TextView tv_numOfPlayer = findViewById(R.id.num_players);
         Button setBtn = findViewById(R.id.set_btn);
-//        createDifficultyRadioButtons();
 
         if(bundle != null){
             // go to edit game screen
@@ -652,7 +651,6 @@ public class AddNewGame extends AppCompatActivity {
             //If adding a new game, go to game config
             if (isNewGame) {
                 manager.setIndex(selectedGame);
-//                dialog.dismiss();
                 AddNewGame.this.finish();
             } else{ //If editing a game, go to history
                 Intent refresh = new Intent(AddNewGame.this, GameHistory.class);
@@ -797,7 +795,6 @@ public class AddNewGame extends AppCompatActivity {
             btn.setOnClickListener(v -> {
                     //Set difficulty for this game
                     addNewGameAchievements.setDifficultyLevel(selectedDifficulty);
-//                Toast.makeText(this, "selected " + selectedDifficulty, Toast.LENGTH_SHORT).show();
             });
             btn.setLayoutParams(radio_lp);
             difficultiesGroup.addView(btn);
@@ -808,39 +805,7 @@ public class AddNewGame extends AppCompatActivity {
         }
     }
 
-//    private void createDifficultyRadioButtons() {
-////        RadioGroup difficultiesGroup = findViewById(R.id.radioGroupDifficulty);
-//
-//        RadioButton easyDifBtn = findViewById(R.id.radioBtnDifEasy1);
-//        RadioButton normalDifBtn = findViewById(R.id.radioBtnDifNormal1);
-//        RadioButton hardDifBtn = findViewById(R.id.radioBtnDifHard1);
-//
-//        difficultyButtonClicked(easyDifBtn);
-//        difficultyButtonClicked(normalDifBtn);
-//        difficultyButtonClicked(hardDifBtn);
-//    }
-//
-//    private void difficultyButtonClicked(RadioButton diffBtn) {
-//        diffBtn.setOnClickListener(view -> {
-//            switch (diffBtn.getText().toString()) {
-//                case "Easy":
-//                    Toast.makeText(AddNewGame.this, "you selected Difficulty Easy", Toast.LENGTH_SHORT).show();
-//                    addNewGameAchievements.setDifficultyLevel(0);
-//                    break;
-//                case "Normal":
-//                    Toast.makeText(AddNewGame.this, "you selected Difficulty Normal", Toast.LENGTH_SHORT).show();
-//                    addNewGameAchievements.setDifficultyLevel(1);
-//                    break;
-//                case "Hard":
-//                    Toast.makeText(AddNewGame.this, "you selected Difficulty Hard", Toast.LENGTH_SHORT).show();
-//                    addNewGameAchievements.setDifficultyLevel(2);
-//                    break;
-//
-//            }
-//
-//        });
-//    }
-
+    // create radio buttons for edit game
     private void resetDifficultyRadioButtons(int indexOfGame){
         RadioGroup difficultiesGroup = findViewById(R.id.radioGroupDifficulty);
         String[] difficultyLevels = getResources().getStringArray(R.array.difficultyLevels);
@@ -865,11 +830,5 @@ public class AddNewGame extends AppCompatActivity {
             }
         }
     }
-
-//    public static String getSavedDifficultyLevel(Context context){
-//        SharedPreferences preferences = context.getSharedPreferences("Difficulty Preferences", MODE_PRIVATE);
-//        String defaultDifficulty = context.getResources().getString(R.string.defaultLevel);
-//        return preferences.getString("Difficulty level", defaultDifficulty);
-//    }
 
 }
