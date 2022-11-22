@@ -76,8 +76,6 @@ public class Achievements {
     public void setAchievementsBounds(int min, int max, int players) {
         minScore = calculateMinMaxScore(min, players);
         maxScore = calculateMinMaxScore(max, players);
-//        min = calculateMinMaxScore(min, players);
-//        max = calculateMinMaxScore(max, players);
         this.intAchievements[0] = minScore;
         this.intAchievements[1] = minScore;
         int range = calculateLevelRange(minScore, maxScore);
@@ -89,21 +87,20 @@ public class Achievements {
 
     public void calculateLevelAchieved(int combinedScore){
         boolean calculatingLevel = true;
+        //If the combined score is less than the poor score, user has lowest level
         if (combinedScore < intAchievements[0]){
             this.levelAchieved = getAchievementLevel(0);
-        }
-        else if (combinedScore >= intAchievements[9]){
+        } else if (combinedScore >= intAchievements[9]){ //If combined score is greater than great score, user has highest level
             this.levelAchieved = getAchievementLevel(9);
-        }
-        else {
+        } else { //Else go through the array that stores each upper bound
             while (calculatingLevel) {
                 for (int i = 1; i < intAchievements.length - 1; i++) {
-                    if (i == (intAchievements.length - 1)) {
+                    if (i == (intAchievements.length - 1)) { //If array is at last position before greatest level, achievement level is before greatest level
                         if (combinedScore >= intAchievements[i] && combinedScore <= maxScore) {
                             this.levelAchieved = getAchievementLevel(i);
                             calculatingLevel = false;
                         }
-                    } else {
+                    } else { //If array is not at last position and value is greater than current level bound but less than i+1 level bound
                         if (combinedScore >= intAchievements[i] && combinedScore < intAchievements[i + 1]) {
                             this.levelAchieved = getAchievementLevel(i);
                             calculatingLevel = false;
@@ -117,8 +114,6 @@ public class Achievements {
     public void setAchievementsScores(int min, int max, int players){
         minScore = calculateMinMaxScore(min, players);
         maxScore = calculateMinMaxScore(max, players);
-//        min = calculateMinMaxScore(min, players);
-//        max = calculateMinMaxScore(max, players);
         this.intAchievements[0] = minScore;
         this.intAchievements[1] = minScore;
         for (int i = 2; i <= (maxScore - minScore + 1); i++){
