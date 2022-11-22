@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.ArrayList;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
+import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
 /*
 * activity class GameHistory
@@ -20,6 +21,7 @@ import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 public class GameHistory extends AppCompatActivity {
 
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
+    private SaveUsingGson toSaveUsingGsonAndSP = new SaveUsingGson();
     private int indexOfGame = 0;
     private ArrayAdapter<String> adapter;
 
@@ -48,6 +50,7 @@ public class GameHistory extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        toSaveUsingGsonAndSP.saveToSharedRefs(this);
     }
 
     //populates a list view with all the games played before in the given config
