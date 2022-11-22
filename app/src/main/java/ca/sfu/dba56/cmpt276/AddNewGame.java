@@ -387,6 +387,7 @@ public class AddNewGame extends AppCompatActivity {
                    createFields(numOfPlayers);
                 }else if(isPlayerValid){
                     removeViewsInLinearLayout();
+                    isScoresValid = false;
                     createFields(numOfPlayers);
                 }
             }
