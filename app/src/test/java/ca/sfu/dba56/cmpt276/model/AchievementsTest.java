@@ -1,5 +1,6 @@
 package ca.sfu.dba56.cmpt276.model;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,28 +12,24 @@ class AchievementsTest {
         Achievements newAchievements = new Achievements();
         //check standard
         assertEquals(8, newAchievements.getNumOfBoundedLevels());
-        //check out of bound exceptions
     }
 
     @Test
     void getAchievementLevel() {
         Achievements newAchievements = new Achievements();
-        //should through out of bound exceptions
-        //assertThrows();
-        //assertThrows();
-        assertAll("Correct levels of achievements",
-                () -> assertEquals("Beautiful Bananas",newAchievements.getAchievementLevel(0)),
-                () -> assertEquals("Wonderful Watermelons",newAchievements.getAchievementLevel(1)),
-                () -> assertEquals("Outstanding Oranges",newAchievements.getAchievementLevel(2)),
-                () -> assertEquals("Admirable Apricots",newAchievements.getAchievementLevel(3)),
-                () -> assertEquals("Good Grapefruits",newAchievements.getAchievementLevel(4)),
-                () -> assertEquals("Amazing Apples",newAchievements.getAchievementLevel(5)),
-                () -> assertEquals("Great Grapes",newAchievements.getAchievementLevel(6)),
-                () -> assertEquals("Better Blueberries",newAchievements.getAchievementLevel(7)),
-                () -> assertEquals("Super Strawberries",newAchievements.getAchievementLevel(8)),
-                () -> assertEquals("Perfect Peaches",newAchievements.getAchievementLevel(9))
-        );
+        assertEquals("Beautiful Bananas",newAchievements.getAchievementLevel(0));
+        assertEquals("Wonderful Watermelons",newAchievements.getAchievementLevel(1));
+        assertEquals("Outstanding Oranges",newAchievements.getAchievementLevel(2));
+        assertEquals("Admirable Apricots",newAchievements.getAchievementLevel(3));
+        assertEquals("Good Grapefruits",newAchievements.getAchievementLevel(4));
+        assertEquals("Amazing Apples",newAchievements.getAchievementLevel(5));
+        assertEquals("Great Grapes",newAchievements.getAchievementLevel(6));
+        assertEquals("Better Blueberries",newAchievements.getAchievementLevel(7));
+        assertEquals("Super Strawberries",newAchievements.getAchievementLevel(8));
+        assertEquals("Perfect Peaches",newAchievements.getAchievementLevel(9));
     }
+
+
 
     @Test
     void calculateMinMaxScore() {
