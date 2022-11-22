@@ -9,14 +9,14 @@ class AchievementsTest {
 
     @Test
     void getNumOfBoundedLevels() {
-        Achievements newAchievements = new Achievements();
+        Achievements newAchievements = new Achievements("");
         //check standard
         assertEquals(8, newAchievements.getNumOfBoundedLevels());
     }
 
     @Test
     void getAchievementLevel() {
-        Achievements newAchievements = new Achievements();
+        Achievements newAchievements = new Achievements("");
         assertEquals("Beautiful Bananas",newAchievements.getAchievementLevel(0));
         assertEquals("Wonderful Watermelons",newAchievements.getAchievementLevel(1));
         assertEquals("Outstanding Oranges",newAchievements.getAchievementLevel(2));
@@ -33,7 +33,7 @@ class AchievementsTest {
 
     @Test
     void calculateMinMaxScore() {
-        Achievements newAchievements = new Achievements();
+        Achievements newAchievements = new Achievements("");
         //check with set number of score and players
         int scoreTest = 100;
         int playersTest = 100;
@@ -42,7 +42,7 @@ class AchievementsTest {
 
     @Test
     void calculateLevelRange() {
-        Achievements newAchievements = new Achievements();
+        Achievements newAchievements = new Achievements("");
         int minTest = 10;
         int maxTest = 20;
         assertEquals((maxTest - minTest)/8, newAchievements.calculateLevelRange(minTest, maxTest));
@@ -53,7 +53,7 @@ class AchievementsTest {
 
     @Test
     void setAchievementsBoundsANDcalculateLevelAchieved() {
-        Achievements newAchievements = new Achievements();
+        Achievements newAchievements = new Achievements("");
         int finalMinTest = -1;
         int finalMaxTest = -2;
         int finalPlayerTest = -1;
@@ -80,7 +80,7 @@ class AchievementsTest {
 
     @Test
     void setAchievementsScoresANDcalculateScoreAchieved() {
-        Achievements newAchievements = new Achievements();
+        Achievements newAchievements = new Achievements("");
         int finalMinTest = -1;
         int finalMaxTest = -2;
         int finalPlayerTest = -1;
