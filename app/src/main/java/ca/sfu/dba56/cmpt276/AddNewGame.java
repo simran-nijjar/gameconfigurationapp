@@ -573,14 +573,8 @@ public class AddNewGame extends AppCompatActivity {
                 Game gamePlayed = new Game(numOfPlayers, combinedScores, scoreList, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(),
                         isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme(), addNewGameAchievements.getDifficultyLevel());
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
-//                Toast.makeText(this, "min " + gamePlayed.getAdjustedMin() + " max " + gamePlayed.getAdjustedMax() + " d: " + addNewGameAchievements.getDifficultyLevel(), Toast.LENGTH_LONG).show();
-                Toast.makeText(this, "a d " + addNewGameAchievements.getDifficultyLevel(), Toast.LENGTH_LONG).show();
-
-                Toast.makeText(this, "g d " + gamePlayed.getAdjustDifficulty(), Toast.LENGTH_LONG).show();
-                //Toast.makeText(this, "g d " + manager.getItemAtIndex(selectedGameInt).getGame(manager.getItemAtIndex(selectedGameInt).getSizeOfListOfConfigs()-1).getAdjustDifficulty(), Toast.LENGTH_LONG).show();
-                Toast.makeText(this, "title " + gamePlayed.getDifficultyLevelTitle(), Toast.LENGTH_LONG).show();
-//                // show alertdialog in add new game screen
-//                // pass achievement level to appropriate theme layout in add new game screen
+                // show alertdialog in add new game screen
+                // pass achievement level to appropriate theme layout in add new game screen
                 if (selectedTheme == 0) {
                     showFruitsResult(gamePlayed.getLevelAchieved(), true);
                 }
