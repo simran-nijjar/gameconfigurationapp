@@ -34,8 +34,12 @@ public class Game {
         this.theme = achievements.getAchievementTheme();
         this.difficulty = difficultyLevel;
         this.adjustDifficulty = setDifficultyLevelAdjuster(difficultyLevel);
+
+        //Get the expected poor and expected great score from game configuration
         minScore = manager.getMinPoorScoreFromConfig();
         maxScore = manager.getMaxBestScoreFromConfig();
+
+        //Adjust expected poor and great score depending on difficulty selected in radio button
         switch(difficultyLevel){
             case 0: //Easy level
                 minScore *= 0.75;
@@ -49,9 +53,6 @@ public class Game {
                 break;
         }
 
-//        adjustedMin = manager.getPoorDifficultyScore(getAdjustDifficulty());
-//        adjustedMax = manager.getPoorDifficultyScore(getAdjustDifficulty());
-//
         if (isCalculatingRangeLevels) {
             //Set the achievement level range bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
             achievements.setAchievementsBounds(minScore, maxScore, players);
@@ -78,7 +79,7 @@ public class Game {
                 minScore *= 0.75;
                 maxScore *= 0.75;
                 break;
-            case 1:
+            case 1: //Normal Level
                 break;
             case 2: //Hard level
                 minScore *= 1.25;
@@ -118,51 +119,25 @@ public class Game {
         }
         return NORMAL;
     }
-
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }
-
     public int getDifficulty() {
         return difficulty;
     }
-
+    //Sets the value to adjust the expected poor and great score to multiply with
     public double setDifficultyLevelAdjuster(int difficulty){
-        //adjustDifficulty = 1;
-//        if (difficulty == 0){
-//            adjustDifficulty *= 0.75;
-//        }
-//        if (difficulty == 1){
-//            adjustDifficulty *= 1;
-//        }
-//        if (difficulty == 2){
-//            adjustDifficulty *= 1.25;
-//        }
         int adj = 1;
         if (difficulty == 0){
             adj *= 0.75;
         }else if(difficulty == 2){
             adj *= 1.25;
         }
-
         return (double)adj;
-//
-//        if (this.difficulty == 0){
-//            return EASY;
-//        }
-//        if (this.difficulty == 2){
-//            return HARD;
-//        }
-//        return NORMAL;
 
     }
     public double getAdjustDifficulty(){ //Returns the value to adjust difficulty by
         return adjustDifficulty;
     }
-//    public int getAdjustedMin(){
-//        return adjustedMin;
-//    }
-//    public int getAdjustedMax(){
-//        return adjustedMax;
-//    }
+
 }
