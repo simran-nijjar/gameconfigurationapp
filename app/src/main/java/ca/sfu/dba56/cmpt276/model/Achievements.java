@@ -74,17 +74,17 @@ public class Achievements {
     //used in: ViewAchievements, AddNewGame
     //Gets the lower and upper bound for each level
     public void setAchievementsBounds(int min, int max, int players) {
-//        minScore = calculateMinMaxScore(min, players);
-//        maxScore = calculateMinMaxScore(max, players);
-        min = calculateMinMaxScore(min, players);
-        max = calculateMinMaxScore(max, players);
-        this.intAchievements[0] = min;
-        this.intAchievements[1] = max;
-        int range = calculateLevelRange(min, max);
+        minScore = calculateMinMaxScore(min, players);
+        maxScore = calculateMinMaxScore(max, players);
+//        min = calculateMinMaxScore(min, players);
+//        max = calculateMinMaxScore(max, players);
+        this.intAchievements[0] = minScore;
+        this.intAchievements[1] = minScore;
+        int range = calculateLevelRange(minScore, maxScore);
         for (int i = 2; i < intAchievements.length - 1; i++){
             this.intAchievements[i] = (this.intAchievements[i-1] + range + 1);
         }
-        this.intAchievements[9] = max + 1;
+        this.intAchievements[9] = maxScore + 1;
     }
 
     public void calculateLevelAchieved(int combinedScore){
@@ -115,17 +115,17 @@ public class Achievements {
     }
 
     public void setAchievementsScores(int min, int max, int players){
-//        minScore = calculateMinMaxScore(min, players);
-//        maxScore = calculateMinMaxScore(max, players);
-        min = calculateMinMaxScore(min, players);
-        max = calculateMinMaxScore(max, players);
-        this.intAchievements[0] = min;
-        this.intAchievements[1] = min;
-        for (int i = 2; i <= (max - min + 1); i++){
-            this.intAchievements[i] = min + i - 1;
+        minScore = calculateMinMaxScore(min, players);
+        maxScore = calculateMinMaxScore(max, players);
+//        min = calculateMinMaxScore(min, players);
+//        max = calculateMinMaxScore(max, players);
+        this.intAchievements[0] = minScore;
+        this.intAchievements[1] = minScore;
+        for (int i = 2; i <= (maxScore - minScore + 1); i++){
+            this.intAchievements[i] = minScore + i - 1;
         }
         if ((max - min + 1) != 8) {
-            this.intAchievements[max - min + 1] = max;
+            this.intAchievements[maxScore - minScore + 1] = maxScore;
         }
     }
 

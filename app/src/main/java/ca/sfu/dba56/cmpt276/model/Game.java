@@ -51,12 +51,13 @@ public class Game {
 
 //        adjustedMin = manager.getPoorDifficultyScore(getAdjustDifficulty());
 //        adjustedMax = manager.getPoorDifficultyScore(getAdjustDifficulty());
-
+//
         if (isCalculatingRangeLevels) {
             //Set the achievement level range bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
             achievements.setAchievementsBounds(minScore, maxScore, players);
             achievements.calculateLevelAchieved(scores);
-        } else { //Set the achievement level score bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
+        }
+        else { //Set the achievement level score bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
             achievements.setAchievementsScores(minScore, maxScore, players);
             achievements.calculateScoreAchieved(scores);
         }
@@ -69,15 +70,30 @@ public class Game {
         this.players = players;
         this.scores = combined_scores;
         this.difficulty = difficultyLevel;
-        setDifficultyLevelAdjuster(difficultyLevel);
+        this.adjustDifficulty = setDifficultyLevelAdjuster(difficultyLevel);
+        minScore = manager.getMinPoorScoreFromConfig();
+        maxScore = manager.getMaxBestScoreFromConfig();
+        switch(difficultyLevel){
+            case 0: //Easy level
+                minScore *= 0.75;
+                maxScore *= 0.75;
+                break;
+            case 1:
+                break;
+            case 2: //Hard level
+                minScore *= 1.25;
+                maxScore *= 1.25;
+                break;
+        }
 
         if (isCalculatingRangeLevels) {
             //Set the achievement level range bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
             achievements.setAchievementsBounds(minScore, maxScore, players);
-            achievements.calculateLevelAchieved(combined_scores);
-        } else { //Set the achievement level score bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
+            achievements.calculateLevelAchieved(scores);
+        }
+        else { //Set the achievement level score bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
             achievements.setAchievementsScores(minScore, maxScore, players);
-            achievements.calculateScoreAchieved(combined_scores);
+            achievements.calculateScoreAchieved(scores);
         }
         this.levelAchieved = achievements.getLevelAchieved();
         return this.levelAchieved;
@@ -122,14 +138,14 @@ public class Game {
 //        if (difficulty == 2){
 //            adjustDifficulty *= 1.25;
 //        }
-        double adj = 1.00;
-        if (this.difficulty == 0){
+        int adj = 1;
+        if (difficulty == 0){
             adj *= 0.75;
-        }else if(this.difficulty == 2){
+        }else if(difficulty == 2){
             adj *= 1.25;
         }
 
-        return adj;
+        return (double)adj;
 //
 //        if (this.difficulty == 0){
 //            return EASY;
