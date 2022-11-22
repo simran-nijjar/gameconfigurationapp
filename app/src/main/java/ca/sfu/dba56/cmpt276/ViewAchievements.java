@@ -346,39 +346,79 @@ public class ViewAchievements extends AppCompatActivity {
 
     // create radio buttons for the achievement view that will change the levels of achievement
     // according to selected difficulty level
+//    private void createDifficultyRadioButtons() {
+//        RadioGroup difficultiesGroup = findViewById(R.id.radioGroupDifficulty);
+//        String[] difficultyLevels = getResources().getStringArray(R.array.difficultyLevels);
+//
+//        for (int i = 0; i < difficultyLevels.length; i++){
+//            final int selectedDifficulty = i;
+//            final String difficulty = difficultyLevels[i];
+//
+//            RadioButton btn = new RadioButton(this);
+//            btn.setText(difficulty);
+//            btn.setOnClickListener(v -> {
+//                //Set difficulty for this game
+//              achievements.setDifficultyLevel(selectedDifficulty);
+//            });
+//            difficultiesGroup.addView(btn);
+//            //Set Normal as default difficulty
+//            if (difficulty.equals(getSavedDifficultyLevel(this))){
+//                btn.setChecked(true);
+//            }
+//
+//            difficultiesGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                    //Erase user input and make them re-enter
+//                    numPlayersFromUser.getText().clear();
+//                }
+//            });
+//        }
+//    }
+//
+//    public static String getSavedDifficultyLevel(Context context){
+//        SharedPreferences preferences = context.getSharedPreferences("Difficulty Preferences", MODE_PRIVATE);
+//        String defaultDifficulty = context.getResources().getString(R.string.defaultLevel);
+//        return preferences.getString("Difficulty level", defaultDifficulty);
+//    }
+
+
+    // create radio buttons for the achievement view that will change the levels of achievement
+    // according to selected difficulty level
     private void createDifficultyRadioButtons() {
-        RadioGroup difficultiesGroup = findViewById(R.id.radioGroupDifficulty);
-        String[] difficultyLevels = getResources().getStringArray(R.array.difficultyLevels);
+//        RadioGroup difficultiesGroup = findViewById(R.id.radioGroupDifficulty);
 
-        for (int i = 0; i < difficultyLevels.length; i++){
-            final int selectedDifficulty = i;
-            final String difficulty = difficultyLevels[i];
+        RadioButton easyDifBtn = findViewById(R.id.radioBtnDifEasy);
+        RadioButton normalDifBtn = findViewById(R.id.radioBtnDifNormal);
+        RadioButton hardDifBtn = findViewById(R.id.radioBtnDifHard);
 
-            RadioButton btn = new RadioButton(this);
-            btn.setText(difficulty);
-            btn.setOnClickListener(v -> {
-                //Set difficulty for this game
-              achievements.setDifficultyLevel(selectedDifficulty);
-            });
-            difficultiesGroup.addView(btn);
-            //Set Normal as default difficulty
-            if (difficulty.equals(getSavedDifficultyLevel(this))){
-                btn.setChecked(true);
-            }
-
-            difficultiesGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    //Erase user input and make them re-enter
-                    numPlayersFromUser.getText().clear();
-                }
-            });
-        }
+        difficultyButtonClicked(easyDifBtn);
+        difficultyButtonClicked(normalDifBtn);
+        difficultyButtonClicked(hardDifBtn);
     }
 
-    public static String getSavedDifficultyLevel(Context context){
-        SharedPreferences preferences = context.getSharedPreferences("Difficulty Preferences", MODE_PRIVATE);
-        String defaultDifficulty = context.getResources().getString(R.string.defaultLevel);
-        return preferences.getString("Difficulty level", defaultDifficulty);
+    private void difficultyButtonClicked(RadioButton diffBtn) {
+        diffBtn.setOnClickListener(view -> {
+            switch (diffBtn.getText().toString()) {
+                case "Easy":
+                    Toast.makeText(ViewAchievements.this, "you selected Difficulty Easy", Toast.LENGTH_SHORT).show();
+                    achievements.setDifficultyLevel(0);
+                    if(!numPlayersFromUser.getText().toString().isEmpty()){displayAchievementLevels();}
+                    break;
+                case "Normal":
+                    Toast.makeText(ViewAchievements.this, "you selected Difficulty Normal", Toast.LENGTH_SHORT).show();
+                    achievements.setDifficultyLevel(1);
+                    if(!numPlayersFromUser.getText().toString().isEmpty()){displayAchievementLevels();}
+
+                    break;
+                case "Hard":
+                    Toast.makeText(ViewAchievements.this, "you selected Difficulty Hard", Toast.LENGTH_SHORT).show();
+                    achievements.setDifficultyLevel(2);
+                    if(!numPlayersFromUser.getText().toString().isEmpty()){displayAchievementLevels();}
+                    break;
+
+            }
+
+        });
     }
 }
