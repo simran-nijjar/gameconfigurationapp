@@ -28,8 +28,6 @@ public class GameHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_history);
         // get selected game name from ViewConfiguration
-//        Bundle b = getIntent().getExtras();
-//        indexOfGame = b.getInt(getString(R.string.gameName2));
         indexOfGame = manager.getIndex();
         populateListView(manager, indexOfGame);
         registerClickCallBack();
@@ -40,16 +38,6 @@ public class GameHistory extends AppCompatActivity {
     public static Intent makeIntent(Context context){
         return new Intent(context, GameHistory.class);
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                this.finish();
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     public boolean onOptionsItemSelected(MenuItem item){
         Intent myIntent = new Intent(getApplicationContext(), ViewConfiguration.class);

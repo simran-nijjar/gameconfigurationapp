@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -52,6 +51,7 @@ public class ViewConfiguration extends AppCompatActivity {
         toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
     }
 
+
     private void UpdateUI() {
         currentConfigPosition = manager.getIndex();
         manager = ConfigurationsManager.getInstance();
@@ -77,7 +77,6 @@ public class ViewConfiguration extends AppCompatActivity {
         setUpDeleteButton(currentConfigPosition);
         setUpAddGameButton();
         expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMaxBestScoreFromConfig()));
-        //setUpAddGameButton();
         setUpViewAchievementsButton();
         //to save config manager
         toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);

@@ -17,6 +17,10 @@ import android.widget.TextView;
  */
 public class HelpActivity extends AppCompatActivity {
 
+    private final String FRUITS = "Fruits";
+    private final String FANTASY = "Fantasy";
+    private final String STAR_WARS = "Star Wars";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +30,11 @@ public class HelpActivity extends AppCompatActivity {
         setAchievementBtn();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     public static Intent makeIntent(Context context){
@@ -59,7 +68,7 @@ public class HelpActivity extends AppCompatActivity {
                 description_content.setText(R.string.description_content);
                 description_content.setVisibility(View.VISIBLE);
                 description_content.setMovementMethod(LinkMovementMethod.getInstance());
-            }else if (description_content.getVisibility() == View.VISIBLE){
+            } else if (description_content.getVisibility() == View.VISIBLE){
                 description_content.setText("");
                 description_content.setVisibility(View.GONE);
             }
@@ -72,11 +81,10 @@ public class HelpActivity extends AppCompatActivity {
         TextView achieve_content = findViewById(R.id.achieve_content);
         achieve_content.setVisibility(View.GONE);
         achieve.setOnClickListener(v -> {
-
-            if(achieve_content.getVisibility() == View.GONE) {
-                achieve_content.setText(R.string.achieve_content);
+            if (achieve_content.getVisibility() == View.GONE) {
+                achieve_content.setText(R.string.achievement_themes_plus_levels_content);
                 achieve_content.setVisibility(View.VISIBLE);
-            }else if (achieve_content.getVisibility() == View.VISIBLE){
+            } else if (achieve_content.getVisibility() == View.VISIBLE){
                 achieve_content.setText("");
                 achieve_content.setVisibility(View.GONE);
             }
