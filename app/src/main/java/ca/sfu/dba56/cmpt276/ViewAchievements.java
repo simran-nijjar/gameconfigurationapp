@@ -48,7 +48,7 @@ public class ViewAchievements extends AppCompatActivity {
     private TextView displayAchievements;
     private int minScore;
     private int maxScore;
-    private final int MAX_PLAYERS = 100000000;
+    private final int MAX_PLAYERS = 10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,14 +235,14 @@ public class ViewAchievements extends AppCompatActivity {
         //Worst range level depends on selected theme in radio button
         if (theme.equals(FANTASY)){
             return getString(R.string.worst_game_level_range_boundary_fantasy) //Add worse range than expected lowest range achievement level
-                    + minScore + "\n\n";
+                    + minScore + "\n";
         }
         if (theme.equals(STAR_WARS)){
             return  getString(R.string.worst_game_level_range_boundary_starwars) //Add worse range than expected lowest range achievement level
-                    + minScore + "\n\n";
+                    + minScore + "\n";
         }
         return getString(R.string.worst_game_level_range_boundary_fruits) //Add worse range than expected lowest range achievement level
-                + minScore + "\n\n";
+                + minScore + "\n";
     }
 
     private String getBestRangeOfTheme(String theme, int newStartRange){
@@ -263,14 +263,14 @@ public class ViewAchievements extends AppCompatActivity {
         //Worst score level depends on selected theme in radio button
         if (theme.equals(FANTASY)){
             return getString(R.string.worst_game_level_score_boundary_fantasy)
-                    + minScore +"\n\n";
+                    + minScore +"\n";
         }
         if (theme.equals(STAR_WARS)){
             return getString(R.string.worst_game_level_score_boundary_starwars)
-                    + minScore +"\n\n";
+                    + minScore +"\n";
         }
         return getString(R.string.worst_game_level_score_boundary_fruits)
-                + minScore +"\n\n";
+                + minScore +"\n";
     }
 
     private String getBestScoreOfTheme(String theme){
@@ -297,16 +297,16 @@ public class ViewAchievements extends AppCompatActivity {
                 achievementLevels += " Range: [";
                 if (i == 1) {
                     achievementLevels += minScore;
-                    achievementLevels += ", " + (minScore + range) + "]\n\n";
+                    achievementLevels += ", " + (minScore + range) + "]\n";
                     newStartRange = (minScore + range);
                 } else if (newStartRange + range > Math.abs(maxScore)) {
-                    achievementLevels += "" + (newStartRange + 1) + ", " + (maxScore) + "]\n\n";
+                    achievementLevels += "" + (newStartRange + 1) + ", " + (maxScore) + "]\n";
                     newStartRange = maxScore;
                     lessThanEightLevels = true;
                 } else if (i == achievements.getNumOfBoundedLevels()) {
-                    achievementLevels += "" + (newStartRange) + ", " + (maxScore) + "]\n\n";
+                    achievementLevels += "" + (newStartRange) + ", " + (maxScore) + "]\n";
                 } else {
-                    achievementLevels += "" + (newStartRange + 1) + ", " + (newStartRange + 1 + range) + "]\n\n";
+                    achievementLevels += "" + (newStartRange + 1) + ", " + (newStartRange + 1 + range) + "]\n";
                     newStartRange += 1 + range;
                 }
             } else{
@@ -343,45 +343,6 @@ public class ViewAchievements extends AppCompatActivity {
         minScore = achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMinPoorScoreFromConfig(), numPlayers);
         maxScore = achievements.calculateMinMaxScore(manager.getItemAtIndex(indexOfGame).getMaxBestScoreFromConfig(), numPlayers);
     }
-
-    // create radio buttons for the achievement view that will change the levels of achievement
-    // according to selected difficulty level
-//    private void createDifficultyRadioButtons() {
-//        RadioGroup difficultiesGroup = findViewById(R.id.radioGroupDifficulty);
-//        String[] difficultyLevels = getResources().getStringArray(R.array.difficultyLevels);
-//
-//        for (int i = 0; i < difficultyLevels.length; i++){
-//            final int selectedDifficulty = i;
-//            final String difficulty = difficultyLevels[i];
-//
-//            RadioButton btn = new RadioButton(this);
-//            btn.setText(difficulty);
-//            btn.setOnClickListener(v -> {
-//                //Set difficulty for this game
-//              achievements.setDifficultyLevel(selectedDifficulty);
-//            });
-//            difficultiesGroup.addView(btn);
-//            //Set Normal as default difficulty
-//            if (difficulty.equals(getSavedDifficultyLevel(this))){
-//                btn.setChecked(true);
-//            }
-//
-//            difficultiesGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                    //Erase user input and make them re-enter
-//                    numPlayersFromUser.getText().clear();
-//                }
-//            });
-//        }
-//    }
-//
-//    public static String getSavedDifficultyLevel(Context context){
-//        SharedPreferences preferences = context.getSharedPreferences("Difficulty Preferences", MODE_PRIVATE);
-//        String defaultDifficulty = context.getResources().getString(R.string.defaultLevel);
-//        return preferences.getString("Difficulty level", defaultDifficulty);
-//    }
-
 
     // create radio buttons for the achievement view that will change the levels of achievement
     // according to selected difficulty level

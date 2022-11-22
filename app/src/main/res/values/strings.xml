@@ -120,7 +120,7 @@
     <string name="best_level_score_boundary_starwars"><![CDATA[\Leia Organa : Score >= \]]></string>
     <string name="best_level_range_boundary_starwars"><![CDATA[\Leia Organa : Range >= \]]></string>
     <string name="score_part1">\ Score : [\</string>
-    <string name="score_part2"> ]\n\n</string>
+    <string name="score_part2"> ]\n</string>
     <string name="display_string_option">"%1s "</string>
     <string name="select_theme_prompt">Select a theme</string>
     <string name="achievement_title">Your achievement is...</string>
