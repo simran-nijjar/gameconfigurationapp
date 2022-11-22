@@ -45,6 +45,6 @@ public class Configuration {
     public List<Integer> getListOfValues(int i){return listOfGames.get(i).getListOfValues();}
     public Game getGame(int i){return listOfGames.get(i);}
     public String getTheme(int i){return listOfGames.get(i).getTheme();}
-    public int getPoorDifficultyScore(int difficultyLevel){return minPoorScore*difficultyLevel;}
-    public int getGreatDifficultyScore(int difficultyLevel){return maxBestScore*difficultyLevel;}
+    public int getPoorDifficultyScore(int difficultyLevel){return (minPoorScore*difficultyLevel);}
+    public int getGreatDifficultyScore(int difficultyLevel){return (maxBestScore*difficultyLevel);}
 }

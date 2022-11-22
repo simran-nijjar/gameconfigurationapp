@@ -20,7 +20,9 @@ public class Game {
     private List<Integer> listOfValues;
     private String theme;
     private int difficulty;
-    private int adjustDifficulty = 1;
+    private double adjustDifficulty;
+    private int minScore;
+    private int maxScore;
 
     public Game(int players, int scores, List<Integer> listOfValues, Configuration manager,
                 String dateGamePlayed, boolean isCalculatingRangeLevels, String theme, int difficultyLevel) {
@@ -31,14 +33,31 @@ public class Game {
         this.listOfValues = listOfValues;
         this.theme = achievements.getAchievementTheme();
         this.difficulty = difficultyLevel;
-        setDifficultyLevelAdjuster();
+        this.adjustDifficulty = setDifficultyLevelAdjuster(difficultyLevel);
+        minScore = manager.getMinPoorScoreFromConfig();
+        maxScore = manager.getMaxBestScoreFromConfig();
+        switch(difficultyLevel){
+            case 0: //Easy level
+                minScore *= 0.75;
+                maxScore *= 0.75;
+                break;
+            case 1:
+                break;
+            case 2: //Hard level
+                minScore *= 1.25;
+                maxScore *= 1.25;
+                break;
+        }
+
+//        adjustedMin = manager.getPoorDifficultyScore(getAdjustDifficulty());
+//        adjustedMax = manager.getPoorDifficultyScore(getAdjustDifficulty());
 
         if (isCalculatingRangeLevels) {
             //Set the achievement level range bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
-            achievements.setAchievementsBounds(manager.getPoorDifficultyScore(getAdjustDifficulty()), manager.getGreatDifficultyScore(getAdjustDifficulty()), players);
+            achievements.setAchievementsBounds(minScore, maxScore, players);
             achievements.calculateLevelAchieved(scores);
         } else { //Set the achievement level score bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
-            achievements.setAchievementsScores(manager.getPoorDifficultyScore(getAdjustDifficulty()), manager.getGreatDifficultyScore(getAdjustDifficulty()), players);
+            achievements.setAchievementsScores(minScore, maxScore, players);
             achievements.calculateScoreAchieved(scores);
         }
         this.levelAchieved = achievements.getLevelAchieved();
@@ -50,14 +69,14 @@ public class Game {
         this.players = players;
         this.scores = combined_scores;
         this.difficulty = difficultyLevel;
-        setDifficultyLevelAdjuster();
+        setDifficultyLevelAdjuster(difficultyLevel);
 
         if (isCalculatingRangeLevels) {
             //Set the achievement level range bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
-            achievements.setAchievementsBounds(manager.getPoorDifficultyScore(getAdjustDifficulty()), manager.getGreatDifficultyScore(getAdjustDifficulty()), players);
+            achievements.setAchievementsBounds(minScore, maxScore, players);
             achievements.calculateLevelAchieved(combined_scores);
         } else { //Set the achievement level score bounds with the expected poor * adjustment value for difficulty and expected great score for difficulty
-            achievements.setAchievementsScores(manager.getPoorDifficultyScore(getAdjustDifficulty()), manager.getGreatDifficultyScore(getAdjustDifficulty()), players);
+            achievements.setAchievementsScores(minScore, maxScore, players);
             achievements.calculateScoreAchieved(combined_scores);
         }
         this.levelAchieved = achievements.getLevelAchieved();
@@ -92,18 +111,42 @@ public class Game {
         return difficulty;
     }
 
-    public void setDifficultyLevelAdjuster(){
+    public double setDifficultyLevelAdjuster(int difficulty){
+        //adjustDifficulty = 1;
+//        if (difficulty == 0){
+//            adjustDifficulty *= 0.75;
+//        }
+//        if (difficulty == 1){
+//            adjustDifficulty *= 1;
+//        }
+//        if (difficulty == 2){
+//            adjustDifficulty *= 1.25;
+//        }
+        double adj = 1.00;
         if (this.difficulty == 0){
-            this.adjustDifficulty *= 0.75;
+            adj *= 0.75;
+        }else if(this.difficulty == 2){
+            adj *= 1.25;
         }
-        if (this.difficulty == 1){
-            this.adjustDifficulty *= 1;
-        }
-        if (this.difficulty == 2){
-            this.adjustDifficulty *= 1.25;
-        }
+
+        return adj;
+//
+//        if (this.difficulty == 0){
+//            return EASY;
+//        }
+//        if (this.difficulty == 2){
+//            return HARD;
+//        }
+//        return NORMAL;
+
     }
-    public int getAdjustDifficulty(){ //Returns the value to adjust difficulty by
+    public double getAdjustDifficulty(){ //Returns the value to adjust difficulty by
         return adjustDifficulty;
     }
+//    public int getAdjustedMin(){
+//        return adjustedMin;
+//    }
+//    public int getAdjustedMax(){
+//        return adjustedMax;
+//    }
 }

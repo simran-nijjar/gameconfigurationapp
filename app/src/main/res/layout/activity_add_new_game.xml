@@ -60,7 +60,27 @@
                     android:id="@+id/radioGroupDifficulty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"/>
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioBtnDifEasy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Easy" />
+
+                    <RadioButton
+                        android:id="@+id/radioBtnDifNormal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Normal" />
+
+                    <RadioButton
+                        android:id="@+id/radioBtnDifHard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Hard" />
+                </RadioGroup>
+
 
             </LinearLayout>
 
