@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/fantasyAlertImage"
-        android:layout_width="308dp"
-        android:layout_height="269dp"
+        android:layout_width="319dp"
+        android:layout_height="232dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,8 +28,8 @@
 
     <ImageView
         android:id="@+id/celebrationAlertsImage"
-        android:layout_width="432dp"
-        android:layout_height="296dp"
+        android:layout_width="442dp"
+        android:layout_height="307dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

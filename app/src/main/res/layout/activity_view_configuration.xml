@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.257"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16" />
+        app:layout_constraintVertical_bias="0.04000002" />
 
     <TextView
         android:id="@+id/txtGreatScoreConfigView"
@@ -69,11 +69,12 @@
         android:id="@+id/btnHistoryConfig"
         android:layout_width="320dp"
         android:layout_height="55dp"
+        android:layout_marginTop="72dp"
         android:text="View Games History"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="304dp" />
+        app:layout_constraintTop_toBottomOf="@+id/txtGreatScoreConfigView" />
 
     <Button
         android:id="@+id/btnDeleteConfig"
@@ -89,12 +90,11 @@
         android:layout_width="195dp"
         android:layout_height="55dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="35dp"
         android:text="Add New Game"
         app:layout_constraintEnd_toEndOf="@+id/btnHistoryConfig"
         app:layout_constraintHorizontal_bias="0.02"
         app:layout_constraintStart_toEndOf="@+id/btnEditConfig"
-        app:layout_constraintTop_toBottomOf="@+id/btnHistoryConfig" />
+        app:layout_constraintTop_toTopOf="@+id/btnEditConfig" />
 
     <Button
         android:id="@+id/viewAchievementsBtn"
