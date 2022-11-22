@@ -69,12 +69,11 @@
         android:id="@+id/btnHistoryConfig"
         android:layout_width="320dp"
         android:layout_height="55dp"
-        android:layout_marginTop="72dp"
         android:text="View Games History"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtGreatScoreConfigView" />
+        tools:layout_editor_absoluteY="304dp" />
 
     <Button
         android:id="@+id/btnDeleteConfig"
