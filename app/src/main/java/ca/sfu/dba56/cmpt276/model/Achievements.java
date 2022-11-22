@@ -34,15 +34,20 @@ public class Achievements {
     }
 
     public int calculateMinMaxScore(int score, int numPlayers){
+        if(numPlayers <= 0){ throw new IllegalArgumentException("number of players should not be negative and cannot be zero");}
         return score * numPlayers;
     }
 
     public int calculateLevelRange(int min, int max){
+        if(min > max){
+            throw new IllegalArgumentException("min is greater than max");
+        }
         int range = ((max - min)/8);
         return range;
     }
 
     public void setAchievementsBounds(int min, int max, int players) {
+        if(players <= 0){ throw new IllegalArgumentException("players should not be negative and cannot be zero");}
         minScore = calculateMinMaxScore(min, players);
         maxScore = calculateMinMaxScore(max, players);
         this.intAchievements[0] = minScore;
@@ -82,6 +87,7 @@ public class Achievements {
     }
 
     public void setAchievementsScores(int min, int max, int players){
+        if(players <= 0){ throw new IllegalArgumentException("players should not be negative and cannot be zero");}
         minScore = calculateMinMaxScore(min, players);
         maxScore = calculateMinMaxScore(max, players);
         this.intAchievements[0] = minScore;
