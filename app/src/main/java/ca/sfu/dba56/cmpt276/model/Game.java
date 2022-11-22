@@ -136,8 +136,5 @@ public class Game {
         return (double)adj;
 
     }
-    public double getAdjustDifficulty(){ //Returns the value to adjust difficulty by
-        return adjustDifficulty;
-    }
 
 }
