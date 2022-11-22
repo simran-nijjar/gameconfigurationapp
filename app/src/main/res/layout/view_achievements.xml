@@ -3,44 +3,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/appbackground">
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/dropdownThemeAchievements"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dialog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/listOfAchievements"
         android:layout_width="318dp"
         android:layout_height="514dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:text=""
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="@+id/userInputPlayers"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/userInputPlayers"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtEnterPlayers"
         app:layout_constraintTop_toBottomOf="@+id/userInputPlayers" />
 
     <TextView
         android:id="@+id/txtEnterPlayers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="64dp"
         android:text="Enter players: "
         android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.127"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/dropdownThemeAchievements"
+        app:layout_constraintHorizontal_bias="0.152"
+        app:layout_constraintStart_toStartOf="@+id/dropdownThemeAchievements"
+        app:layout_constraintTop_toBottomOf="@+id/dropdownThemeAchievements" />
 
     <EditText
         android:id="@+id/userInputPlayers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="118dp"
+        android:layout_marginStart="28dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintEnd_toEndOf="@+id/dropdownThemeAchievements"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/txtEnterPlayers"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/txtEnterPlayers" />
 
     <TextView
         android:id="@+id/emptyAchievementsList"
@@ -50,9 +59,49 @@
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/userInputPlayers"
-        app:layout_constraintHorizontal_bias="0.826"
-        app:layout_constraintStart_toStartOf="@+id/userInputPlayers"
+        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintStart_toStartOf="@+id/txtEnterPlayers"
         app:layout_constraintTop_toBottomOf="@+id/txtEnterPlayers"
         app:layout_constraintVertical_bias="0.355" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDifficultyLevel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewDifficultyLevel"
+        app:layout_constraintTop_toTopOf="@+id/textViewDifficultyLevel">
+
+        <RadioButton
+            android:id="@+id/radioBtnDifEasy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Easy" />
+
+        <RadioButton
+            android:id="@+id/radioBtnDifNormal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Normal" />
+
+        <RadioButton
+            android:id="@+id/radioBtnDifHard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hard" />
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/textViewDifficultyLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Difficulty"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dropdownThemeAchievements" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,7 +27,8 @@ public class Configuration {
     public void add(Game game){listOfGames.add(game);}
     // get a string containing info for 1 game for the history
     public String get(int i){
-        return listOfGames.get(i).getDateGamePlayed() + "  Players: " + listOfGames.get(i).getPlayers() + " Combined Score: " + listOfGames.get(i).getScores() + " Score List: " + listOfGames.get(i).getListOfValues() + " " + listOfGames.get(i).getLevelAchieved();
+        return listOfGames.get(i).getDateGamePlayed() + "  Players: " + listOfGames.get(i).getPlayers() + " Combined Score: " + listOfGames.get(i).getScores() +
+                " Difficulty Level: " + listOfGames.get(i).getDifficultyLevelTitle() + " Level Achieved: " + listOfGames.get(i).getLevelAchieved();
     }
     //setters
     public void setGameNameInConfig(String newName){gameName = newName;}
@@ -43,5 +44,7 @@ public class Configuration {
     public int getPlayer(int i){return listOfGames.get(i).getPlayers();}
     public List<Integer> getListOfValues(int i){return listOfGames.get(i).getListOfValues();}
     public Game getGame(int i){return listOfGames.get(i);}
-
+    public String getTheme(int i){return listOfGames.get(i).getTheme();}
+    public int getPoorDifficultyScore(int difficultyLevel){return (minPoorScore*difficultyLevel);}
+    public int getGreatDifficultyScore(int difficultyLevel){return (maxBestScore*difficultyLevel);}
 }

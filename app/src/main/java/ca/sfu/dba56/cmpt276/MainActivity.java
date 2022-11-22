@@ -2,16 +2,14 @@ package ca.sfu.dba56.cmpt276;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
@@ -59,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         toSaveUsingGsonAndSP.saveToSharedRefs(this);
     }
 
+    public static Intent makeIntent(Context context){
+        return new Intent(context, MainActivity.class);
+    }
+
     private void setUpHelpButton() {
         Button helpBtn = (Button)findViewById(R.id.helpBtn);
         helpBtn.setOnClickListener(v -> {
@@ -68,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void UpdateUI() {
-        ConfigurationsManager manager = ConfigurationsManager.getInstance();
         // image made from miro
         // https://miro.com
         ImageView image = findViewById(R.id.image_main);
