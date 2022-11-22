@@ -17,8 +17,8 @@
 
     <TextView
         android:id="@+id/listOfAchievements"
-        android:layout_width="318dp"
-        android:layout_height="514dp"
+        android:layout_width="267dp"
+        android:layout_height="343dp"
         android:layout_marginTop="28dp"
         android:text=""
         android:textColor="#000000"
@@ -41,7 +41,7 @@
 
     <EditText
         android:id="@+id/userInputPlayers"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:ems="10"
@@ -59,10 +59,10 @@
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/userInputPlayers"
-        app:layout_constraintHorizontal_bias="0.589"
-        app:layout_constraintStart_toStartOf="@+id/txtEnterPlayers"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtEnterPlayers"
-        app:layout_constraintVertical_bias="0.355" />
+        app:layout_constraintVertical_bias="0.349" />
 
     <RadioGroup
         android:layout_width="wrap_content"

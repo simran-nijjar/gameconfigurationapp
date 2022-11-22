@@ -41,7 +41,7 @@
 
     <EditText
         android:id="@+id/inputName"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
@@ -64,7 +64,7 @@
 
     <EditText
         android:id="@+id/inputLowScore"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:ems="10"
@@ -75,7 +75,7 @@
 
     <EditText
         android:id="@+id/inputHighScore"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:ems="10"
