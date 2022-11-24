@@ -10,7 +10,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".AchievementCelebration">
+        tools:context=".AchievementCelebration"
+        tools:layout_editor_absoluteX="3dp"
+        tools:layout_editor_absoluteY="8dp">
 
         <LinearLayout
             android:id="@+id/mid"
@@ -32,8 +34,8 @@
             android:id="@+id/yourAchievementIsTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="116dp"
+            android:layout_marginTop="40dp"
             android:text="Your achievement is..."
             android:textColor="#000000"
             android:textSize="20sp"

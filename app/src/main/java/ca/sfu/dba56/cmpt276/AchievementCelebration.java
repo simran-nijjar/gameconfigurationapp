@@ -25,6 +25,9 @@ import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
 public class AchievementCelebration extends AppCompatActivity {
+    private final String FRUITS = "Fruits";
+    private final String FANTASY = "Fantasy";
+    private final String STAR_WARS = "Star Wars";
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private String gameTheme;
     private int currentConfigPosition;
@@ -38,6 +41,7 @@ public class AchievementCelebration extends AppCompatActivity {
     private ImageView achievementAnim;
     private TextView userLevelAchieved;
     private int countChangedTheme = 0;
+    private int indexLevelAchieved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class AchievementCelebration extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         gameTheme = getAchievementTheme(this);
-        Toast.makeText(this, "theme " + gameTheme, Toast.LENGTH_SHORT).show();
+        Toast.makeText(AchievementCelebration.this, "theme " + gameTheme, Toast.LENGTH_SHORT).show();
         achievements = new Achievements(getAchievementTheme(this));
         currentConfigPosition = manager.getIndex();
 
@@ -59,22 +63,25 @@ public class AchievementCelebration extends AppCompatActivity {
         }
         //Get the level user achieved when editing or adding new game
         levelAchieved = manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getLevelAchieved();
+        //Get the index position of level achieved
+        indexLevelAchieved = manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getIndexGameLevelAchieved();
         displayAchievementThemeLayout();
         storeSelectedAchievementTheme();
     }
 
     //Display the matching theme layout for achievement celebration
     private void displayAchievementThemeLayout(){
-        if (selectedTheme == 0){
-            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
+        if (gameTheme.equals(FRUITS)){
             setContentView(R.layout.fruitsalertdialog);
             showFruitsResult();
         }
-        else if (selectedTheme == 1){
+        else if (gameTheme.equals(FANTASY)){
             setContentView(R.layout.fantasyalertdialog);
+            showFantasyResult();
         }
-        else if (selectedTheme == 2){
+        else if (gameTheme.equals(STAR_WARS)){
             setContentView(R.layout.starwarsalertdialog);
+            showStarWarsResult();
         }
     }
 
@@ -104,6 +111,8 @@ public class AchievementCelebration extends AppCompatActivity {
                         final String achievementTheme = themesArray[i];
                         saveAchievementTheme(achievementTheme);
                         achievements.setAchievementTheme(achievementTheme);
+                        //Set the level achieved for the new theme selected at the same index position of previously selected level
+                        manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(achievements.getAchievementLevel(indexLevelAchieved));
                         AchievementCelebration.this.recreate();
                     }
                 }
@@ -117,13 +126,13 @@ public class AchievementCelebration extends AppCompatActivity {
     }
 
     private void playSound(){
-        if(selectedTheme == 0){
+        if(gameTheme.equals(FRUITS)){
             mediaPlayer = MediaPlayer.create(this, R.raw.fruitslice);
         }
-        if(selectedTheme == 1){
+        if(gameTheme.equals(FANTASY)){
             mediaPlayer = MediaPlayer.create(this, R.raw.fairysound);
         }
-        if(selectedTheme == 2){
+        if(gameTheme.equals(STAR_WARS)){
             mediaPlayer = MediaPlayer.create(this, R.raw.lightsaber);
         }
         mediaPlayer.start();
@@ -131,6 +140,68 @@ public class AchievementCelebration extends AppCompatActivity {
 
     // pop up a window to show achievement level for fruits theme
     private void showFruitsResult(){
+        //Play sound
+        playSound();
+        //Display the level user achieved
+        userLevelAchieved = findViewById(R.id.levelAchievedTxt);
+        userLevelAchieved.setText(levelAchieved);
+
+        //Display the animation
+        fadeOut = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+        ImageView foxCelebrationAnimation = findViewById(R.id.celebrationAlertsImage);
+        foxCelebrationAnimation.startAnimation(fadeOut);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                //Don't have animation code here, animation will not end properly
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                //End the animation
+                foxCelebrationAnimation.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                //Do nothing
+            }
+        });
+    }
+
+    // pop up a window to show achievement level for fantasy theme
+    private void showFantasyResult(){
+        //Play sound
+        playSound();
+        //Display the level user achieved
+        userLevelAchieved = findViewById(R.id.levelAchievedTxt);
+        userLevelAchieved.setText(levelAchieved);
+
+        //Display the animation
+        fadeOut = AnimationUtils.loadAnimation(this,R.anim.fadeout);
+        ImageView foxCelebrationAnimation = findViewById(R.id.celebrationAlertsImage);
+        foxCelebrationAnimation.startAnimation(fadeOut);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                //Don't have animation code here, animation will not end properly
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                //End the animation
+                foxCelebrationAnimation.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                //Do nothing
+            }
+        });
+    }
+
+    // pop up a window to show achievement level for starwars theme
+    private void showStarWarsResult(){
         //Play sound
         playSound();
         //Display the level user achieved

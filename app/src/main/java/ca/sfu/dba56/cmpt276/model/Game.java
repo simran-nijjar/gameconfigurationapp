@@ -134,7 +134,6 @@ public class Game {
             adj *= 1.25;
         }
         return (double)adj;
-
     }
-
+    public int getIndexGameLevelAchieved(){return achievements.getIndexLevelAchieved();}
 }

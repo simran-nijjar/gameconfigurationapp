@@ -6,8 +6,6 @@ package ca.sfu.dba56.cmpt276.model;
 * Keeps/populates the array of achievements names and allows to retrieve achievement names
  */
 
-import ca.sfu.dba56.cmpt276.R;
-
 public class Achievements {
 
     private final String FANTASY = "Fantasy";
@@ -23,6 +21,7 @@ public class Achievements {
     //difLevels: 0 - Easy; 1 - Normal; 2 - Hard
     private int currentDifLevel = 1;
     private String theme;
+    private int indexLevelAchieved; //Index position of level achieved
 
     public Achievements(String theme){
         //Three different arrays for three themes
@@ -95,19 +94,23 @@ public class Achievements {
         //If the combined score is less than the poor score, user has lowest level
         if (combinedScore < intAchievements[0]){
             this.levelAchieved = getAchievementLevel(0);
+            this.indexLevelAchieved = 0;
         } else if (combinedScore >= intAchievements[9]){ //If combined score is greater than great score, user has highest level
             this.levelAchieved = getAchievementLevel(9);
+            this.indexLevelAchieved = 9;
         } else { //Else go through the array that stores each upper bound
             while (calculatingLevel) {
                 for (int i = 1; i < intAchievements.length - 1; i++) {
                     if (i == (intAchievements.length - 1)) { //If array is at last position before greatest level, achievement level is before greatest level
                         if (combinedScore >= intAchievements[i] && combinedScore <= maxScore) {
                             this.levelAchieved = getAchievementLevel(i);
+                            this.indexLevelAchieved = i;
                             calculatingLevel = false;
                         }
                     } else { //If array is not at last position and value is greater than current level bound but less than i+1 level bound
                         if (combinedScore >= intAchievements[i] && combinedScore < intAchievements[i + 1]) {
                             this.levelAchieved = getAchievementLevel(i);
+                            this.indexLevelAchieved = i;
                             calculatingLevel = false;
                         }
                     }
@@ -152,4 +155,5 @@ public class Achievements {
     public int getDifficultyLevel(){
         return this.currentDifLevel;
     }
+    public int getIndexLevelAchieved(){return indexLevelAchieved;}
 }
