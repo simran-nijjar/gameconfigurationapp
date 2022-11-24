@@ -38,9 +38,7 @@ public class AchievementCelebration extends AppCompatActivity {
     private boolean isNewGame;
     private MediaPlayer mediaPlayer;
     private Animation fadeOut;
-    private ImageView achievementAnim;
     private TextView userLevelAchieved;
-    private int countChangedTheme = 0;
     private int indexLevelAchieved;
 
     @Override
@@ -167,6 +165,18 @@ public class AchievementCelebration extends AppCompatActivity {
                 //Do nothing
             }
         });
+        //Set up button to leave achievement celebration page
+        Button okBtn = findViewById(R.id.appleOkBtn);
+        okBtn.setOnClickListener(v -> {
+            //If adding a new game, go to game config
+            Intent refresh;
+            if (isNewGame){
+                refresh = new Intent(AchievementCelebration.this, ViewConfiguration.class);
+            } else{ //If editing a game, go to history
+                refresh = new Intent(AchievementCelebration.this, GameHistory.class);
+            }
+            startActivity(refresh);
+        });
     }
 
     // pop up a window to show achievement level for fantasy theme
@@ -198,6 +208,18 @@ public class AchievementCelebration extends AppCompatActivity {
                 //Do nothing
             }
         });
+        //Set up button to leave achievement celebration page
+        Button okBtn = findViewById(R.id.starOkBtn);
+        okBtn.setOnClickListener(v -> {
+            //If adding a new game, go to game config
+            Intent refresh;
+            if (isNewGame){
+                refresh = new Intent(AchievementCelebration.this, ViewConfiguration.class);
+            } else{ //If editing a game, go to history
+                refresh = new Intent(AchievementCelebration.this, GameHistory.class);
+            }
+            startActivity(refresh);
+        });
     }
 
     // pop up a window to show achievement level for starwars theme
@@ -228,6 +250,18 @@ public class AchievementCelebration extends AppCompatActivity {
             public void onAnimationRepeat(Animation animation) {
                 //Do nothing
             }
+        });
+        //Set up button to leave achievement celebration page
+        Button okBtn = findViewById(R.id.yodaOkBtn);
+        okBtn.setOnClickListener(v -> {
+            //If adding a new game, go to game config
+            Intent refresh;
+            if (isNewGame){
+                refresh = new Intent(AchievementCelebration.this, ViewConfiguration.class);
+            } else{ //If editing a game, go to history
+                refresh = new Intent(AchievementCelebration.this, GameHistory.class);
+            }
+            startActivity(refresh);
         });
     }
 

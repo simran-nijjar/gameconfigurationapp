@@ -538,29 +538,14 @@ public class AddNewGame extends AppCompatActivity {
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setAchievementForEditGame(numOfPlayers, combinedScores, manager.getItemAtIndex(currentConfigPosition), isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme(), addNewGameAchievements.getDifficultyLevel()));
                     // reset theme
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setTheme(addNewGameAchievements.getAchievementTheme());
-                    // show alertdialog in edit game screen
-                    // pass achievement level to showResultForEditGame in edit game screen
-//                    showResultForEditGame(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getLevelAchieved());
-                }else {
+                    // pass achievement level to appropriate theme layout to be displayed
+                    goToAchievementCelebrationPage();
+                } else {
                     Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-
-    // pop up a window to show achievement level in edit game screen
-//    private void showResultForEditGame(String achievements){
-//        if (selectedTheme == 0){
-//            showFruitsResult(achievements, false);
-//        }
-//        if (selectedTheme == 1){
-//            showFantasyResult(achievements, false);
-//        }
-//        if (selectedTheme == 2){
-//            showStarWarsResult(achievements, false);
-//        }
-//
-//    }
 
     // save input to the list in add new game screen
     private void saveInput(int selectedGameInt) {
@@ -571,20 +556,10 @@ public class AddNewGame extends AppCompatActivity {
                 Game gamePlayed = new Game(numOfPlayers, combinedScores, scoreList, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(),
                         isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme(), addNewGameAchievements.getDifficultyLevel());
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
-                // show alertdialog in add new game screen
                 // pass achievement level to appropriate theme layout in add new game screen
                 manager.setIndex(selectedGame);
                 goToAchievementCelebrationPage();
-//                if (selectedTheme == 0) {
-//                    showFruitsResult(gamePlayed.getLevelAchieved(), true);
-//                }
-//                if (selectedTheme == 1){
-//                    showFantasyResult(gamePlayed.getLevelAchieved(), true);
-//                }
-//                if (selectedTheme == 2){
-//                    showStarWarsResult(gamePlayed.getLevelAchieved(), true);
-//                }
-            }else {
+            } else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
             }
         });
