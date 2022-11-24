@@ -63,7 +63,7 @@ public class AddNewGame extends AppCompatActivity {
     private boolean isScoresValid; // check if user input is valid
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private int selectedGame; // user selected game config index
-    private int selectedTheme;
+    public int selectedTheme;
     private double adjustedMax;
     private double adjustedMin;
     private Achievements addNewGameAchievements;
@@ -74,7 +74,7 @@ public class AddNewGame extends AppCompatActivity {
     private int indexOfPlayer = 0; // textview player index
     private int indexOfScore = 0; // edittext score index
     private EditText[] edList;
-    MediaPlayer mediaplayer;
+    private MediaPlayer mediaPlayer;
     private List<Integer> scoreList;
     private int indexOfGame = -1; // selected game index in game history
     private int currentConfigPosition = 0;
@@ -541,7 +541,6 @@ public class AddNewGame extends AppCompatActivity {
                     // show alertdialog in edit game screen
                     // pass achievement level to showResultForEditGame in edit game screen
                     showResultForEditGame(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getLevelAchieved());
-
                 }else {
                     Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                 }
@@ -574,15 +573,17 @@ public class AddNewGame extends AppCompatActivity {
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
                 // show alertdialog in add new game screen
                 // pass achievement level to appropriate theme layout in add new game screen
-                if (selectedTheme == 0) {
-                    showFruitsResult(gamePlayed.getLevelAchieved(), true);
-                }
-                if (selectedTheme == 1){
-                    showFantasyResult(gamePlayed.getLevelAchieved(), true);
-                }
-                if (selectedTheme == 2){
-                    showStarWarsResult(gamePlayed.getLevelAchieved(), true);
-                }
+                manager.setIndex(selectedGame);
+                goToAchievementCelebrationPage();
+//                if (selectedTheme == 0) {
+//                    showFruitsResult(gamePlayed.getLevelAchieved(), true);
+//                }
+//                if (selectedTheme == 1){
+//                    showFantasyResult(gamePlayed.getLevelAchieved(), true);
+//                }
+//                if (selectedTheme == 2){
+//                    showStarWarsResult(gamePlayed.getLevelAchieved(), true);
+//                }
             }else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
             }
@@ -592,15 +593,15 @@ public class AddNewGame extends AppCompatActivity {
     //makes audio play for achievement sound
     private void playSound(){
         if(selectedTheme == 0){
-            mediaplayer = MediaPlayer.create(this, R.raw.fruitslice);
+            mediaPlayer = MediaPlayer.create(this, R.raw.fruitslice);
         }
         if(selectedTheme == 1){
-            mediaplayer = MediaPlayer.create(this, R.raw.fairysound);
+            mediaPlayer = MediaPlayer.create(this, R.raw.fairysound);
         }
         if(selectedTheme == 2){
-            mediaplayer = MediaPlayer.create(this, R.raw.lightsaber);
+            mediaPlayer = MediaPlayer.create(this, R.raw.lightsaber);
         }
-        mediaplayer.start();
+        mediaPlayer.start();
     }
 
 
@@ -831,4 +832,8 @@ public class AddNewGame extends AppCompatActivity {
         }
     }
 
+    private void goToAchievementCelebrationPage(){
+        Intent intent = new Intent(AddNewGame.this, AchievementCelebration.class);
+        startActivity(intent);
+    }
 }

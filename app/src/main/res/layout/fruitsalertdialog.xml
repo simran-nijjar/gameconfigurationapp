@@ -3,41 +3,89 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/fruitsbackground"
+    >
 
-    <ImageView
-        android:id="@+id/fruitsAlertImage"
-        android:layout_width="209dp"
-        android:layout_height="196dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.331"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/fruitsimage" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".AchievementCelebration">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appleOkBtn"
-        android:layout_width="80dp"
-        android:layout_height="85dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/appleicon"
-        android:text="Ok"
-        app:layout_constraintEnd_toEndOf="@+id/fruitsAlertImage"
-        app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toEndOf="@+id/fruitsAlertImage"
-        app:layout_constraintTop_toBottomOf="@+id/fruitsAlertImage" />
+        <LinearLayout
+            android:id="@+id/mid"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-    <ImageView
-        android:id="@+id/celebrationAlertsImage"
-        android:layout_width="274dp"
-        android:layout_height="254dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/fruitsAlertImage"
-        app:layout_constraintHorizontal_bias="0.384"
-        app:layout_constraintStart_toStartOf="@+id/fruitsAlertImage"
-        app:layout_constraintTop_toTopOf="@+id/fruitsAlertImage"
-        app:srcCompat="@drawable/foxcelebration" />
+            <Spinner
+                android:id="@+id/dropdownTheme"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dialog" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/yourAchievementIsTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="24dp"
+            android:text="Your achievement is..."
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/mid"
+            app:layout_constraintTop_toBottomOf="@+id/mid" />
+
+        <TextView
+            android:id="@+id/levelAchievedTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/yourAchievementIsTxt"
+            app:layout_constraintHorizontal_bias="0.479"
+            app:layout_constraintStart_toStartOf="@+id/yourAchievementIsTxt"
+            app:layout_constraintTop_toBottomOf="@+id/yourAchievementIsTxt" />
+
+        <ImageView
+            android:id="@+id/fruitsAlertImage"
+            android:layout_width="209dp"
+            android:layout_height="196dp"
+            android:layout_marginTop="88dp"
+            app:layout_constraintEnd_toEndOf="@+id/levelAchievedTxt"
+            app:layout_constraintHorizontal_bias="0.447"
+            app:layout_constraintStart_toStartOf="@+id/levelAchievedTxt"
+            app:layout_constraintTop_toBottomOf="@+id/levelAchievedTxt"
+            app:srcCompat="@drawable/fruitsimage" />
+
+        <ImageView
+            android:id="@+id/celebrationAlertsImage"
+            android:layout_width="238dp"
+            android:layout_height="222dp"
+            android:layout_marginTop="76dp"
+            app:layout_constraintEnd_toEndOf="@+id/levelAchievedTxt"
+            app:layout_constraintHorizontal_bias="0.472"
+            app:layout_constraintStart_toStartOf="@+id/levelAchievedTxt"
+            app:layout_constraintTop_toBottomOf="@+id/levelAchievedTxt"
+            app:srcCompat="@drawable/foxcelebration" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appleOkBtn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="324dp"
+            android:background="@drawable/appleicon"
+            android:text="Ok"
+            app:layout_constraintEnd_toEndOf="@+id/yourAchievementIsTxt"
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintStart_toEndOf="@+id/yourAchievementIsTxt"
+            app:layout_constraintTop_toBottomOf="@+id/levelAchievedTxt" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
