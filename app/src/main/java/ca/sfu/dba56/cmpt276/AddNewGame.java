@@ -35,7 +35,6 @@ import android.widget.Toast;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -197,7 +196,6 @@ public class AddNewGame extends AppCompatActivity {
                 setSetBtn();
                 //numOfPlayers = 2;
                 createFields(2);
-                //textWatcherForEditTest();
                 saveInput(selectedGame);
             }
             public void onNothingSelected(AdapterView<?> arg0) {}
@@ -404,7 +402,6 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void setSetBtn(){
-        //removeTextWatcherForEditText();
         Button setBtn = findViewById(R.id.set_btn);
         setBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -449,9 +446,7 @@ public class AddNewGame extends AppCompatActivity {
 
                         // TODO: 2022-11-23 player 3 to 2 textWatcher problem
                     isScoresValid = false;
-                    //removeTextWatcherForEditText();
-                        createFieldsAgain(numOfPlayers);
-                    //addTextWatcherForEditText();
+                    createFieldsAgain(numOfPlayers);
 //                    temp = numOfPlayers;
                 }
                     else if(isPlayerValid) {
@@ -630,9 +625,6 @@ public class AddNewGame extends AppCompatActivity {
         //removeViewsInLinearLayout();
         createFields(numOfPlayers);
         setSetBtn();
-
-
-//        createFields(numOfPlayers);
 
         for (int i = 0; i < edList.size(); i++) {
             edList.get(i).setText("" + manager.getItemAtIndex(currentConfigPosition).getListOfValues(indexOfGame).get(i));
