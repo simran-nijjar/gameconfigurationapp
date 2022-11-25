@@ -3,13 +3,11 @@ package ca.sfu.dba56.cmpt276;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -19,10 +17,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
+import ca.sfu.dba56.cmpt276.model.Game;
 
 public class AchievementCelebration extends AppCompatActivity {
     private final String FRUITS = "Fruits";
@@ -40,6 +38,10 @@ public class AchievementCelebration extends AppCompatActivity {
     private Animation fadeOut;
     private TextView userLevelAchieved;
     private int indexLevelAchieved;
+    private boolean isHighestLevel; //Is true if user received highest level
+    private TextView nextLevel; //Text View to display the next level after the one user achieved
+    private String nextAchievementLevel; //String for next level after the one user achieved
+    private int pointsAwayFromNextLevel; //Stores how points away user is from achieving next level
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,6 @@ public class AchievementCelebration extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         gameTheme = getAchievementTheme(this);
-        Toast.makeText(AchievementCelebration.this, "theme " + gameTheme, Toast.LENGTH_SHORT).show();
         achievements = new Achievements(getAchievementTheme(this));
         currentConfigPosition = manager.getIndex();
 
@@ -59,12 +60,22 @@ public class AchievementCelebration extends AppCompatActivity {
             isNewGame = true;
             indexOfGame = manager.getItemAtIndex(currentConfigPosition).getSizeOfListOfConfigs() - 1; //index of game is last position
         }
+
         //Get the level user achieved when editing or adding new game
-        levelAchieved = manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getLevelAchieved();
+        levelAchieved = getGame().getLevelAchieved();
         //Get the index position of level achieved
-        indexLevelAchieved = manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getIndexGameLevelAchieved();
+        indexLevelAchieved = getGame().getIndexGameLevelAchieved();
+        //Check if user achieved highest level
+        isHighestLevel = getGame().isHighestLevelAchieved();
+        //Get the name of the next higher level
+        nextAchievementLevel = getGame().getNextAchievementLevel();
         displayAchievementThemeLayout();
         storeSelectedAchievementTheme();
+    }
+
+    //Get the game that is being added or edited
+    private Game getGame() {
+        return manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame);
     }
 
     //Display the matching theme layout for achievement celebration
@@ -72,12 +83,10 @@ public class AchievementCelebration extends AppCompatActivity {
         if (gameTheme.equals(FRUITS)){
             setContentView(R.layout.fruitsalertdialog);
             showFruitsResult();
-        }
-        else if (gameTheme.equals(FANTASY)){
+        } else if (gameTheme.equals(FANTASY)){
             setContentView(R.layout.fantasyalertdialog);
             showFantasyResult();
-        }
-        else if (gameTheme.equals(STAR_WARS)){
+        } else if (gameTheme.equals(STAR_WARS)){
             setContentView(R.layout.starwarsalertdialog);
             showStarWarsResult();
         }
@@ -110,39 +119,57 @@ public class AchievementCelebration extends AppCompatActivity {
                         saveAchievementTheme(achievementTheme);
                         achievements.setAchievementTheme(achievementTheme);
                         //Set the level achieved for the new theme selected at the same index position of previously selected level
-                        manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(achievements.getAchievementLevel(indexLevelAchieved));
+                        getGame().setLevelAchieved(achievements.getAchievementLevel(indexLevelAchieved));
+                        //Get the next higher level for the new theme if the level user achieved is not the highest
+                        if (!isHighestLevel) {
+                            getGame().setNextAchievementLevel(achievements.getAchievementLevel(indexLevelAchieved + 1));
+                        }
+                        //Change theme for game
+                        manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setTheme(achievements.getAchievementTheme());
                         AchievementCelebration.this.recreate();
                     }
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //Do nothing
-            }
+            //Do nothing
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 
     private void playSound(){
-        if(gameTheme.equals(FRUITS)){
+        if (gameTheme.equals(FRUITS)){
             mediaPlayer = MediaPlayer.create(this, R.raw.fruitslice);
         }
-        if(gameTheme.equals(FANTASY)){
+        if (gameTheme.equals(FANTASY)){
             mediaPlayer = MediaPlayer.create(this, R.raw.fairysound);
         }
-        if(gameTheme.equals(STAR_WARS)){
+        if (gameTheme.equals(STAR_WARS)){
             mediaPlayer = MediaPlayer.create(this, R.raw.lightsaber);
         }
         mediaPlayer.start();
     }
 
-    // pop up a window to show achievement level for fruits theme
-    private void showFruitsResult(){
-        //Play sound
-        playSound();
+    private void displayLevelAchievedAndNextLevel() {
         //Display the level user achieved
         userLevelAchieved = findViewById(R.id.levelAchievedTxt);
         userLevelAchieved.setText(levelAchieved);
+
+        nextLevel = findViewById(R.id.nextLevelTxt);
+        pointsAwayFromNextLevel = getGame().getPointsAwayFromNextLevel();
+        if (isHighestLevel){ //If user got highest level, display highest level msg
+            nextLevel.setText(getResources().getString(R.string.got_highest_level_msg));
+        } else { //Else, display how many points away user's from next level and name of next level
+            nextLevel.setText(getResources().getString(R.string.you_were_msg) + " " + pointsAwayFromNextLevel + " " + getResources().getString(R.string.points_away_msg) + " " +  nextAchievementLevel);
+        }
+    }
+
+    //Show achievement celebration for fruits theme
+    private void showFruitsResult(){
+        //Play sound
+        playSound();
+        //Display the level user achieved and the next level
+        displayLevelAchievedAndNextLevel();
 
         //Display the animation
         fadeOut = AnimationUtils.loadAnimation(this,R.anim.fadeout);
@@ -150,20 +177,16 @@ public class AchievementCelebration extends AppCompatActivity {
         foxCelebrationAnimation.startAnimation(fadeOut);
         fadeOut.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
-                //Don't have animation code here, animation will not end properly
-            }
-
+            //Don't have animation code here, animation will not end properly
+            public void onAnimationStart(Animation animation) {}
             @Override
             public void onAnimationEnd(Animation animation) {
                 //End the animation
                 foxCelebrationAnimation.setVisibility(View.GONE);
             }
-
             @Override
-            public void onAnimationRepeat(Animation animation) {
-                //Do nothing
-            }
+            //Do nothing
+            public void onAnimationRepeat(Animation animation) {}
         });
         //Set up button to leave achievement celebration page
         Button okBtn = findViewById(R.id.appleOkBtn);
@@ -172,20 +195,25 @@ public class AchievementCelebration extends AppCompatActivity {
             Intent refresh;
             if (isNewGame){
                 refresh = new Intent(AchievementCelebration.this, ViewConfiguration.class);
-            } else{ //If editing a game, go to history
+            } else { //If editing a game, go to history
                 refresh = new Intent(AchievementCelebration.this, GameHistory.class);
             }
             startActivity(refresh);
         });
+        //Set up button to replay animation and sound
+        Button replayBtn = findViewById(R.id.appleReplayBtn);
+        replayBtn.setOnClickListener(v -> {
+            foxCelebrationAnimation.startAnimation(fadeOut);
+            playSound();
+        });
     }
 
-    // pop up a window to show achievement level for fantasy theme
+    //Show achievement celebration for fantasy theme
     private void showFantasyResult(){
         //Play sound
         playSound();
-        //Display the level user achieved
-        userLevelAchieved = findViewById(R.id.levelAchievedTxt);
-        userLevelAchieved.setText(levelAchieved);
+        //Display the level user achieved and the next level
+        displayLevelAchievedAndNextLevel();
 
         //Display the animation
         fadeOut = AnimationUtils.loadAnimation(this,R.anim.fadeout);
@@ -193,20 +221,16 @@ public class AchievementCelebration extends AppCompatActivity {
         foxCelebrationAnimation.startAnimation(fadeOut);
         fadeOut.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
-                //Don't have animation code here, animation will not end properly
-            }
-
+            //Don't have animation code here, animation will not end properly
+            public void onAnimationStart(Animation animation) {}
             @Override
             public void onAnimationEnd(Animation animation) {
                 //End the animation
                 foxCelebrationAnimation.setVisibility(View.GONE);
             }
-
             @Override
-            public void onAnimationRepeat(Animation animation) {
-                //Do nothing
-            }
+            //Do nothing
+            public void onAnimationRepeat(Animation animation) {}
         });
         //Set up button to leave achievement celebration page
         Button okBtn = findViewById(R.id.starOkBtn);
@@ -215,20 +239,25 @@ public class AchievementCelebration extends AppCompatActivity {
             Intent refresh;
             if (isNewGame){
                 refresh = new Intent(AchievementCelebration.this, ViewConfiguration.class);
-            } else{ //If editing a game, go to history
+            } else { //If editing a game, go to history
                 refresh = new Intent(AchievementCelebration.this, GameHistory.class);
             }
             startActivity(refresh);
         });
+        //Set up button to replay animation and sound
+        Button replayBtn = findViewById(R.id.starReplayBtn);
+        replayBtn.setOnClickListener(v -> {
+            foxCelebrationAnimation.startAnimation(fadeOut);
+            playSound();
+        });
     }
 
-    // pop up a window to show achievement level for starwars theme
+    //Show achievement celebration for starwars theme
     private void showStarWarsResult(){
         //Play sound
         playSound();
-        //Display the level user achieved
-        userLevelAchieved = findViewById(R.id.levelAchievedTxt);
-        userLevelAchieved.setText(levelAchieved);
+        //Display the level user achieved and the next level
+        displayLevelAchievedAndNextLevel();
 
         //Display the animation
         fadeOut = AnimationUtils.loadAnimation(this,R.anim.fadeout);
@@ -236,20 +265,16 @@ public class AchievementCelebration extends AppCompatActivity {
         foxCelebrationAnimation.startAnimation(fadeOut);
         fadeOut.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
-                //Don't have animation code here, animation will not end properly
-            }
-
+            //Don't have animation code here, animation will not end properly
+            public void onAnimationStart(Animation animation) {}
             @Override
             public void onAnimationEnd(Animation animation) {
                 //End the animation
                 foxCelebrationAnimation.setVisibility(View.GONE);
             }
-
             @Override
-            public void onAnimationRepeat(Animation animation) {
-                //Do nothing
-            }
+            //Do nothing
+            public void onAnimationRepeat(Animation animation) {}
         });
         //Set up button to leave achievement celebration page
         Button okBtn = findViewById(R.id.yodaOkBtn);
@@ -258,10 +283,16 @@ public class AchievementCelebration extends AppCompatActivity {
             Intent refresh;
             if (isNewGame){
                 refresh = new Intent(AchievementCelebration.this, ViewConfiguration.class);
-            } else{ //If editing a game, go to history
+            } else { //If editing a game, go to history
                 refresh = new Intent(AchievementCelebration.this, GameHistory.class);
             }
             startActivity(refresh);
+        });
+        //Set up button to replay animation and sound
+        Button replayBtn = findViewById(R.id.yodaReplayBtn);
+        replayBtn.setOnClickListener(v -> {
+            foxCelebrationAnimation.startAnimation(fadeOut);
+            playSound();
         });
     }
 

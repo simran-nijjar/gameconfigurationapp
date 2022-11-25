@@ -127,4 +127,7 @@
     <string name="easyDifficulty">Easy</string>
     <string name="normalDifficulty">Normal</string>
     <string name="hardDifficulty">Hard</string>
+    <string name="got_highest_level_msg">You got the highest level!</string>
+    <string name="you_were_msg">You were</string>
+    <string name="points_away_msg">points away\n from getting</string>
 </resources>
