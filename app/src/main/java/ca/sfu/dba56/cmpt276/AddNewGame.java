@@ -406,7 +406,7 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void setSetBtn(){
-        removeTextWatcherForEditText();
+        //removeTextWatcherForEditText();
         Button setBtn = findViewById(R.id.set_btn);
         setBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -451,7 +451,7 @@ public class AddNewGame extends AppCompatActivity {
 
                         // TODO: 2022-11-23 player 3 to 2 textWatcher problem
                     isScoresValid = false;
-
+                    removeTextWatcherForEditText();
                     createFieldsAgain(numOfPlayers);
 
 //                    temp = numOfPlayers;
@@ -485,6 +485,7 @@ public class AddNewGame extends AppCompatActivity {
     }
 
     private void createFieldsAgain(int numOfPlayers){
+
         LinearLayout ll_test = findViewById(R.id.ll_test);
         if(temp < numOfPlayers) {
             int count = 0;
@@ -559,41 +560,90 @@ public class AddNewGame extends AppCompatActivity {
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            isScoresValid = true;
+            isScoresValid = true;
             for (EditText editText : edList) {
-                editText.setError(null);
+                scoresAsStr = editText.getText().toString().trim();
+                //scoresAsStr = s.toString();
+                //editText.setError(null);
+                try {
+                    scores = Integer.parseInt(scoresAsStr);
+                }catch (NumberFormatException ex) {
+                    isScoresValid = false;
+                    editText.setError("Must enter score");
+//                        if (editText.getText().toString().trim().length() == 0) {
+//                            //isScoresValid = false;
+//                            editText.setError("Must enter score");
+//                        }
+                    if(editText.getText().toString().length() <= 1) {
+//                        //isScoresValid = false;
+                        editText.setError("yoooo");
+                    }
+                }
             }
 
         }
+
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-        @Override
-        public void afterTextChanged(Editable s) {
             isScoresValid = true;
             for (EditText editText : edList) {
                 //if (editText.hasFocus()) {
-                    scoresAsStr = editText.getText().toString();
-                    try {
-                        scores = Integer.parseInt(scoresAsStr);
-                        if (scores >= MAX_USER_INPUT) {
-                            isScoresValid = false;
-                            displayMaxCombinedScoreMsg();
-                            editText.setText("");
-                        } else if (scores <= MIN_USER_INPUT) {
-                            isScoresValid = false;
-                            displayMinCombinedScoreMsg();
-                            editText.setText("");
-                        } else isScoresValid = true;
-                    } catch (NumberFormatException ex) {
-//                    isScoresValid = false;
-                        if (editText.getText().toString().trim().length() == 0) {
-                            isScoresValid = false;
-                            editText.setError("Must enter score");
-                        }
+                scoresAsStr = editText.getText().toString();
+                try {
+                    scores = Integer.parseInt(scoresAsStr);
+                    if (scores >= MAX_USER_INPUT) {
+                        isScoresValid = false;
+                        displayMaxCombinedScoreMsg();
+                        editText.setText("");
+                    } else if (scores <= MIN_USER_INPUT) {
+                        isScoresValid = false;
+                        displayMinCombinedScoreMsg();
+                        editText.setText("");
+                    } else isScoresValid = true;
+                } catch (NumberFormatException ex) {
+                    isScoresValid = false;
+//                        if (editText.getText().toString().trim().length() == 0) {
+//                            //isScoresValid = false;
+//                            editText.setError("Must enter score");
+//                        }
+                    if(editText.getText().toString().trim().length() <= 1) {
+//                        //isScoresValid = false;
+                        editText.setError("Must enter score");
                     }
+                }
             }
+        }
+
+
+        @Override
+        public void afterTextChanged(Editable s) {
+//            isScoresValid = true;
+//            for (EditText editText : edList) {
+//                //if (editText.hasFocus()) {
+//                    scoresAsStr = editText.getText().toString();
+//                    try {
+//                        scores = Integer.parseInt(scoresAsStr);
+//                        if (scores >= MAX_USER_INPUT) {
+//                            isScoresValid = false;
+//                            displayMaxCombinedScoreMsg();
+//                            editText.setText("");
+//                        } else if (scores <= MIN_USER_INPUT) {
+//                            isScoresValid = false;
+//                            displayMinCombinedScoreMsg();
+//                            editText.setText("");
+//                        } else isScoresValid = true;
+//                    } catch (NumberFormatException ex) {
+//                        isScoresValid = false;
+////                        if (editText.getText().toString().trim().length() == 0) {
+////                            //isScoresValid = false;
+////                            editText.setError("Must enter score");
+////                        }
+//                        if(editText.getText().toString().trim().length() <= 1) {
+////                        //isScoresValid = false;
+//                            editText.setError("Must enter score");
+//                        }
+//                    }
+//            }
 //                    if(scoresAsStr.length() == 0) {
 //                        //isScoresValid = false;
 //                        editText.setError("Must enter score");
@@ -636,6 +686,13 @@ public class AddNewGame extends AppCompatActivity {
         }
         numOfPlayerFromUser.setText("" + manager.getItemAtIndex(currentConfigPosition).getPlayer(indexOfGame));
         numOfPlayers = manager.getItemAtIndex(currentConfigPosition).getPlayer(indexOfGame);
+
+        indexOfPlayer = 0;
+        indexOfScore = 0;
+        //edList.clear();
+        checkInput(currentConfigPosition);
+        setSetBtn();
+
         removeViewsInLinearLayout();
         createFields(numOfPlayers);
 
@@ -682,6 +739,8 @@ public class AddNewGame extends AppCompatActivity {
 
                     // set combined score
                     storeScores();
+                    // reset numOfPlayers
+                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setPlayers(numOfPlayers);
                     // reset scoreList
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setListOfValues(scoreList);
                     // reset combined score
