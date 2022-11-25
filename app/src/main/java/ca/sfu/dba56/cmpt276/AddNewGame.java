@@ -88,7 +88,6 @@ public class AddNewGame extends AppCompatActivity {
     private boolean isEditing;
     private int temp;
     private Stack<EditText> edList = new Stack<>();
-    textWatcher tw = new textWatcher(edList);
     private ArrayList<String> edList_temp = new ArrayList<>();
     //private Stack<TextWatcher> mListeners = null;
 
@@ -115,10 +114,6 @@ public class AddNewGame extends AppCompatActivity {
             getSupportActionBar().setTitle("Edit Game");
             indexOfGame = bundle.getInt("selected game"); // get selected game position from game history
             dropdown.setVisibility(View.GONE);
-//            numOfPlayerFromUser.setFocusable(false);
-//            numOfPlayerFromUser.setClickable(false);
-//            numOfPlayerFromUser.setBackground(null);
-            //setBtn.setVisibility(View.INVISIBLE);
             tv_numOfPlayer.setText("Number of Player:");
             setVariablesFromExistingGame(indexOfGame);
             resetDifficultyRadioButtons(indexOfGame);
@@ -128,10 +123,7 @@ public class AddNewGame extends AppCompatActivity {
             isEditing = false;
             getSupportActionBar().setTitle("Add New Game");
             dropdown.setVisibility(View.VISIBLE);
-//            numOfPlayerFromUser.setFocusable(true);
-//            numOfPlayerFromUser.setClickable(true);
             numOfPlayerFromUser.setText("2");
-            //setBtn.setVisibility(View.VISIBLE);
             tv_numOfPlayer.setText(R.string.num_player);
             createDifficultyRadioButtons();
         }
@@ -299,27 +291,6 @@ public class AddNewGame extends AppCompatActivity {
         numOfPlayerFromUser.setText("2");
     }
 
-    private void displayMaxCombinedScoreMsg(){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
-        alertDialog.setTitle(getString(R.string.scoreTooHigh));
-        alertDialog.setMessage(getString(R.string.scoreTooHighMsg));
-        alertDialog.setButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // Stay on AddNewGame activity
-            }
-        });
-        alertDialog.show();
-    }
-
-    private void displayMinCombinedScoreMsg(){
-        AlertDialog alertDialog = new AlertDialog.Builder(AddNewGame.this).create();
-        alertDialog.setTitle(getString(R.string.scoreTooLow));
-        alertDialog.setMessage(getString(R.string.scoreTooLowMsg));
-        alertDialog.setButton(getString(R.string.OK), (dialog, which) -> {
-            // Stay on AddNewGame activity
-        });
-        alertDialog.show();
-    }
 
     // check if user input player is valid
     private void checkInput(int selectedGameInt){
@@ -490,34 +461,14 @@ public class AddNewGame extends AppCompatActivity {
         });
     }
 
-//    private void addTextWatcherForEditText(){
-//        //for (EditText editText : edList) editText.setSelectAllOnFocus(true);
-//        // for (EditText editText : edList) editText.requestFocus();
-//        for (EditText editText : edList) editText.addTextChangedListener(tw);
-//    }
-//
-//    private void removeTextWatcherForEditText(){
-//        for (EditText editText : edList) editText.removeTextChangedListener(tw);
-//    }
-
-//    private boolean checkIfScoresValid(Stack<EditText> edList){
-//        isScoresValid = true;
-//        for(EditText editText: edList){
-//            String ed = editText.getText().toString();
-//            if(ed.length() > 0){
-//                isScoresValid = true;
-//            }else {
-//                isScoresValid = false;
-//                editText.setError("Must enter score");
-//                Toast.makeText(AddNewGame.this, "invalid input", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//
-//        return isScoresValid;
-//    }
+    // check if user input scores is valid
     public boolean validateFields(){
         isScoresValid = true;
         for(EditText editText:edList){
+//            if(!Util.isScoreEmpty(editText.getText().toString())){
+//                editText.setError("Invalid input!");
+//                isScoresValid = false;
+//            }
             if(!Util.isValidScore(editText.getText().toString())){
                 editText.setError("Invalid input!");
                 isScoresValid = false;
@@ -525,6 +476,7 @@ public class AddNewGame extends AppCompatActivity {
         }
         return isScoresValid;
     }
+
     private void createFields(int numOfPlayers){
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
         numOfPlayerFromUser.setText(""+ numOfPlayers);
@@ -534,10 +486,6 @@ public class AddNewGame extends AppCompatActivity {
 
         temp = numOfPlayers;
 
-
-        //addTextWatcherForEditText();
-//        textWatcher tw = new textWatcher(edList);
-//        for (EditText editText : edList) editText.addTextChangedListener(tw);
     }
 
     private void createFieldsAgain(int numOfPlayers){
@@ -601,7 +549,6 @@ public class AddNewGame extends AppCompatActivity {
             temp = numOfPlayers;
 
         }
-        //addTextWatcherForEditText();
     }
 
     private void createFieldsAgainForEditGame(int numOfPlayers){
@@ -638,108 +585,7 @@ public class AddNewGame extends AppCompatActivity {
         }
 
     }
-    // check if user input scores is valid
-    public class textWatcher implements TextWatcher {
 
-        //EditText[] edList;
-        Stack<EditText> edList;
-
-        public textWatcher(Stack<EditText> edList) {
-            this.edList = edList;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            isScoresValid = true;
-//            for (EditText editText : edList) {
-//                scoresAsStr = editText.getText().toString().trim();
-//                //scoresAsStr = s.toString();
-//                //editText.setError(null);
-//                try {
-//                    scores = Integer.parseInt(scoresAsStr);
-//                }catch (NumberFormatException ex) {
-//                    isScoresValid = false;
-//                    editText.setError("Must enter score");
-////                        if (editText.getText().toString().trim().length() == 0) {
-////                            //isScoresValid = false;
-////                            editText.setError("Must enter score");
-////                        }
-//                    if(editText.getText().toString().length() <= 1) {
-////                        //isScoresValid = false;
-//                        editText.setError("yoooo");
-//                    }
-//                }
-//            }
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            isScoresValid = true;
-            for (EditText editText : edList) {
-                //if (editText.hasFocus()) {
-                scoresAsStr = editText.getText().toString();
-                try {
-                    scores = Integer.parseInt(scoresAsStr);
-                    if (scores >= MAX_USER_INPUT) {
-                        isScoresValid = false;
-                        displayMaxCombinedScoreMsg();
-                        editText.setText("");
-                    } else if (scores <= MIN_USER_INPUT) {
-                        isScoresValid = false;
-                        displayMinCombinedScoreMsg();
-                        editText.setText("");
-                    } else isScoresValid = true;
-                } catch (NumberFormatException ex) {
-                    isScoresValid = false;
-//                        if (editText.getText().toString().trim().length() == 0) {
-//                            //isScoresValid = false;
-//                            editText.setError("Must enter score");
-//                        }
-                    if(editText.getText().toString().trim().length() <= 1) {
-//                        //isScoresValid = false;
-                        editText.setError("Must enter score");
-                    }
-                }
-            }
-        }
-
-
-        @Override
-        public void afterTextChanged(Editable s) {
-//            isScoresValid = true;
-//            for (EditText editText : edList) {
-//                //if (editText.hasFocus()) {
-//                    scoresAsStr = editText.getText().toString();
-//                    try {
-//                        scores = Integer.parseInt(scoresAsStr);
-//                        if (scores >= MAX_USER_INPUT) {
-//                            isScoresValid = false;
-//                            displayMaxCombinedScoreMsg();
-//                            editText.setText("");
-//                        } else if (scores <= MIN_USER_INPUT) {
-//                            isScoresValid = false;
-//                            displayMinCombinedScoreMsg();
-//                            editText.setText("");
-//                        } else isScoresValid = true;
-//                    } catch (NumberFormatException ex) {
-//                        isScoresValid = false;
-////                        if (editText.getText().toString().trim().length() == 0) {
-////                            //isScoresValid = false;
-////                            editText.setError("Must enter score");
-////                        }
-//                        if(editText.getText().toString().trim().length() <= 1) {
-////                        //isScoresValid = false;
-//                            editText.setError("Must enter score");
-//                        }
-//                    }
-//            }
-//                    if(scoresAsStr.length() == 0) {
-//                        //isScoresValid = false;
-//                        editText.setError("Must enter score");
-//                    }
-        }
-    }
 
     // store score list and update combined score
     private void storeScores(){
