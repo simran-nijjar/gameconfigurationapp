@@ -121,6 +121,7 @@ public class AddNewGame extends AppCompatActivity {
             tv_numOfPlayer.setText("Number of Player:");
             setVariablesFromExistingGame(indexOfGame);
             resetDifficultyRadioButtons(indexOfGame);
+            saveInputForEditGame(manager.getIndex());
         } else {
             // go to add new game screen
             isEditing = false;
@@ -411,7 +412,7 @@ public class AddNewGame extends AppCompatActivity {
         setBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if(isPlayerValid){
+                    if(isPlayerValid && !isEditing){
                     //removeViewsInLinearLayout();
 
                     Iterator<EditText> iterator = edList.iterator();
@@ -455,7 +456,9 @@ public class AddNewGame extends AppCompatActivity {
                     createFieldsAgain(numOfPlayers);
 
 //                    temp = numOfPlayers;
-                }
+                }else if(isPlayerValid) {
+                        createFieldsAgainForEditGame(numOfPlayers);
+                    }
             }
         });
     }
@@ -548,6 +551,40 @@ public class AddNewGame extends AppCompatActivity {
         addTextWatcherForEditText();
     }
 
+    private void createFieldsAgainForEditGame(int numOfPlayers){
+        LinearLayout ll_test = findViewById(R.id.ll_test);
+        if(temp < numOfPlayers) {
+
+            int count = edList.size();
+
+            for (int i = temp; i < numOfPlayers; i++) {
+                edList.push(createRightFields());
+            }
+
+            int count2 = 0;
+            Iterator<EditText> iterator = edList.iterator();
+            while (iterator.hasNext()) {
+                EditText editText = (EditText) iterator.next();
+                if(count <= count2 ) {
+                    editText.setText("" + 0);
+                }
+                count2++;
+            }
+
+            temp = numOfPlayers;
+        }else if(temp > numOfPlayers){
+
+            for (int i = temp; i > numOfPlayers; i--) {
+                edList.pop();
+                ll_test.removeViewAt(ll_test.getChildCount() - 1);
+            }
+
+            indexOfPlayer = numOfPlayers;
+            indexOfScore = numOfPlayers;
+            temp = numOfPlayers;
+        }
+
+    }
     // check if user input scores is valid
     public class textWatcher implements TextWatcher {
 
@@ -691,16 +728,18 @@ public class AddNewGame extends AppCompatActivity {
         indexOfScore = 0;
         //edList.clear();
         checkInput(currentConfigPosition);
+        //removeViewsInLinearLayout();
+        createFields(numOfPlayers);
         setSetBtn();
 
-        removeViewsInLinearLayout();
-        createFields(numOfPlayers);
+
+//        createFields(numOfPlayers);
 
         for (int i = 0; i < edList.size(); i++) {
             edList.get(i).setText("" + manager.getItemAtIndex(currentConfigPosition).getListOfValues(indexOfGame).get(i));
         }
 
-        saveInputForEditGame(currentConfigPosition);
+        //saveInputForEditGame(currentConfigPosition);
     }
 
     // reset Achievement level in edit game screen
@@ -740,7 +779,7 @@ public class AddNewGame extends AppCompatActivity {
                     // set combined score
                     storeScores();
                     // reset numOfPlayers
-                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setPlayers(numOfPlayers);
+                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setPlayers(scoreList.size());
                     // reset scoreList
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setListOfValues(scoreList);
                     // reset combined score
