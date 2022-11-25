@@ -44,6 +44,7 @@ import java.util.Stack;
 import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.Game;
+import ca.sfu.dba56.cmpt276.model.Util;
 
 /*
 * add new game activity class adds new game to the list of games in configuration
@@ -246,9 +247,34 @@ public class AddNewGame extends AppCompatActivity {
                         final String achievementTheme = themesArray[i];
                         saveAchievementTheme(achievementTheme);
                         addNewGameAchievements.setAchievementTheme(achievementTheme);
+
+//                        Iterator<EditText> iterator3 = edList.iterator();
+//
+//                        if(edList_temp.isEmpty()) {
+//                            while (iterator3.hasNext()) {
+//                                EditText editText = (EditText) iterator3.next();
+//                                edList_temp.add(editText.getText().toString());
+//                            }
+//                        }
+
                         AddNewGame.this.recreate();
                     }
                 }
+//                removeViewsInLinearLayout();
+//                edList.clear();
+//                indexOfScore = 0;
+//                indexOfPlayer = 0;
+//                createFields(edList_temp.size());
+//
+//                //createFieldsAgainForEditGame(edList.size());
+//                int count = 0;
+//                Iterator<EditText> iterator = edList.iterator();
+//                while (iterator.hasNext()) {
+//                    EditText editText = (EditText) iterator.next();
+//                    editText.setText("" + edList_temp.get(count));
+//                    count ++;
+//                }
+//                edList_temp.clear();
             }
 
             @Override
@@ -452,28 +478,53 @@ public class AddNewGame extends AppCompatActivity {
 
                         // TODO: 2022-11-23 player 3 to 2 textWatcher problem
                     isScoresValid = false;
-                    removeTextWatcherForEditText();
-                    createFieldsAgain(numOfPlayers);
-
+                    //removeTextWatcherForEditText();
+                        createFieldsAgain(numOfPlayers);
+                    //addTextWatcherForEditText();
 //                    temp = numOfPlayers;
-                }else if(isPlayerValid) {
+                }
+                    else if(isPlayerValid) {
                         createFieldsAgainForEditGame(numOfPlayers);
                     }
             }
         });
     }
 
-    private void addTextWatcherForEditText(){
-        //for (EditText editText : edList) editText.setSelectAllOnFocus(true);
-        // for (EditText editText : edList) editText.requestFocus();
-        for (EditText editText : edList) editText.addTextChangedListener(tw);
+//    private void addTextWatcherForEditText(){
+//        //for (EditText editText : edList) editText.setSelectAllOnFocus(true);
+//        // for (EditText editText : edList) editText.requestFocus();
+//        for (EditText editText : edList) editText.addTextChangedListener(tw);
+//    }
+//
+//    private void removeTextWatcherForEditText(){
+//        for (EditText editText : edList) editText.removeTextChangedListener(tw);
+//    }
+
+//    private boolean checkIfScoresValid(Stack<EditText> edList){
+//        isScoresValid = true;
+//        for(EditText editText: edList){
+//            String ed = editText.getText().toString();
+//            if(ed.length() > 0){
+//                isScoresValid = true;
+//            }else {
+//                isScoresValid = false;
+//                editText.setError("Must enter score");
+//                Toast.makeText(AddNewGame.this, "invalid input", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//
+//        return isScoresValid;
+//    }
+    public boolean validateFields(){
+        isScoresValid = true;
+        for(EditText editText:edList){
+            if(!Util.isValidScore(editText.getText().toString())){
+                editText.setError("Invalid input!");
+                isScoresValid = false;
+            }
+        }
+        return isScoresValid;
     }
-
-    private void removeTextWatcherForEditText(){
-        for (EditText editText : edList) editText.removeTextChangedListener(tw);
-    }
-
-
     private void createFields(int numOfPlayers){
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
         numOfPlayerFromUser.setText(""+ numOfPlayers);
@@ -482,7 +533,9 @@ public class AddNewGame extends AppCompatActivity {
         }
 
         temp = numOfPlayers;
-        addTextWatcherForEditText();
+
+
+        //addTextWatcherForEditText();
 //        textWatcher tw = new textWatcher(edList);
 //        for (EditText editText : edList) editText.addTextChangedListener(tw);
     }
@@ -548,7 +601,7 @@ public class AddNewGame extends AppCompatActivity {
             temp = numOfPlayers;
 
         }
-        addTextWatcherForEditText();
+        //addTextWatcherForEditText();
     }
 
     private void createFieldsAgainForEditGame(int numOfPlayers){
@@ -597,26 +650,26 @@ public class AddNewGame extends AppCompatActivity {
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            isScoresValid = true;
-            for (EditText editText : edList) {
-                scoresAsStr = editText.getText().toString().trim();
-                //scoresAsStr = s.toString();
-                //editText.setError(null);
-                try {
-                    scores = Integer.parseInt(scoresAsStr);
-                }catch (NumberFormatException ex) {
-                    isScoresValid = false;
-                    editText.setError("Must enter score");
-//                        if (editText.getText().toString().trim().length() == 0) {
-//                            //isScoresValid = false;
-//                            editText.setError("Must enter score");
-//                        }
-                    if(editText.getText().toString().length() <= 1) {
-//                        //isScoresValid = false;
-                        editText.setError("yoooo");
-                    }
-                }
-            }
+//            isScoresValid = true;
+//            for (EditText editText : edList) {
+//                scoresAsStr = editText.getText().toString().trim();
+//                //scoresAsStr = s.toString();
+//                //editText.setError(null);
+//                try {
+//                    scores = Integer.parseInt(scoresAsStr);
+//                }catch (NumberFormatException ex) {
+//                    isScoresValid = false;
+//                    editText.setError("Must enter score");
+////                        if (editText.getText().toString().trim().length() == 0) {
+////                            //isScoresValid = false;
+////                            editText.setError("Must enter score");
+////                        }
+//                    if(editText.getText().toString().length() <= 1) {
+////                        //isScoresValid = false;
+//                        editText.setError("yoooo");
+//                    }
+//                }
+//            }
 
         }
 
@@ -773,6 +826,8 @@ public class AddNewGame extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                validateFields();
+                //checkIfScoresValid(edList);
                 if (isScoresValid) {
                     combinedScores = 0;
 
@@ -819,6 +874,8 @@ public class AddNewGame extends AppCompatActivity {
     private void saveInput(int selectedGameInt) {
         Button save = findViewById(R.id.save_btn);
         save.setOnClickListener(v -> {
+            //checkIfScoresValid(edList);
+            validateFields();
             if (isPlayerValid && isScoresValid) {
                 storeScores();
                 Game gamePlayed = new Game(scoreList.size(), combinedScores, scoreList, manager.getItemAtIndex(selectedGameInt), saveDatePlayed(),
