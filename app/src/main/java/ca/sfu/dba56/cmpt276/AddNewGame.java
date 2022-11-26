@@ -54,7 +54,7 @@ public class AddNewGame extends AppCompatActivity {
     private int combinedScores = 0;
     private String dateGamePlayed; // date time
     private String numOfPlayersAsStr = "";  // String user input
-    private String scoresAsStr = ""; // String user input
+    //private String scoresAsStr = ""; // String user input
     private EditText numOfPlayerFromUser;
     private TextView playerMsg; // alert message
     private boolean isPlayerValid; // check if user input is valid
@@ -235,7 +235,8 @@ public class AddNewGame extends AppCompatActivity {
 //                            }
 //                        }
 
-                        AddNewGame.this.recreate();
+                        //AddNewGame.this.recreate();
+                        manager.changeTheme(AddNewGame.this);
                     }
                 }
 //                removeViewsInLinearLayout();
