@@ -3,6 +3,7 @@ package ca.sfu.dba56.cmpt276;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -77,6 +78,7 @@ public class AddNewGame extends AppCompatActivity {
     private int temp;
     private Stack<EditText> edList = new Stack<>();
     private ArrayList<String> edList_temp = new ArrayList<>();
+    View screenView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,6 +219,9 @@ public class AddNewGame extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                screenView = findViewById(R.id.scrollInAddGame);
+
+                int [] background_image = new int[]{R.drawable.fruitsbackground, R.drawable.fantasybackground, R.drawable.starwarsbackground};
                 //When user selects a new theme, recreate activity to display theme levels and achievements
                 selectedTheme = dropdown.getSelectedItemPosition();
                 String[] themesArray = getResources().getStringArray(R.array.achievementThemes);
@@ -225,35 +230,9 @@ public class AddNewGame extends AppCompatActivity {
                         final String achievementTheme = themesArray[i];
                         saveAchievementTheme(achievementTheme);
                         addNewGameAchievements.setAchievementTheme(achievementTheme);
-
-//                        Iterator<EditText> iterator3 = edList.iterator();
-//
-//                        if(edList_temp.isEmpty()) {
-//                            while (iterator3.hasNext()) {
-//                                EditText editText = (EditText) iterator3.next();
-//                                edList_temp.add(editText.getText().toString());
-//                            }
-//                        }
-
-                        //AddNewGame.this.recreate();
-                        manager.changeTheme(AddNewGame.this);
+                        getWindow().setBackgroundDrawableResource(background_image[i]);
                     }
                 }
-//                removeViewsInLinearLayout();
-//                edList.clear();
-//                indexOfScore = 0;
-//                indexOfPlayer = 0;
-//                createFields(edList_temp.size());
-//
-//                //createFieldsAgainForEditGame(edList.size());
-//                int count = 0;
-//                Iterator<EditText> iterator = edList.iterator();
-//                while (iterator.hasNext()) {
-//                    EditText editText = (EditText) iterator.next();
-//                    editText.setText("" + edList_temp.get(count));
-//                    count ++;
-//                }
-//                edList_temp.clear();
             }
 
             @Override
