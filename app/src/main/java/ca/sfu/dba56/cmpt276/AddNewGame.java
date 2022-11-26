@@ -8,23 +8,18 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -55,7 +50,7 @@ public class AddNewGame extends AppCompatActivity {
     private final String FANTASY = "Fantasy";
     private final String STAR_WARS = "Star Wars";
     private int numOfPlayers; // int user input
-    private int scores; // int user input
+    //private int scores; // int user input
     private int combinedScores = 0;
     private String dateGamePlayed; // date time
     private String numOfPlayersAsStr = "";  // String user input
@@ -71,17 +66,12 @@ public class AddNewGame extends AppCompatActivity {
     private double adjustedMin;
     private Achievements addNewGameAchievements;
     private boolean isCalculatingRangeForLevels;
-//    private final int MAX_USER_INPUT = 100000000;
-//    private final int MIN_USER_INPUT = -100000000;
     private final int MAX_PLAYERS = 1000;
     private int indexOfPlayer = 0; // textview player index
     private int indexOfScore = 0; // edittext score index
-    private MediaPlayer mediaPlayer;
     private List<Integer> scoreList;
     private int indexOfGame = -1; // selected game index in game history
     private int currentConfigPosition = 0;
-    private Animation fadeOut;
-    private ImageView achievementAnim;
     private String gameTheme;
     private boolean isEditing;
     private int temp;
@@ -297,7 +287,6 @@ public class AddNewGame extends AppCompatActivity {
         numOfPlayerFromUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                addTextChangedListener(this);
                 numOfPlayersAsStr = numOfPlayerFromUser.getText().toString();
                 try{
                     numOfPlayers = Integer.parseInt(numOfPlayersAsStr);
@@ -340,17 +329,6 @@ public class AddNewGame extends AppCompatActivity {
             }
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //isPlayerValid = true;
-//                numOfPlayersAsStr = numOfPlayerFromUser.getText().toString();
-//                try {
-//                    numOfPlayers = Integer.parseInt(numOfPlayersAsStr);
-//                    if (numOfPlayers == 2){
-//                        isPlayerValid = true;
-//                    }
-//                }catch (NumberFormatException ex){
-//                    Toast.makeText(AddNewGame.this, "kk", Toast.LENGTH_SHORT).show();
-//                    //isPlayerValid = false;
-//                }
             }
             @Override
             public void afterTextChanged(Editable s) {}
@@ -656,7 +634,6 @@ public class AddNewGame extends AppCompatActivity {
 
                     // set combined score
                     storeScores();
-                    //storeScoresForEditGame();
                     // reset numOfPlayers
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setPlayers(edList.size());
                     // reset scoreList
