@@ -88,7 +88,6 @@ public class AddNewGame extends AppCompatActivity {
     private int temp;
     private Stack<EditText> edList = new Stack<>();
     private ArrayList<String> edList_temp = new ArrayList<>();
-    //private Stack<TextWatcher> mListeners = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,12 +104,13 @@ public class AddNewGame extends AppCompatActivity {
         Spinner dropdown = findViewById(R.id.gameName);
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
         TextView tv_numOfPlayer = findViewById(R.id.num_players);
-        Button setBtn = findViewById(R.id.set_btn);
 
         if(bundle != null){
             // go to edit game screen
             isEditing = true;
             getSupportActionBar().setTitle("Edit Game");
+            edList.clear();
+            edList_temp.clear();
             indexOfGame = bundle.getInt("selected game"); // get selected game position from game history
             dropdown.setVisibility(View.GONE);
             tv_numOfPlayer.setText("Number of Player:");
@@ -194,7 +194,6 @@ public class AddNewGame extends AppCompatActivity {
                 // call function according to current selection
                 checkInput(selectedGame);
                 setSetBtn();
-                //numOfPlayers = 2;
                 createFields(2);
                 saveInput(selectedGame);
             }
@@ -407,7 +406,6 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     if(isPlayerValid && !isEditing){
-                    //removeViewsInLinearLayout();
 
                     Iterator<EditText> iterator = edList.iterator();
 
@@ -444,10 +442,8 @@ public class AddNewGame extends AppCompatActivity {
                     }
 
 
-                        // TODO: 2022-11-23 player 3 to 2 textWatcher problem
                     isScoresValid = false;
                     createFieldsAgain(numOfPlayers);
-//                    temp = numOfPlayers;
                 }
                     else if(isPlayerValid) {
                         createFieldsAgainForEditGame(numOfPlayers);
@@ -501,7 +497,7 @@ public class AddNewGame extends AppCompatActivity {
                 edList.push(createRightFields());
             }
 
-            // TODO: 2022-11-23 discontinue
+
             int count3 = 0;
             Iterator<EditText> iterator2 = edList.iterator();
             while (iterator2.hasNext()) {
@@ -516,13 +512,6 @@ public class AddNewGame extends AppCompatActivity {
             temp = numOfPlayers;
 
         }else if(temp >= numOfPlayers){
-//            numOfPlayers = 3;
-//            temp = 5;
-//            ll_both 0 1 2 3 4
-//             delete 3 4
-            //EditText editText = ll_test.findViewById(i-1);
-            //edList.remove(i - 1);
-            //edList.remove(editText);
 
             if(temp > numOfPlayers) {
                 for (int i = temp; i > numOfPlayers; i--) {
@@ -577,7 +566,7 @@ public class AddNewGame extends AppCompatActivity {
             indexOfPlayer = numOfPlayers;
             indexOfScore = numOfPlayers;
             temp = numOfPlayers;
-        }
+        }else temp = numOfPlayers;
 
     }
 
@@ -615,14 +604,12 @@ public class AddNewGame extends AppCompatActivity {
         if (gameTheme.equals(STAR_WARS)){
             selectedTheme = 2;
         }
-        numOfPlayerFromUser.setText("" + manager.getItemAtIndex(currentConfigPosition).getPlayer(indexOfGame));
-        numOfPlayers = manager.getItemAtIndex(currentConfigPosition).getPlayer(indexOfGame);
+        numOfPlayerFromUser.setText("" + manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getPlayers());
+        numOfPlayers = manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getPlayers();
 
         indexOfPlayer = 0;
         indexOfScore = 0;
-        //edList.clear();
         checkInput(currentConfigPosition);
-        //removeViewsInLinearLayout();
         createFields(numOfPlayers);
         setSetBtn();
 
@@ -665,14 +652,14 @@ public class AddNewGame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 validateFields();
-                //checkIfScoresValid(edList);
                 if (isScoresValid) {
                     combinedScores = 0;
 
                     // set combined score
                     storeScores();
+                    //storeScoresForEditGame();
                     // reset numOfPlayers
-                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setPlayers(scoreList.size());
+                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setPlayers(edList.size());
                     // reset scoreList
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setListOfValues(scoreList);
                     // reset combined score
@@ -680,7 +667,7 @@ public class AddNewGame extends AppCompatActivity {
                     // reset achievement
                     resetAchievementLevel(currentConfigPosition, manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getPlayers());
                     manager.getItemAtIndex(manager.getIndex()).getGame(indexOfGame).setDifficulty(addNewGameAchievements.getDifficultyLevel());
-                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setAchievementForEditGame(numOfPlayers, combinedScores, manager.getItemAtIndex(currentConfigPosition), isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme(), addNewGameAchievements.getDifficultyLevel()));
+                    manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setAchievementForEditGame(edList.size(), combinedScores, manager.getItemAtIndex(currentConfigPosition), isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme(), addNewGameAchievements.getDifficultyLevel()));
                     // reset theme
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setTheme(addNewGameAchievements.getAchievementTheme());
                     // show alertdialog in edit game screen
@@ -712,7 +699,6 @@ public class AddNewGame extends AppCompatActivity {
     private void saveInput(int selectedGameInt) {
         Button save = findViewById(R.id.save_btn);
         save.setOnClickListener(v -> {
-            //checkIfScoresValid(edList);
             validateFields();
             if (isPlayerValid && isScoresValid) {
                 storeScores();
