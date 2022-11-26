@@ -37,7 +37,7 @@ public class ConfigurationsManager {
     public void add(Configuration newConfig) {ListOfConfigurations.add(newConfig);}
     public void remove(int i) {ListOfConfigurations.remove(i);}
     public boolean isEmpty() {return this.ListOfConfigurations.isEmpty();}
-    public  int configListSize() {return ListOfConfigurations.size();}
+    public int configListSize() {return ListOfConfigurations.size();}
 
     //setters
     public void setListOfConfigurations(List<Configuration> newList) {this.ListOfConfigurations = newList;}

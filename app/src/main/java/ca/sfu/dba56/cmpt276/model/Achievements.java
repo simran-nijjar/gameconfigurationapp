@@ -6,8 +6,6 @@ package ca.sfu.dba56.cmpt276.model;
 * Keeps/populates the array of achievements names and allows to retrieve achievement names
  */
 
-import ca.sfu.dba56.cmpt276.R;
-
 public class Achievements {
 
     private final String FANTASY = "Fantasy";
@@ -23,6 +21,10 @@ public class Achievements {
     //difLevels: 0 - Easy; 1 - Normal; 2 - Hard
     private int currentDifLevel = 1;
     private String theme;
+    private int indexLevelAchieved; //Index position of level achieved
+    private boolean isHighestLevel; //True if user has reached the highest level
+    private String nextAchievementLevel; //Stores the achievement level that is after the one user achieved
+    private int pointsAwayFromNextLevel; //Stores how points away user is from achieving next level
 
     public Achievements(String theme){
         //Three different arrays for three themes
@@ -95,19 +97,33 @@ public class Achievements {
         //If the combined score is less than the poor score, user has lowest level
         if (combinedScore < intAchievements[0]){
             this.levelAchieved = getAchievementLevel(0);
+            this.indexLevelAchieved = 0;
+            this.isHighestLevel = false;
+            this.nextAchievementLevel = getAchievementLevel(1);
+            this.pointsAwayFromNextLevel = intAchievements[1] - combinedScore;
         } else if (combinedScore >= intAchievements[9]){ //If combined score is greater than great score, user has highest level
             this.levelAchieved = getAchievementLevel(9);
+            this.indexLevelAchieved = 9;
+            this.isHighestLevel = true;
         } else { //Else go through the array that stores each upper bound
             while (calculatingLevel) {
                 for (int i = 1; i < intAchievements.length - 1; i++) {
                     if (i == (intAchievements.length - 1)) { //If array is at last position before greatest level, achievement level is before greatest level
                         if (combinedScore >= intAchievements[i] && combinedScore <= maxScore) {
                             this.levelAchieved = getAchievementLevel(i);
+                            this.indexLevelAchieved = i;
+                            this.isHighestLevel = false;
+                            this.nextAchievementLevel = getAchievementLevel(i+1);
+                            this.pointsAwayFromNextLevel = maxScore - combinedScore;
                             calculatingLevel = false;
                         }
                     } else { //If array is not at last position and value is greater than current level bound but less than i+1 level bound
                         if (combinedScore >= intAchievements[i] && combinedScore < intAchievements[i + 1]) {
                             this.levelAchieved = getAchievementLevel(i);
+                            this.indexLevelAchieved = i;
+                            this.isHighestLevel = false;
+                            this.nextAchievementLevel = getAchievementLevel(i+1);
+                            this.pointsAwayFromNextLevel = intAchievements[i+1] - combinedScore;
                             calculatingLevel = false;
                         }
                     }
@@ -133,14 +149,24 @@ public class Achievements {
     public void calculateScoreAchieved(int combinedScore){
         if (combinedScore < intAchievements[0]){
             this.levelAchieved = getAchievementLevel(0);
+            this.indexLevelAchieved = 0;
+            this.isHighestLevel = false;
+            this.nextAchievementLevel = getAchievementLevel(1);
+            this.pointsAwayFromNextLevel = intAchievements[1] - combinedScore;
         }
         else if (combinedScore >= intAchievements[maxScore - minScore + 1]){
             this.levelAchieved = getAchievementLevel(9);
+            this.indexLevelAchieved = 0;
+            this.isHighestLevel = true;
         }
         else{
             for (int i = 1; i < (maxScore - minScore + 2); i++){
                 if (combinedScore == intAchievements[i]){
                     this.levelAchieved = getAchievementLevel(i);
+                    this.indexLevelAchieved = i;
+                    this.isHighestLevel = false;
+                    this.nextAchievementLevel = getAchievementLevel(i+1);
+                    this.pointsAwayFromNextLevel = intAchievements[i+1] - combinedScore;
                 }
             }
         }
@@ -152,4 +178,9 @@ public class Achievements {
     public int getDifficultyLevel(){
         return this.currentDifLevel;
     }
+    public int getIndexLevelAchieved(){return indexLevelAchieved;}
+    public boolean isHighestLevelAchieved(){return isHighestLevel;}
+    public String getNextAchievementLevel(){return nextAchievementLevel;}
+    public void setNextAchievementLevel(String nextLevel){this.nextAchievementLevel = nextLevel;}
+    public int getPointsAwayFromNextLevel(){return pointsAwayFromNextLevel;}
 }

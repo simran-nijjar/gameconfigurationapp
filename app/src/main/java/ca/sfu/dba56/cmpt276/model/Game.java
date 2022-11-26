@@ -135,7 +135,10 @@ public class Game {
             adj *= 1.25;
         }
         return (double)adj;
-
     }
-
+    public int getIndexGameLevelAchieved(){return achievements.getIndexLevelAchieved();}
+    public String getNextAchievementLevel(){return achievements.getNextAchievementLevel();}
+    public void setNextAchievementLevel(String nextLevel){achievements.setNextAchievementLevel(nextLevel);}
+    public boolean isHighestLevelAchieved(){return achievements.isHighestLevelAchieved();}
+    public int getPointsAwayFromNextLevel(){return achievements.getPointsAwayFromNextLevel();}
 }

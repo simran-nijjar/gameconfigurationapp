@@ -26,7 +26,7 @@
         \n<a href="https://pixabay.com/sound-effects/fairy-sound-6469/">fairysound.mp3</a>\n
         \n<a href="https://www.youtube.com/watch?v=RQELlsfcZAM">fairysound.mp3</a>\n
         \n<a href="https://pixabay.com/sound-effects/lightsaber-ignition-6816/">lightsaber.mp3</a>\n
-        \n<a href="https://www.vecteezy.com/vector-art/2794353-cartoon-vector-illustration-isolated-object-fresh-food-fruit-red-apple">appleicon.png</a>\n
+        \n<a href="https://www.clipartmax.com/download/m2K9A0m2A0K9b1A0_red-apple-fruits-png-transparent-images-clipart-icons-transparent-background-apple-clipart/#">appleicon.png</a>\n
         \n<a href="https://www.vectorstock.com/royalty-free-vector/mythical-creatures-and-fairytale-animals-set-vector-30418440">fantasyimage.png</a>\n
         \n<a href="https://uxwing.com/star-icon/">staricon.png</a>\n
         \n<a href="https://www.kibrispdr.org/detail-1/star-wars-characters-cartoon-pictures.html">starwarsimage.png</a>\n
@@ -127,4 +127,7 @@
     <string name="easyDifficulty">Easy</string>
     <string name="normalDifficulty">Normal</string>
     <string name="hardDifficulty">Hard</string>
+    <string name="got_highest_level_msg">You got the highest level!</string>
+    <string name="you_were_msg">You were</string>
+    <string name="points_away_msg">points away\n from getting</string>
 </resources>
