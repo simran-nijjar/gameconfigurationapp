@@ -15,12 +15,14 @@ public class Configuration {
     private int minPoorScore;
     private int maxBestScore;
     private List<Game> listOfGames = new ArrayList<>();
+    private int achievementsEarnedStats[];
 
     //constructor
     public Configuration(String newGameName, int newMinScore, int newMaxScore){
         gameName = newGameName;
         minPoorScore = newMinScore;
         maxBestScore = newMaxScore;
+        this.achievementsEarnedStats = new int[]{0,0,0,0,0,0,0,0,0,0};
     }
 
     //add new game (to the list)
@@ -45,4 +47,5 @@ public class Configuration {
     public List<Integer> getListOfValues(int i){return listOfGames.get(i).getListOfValues();}
     public Game getGame(int i){return listOfGames.get(i);}
     public String getTheme(int i){return listOfGames.get(i).getTheme();}
+    public void addAchievementsEarnedStats(int index){this.achievementsEarnedStats[index] += 1;}
 }
