@@ -8,23 +8,18 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -74,12 +69,9 @@ public class AddNewGame extends AppCompatActivity {
     private int indexOfPlayer = 0; // textview player index
     private int indexOfScore = 0; // edittext score index
     private EditText[] edList;
-    private MediaPlayer mediaPlayer;
     private List<Integer> scoreList;
     private int indexOfGame = -1; // selected game index in game history
     private int currentConfigPosition = 0;
-    private Animation fadeOut;
-    private ImageView achievementAnim;
     private String gameTheme;
     private boolean isEditing;
 
