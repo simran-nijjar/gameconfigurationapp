@@ -80,6 +80,9 @@ public class ViewConfiguration extends AppCompatActivity {
         setUpViewAchievementsButton();
         //to save config manager
         toSaveUsingGsonAndSP.saveToSharedRefs(ViewConfiguration.this);
+
+        //set uo image on click method
+        setOnImageClick();
     }
 
     public static Intent makeIntent(Context context) {
@@ -147,4 +150,12 @@ public class ViewConfiguration extends AppCompatActivity {
         alert.show();
     }
 
+    private void setOnImageClick() {
+        ImageView configImage = findViewById(R.id.configImage);
+        configImage.setOnClickListener(view -> {
+            Intent intent = ViewImage.makeIntent(ViewConfiguration.this);
+            intent.putExtra(getString(R.string.selected_config_position), currentConfigPosition);
+            startActivity(intent);
+        });
+    }
 }
