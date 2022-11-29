@@ -9,8 +9,6 @@ import java.util.List;
  * allows to add new games to the list, get/set min/max scores and name, and string with played games info
  */
 public class Configuration {
-
-
     private String gameName;
     private int minPoorScore;
     private int maxBestScore;
@@ -48,4 +46,5 @@ public class Configuration {
     public Game getGame(int i){return listOfGames.get(i);}
     public String getTheme(int i){return listOfGames.get(i).getTheme();}
     public void addAchievementsEarnedStats(int index){this.achievementsEarnedStats[index] += 1;}
+    public int getAchievementsEarnedStats(int index){return this.achievementsEarnedStats[index];}
 }

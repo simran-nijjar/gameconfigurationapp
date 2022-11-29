@@ -531,7 +531,7 @@ public class AddNewGame extends AppCompatActivity {
                     // reset theme
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setTheme(addNewGameAchievements.getAchievementTheme());
                     // Add level earned to achievement statistics
-                    manager.getItemAtIndex(currentConfigPosition).addAchievementsEarnedStats(addNewGameAchievements.getIndexLevelAchieved());
+                    manager.getItemAtIndex(currentConfigPosition).addAchievementsEarnedStats(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getIndexGameLevelAchieved());
                     // pass achievement level to appropriate theme layout to be displayed
                     goToAchievementCelebrationPage();
                 } else {
@@ -553,7 +553,7 @@ public class AddNewGame extends AppCompatActivity {
                 // pass achievement level to appropriate theme layout in add new game screen
                 manager.setIndex(selectedGame);
                 // Add level earned to achievement statistics
-                manager.getItemAtIndex(selectedGameInt).addAchievementsEarnedStats(addNewGameAchievements.getIndexLevelAchieved());
+                manager.getItemAtIndex(selectedGameInt).addAchievementsEarnedStats(gamePlayed.getIndexLevelAchieved());
                 goToAchievementCelebrationPage();
             } else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
