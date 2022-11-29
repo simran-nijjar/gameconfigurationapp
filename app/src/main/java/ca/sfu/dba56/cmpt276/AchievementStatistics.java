@@ -106,6 +106,7 @@ public class AchievementStatistics extends AppCompatActivity {
 
         //y-axis modifications
         YAxis leftYAxis = statsGraph.getAxisLeft();
+        leftYAxis.setAxisMinimum(0f);
         leftYAxis.setGranularity(1f); //Increase by 1 for y-axis
         leftYAxis.setAxisLineColor(getResources().getColor(R.color.black));
         leftYAxis.setGridColor(getResources().getColor(R.color.purple_700));
