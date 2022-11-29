@@ -1,6 +1,5 @@
 package ca.sfu.dba56.cmpt276;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
@@ -30,7 +29,7 @@ public class GameHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_history);
         // get selected game name from ViewConfiguration
-        indexOfGame = manager.getIndex();
+        indexOfGame = manager.getIndexOfCurrentConfiguration();
         populateListView(manager, indexOfGame);
         registerClickCallBack();
         ActionBar actionBar = getSupportActionBar();

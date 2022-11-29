@@ -50,7 +50,7 @@ public class AchievementCelebration extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         gameTheme = getAchievementTheme(this);
         achievements = new Achievements(getAchievementTheme(this));
-        currentConfigPosition = manager.getIndex();
+        currentConfigPosition = manager.getIndexOfCurrentConfiguration();
 
         Bundle bundle = getIntent().getExtras(); // from game history
         if (bundle != null){ //If game is being edited

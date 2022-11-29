@@ -1,5 +1,7 @@
 package ca.sfu.dba56.cmpt276.model;
 
+import android.net.Uri;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class Configuration {
     private int minPoorScore;
     private int maxBestScore;
     private List<Game> listOfGames = new ArrayList<>();
+    private Uri uriForConfigImage = null;
 
     //constructor
     public Configuration(String newGameName, int newMinScore, int newMaxScore){
@@ -34,6 +37,7 @@ public class Configuration {
     public void setGameNameInConfig(String newName){gameName = newName;}
     public void setMinPoorScoreInConfig(int newScore){minPoorScore = newScore;}
     public void setMaxBestScoreInConfig(int newScore){maxBestScore = newScore;}
+    public void setUriForConfigImage(Uri newUri){uriForConfigImage = newUri;}
     //getters
     public String getGameNameFromConfig(){return gameName;}
     public int getMinPoorScoreFromConfig(){return minPoorScore;}
@@ -45,4 +49,5 @@ public class Configuration {
     public List<Integer> getListOfValues(int i){return listOfGames.get(i).getListOfValues();}
     public Game getGame(int i){return listOfGames.get(i);}
     public String getTheme(int i){return listOfGames.get(i).getTheme();}
+    public Uri getUriForConfigImage(){return this.uriForConfigImage;}
 }

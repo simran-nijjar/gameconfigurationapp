@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         ListView list = findViewById(R.id.configList);
         list.setOnItemClickListener((parent, viewClicked, position, id) -> {
 
-            manager.setIndex(position);
+            manager.setIndexOfCurrentConfiguration(position);
             //make an intent for view configuration activity
             Intent intent = ViewConfiguration.makeIntent(MainActivity.this);
             startActivity(intent);

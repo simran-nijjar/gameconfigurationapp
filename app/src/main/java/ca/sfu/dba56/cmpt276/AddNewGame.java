@@ -3,7 +3,6 @@ package ca.sfu.dba56.cmpt276;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -61,7 +60,7 @@ public class AddNewGame extends AppCompatActivity {
     private boolean isPlayerValid; // check if user input is valid
     private boolean isScoresValid; // check if user input is valid
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
-    private int selectedGame; // user selected game config index
+    private int selectedConfigPosition; // user selected game config index
     public int selectedTheme;
     private double adjustedMax;
     private double adjustedMin;
@@ -107,7 +106,7 @@ public class AddNewGame extends AppCompatActivity {
             tv_numOfPlayer.setText("Number of Player:");
             setVariablesFromExistingGame(indexOfGame);
             resetDifficultyRadioButtons(indexOfGame);
-            saveInputForEditGame(manager.getIndex());
+            saveInputForEditGame(manager.getIndexOfCurrentConfiguration());
         } else {
             // go to add new game screen
             isEditing = false;
@@ -142,7 +141,7 @@ public class AddNewGame extends AppCompatActivity {
 
     private void chooseGame() {
         // get selected game config index
-        String name = manager.getItemAtIndex(manager.getIndex()).getGameNameFromConfig();
+        String name = manager.getItemAtIndex(manager.getIndexOfCurrentConfiguration()).getGameNameFromConfig();
         // drop down menu for games
         Spinner dropdown = findViewById(R.id.gameName);
 
@@ -170,7 +169,7 @@ public class AddNewGame extends AppCompatActivity {
         Spinner dropdown = findViewById(R.id.gameName);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                selectedGame = dropdown.getSelectedItemPosition();
+                selectedConfigPosition = dropdown.getSelectedItemPosition();
 
                 // set text again when the user changes selection
                 numOfPlayerFromUser = findViewById(R.id.num_players_input);
@@ -183,10 +182,10 @@ public class AddNewGame extends AppCompatActivity {
                 combinedScores = 0;
                 edList.clear();
                 // call function according to current selection
-                checkInput(selectedGame);
+                checkInput(selectedConfigPosition);
                 setSetBtn();
                 createFields(2);
-                saveInput(selectedGame);
+                saveInput(selectedConfigPosition);
             }
             public void onNothingSelected(AdapterView<?> arg0) {}
         });
@@ -549,7 +548,7 @@ public class AddNewGame extends AppCompatActivity {
 
     private void setVariablesFromExistingGame(int indexOfGame){
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
-        currentConfigPosition = manager.getIndex();
+        currentConfigPosition = manager.getIndexOfCurrentConfiguration();
         //Get the theme from the game that is being edited
         gameTheme = manager.getItemAtIndex(currentConfigPosition).getTheme(indexOfGame);
         if (gameTheme.equals(FRUITS)){
@@ -622,7 +621,7 @@ public class AddNewGame extends AppCompatActivity {
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setScores(combinedScores);
                     // reset achievement
                     resetAchievementLevel(currentConfigPosition, manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getPlayers());
-                    manager.getItemAtIndex(manager.getIndex()).getGame(indexOfGame).setDifficulty(addNewGameAchievements.getDifficultyLevel());
+                    manager.getItemAtIndex(manager.getIndexOfCurrentConfiguration()).getGame(indexOfGame).setDifficulty(addNewGameAchievements.getDifficultyLevel());
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setAchievementForEditGame(edList.size(), combinedScores, manager.getItemAtIndex(currentConfigPosition), isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme(), addNewGameAchievements.getDifficultyLevel()));
                     // reset theme
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setTheme(addNewGameAchievements.getAchievementTheme());
@@ -646,7 +645,7 @@ public class AddNewGame extends AppCompatActivity {
                         isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme(), addNewGameAchievements.getDifficultyLevel());
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
                 // pass achievement level to appropriate theme layout in add new game screen
-                manager.setIndex(selectedGame);
+                manager.setIndexOfCurrentConfiguration(selectedConfigPosition);
                 goToAchievementCelebrationPage();
             } else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
@@ -714,7 +713,7 @@ public class AddNewGame extends AppCompatActivity {
             btn.setLayoutParams(radio_lp);
             difficultiesGroup.addView(btn);
             //Set user selection as default difficulty
-            if (i == manager.getItemAtIndex(manager.getIndex()).getGame(indexOfGame).getDifficulty()){
+            if (i == manager.getItemAtIndex(manager.getIndexOfCurrentConfiguration()).getGame(indexOfGame).getDifficulty()){
                 btn.setChecked(true);
             }
         }
