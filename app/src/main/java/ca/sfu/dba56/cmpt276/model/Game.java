@@ -100,6 +100,7 @@ public class Game {
         return this.levelAchieved;
     }
 
+    public void setPlayers(int players) {this.players = players;}
     public void setScores(int scores) {this.scores = scores;}
     public void setLevelAchieved(String levelAchieved) {this.levelAchieved = levelAchieved;}
     public void setListOfValues(List<Integer> listOfValues) {this.listOfValues = listOfValues;}
