@@ -47,4 +47,11 @@ public class Configuration {
     public String getTheme(int i){return listOfGames.get(i).getTheme();}
     public void addAchievementsEarnedStats(int index){this.achievementsEarnedStats[index] += 1;}
     public int getAchievementsEarnedStats(int index){return this.achievementsEarnedStats[index];}
+    //Returns true for game configurations added before this iteration
+    public boolean isAchievementsEarnedStatsArrNull(){
+        if (this.achievementsEarnedStats == null){
+            return true;
+        }
+        return false;
+    }
 }

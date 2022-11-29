@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -34,8 +35,8 @@ import java.util.ArrayList;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
 public class AchievementStatistics extends AppCompatActivity {
-    private final int POOR_SCORE = 1;
-    private final int GREAT_SCORE = 10;
+    private final int LOWEST_LEVEL = 1;
+    private final int GREATEST_LEVEL = 10;
     private BarChart statsGraph;
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private int selectedGamePosition;
@@ -48,11 +49,18 @@ public class AchievementStatistics extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_achievement_statistics);
-        statsGraph = findViewById(R.id.stats_graph);
         selectedGamePosition = manager.getIndex();
-        createAchievementStatisticsGraph();
-        setUpPopUpLevelNameButton();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        //Check if selected game configuration was made before achievement stats was added
+        if (manager.getItemAtIndex(selectedGamePosition).isAchievementsEarnedStatsArrNull()){
+            setContentView(R.layout.achievements_stats_null); //Display msg telling user to add new game config
+        } else { //Else display achievement stats graph
+            setContentView(R.layout.activity_achievement_statistics);
+            statsGraph = findViewById(R.id.stats_graph);
+            createAchievementStatisticsGraph();
+            setUpPopUpLevelNameButton();
+        }
     }
 
     public static Intent makeIntent(Context context){
@@ -62,7 +70,7 @@ public class AchievementStatistics extends AppCompatActivity {
     public void createAchievementStatisticsGraph() {
         //The x-axis values for the number of achievement levels
         achievementLevelNumbers = new ArrayList<>();
-        for (int i = POOR_SCORE; i <= GREAT_SCORE; i ++) {
+        for (int i = LOWEST_LEVEL; i <= GREATEST_LEVEL; i ++) {
             achievementLevelNumbers.add(i);
         }
         //The y-axis values for the times user has earned each level
@@ -72,11 +80,12 @@ public class AchievementStatistics extends AppCompatActivity {
             if (manager.getItemAtIndex(selectedGamePosition).getAchievementsEarnedStats(i) == 0){
                 //Don't add to graph
             } else { //Else, add number of each achievement level is earned to the level number
-                timesLevelEarned.add(new BarEntry((i + 1), manager.getItemAtIndex(selectedGamePosition).getAchievementsEarnedStats(i)));
+                timesLevelEarned.add(new BarEntry(achievementLevelNumbers.get(i), manager.getItemAtIndex(selectedGamePosition).getAchievementsEarnedStats(i)));
             }
         }
         //Create the data set for the number of times user has earned each level
         BarDataSet levelsEarnedDataSet = new BarDataSet(timesLevelEarned, "Times Level Earned");
+        levelsEarnedDataSet.setColor(getResources().getColor(R.color.white));
         //Display the bar of the data set
         BarData barLevelsEarned = new BarData(levelsEarnedDataSet);
         statsGraph.setData(barLevelsEarned);
@@ -89,8 +98,7 @@ public class AchievementStatistics extends AppCompatActivity {
         XAxis xAxis = statsGraph.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawAxisLine(true);
-        xAxis.setGranularity(1f);
-        xAxis.setGranularityEnabled(true);
+        xAxis.setDrawGridLines(false); //Remove grid-lines
 
         //y-axis modifications
         YAxis leftYAxis = statsGraph.getAxisLeft();

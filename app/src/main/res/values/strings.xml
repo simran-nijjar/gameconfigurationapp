@@ -31,7 +31,7 @@
         \n<a href="https://uxwing.com/star-icon/">staricon.png</a>\n
         \n<a href="https://www.kibrispdr.org/detail-1/star-wars-characters-cartoon-pictures.html">starwarsimage.png</a>\n
         \n<a href="https://www.clipartmax.com/download/m2i8G6A0K9N4d3m2_yoda-chewbacca-anakin-skywalker-luke-skywalker-star-wars-cute-cartoons/">yodaicon.png</a>\n
-        \n<a href="https://www.freeiconspng.com/downloadimg/30230">closebutton.png</a>\n
+        \n<a href="https://commons.wikimedia.org/wiki/File:Cross_red_circle.svg">closebutton.png</a>\n
 
     </string>
     <string name="achievement_themes_plus_levels_content">
@@ -170,4 +170,5 @@
         9.Asajj Ventress\n\n
         10.Leia Organa\n\n\n
     </string>
+    <string name="achievement_stats_null">Sorry. The game configuration selected was not set up with achievement statistics.\nPlease delete this configuration and add a new game configuration to have access to new features from this iteration!</string>
 </resources>
