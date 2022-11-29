@@ -54,7 +54,7 @@ public class AchievementStatistics extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         //Check if selected game configuration was made before achievement stats was added
         if (manager.getItemAtIndex(selectedGamePosition).isAchievementsEarnedStatsArrNull()){
-            setContentView(R.layout.achievements_stats_null); //Display msg telling user to add new game config
+            setContentView(R.layout.achievements_statistics_null); //Display msg telling user to add new game config
         } else { //Else display achievement stats graph
             setContentView(R.layout.activity_achievement_statistics);
             statsGraph = findViewById(R.id.stats_graph);
@@ -85,24 +85,30 @@ public class AchievementStatistics extends AppCompatActivity {
         }
         //Create the data set for the number of times user has earned each level
         BarDataSet levelsEarnedDataSet = new BarDataSet(timesLevelEarned, "Times Level Earned");
-        levelsEarnedDataSet.setColor(getResources().getColor(R.color.white));
+        levelsEarnedDataSet.setColor(getResources().getColor(R.color.white)); //bar colour
         //Display the bar of the data set
         BarData barLevelsEarned = new BarData(levelsEarnedDataSet);
         statsGraph.setData(barLevelsEarned);
         statsGraph.setDragEnabled(true);
         Description description = new Description();
-        description.setText("");
+        description.setText(""); //No description, textview instead
         statsGraph.setDescription(description);
 
         //x-axis modifications
         XAxis xAxis = statsGraph.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawAxisLine(true);
+        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMaximum((float)GREATEST_LEVEL);
+        xAxis.setLabelCount(GREATEST_LEVEL - 0); //Number of labels on x-axis
+        xAxis.setDrawAxisLine(true); //Draw base line for axis
         xAxis.setDrawGridLines(false); //Remove grid-lines
+        xAxis.setAxisLineColor(getResources().getColor(R.color.black));
 
         //y-axis modifications
         YAxis leftYAxis = statsGraph.getAxisLeft();
         leftYAxis.setGranularity(1f); //Increase by 1 for y-axis
+        leftYAxis.setAxisLineColor(getResources().getColor(R.color.black));
+        leftYAxis.setGridColor(getResources().getColor(R.color.purple_700));
         YAxis rightYAxis = statsGraph.getAxisRight();
         rightYAxis.setEnabled(false); //Remove right y-axis
     }
