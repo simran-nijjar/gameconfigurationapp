@@ -90,6 +90,7 @@ public class AchievementStatistics extends AppCompatActivity {
         BarData barLevelsEarned = new BarData(levelsEarnedDataSet);
         statsGraph.setData(barLevelsEarned);
         statsGraph.setDragEnabled(true);
+        statsGraph.setTouchEnabled(false);
         Description description = new Description();
         description.setText(""); //No description, textview instead
         statsGraph.setDescription(description);
@@ -101,7 +102,7 @@ public class AchievementStatistics extends AppCompatActivity {
         xAxis.setAxisMaximum((float)GREATEST_LEVEL);
         xAxis.setLabelCount(GREATEST_LEVEL - 0); //Number of labels on x-axis
         xAxis.setDrawAxisLine(true); //Draw base line for axis
-        xAxis.setDrawGridLines(false); //Remove grid-lines
+        xAxis.setDrawGridLines(true);
         xAxis.setAxisLineColor(getResources().getColor(R.color.black));
 
         //y-axis modifications
@@ -109,6 +110,7 @@ public class AchievementStatistics extends AppCompatActivity {
         leftYAxis.setAxisMinimum(0f);
         leftYAxis.setGranularity(1f); //Increase by 1 for y-axis
         leftYAxis.setAxisLineColor(getResources().getColor(R.color.black));
+        leftYAxis.setDrawGridLines(true);
         leftYAxis.setGridColor(getResources().getColor(R.color.purple_700));
         YAxis rightYAxis = statsGraph.getAxisRight();
         rightYAxis.setEnabled(false); //Remove right y-axis
@@ -124,7 +126,7 @@ public class AchievementStatistics extends AppCompatActivity {
             popUpLevelNames = new PopupWindow(popUpView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
             popUpLevelNames.setAnimationStyle(android.R.style.Animation_Dialog);
             popUpLevelNames.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
-            popUpLevelNames.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+            popUpLevelNames.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             //Buttons that when clicked in the pop-up window, will show levels for the clicked theme
             setUpFruitLevelsButton();
             setUpFantasyLevelsButton();
