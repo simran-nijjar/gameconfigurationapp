@@ -156,7 +156,7 @@ public class Achievements {
         }
         else if (combinedScore >= intAchievements[maxScore - minScore + 1]){
             this.levelAchieved = getAchievementLevel(9);
-            this.indexLevelAchieved = 0;
+            this.indexLevelAchieved = 9;
             this.isHighestLevel = true;
         }
         else{
@@ -178,7 +178,7 @@ public class Achievements {
     public int getDifficultyLevel(){
         return this.currentDifLevel;
     }
-    public int getIndexLevelAchieved(){return indexLevelAchieved;}
+    public int getIndexLevelAchieved(){return this.indexLevelAchieved;}
     public boolean isHighestLevelAchieved(){return isHighestLevel;}
     public String getNextAchievementLevel(){return nextAchievementLevel;}
     public void setNextAchievementLevel(String nextLevel){this.nextAchievementLevel = nextLevel;}
