@@ -76,7 +76,9 @@ public class AddNewGame extends AppCompatActivity {
     private int temp;
     private Stack<EditText> edList = new Stack<>();
     private ArrayList<String> edList_temp = new ArrayList<>();
-    View screenView;
+    private View screenView;
+    private int indexOfOriginalAchievementLevel;
+    private int indexOfEditedAchievementLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -561,6 +563,7 @@ public class AddNewGame extends AppCompatActivity {
         }
         numOfPlayerFromUser.setText("" + manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getPlayers());
         numOfPlayers = manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getPlayers();
+        indexOfOriginalAchievementLevel = manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getIndexLevelAchieved();
 
         indexOfPlayer = 0;
         indexOfScore = 0;
@@ -571,8 +574,6 @@ public class AddNewGame extends AppCompatActivity {
         for (int i = 0; i < edList.size(); i++) {
             edList.get(i).setText("" + manager.getItemAtIndex(currentConfigPosition).getListOfValues(indexOfGame).get(i));
         }
-
-        //saveInputForEditGame(currentConfigPosition);
     }
 
     // reset Achievement level in edit game screen
@@ -624,8 +625,12 @@ public class AddNewGame extends AppCompatActivity {
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setAchievementForEditGame(edList.size(), combinedScores, manager.getItemAtIndex(currentConfigPosition), isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme(), addNewGameAchievements.getDifficultyLevel()));
                     // reset theme
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setTheme(addNewGameAchievements.getAchievementTheme());
-                    // Add level earned to achievement statistics
-                    manager.getItemAtIndex(currentConfigPosition).addAchievementsEarnedStats(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getIndexGameLevelAchieved());
+                    // Add level earned to achievement statistics if new achievement level is different than original level
+                    indexOfEditedAchievementLevel = manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getIndexGameLevelAchieved();
+                    if (indexOfOriginalAchievementLevel != indexOfEditedAchievementLevel) {
+                        manager.getItemAtIndex(currentConfigPosition).removeAchievementsEarnedStats(indexOfOriginalAchievementLevel); //Remove original achievement level from statistics
+                        manager.getItemAtIndex(currentConfigPosition).addAchievementsEarnedStats(indexOfEditedAchievementLevel); //Add new achievement level from statistics
+                    }
                     // pass achievement level to appropriate theme layout to be displayed
                     goToAchievementCelebrationPage();
                 } else {

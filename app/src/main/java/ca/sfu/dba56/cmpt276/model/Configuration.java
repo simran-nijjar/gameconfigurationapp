@@ -46,6 +46,12 @@ public class Configuration {
     public Game getGame(int i){return listOfGames.get(i);}
     public String getTheme(int i){return listOfGames.get(i).getTheme();}
     public void addAchievementsEarnedStats(int index){this.achievementsEarnedStats[index] += 1;}
+    public void removeAchievementsEarnedStats(int index){
+        if (this.achievementsEarnedStats[index] == 0){
+            throw new IllegalArgumentException("Cannot remove level earned from achievement stats because the stat for this level is zero\n");
+        }
+        this.achievementsEarnedStats[index] -= 1;
+    }
     public int getAchievementsEarnedStats(int index){return this.achievementsEarnedStats[index];}
     //Returns true for game configurations added before this iteration
     public boolean isAchievementsEarnedStatsArrNull(){
