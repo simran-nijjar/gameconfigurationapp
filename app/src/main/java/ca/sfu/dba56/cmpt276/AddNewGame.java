@@ -51,11 +51,9 @@ public class AddNewGame extends AppCompatActivity {
     private final String FANTASY = "Fantasy";
     private final String STAR_WARS = "Star Wars";
     private int numOfPlayers; // int user input
-    //private int scores; // int user input
     private int combinedScores = 0;
     private String dateGamePlayed; // date time
     private String numOfPlayersAsStr = "";  // String user input
-    //private String scoresAsStr = ""; // String user input
     private EditText numOfPlayerFromUser;
     private TextView playerMsg; // alert message
     private boolean isPlayerValid; // check if user input is valid
@@ -142,7 +140,6 @@ public class AddNewGame extends AppCompatActivity {
 
     private void chooseGame() {
         // get selected game config index
-//        String name = manager.getItemAtIndex(manager.getIndex()).getGameNameFromConfig();
         int name = manager.getIndex();
         // drop down menu for games
         Spinner dropdown = findViewById(R.id.gameName);
@@ -154,8 +151,7 @@ public class AddNewGame extends AppCompatActivity {
         while(count < manager.configListSize()){
             String strResult = manager.getItemAtIndex(count).getGameNameFromConfig();
             items.add(strResult);
-//            if(Objects.equals(items.get(count), name)){
-                if(count == name){
+            if(count == name){
                 defaultGameIndex = count;
             }
             count++;
