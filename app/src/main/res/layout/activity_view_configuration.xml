@@ -64,7 +64,7 @@
         android:id="@+id/btnEditConfig"
         android:layout_width="100dp"
         android:layout_height="55dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="95dp"
         android:text="Edit"
         app:layout_constraintStart_toStartOf="@+id/btnHistoryConfig"
         app:layout_constraintTop_toBottomOf="@+id/btnHistoryConfig" />
@@ -73,7 +73,7 @@
         android:id="@+id/btnHistoryConfig"
         android:layout_width="320dp"
         android:layout_height="55dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="21dp"
         android:text="View Games History"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"
@@ -84,7 +84,7 @@
         android:id="@+id/btnDeleteConfig"
         android:layout_width="100dp"
         android:layout_height="55dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="20dp"
         android:text="Delete"
         app:layout_constraintStart_toStartOf="@+id/btnHistoryConfig"
         app:layout_constraintTop_toBottomOf="@+id/btnEditConfig" />
@@ -105,7 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="55dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="20dp"
         android:text="View Achievements"
         app:layout_constraintEnd_toEndOf="@+id/image_history"
         app:layout_constraintHorizontal_bias="0.02"
@@ -126,6 +126,16 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/txtGreatScoreConfigView"
         app:layout_constraintTop_toBottomOf="@+id/txtGreatScoreConfigView" />
+
+    <Button
+        android:id="@+id/achievementStatsBtn"
+        android:layout_width="320dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:text="Achievement Statistics"
+        app:layout_constraintEnd_toEndOf="@+id/btnHistoryConfig"
+        app:layout_constraintStart_toStartOf="@+id/btnHistoryConfig"
+        app:layout_constraintTop_toBottomOf="@+id/btnHistoryConfig" />
 
     <ImageView
         android:id="@+id/configImage"

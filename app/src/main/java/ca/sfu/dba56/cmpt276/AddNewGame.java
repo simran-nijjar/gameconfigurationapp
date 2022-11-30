@@ -50,11 +50,9 @@ public class AddNewGame extends AppCompatActivity {
     private final String FANTASY = "Fantasy";
     private final String STAR_WARS = "Star Wars";
     private int numOfPlayers; // int user input
-    //private int scores; // int user input
     private int combinedScores = 0;
     private String dateGamePlayed; // date time
     private String numOfPlayersAsStr = "";  // String user input
-    //private String scoresAsStr = ""; // String user input
     private EditText numOfPlayerFromUser;
     private TextView playerMsg; // alert message
     private boolean isPlayerValid; // check if user input is valid
@@ -77,7 +75,9 @@ public class AddNewGame extends AppCompatActivity {
     private int temp;
     private Stack<EditText> edList = new Stack<>();
     private ArrayList<String> edList_temp = new ArrayList<>();
-    View screenView;
+    private View screenView;
+    private int indexOfOriginalAchievementLevel;
+    private int indexOfEditedAchievementLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +141,7 @@ public class AddNewGame extends AppCompatActivity {
 
     private void chooseGame() {
         // get selected game config index
-        String name = manager.getItemAtIndex(manager.getIndexOfCurrentConfiguration()).getGameNameFromConfig();
+        int name = manager.getIndexOfCurrentConfiguration();
         // drop down menu for games
         Spinner dropdown = findViewById(R.id.gameName);
 
@@ -152,7 +152,7 @@ public class AddNewGame extends AppCompatActivity {
         while(count < manager.configListSize()){
             String strResult = manager.getItemAtIndex(count).getGameNameFromConfig();
             items.add(strResult);
-            if(Objects.equals(items.get(count), name)){
+            if(count == name){
                 defaultGameIndex = count;
             }
             count++;
@@ -562,6 +562,7 @@ public class AddNewGame extends AppCompatActivity {
         }
         numOfPlayerFromUser.setText("" + manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getPlayers());
         numOfPlayers = manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getPlayers();
+        indexOfOriginalAchievementLevel = manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getIndexLevelAchieved();
 
         indexOfPlayer = 0;
         indexOfScore = 0;
@@ -572,8 +573,6 @@ public class AddNewGame extends AppCompatActivity {
         for (int i = 0; i < edList.size(); i++) {
             edList.get(i).setText("" + manager.getItemAtIndex(currentConfigPosition).getListOfValues(indexOfGame).get(i));
         }
-
-        //saveInputForEditGame(currentConfigPosition);
     }
 
     // reset Achievement level in edit game screen
@@ -625,6 +624,12 @@ public class AddNewGame extends AppCompatActivity {
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setLevelAchieved(manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setAchievementForEditGame(edList.size(), combinedScores, manager.getItemAtIndex(currentConfigPosition), isCalculatingRangeForLevels, addNewGameAchievements.getAchievementTheme(), addNewGameAchievements.getDifficultyLevel()));
                     // reset theme
                     manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).setTheme(addNewGameAchievements.getAchievementTheme());
+                    // Add level earned to achievement statistics if new achievement level is different than original level
+                    indexOfEditedAchievementLevel = manager.getItemAtIndex(currentConfigPosition).getGame(indexOfGame).getIndexGameLevelAchieved();
+                    if (indexOfOriginalAchievementLevel != indexOfEditedAchievementLevel) {
+                        manager.getItemAtIndex(currentConfigPosition).removeAchievementsEarnedStats(indexOfOriginalAchievementLevel); //Remove original achievement level from statistics
+                        manager.getItemAtIndex(currentConfigPosition).addAchievementsEarnedStats(indexOfEditedAchievementLevel); //Add new achievement level from statistics
+                    }
                     // pass achievement level to appropriate theme layout to be displayed
                     goToAchievementCelebrationPage();
                 } else {
@@ -646,6 +651,8 @@ public class AddNewGame extends AppCompatActivity {
                 manager.getItemAtIndex(selectedGameInt).add(gamePlayed);
                 // pass achievement level to appropriate theme layout in add new game screen
                 manager.setIndexOfCurrentConfiguration(selectedConfigPosition);
+                // Add level earned to achievement statistics
+                manager.getItemAtIndex(selectedGameInt).addAchievementsEarnedStats(gamePlayed.getIndexLevelAchieved());
                 goToAchievementCelebrationPage();
             } else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();

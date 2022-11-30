@@ -141,4 +141,5 @@ public class Game {
     public void setNextAchievementLevel(String nextLevel){achievements.setNextAchievementLevel(nextLevel);}
     public boolean isHighestLevelAchieved(){return achievements.isHighestLevelAchieved();}
     public int getPointsAwayFromNextLevel(){return achievements.getPointsAwayFromNextLevel();}
+    public int getIndexLevelAchieved(){return achievements.getIndexLevelAchieved();}
 }

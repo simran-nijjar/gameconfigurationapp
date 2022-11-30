@@ -78,6 +78,7 @@ public class ViewConfiguration extends AppCompatActivity {
         setUpGameHistoryButton();
         setUpDeleteButton(currentConfigPosition);
         setUpAddGameButton();
+        setUpAchievementStatsButton();
         expGreatScoreEditTxt.setText(String.valueOf(currentConfig.getMaxBestScoreFromConfig()));
         setUpViewAchievementsButton();
         //to save config manager
@@ -156,6 +157,20 @@ public class ViewConfiguration extends AppCompatActivity {
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void setUpAchievementStatsButton(){
+        Button statsBtn = findViewById(R.id.achievementStatsBtn);
+        //If no game has been played for the configuration, don't show the achievement stats button
+        if (manager.getItemAtIndex(currentConfigPosition).getSizeOfListOfConfigs() == 0){
+            statsBtn.setVisibility(View.GONE);
+        } else { //If at least one game has been played, show achievement stats button
+            statsBtn.setVisibility(View.VISIBLE);
+            statsBtn.setOnClickListener(v -> {
+                Intent intent = AchievementStatistics.makeIntent(ViewConfiguration.this);
+                startActivity(intent);
+            });
+        }
     }
 
     private void setOnImageClick() {

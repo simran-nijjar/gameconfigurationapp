@@ -25,6 +25,16 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".AchievementStatistics"
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="Achievement Statistics"
+            android:parentActivityName=".ViewConfiguration">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".AchievementCelebration"
             android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
             android:exported="false"
