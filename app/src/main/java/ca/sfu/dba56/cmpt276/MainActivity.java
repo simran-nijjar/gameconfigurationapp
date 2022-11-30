@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         //retrieve config manager
         toSaveUsingGsonAndSP.retrieveFromSharedPrefs(this);
 
-        setUpHelpButton();
+        setUpAboutButton();
         UpdateUI();
 
         registerClickCallBack();
@@ -61,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
         return new Intent(context, MainActivity.class);
     }
 
-    private void setUpHelpButton() {
-        Button helpBtn = (Button)findViewById(R.id.helpBtn);
+    private void setUpAboutButton() {
+        Button helpBtn = (Button)findViewById(R.id.aboutBtn);
         helpBtn.setOnClickListener(v -> {
-            Intent intent = HelpActivity.makeIntent(MainActivity.this);
+            Intent intent = AboutActivity.makeIntent(MainActivity.this);
             startActivity(intent);
         });
     }

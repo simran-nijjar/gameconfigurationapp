@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Configurations</string>
-    <string name="help">Help</string>
+    <string name="about">About</string>
     <string name="addNewGame">Add New Game</string>
     <string name="gameHistory">Game History</string>
     <string name="viewAchievements">View Achievements</string>
 
     <string name="info_content">
-        \nThe creators of this app are Sodium. For more information, please
+        \nThe creators of this app are team Sodium. The developers are Simran, Jenna, and Dmitrii. For information about the course, please
         look into this source:
     <a href="https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/home">CMPT276</a>
     </string>
@@ -16,7 +16,9 @@
         \nWhen you want to add a game play, press the game from the list and click add new game where you can set the number of players for a game, choose the game difficulty level and your favourite theme, and click on the ‘set’ button to add the score for each player and see the achievement level you earned.\n
         \nWhen you want to edit a game play, press the game from the list in Game history and edit the score for each player and see the new achievement level you earned.\n
         \nYou can also view history, view expecting achievement levels for a game, edit and delete a game configuration.\n
-        \n\nSources:\n
+        \nTo view how many times you have earned each achievement level, you can look at a graph displaying your achievement statistics.\n
+    </string>
+    <string name="sources_content">
         \n<a href="https://www.idownloadblog.com/2021/05/09/multicolor-gradient-wallpapers-pack-iphone/">appbackground.png</a>\n
         \n<a href="https://www.pinterest.ca/pin/759701030882552315/">fruitsbackground.png</a>\n
         \n<a href="https://linasidorova.com/projects/lVdbn5?album_id=795886">fantasybackground.png</a>\n
@@ -31,7 +33,11 @@
         \n<a href="https://uxwing.com/star-icon/">staricon.png</a>\n
         \n<a href="https://www.kibrispdr.org/detail-1/star-wars-characters-cartoon-pictures.html">starwarsimage.png</a>\n
         \n<a href="https://www.clipartmax.com/download/m2i8G6A0K9N4d3m2_yoda-chewbacca-anakin-skywalker-luke-skywalker-star-wars-cute-cartoons/">yodaicon.png</a>\n
-
+        \n<a href="https://commons.wikimedia.org/wiki/File:Cross_red_circle.svg">closebutton.png</a>\n
+        \n<a href="https://www.youtube.com/watch?v=pi1tq-bp7uA">Youtube Tutorial for Graph (Part 1)</a>\n
+        \n<a href="https://www.youtube.com/watch?v=H6QxMBI2QH4">Youtube Tutorial for Graph (Part 2)</a>\n
+        \n<a href="https://weeklycoding.com/mpandroidchart-documentation/">MPAndroid Chart Documentation</a>\n
+        \n<a href="https://stackoverflow.com/a/69951831">Settings.gradle for MPAndroid Chart</a>\n
     </string>
     <string name="achievement_themes_plus_levels_content">
         \n
@@ -77,7 +83,8 @@
     <string name="invalid_players_msg">Number of players cannot be less than 1. Please try again.</string>
     <string name="greaterCombinedScoreMsg">Invalid input: Combined score can not be greater than the maximum score</string>
     <string name="achievement">Achievements</string>
-    <string name="descriptions">Descriptions</string>
+    <string name="description">Description</string>
+    <string name="sources">Sources</string>
     <string name="info">Info</string>
     <string name="emptyOrInvalid">Your input is empty or invalid</string>
     <string name="OK">Ok</string>
