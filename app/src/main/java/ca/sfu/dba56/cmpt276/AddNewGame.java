@@ -142,7 +142,8 @@ public class AddNewGame extends AppCompatActivity {
 
     private void chooseGame() {
         // get selected game config index
-        String name = manager.getItemAtIndex(manager.getIndex()).getGameNameFromConfig();
+//        String name = manager.getItemAtIndex(manager.getIndex()).getGameNameFromConfig();
+        int name = manager.getIndex();
         // drop down menu for games
         Spinner dropdown = findViewById(R.id.gameName);
 
@@ -153,7 +154,8 @@ public class AddNewGame extends AppCompatActivity {
         while(count < manager.configListSize()){
             String strResult = manager.getItemAtIndex(count).getGameNameFromConfig();
             items.add(strResult);
-            if(Objects.equals(items.get(count), name)){
+//            if(Objects.equals(items.get(count), name)){
+                if(count == name){
                 defaultGameIndex = count;
             }
             count++;
