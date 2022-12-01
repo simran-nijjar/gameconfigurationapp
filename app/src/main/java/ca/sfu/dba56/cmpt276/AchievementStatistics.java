@@ -49,7 +49,7 @@ public class AchievementStatistics extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        selectedGamePosition = manager.getIndex();
+        selectedGamePosition = manager.getIndexOfCurrentConfiguration();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         //Check if selected game configuration was made before achievement stats was added

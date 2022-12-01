@@ -7,18 +7,19 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
 
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
@@ -35,7 +36,8 @@ public class ViewImage extends AppCompatActivity {
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private int indexOfGamePlay = -1;
     private ImageView image;
-    Uri image_uri;
+    //Uri image_uri;
+    private int indexOfConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class ViewImage extends AppCompatActivity {
 //        bar.setDisplayHomeAsUpEnabled(true);
 
         Bundle b = getIntent().getExtras();
-        int indexOfConfig = manager.getIndexOfCurrentConfiguration();
+        indexOfConfig = manager.getIndexOfCurrentConfiguration();
         if(b != null){
             //activity is open from AddNewGame
             indexOfGamePlay = b.getInt("Selected GamePlay position");
@@ -108,32 +110,29 @@ public class ViewImage extends AppCompatActivity {
     }
 
     private void openCamera() {
-        Toast.makeText(this, "Camera Permission Granted", Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "Gallery Permission Granted", Toast.LENGTH_SHORT).show();
-
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "new image");
-        values.put(MediaStore.Images.Media.DESCRIPTION, "From the ViewImage class");
-        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
         startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
     }
 
-    @SuppressLint("MissingSuperCall")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode == RESULT_OK){
-            image.setImageURI(image_uri);
-            manager.getItemAtIndex(manager.getIndexOfCurrentConfiguration()).setUriForConfigImage(image_uri);
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            Bundle bundle = data.getExtras();
+            Bitmap finalPhotoInBitMap = (Bitmap) bundle.get("data");
+            image.setImageBitmap(finalPhotoInBitMap);
+            //sets current bitmap of taken photo to a string variable in current config object
+            manager.getItemAtIndex(indexOfConfig).setImageStringForConfig(imageBitMapToString(finalPhotoInBitMap));
+
+        }
+        else{
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
     private void askCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-        {
+                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, WES_PERMISSION_CODE);
         } else {
@@ -147,6 +146,14 @@ public class ViewImage extends AppCompatActivity {
             //check for the camera permission
             askCameraPermission();
         });
+    }
+
+    // inspired/source: https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+    public String imageBitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b = baos.toByteArray();
+        return Base64.encodeToString(b, Base64.DEFAULT);
     }
 
     public static Intent makeIntent(Context context) {

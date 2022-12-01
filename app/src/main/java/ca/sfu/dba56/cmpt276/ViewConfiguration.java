@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -88,9 +89,9 @@ public class ViewConfiguration extends AppCompatActivity {
         setOnImageClick();
         //set image to Uri from config
         configImage = findViewById(R.id.configImage);
-        Uri currentImageUri = manager.getItemAtIndex(manager.getIndexOfCurrentConfiguration()).getUriForConfigImage();
-        if(currentImageUri != null){
-            configImage.setImageURI(currentImageUri);
+        if(manager.getItemAtIndex(currentConfigPosition).imageStringToBitMap() != null){
+            Bitmap imageBM = manager.getItemAtIndex(currentConfigPosition).imageStringToBitMap();
+            configImage.setImageBitmap(imageBM);
         }
     }
 

@@ -1,6 +1,9 @@
 package ca.sfu.dba56.cmpt276.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Base64;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +20,8 @@ public class Configuration {
     private int maxBestScore;
     private List<Game> listOfGames = new ArrayList<>();
     private int achievementsEarnedStats[];
-    private Uri uriForConfigImage = null;
+    //private Uri uriForConfigImage = null;
+    private String imageString;
 
     //constructor
     public Configuration(String newGameName, int newMinScore, int newMaxScore){
@@ -38,7 +42,8 @@ public class Configuration {
     public void setGameNameInConfig(String newName){gameName = newName;}
     public void setMinPoorScoreInConfig(int newScore){minPoorScore = newScore;}
     public void setMaxBestScoreInConfig(int newScore){maxBestScore = newScore;}
-    public void setUriForConfigImage(Uri newUri){uriForConfigImage = newUri;}
+    //public void setUriForConfigImage(Uri newUri){uriForConfigImage = newUri;}
+    public void setImageStringForConfig(String newStr){imageString = newStr;}
     //getters
     public String getGameNameFromConfig(){return gameName;}
     public int getMinPoorScoreFromConfig(){return minPoorScore;}
@@ -50,7 +55,7 @@ public class Configuration {
     public List<Integer> getListOfValues(int i){return listOfGames.get(i).getListOfValues();}
     public Game getGame(int i){return listOfGames.get(i);}
     public String getTheme(int i){return listOfGames.get(i).getTheme();}
-    public Uri getUriForConfigImage(){return this.uriForConfigImage;}
+    //public Uri getUriForConfigImage(){return this.uriForConfigImage;}
 
     //Adds achievement level index to array of achievement stats
     public void addAchievementsEarnedStats(int index){this.achievementsEarnedStats[index] += 1;}
@@ -68,5 +73,18 @@ public class Configuration {
             return true;
         }
         return false;
+    }
+
+    // inspired/source: https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+    // converts imageString variable to bitmap
+    public Bitmap imageStringToBitMap(){
+        try {
+            byte [] encodeByte= Base64.decode(this.imageString, Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }
