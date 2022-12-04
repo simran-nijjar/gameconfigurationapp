@@ -139,8 +139,11 @@
 
     <ImageView
         android:id="@+id/configImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:adjustViewBounds="true"
+        android:maxWidth="150dp"
+        android:maxHeight="150dp"
         app:layout_constraintBottom_toTopOf="@+id/image_history"
         app:layout_constraintEnd_toStartOf="@+id/txtPoorScoreConfigView"
         app:layout_constraintStart_toStartOf="parent"

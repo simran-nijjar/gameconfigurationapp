@@ -6,11 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import ca.sfu.dba56.cmpt276.model.Configuration;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.SaveUsingGson;
 
@@ -85,24 +88,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateListView(ConfigurationsManager manager) {
-        // creating list of config items
-        ArrayList<String> items = new ArrayList<String>();
-        //array of string config names
-        int count = 0;
-        while(count < manager.configListSize()){
-            String strResult = "\n" + manager.getItemAtIndex(count).getGameNameFromConfig() + "\n";
-            items.add(strResult);
-            count++;
-        }
-        //adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this,
-                R.layout.text_view_config_items,
-                items);
+        ArrayAdapter<Configuration> adapter1 = new MyListAdapter();
         ListView list = findViewById(R.id.configList);
-        list.setAdapter(adapter);
+        list.setAdapter(adapter1);
     }
 
+    private class MyListAdapter extends ArrayAdapter<Configuration> {
+        public MyListAdapter() {
+            super(MainActivity.this, R.layout.config_item_list_and_image_view, manager.getListOfConfigurations());
+        }
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent){
+            //makes a view to work with
+            View itemView = convertView;
+            if(itemView == null){
+                itemView = getLayoutInflater().inflate(R.layout.config_item_list_and_image_view, parent, false);
+            }
+            //file the imageView
+            Configuration currentConfig = manager.getItemAtIndex(position);
+            ImageView imageIcon = itemView.findViewById(R.id.item_iconForConfigList);
+            imageIcon.setImageBitmap(currentConfig.imageStringToBitMap());
+            //file the textView
+            TextView makeText = itemView.findViewById(R.id.item_textViewForConfigList);
+            String strConfigName = "\n" + currentConfig.getGameNameFromConfig() + "\n";
+            makeText.setText(strConfigName);
+
+            return itemView;
+            }
+    }
 
     private void registerClickCallBack() {
         ListView list = findViewById(R.id.configList);

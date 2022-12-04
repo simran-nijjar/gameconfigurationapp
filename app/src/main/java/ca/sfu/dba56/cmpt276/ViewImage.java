@@ -2,6 +2,7 @@ package ca.sfu.dba56.cmpt276;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -11,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -36,8 +38,13 @@ public class ViewImage extends AppCompatActivity {
     private ConfigurationsManager manager = ConfigurationsManager.getInstance();
     private int indexOfGamePlay = -1;
     private ImageView image;
-    //Uri image_uri;
+    private Bitmap finalPhotoInBitMap;
+    boolean isThereAPhoto = false;
+    private Button rotateRightBtn;
+    private Button rotateLeftBtn;
+    private Button saveImageBtn;
     private int indexOfConfig;
+    private int angle = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,22 +53,74 @@ public class ViewImage extends AppCompatActivity {
         setTitle("Manage Image");
 
         image = findViewById(R.id.image_view_for_activity);
+        rotateRightBtn = findViewById(R.id.rotateRightBtn);
+        rotateLeftBtn = findViewById(R.id.rotateLeftBtn);
+        saveImageBtn = findViewById(R.id.saveImagebtn);
+        setRotationBtns();
+        setSaveBtn();
 
-//        ActionBar bar = getSupportActionBar();
-//        assert bar != null;
-//        bar.setDisplayHomeAsUpEnabled(true);
+        ActionBar bar = getSupportActionBar();
+        bar.setDisplayHomeAsUpEnabled(true);
 
         Bundle b = getIntent().getExtras();
         indexOfConfig = manager.getIndexOfCurrentConfiguration();
         if(b != null){
             //activity is open from AddNewGame
             indexOfGamePlay = b.getInt("Selected GamePlay position");
+
         }
         else{
             //activity is open from ViewConfiguration
             setUpCameraBtn();
+            if(manager.getItemAtIndex(indexOfConfig).getImageString() != null){
+                isThereAPhoto = true;
+                finalPhotoInBitMap = manager.getItemAtIndex(indexOfConfig).imageStringToBitMap();
+                image.setImageBitmap(finalPhotoInBitMap);
+            }
 
         }
+    }
+
+    private void setSaveBtn() {
+        saveImageBtn.setOnClickListener(view -> {
+            if (isThereAPhoto){
+                //sets current bitmap of taken photo to a string variable in current config object
+                image.buildDrawingCache();
+                finalPhotoInBitMap = image.getDrawingCache();
+                manager.getItemAtIndex(indexOfConfig).setImageStringForConfig(imageBitMapToString(finalPhotoInBitMap));
+                Toast.makeText(this, "Your photo was saved!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "You need a make a photo first", Toast.LENGTH_SHORT).show();
+            }});
+    }
+
+    private void setRotationBtns() {
+        //rotate image view to the left 90 deg
+        rotateLeftBtn.setOnClickListener(view -> {
+            if (isThereAPhoto){
+                Matrix matrix = new Matrix();
+                matrix.postRotate(angle -= 90);
+//                Bitmap scaledBitmap = Bitmap.createScaledBitmap(finalPhotoInBitMap, finalPhotoInBitMap.getWidth(), finalPhotoInBitMap.getHeight(), true);
+//                Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+                Bitmap rotatedBitmap = Bitmap.createBitmap(finalPhotoInBitMap, 0, 0, finalPhotoInBitMap.getWidth(), finalPhotoInBitMap.getHeight(), matrix, true);
+                image.setImageBitmap(rotatedBitmap);
+
+            } else {
+                Toast.makeText(this, "You need a make a photo first", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //rotate image view to the right 90 deg
+        rotateRightBtn.setOnClickListener(view -> {
+            if (isThereAPhoto){
+                Matrix matrix = new Matrix();
+                matrix.postRotate(angle += 90);
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(finalPhotoInBitMap, finalPhotoInBitMap.getWidth(), finalPhotoInBitMap.getHeight(), true);
+                Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+                image.setImageBitmap(rotatedBitmap);
+            } else {
+                Toast.makeText(this, "You need a make a photo first", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -118,11 +177,9 @@ public class ViewImage extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             Bundle bundle = data.getExtras();
-            Bitmap finalPhotoInBitMap = (Bitmap) bundle.get("data");
+            finalPhotoInBitMap = (Bitmap) bundle.get("data");
             image.setImageBitmap(finalPhotoInBitMap);
-            //sets current bitmap of taken photo to a string variable in current config object
-            manager.getItemAtIndex(indexOfConfig).setImageStringForConfig(imageBitMapToString(finalPhotoInBitMap));
-
+            isThereAPhoto = true;
         }
         else{
             super.onActivityResult(requestCode, resultCode, data);

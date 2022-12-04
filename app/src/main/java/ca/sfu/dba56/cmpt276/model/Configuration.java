@@ -20,7 +20,6 @@ public class Configuration {
     private int maxBestScore;
     private List<Game> listOfGames = new ArrayList<>();
     private int achievementsEarnedStats[];
-    //private Uri uriForConfigImage = null;
     private String imageString;
 
     //constructor
@@ -29,6 +28,7 @@ public class Configuration {
         minPoorScore = newMinScore;
         maxBestScore = newMaxScore;
         this.achievementsEarnedStats = new int[]{0,0,0,0,0,0,0,0,0,0};
+        imageString = null;
     }
 
     //add new game (to the list)
@@ -55,7 +55,8 @@ public class Configuration {
     public List<Integer> getListOfValues(int i){return listOfGames.get(i).getListOfValues();}
     public Game getGame(int i){return listOfGames.get(i);}
     public String getTheme(int i){return listOfGames.get(i).getTheme();}
-    //public Uri getUriForConfigImage(){return this.uriForConfigImage;}
+    public String getImageString() {return imageString;}
+
 
     //Adds achievement level index to array of achievement stats
     public void addAchievementsEarnedStats(int index){this.achievementsEarnedStats[index] += 1;}
