@@ -75,7 +75,6 @@ public class AddNewGame extends AppCompatActivity {
     private int temp;
     private Stack<EditText> edList = new Stack<>();
     private ArrayList<String> edList_temp = new ArrayList<>();
-    private View screenView;
     private int indexOfOriginalAchievementLevel;
     private int indexOfEditedAchievementLevel;
 
@@ -218,8 +217,6 @@ public class AddNewGame extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                screenView = findViewById(R.id.scrollInAddGame);
-
                 int [] background_image = new int[]{R.drawable.fruitsbackground, R.drawable.fantasybackground, R.drawable.starwarsbackground};
                 //When user selects a new theme, recreate activity to display theme levels and achievements
                 selectedTheme = dropdown.getSelectedItemPosition();
@@ -341,7 +338,6 @@ public class AddNewGame extends AppCompatActivity {
         lp_et.setMargins(10, 0, 5, 0);
         et.setLayoutParams(lp_et);
         ll_both.addView(et);
-        //ll_both.setId(indexOfScore);
 
         LinearLayout.LayoutParams lp_both = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp_both.setMargins(10, 2, 10, 10);
@@ -412,10 +408,6 @@ public class AddNewGame extends AppCompatActivity {
     public boolean validateFields(){
         isScoresValid = true;
         for(EditText editText:edList){
-//            if(!Util.isScoreEmpty(editText.getText().toString())){
-//                editText.setError("Invalid input!");
-//                isScoresValid = false;
-//            }
             if(!Util.isValidScore(editText.getText().toString())){
                 editText.setError("Invalid input!");
                 isScoresValid = false;
