@@ -631,6 +631,7 @@ public class AddNewGame extends AppCompatActivity {
                         manager.getItemAtIndex(currentConfigPosition).addAchievementsEarnedStats(indexOfEditedAchievementLevel); //Add new achievement level from statistics
                     }
                     // pass achievement level to appropriate theme layout to be displayed
+                    //TODO: add an alert dialog for add new image
                     goToAchievementCelebrationPage();
                 } else {
                     Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
