@@ -113,22 +113,32 @@
 
                 <Button
                     android:id="@+id/save_btn"
-                    android:layout_width="0dip"
+                    android:layout_width="246dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="200dp"
+                    android:layout_weight="1"
                     android:text="Save Game" />
 
                 <Button
                     android:id="@+id/set_btn"
-                    android:layout_width="0dip"
+                    android:layout_width="237dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="200dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_weight="1"
+                    android:text="Set Players" />
+
+                <Button
+                    android:id="@+id/view_image_btn"
+                    android:layout_width="82dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="200dp"
                     android:layout_marginEnd="15dp"
                     android:layout_weight="1"
-                    android:text="Set Players" />
+                    android:text="View Image" />
 
             </LinearLayout>
 

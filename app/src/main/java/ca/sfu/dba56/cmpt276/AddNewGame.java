@@ -77,6 +77,7 @@ public class AddNewGame extends AppCompatActivity {
     private ArrayList<String> edList_temp = new ArrayList<>();
     private int indexOfOriginalAchievementLevel;
     private int indexOfEditedAchievementLevel;
+    private Button viewImageBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,7 @@ public class AddNewGame extends AppCompatActivity {
         Spinner dropdown = findViewById(R.id.gameName);
         numOfPlayerFromUser = findViewById(R.id.num_players_input);
         TextView tv_numOfPlayer = findViewById(R.id.num_players);
+        viewImageBtn = findViewById(R.id.view_image_btn);
 
         if(bundle != null){
             // go to edit game screen
@@ -106,6 +108,8 @@ public class AddNewGame extends AppCompatActivity {
             setVariablesFromExistingGame(indexOfGame);
             resetDifficultyRadioButtons(indexOfGame);
             saveInputForEditGame(manager.getIndexOfCurrentConfiguration());
+            viewImageBtn.setVisibility(View.VISIBLE);
+            setUpViewImageBtn();
         } else {
             // go to add new game screen
             isEditing = false;
@@ -114,6 +118,7 @@ public class AddNewGame extends AppCompatActivity {
             numOfPlayerFromUser.setText("2");
             tv_numOfPlayer.setText(R.string.num_player);
             createDifficultyRadioButtons();
+            viewImageBtn.setVisibility(View.GONE);
         }
         storeSelectedAchievementTheme();
     }
@@ -630,6 +635,18 @@ public class AddNewGame extends AppCompatActivity {
                     Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                 }
             }
+        });
+    }
+
+    //Button to view image for game played
+    private void setUpViewImageBtn(){
+        Button viewImageBtn = findViewById(R.id.view_image_btn);
+        viewImageBtn.setOnClickListener(v -> {
+            //make an intent for ViewImage activity
+            Intent intent = ViewImage.makeIntent(AddNewGame.this);
+            int gamePosition= manager.getItemAtIndex(manager.getIndexOfCurrentConfiguration()).getSizeOfListOfGamePlays() - 1;
+            intent.putExtra("Selected GamePlay position", gamePosition);
+            startActivity(intent);
         });
     }
 
