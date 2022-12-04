@@ -58,7 +58,7 @@ public class GameHistory extends AppCompatActivity {
         ArrayList<String> items = new ArrayList<String>();
         //array of games
         int count = 0;
-        while(count < manager.getItemAtIndex(indexOfGame).getSizeOfListOfConfigs()){
+        while(count < manager.getItemAtIndex(indexOfGame).getSizeOfListOfGamePlays()){
             String strResult = "\n" + manager.getItemAtIndex(indexOfGame).get(count) + "\n";
             items.add(strResult);
             count++;

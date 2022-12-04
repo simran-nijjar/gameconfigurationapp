@@ -7,7 +7,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -113,7 +112,7 @@ public class ViewConfiguration extends AppCompatActivity {
         // image made from miro
         // https://miro.com
         ImageView image = findViewById(R.id.image_history);
-        if(manager.getItemAtIndex(currentConfigPosition).getSizeOfListOfConfigs() == 0){
+        if(manager.getItemAtIndex(currentConfigPosition).getSizeOfListOfGamePlays() == 0){
             historyBtn.setVisibility(View.INVISIBLE);
             image.setVisibility(View.VISIBLE);
         }else {
@@ -163,7 +162,7 @@ public class ViewConfiguration extends AppCompatActivity {
     private void setUpAchievementStatsButton(){
         Button statsBtn = findViewById(R.id.achievementStatsBtn);
         //If no game has been played for the configuration, don't show the achievement stats button
-        if (manager.getItemAtIndex(currentConfigPosition).getSizeOfListOfConfigs() == 0){
+        if (manager.getItemAtIndex(currentConfigPosition).getSizeOfListOfGamePlays() == 0){
             statsBtn.setVisibility(View.GONE);
         } else { //If at least one game has been played, show achievement stats button
             statsBtn.setVisibility(View.VISIBLE);

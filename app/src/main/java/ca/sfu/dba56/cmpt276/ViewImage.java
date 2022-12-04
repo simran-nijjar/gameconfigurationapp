@@ -45,6 +45,7 @@ public class ViewImage extends AppCompatActivity {
     private Button saveImageBtn;
     private int indexOfConfig;
     private int angle = 0;
+    private Bundle b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,26 +59,40 @@ public class ViewImage extends AppCompatActivity {
         saveImageBtn = findViewById(R.id.saveImagebtn);
         setRotationBtns();
         setSaveBtn();
+        setUpCameraBtn();
 
         ActionBar bar = getSupportActionBar();
         bar.setDisplayHomeAsUpEnabled(true);
 
-        Bundle b = getIntent().getExtras();
+        UpdateImageUI();
+    }
+
+    @Override
+    protected void onResume() {
+        UpdateImageUI();
+        super.onResume();
+    }
+
+    private void UpdateImageUI() {
+
+        b = getIntent().getExtras();
         indexOfConfig = manager.getIndexOfCurrentConfiguration();
         if(b != null){
             //activity is open from AddNewGame
             indexOfGamePlay = b.getInt("Selected GamePlay position");
-
+            if(manager.getItemAtIndex(indexOfConfig).getGame(indexOfGamePlay).getImageStringForGamePlay() != null){
+                isThereAPhoto = true;
+                finalPhotoInBitMap = manager.getItemAtIndex(indexOfConfig).getGame(indexOfGamePlay).imageStringToBitMap();
+                image.setImageBitmap(finalPhotoInBitMap);
+            }
         }
         else{
             //activity is open from ViewConfiguration
-            setUpCameraBtn();
-            if(manager.getItemAtIndex(indexOfConfig).getImageString() != null){
+            if(manager.getItemAtIndex(indexOfConfig).getImageStringForConfig() != null){
                 isThereAPhoto = true;
                 finalPhotoInBitMap = manager.getItemAtIndex(indexOfConfig).imageStringToBitMap();
                 image.setImageBitmap(finalPhotoInBitMap);
             }
-
         }
     }
 
@@ -87,11 +102,19 @@ public class ViewImage extends AppCompatActivity {
                 //sets current bitmap of taken photo to a string variable in current config object
                 image.buildDrawingCache();
                 finalPhotoInBitMap = image.getDrawingCache();
-                manager.getItemAtIndex(indexOfConfig).setImageStringForConfig(imageBitMapToString(finalPhotoInBitMap));
+                if(b != null){
+                    //for AddNewGame
+                    manager.getItemAtIndex(indexOfConfig).getGame(indexOfGamePlay).setImageStringForGamePlay(imageBitMapToString(finalPhotoInBitMap));
+                } else {
+                    //for Config
+                    manager.getItemAtIndex(indexOfConfig).setImageStringForConfig(imageBitMapToString(finalPhotoInBitMap));
+                }
                 Toast.makeText(this, "Your photo was saved!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "You need a make a photo first", Toast.LENGTH_SHORT).show();
-            }});
+            }
+        }
+        );
     }
 
     private void setRotationBtns() {
@@ -100,9 +123,9 @@ public class ViewImage extends AppCompatActivity {
             if (isThereAPhoto){
                 Matrix matrix = new Matrix();
                 matrix.postRotate(angle -= 90);
-//                Bitmap scaledBitmap = Bitmap.createScaledBitmap(finalPhotoInBitMap, finalPhotoInBitMap.getWidth(), finalPhotoInBitMap.getHeight(), true);
-//                Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
-                Bitmap rotatedBitmap = Bitmap.createBitmap(finalPhotoInBitMap, 0, 0, finalPhotoInBitMap.getWidth(), finalPhotoInBitMap.getHeight(), matrix, true);
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(finalPhotoInBitMap, finalPhotoInBitMap.getWidth(), finalPhotoInBitMap.getHeight(), true);
+                Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+//                Bitmap rotatedBitmap = Bitmap.createBitmap(finalPhotoInBitMap, 0, 0, finalPhotoInBitMap.getWidth(), finalPhotoInBitMap.getHeight(), matrix, true);
                 image.setImageBitmap(rotatedBitmap);
 
             } else {

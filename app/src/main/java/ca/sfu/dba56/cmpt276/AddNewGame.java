@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import java.util.Stack;
 
 import ca.sfu.dba56.cmpt276.model.Achievements;
@@ -624,11 +624,41 @@ public class AddNewGame extends AppCompatActivity {
                     }
                     // pass achievement level to appropriate theme layout to be displayed
                     //TODO: add an alert dialog for add new image
-                    goToAchievementCelebrationPage();
+                    displayNewImageQuestionMsg();
+//                    goToAchievementCelebrationPage();
                 } else {
                     Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                 }
             }
+        });
+    }
+
+    private void displayNewImageQuestionMsg() {
+        LayoutInflater inflater = LayoutInflater.from(AddNewGame.this);
+        View newImageQuestion = inflater.inflate(R.layout.new_image_alert_dialog, null);
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddNewGame.this)
+                .setView(newImageQuestion)
+                .setMessage("")
+                .setTitle("New Photo?");
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
+
+        Button btnYes = newImageQuestion.findViewById(R.id.yesBtn);
+        Button btnNo = newImageQuestion.findViewById(R.id.noBtn);
+        btnYes.setOnClickListener(view -> {
+            //make an intent for ViewImage activity
+            Intent intent = ViewImage.makeIntent(AddNewGame.this);
+            int gamePosition;
+            //initialize position of the game
+            if(isEditing){gamePosition = indexOfGame;}
+            else {gamePosition = manager.getItemAtIndex(manager.getIndexOfCurrentConfiguration()).getSizeOfListOfGamePlays() - 1;}
+
+            intent.putExtra("Selected GamePlay position",gamePosition);
+            startActivity(intent);
+        });
+        btnNo.setOnClickListener(view -> {
+            goToAchievementCelebrationPage();
         });
     }
 
@@ -646,7 +676,9 @@ public class AddNewGame extends AppCompatActivity {
                 manager.setIndexOfCurrentConfiguration(selectedConfigPosition);
                 // Add level earned to achievement statistics
                 manager.getItemAtIndex(selectedGameInt).addAchievementsEarnedStats(gamePlayed.getIndexLevelAchieved());
-                goToAchievementCelebrationPage();
+                //TODO: add an alert dialog for add new image
+                displayNewImageQuestionMsg();
+//                goToAchievementCelebrationPage();
             } else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
             }

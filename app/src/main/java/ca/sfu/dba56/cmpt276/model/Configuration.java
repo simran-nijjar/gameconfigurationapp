@@ -2,7 +2,6 @@ package ca.sfu.dba56.cmpt276.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.util.Base64;
 
 import java.util.ArrayList;
@@ -48,14 +47,12 @@ public class Configuration {
     public String getGameNameFromConfig(){return gameName;}
     public int getMinPoorScoreFromConfig(){return minPoorScore;}
     public int getMaxBestScoreFromConfig(){return maxBestScore;}
-    public int getSizeOfListOfConfigs(){
-        return listOfGames.size();
-    }
+    public int getSizeOfListOfGamePlays(){return listOfGames.size();}
     public int getPlayer(int i){return listOfGames.get(i).getPlayers();}
     public List<Integer> getListOfValues(int i){return listOfGames.get(i).getListOfValues();}
     public Game getGame(int i){return listOfGames.get(i);}
     public String getTheme(int i){return listOfGames.get(i).getTheme();}
-    public String getImageString() {return imageString;}
+    public String getImageStringForConfig() {return imageString;}
 
 
     //Adds achievement level index to array of achievement stats
