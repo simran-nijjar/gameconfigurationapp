@@ -20,7 +20,7 @@ public class ConfigurationsManager {
     private final String STAR_WARS = "Star Wars";
 
     private static ConfigurationsManager instance;
-    private int index;
+    private int indexOfConfiguration;
     private List<Configuration> ListOfConfigurations = new ArrayList<>();
 
     private ConfigurationsManager() {
@@ -42,11 +42,11 @@ public class ConfigurationsManager {
     //setters
     public void setListOfConfigurations(List<Configuration> newList) {this.ListOfConfigurations = newList;}
     public void setItemAtIndex(int currentConfigPosition, Configuration newConfig){ListOfConfigurations.set(currentConfigPosition, newConfig);}
-    public void setIndex(int index) {this.index = index;}
+    public void setIndexOfCurrentConfiguration(int indexOfConfiguration) {this.indexOfConfiguration = indexOfConfiguration;}
     //getters
     public List<Configuration> getListOfConfigurations() {return ListOfConfigurations;}
     public Configuration getItemAtIndex(int i){return ListOfConfigurations.get(i);}
-    public int getIndex() {return index;}
+    public int getIndexOfCurrentConfiguration() {return indexOfConfiguration;}
 
     public void changeTheme(Context context){
         //Change theme depending on click radio button for theme
