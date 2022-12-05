@@ -67,12 +67,6 @@ public class ViewImage extends AppCompatActivity {
         UpdateImageUI();
     }
 
-    @Override
-    protected void onResume() {
-        UpdateImageUI();
-        super.onResume();
-    }
-
     private void UpdateImageUI() {
 
         b = getIntent().getExtras();
@@ -203,6 +197,7 @@ public class ViewImage extends AppCompatActivity {
             finalPhotoInBitMap = (Bitmap) bundle.get("data");
             image.setImageBitmap(finalPhotoInBitMap);
             isThereAPhoto = true;
+            Toast.makeText(this, "photo made", Toast.LENGTH_SHORT).show();
         }
         else{
             super.onActivityResult(requestCode, resultCode, data);

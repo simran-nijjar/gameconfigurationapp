@@ -628,9 +628,8 @@ public class AddNewGame extends AppCompatActivity {
                         manager.getItemAtIndex(currentConfigPosition).addAchievementsEarnedStats(indexOfEditedAchievementLevel); //Add new achievement level from statistics
                     }
                     // pass achievement level to appropriate theme layout to be displayed
-                    //TODO: add an alert dialog for add new image
+                    //display alert dialog for new image
                     displayNewImageQuestionMsg();
-//                    goToAchievementCelebrationPage();
                 } else {
                     Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
                 }
@@ -657,7 +656,7 @@ public class AddNewGame extends AppCompatActivity {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddNewGame.this)
                 .setView(newImageQuestion)
                 .setMessage("")
-                .setTitle("New Photo?");
+                .setTitle(R.string.new_photo_alert_dialog);
         AlertDialog dialog = alertDialog.create();
         dialog.show();
 
@@ -693,9 +692,8 @@ public class AddNewGame extends AppCompatActivity {
                 manager.setIndexOfCurrentConfiguration(selectedConfigPosition);
                 // Add level earned to achievement statistics
                 manager.getItemAtIndex(selectedGameInt).addAchievementsEarnedStats(gamePlayed.getIndexLevelAchieved());
-                //TODO: add an alert dialog for add new image
+                //display alert dialog for new image
                 displayNewImageQuestionMsg();
-//                goToAchievementCelebrationPage();
             } else {
                 Toast.makeText(AddNewGame.this, R.string.emptyOrInvalid, Toast.LENGTH_SHORT).show();
             }

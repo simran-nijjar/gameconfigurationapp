@@ -172,4 +172,5 @@
     </string>
     <string name="achievement_stats_null">Sorry. The game configuration selected was not set up with achievement statistics.\nPlease delete this configuration and add a new game configuration to have access to new features from this iteration!</string>
     <string name="checkLevelNamesMsg">To check which levels matches with which level number, click \'Levels\'</string>
+    <string name="new_photo_alert_dialog">New Photo?</string>
 </resources>
