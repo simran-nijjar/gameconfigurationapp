@@ -41,14 +41,12 @@ public class Configuration {
     public void setGameNameInConfig(String newName){gameName = newName;}
     public void setMinPoorScoreInConfig(int newScore){minPoorScore = newScore;}
     public void setMaxBestScoreInConfig(int newScore){maxBestScore = newScore;}
-    //public void setUriForConfigImage(Uri newUri){uriForConfigImage = newUri;}
     public void setImageStringForConfig(String newStr){imageString = newStr;}
     //getters
     public String getGameNameFromConfig(){return gameName;}
     public int getMinPoorScoreFromConfig(){return minPoorScore;}
     public int getMaxBestScoreFromConfig(){return maxBestScore;}
     public int getSizeOfListOfGamePlays(){return listOfGames.size();}
-    public int getPlayer(int i){return listOfGames.get(i).getPlayers();}
     public List<Integer> getListOfValues(int i){return listOfGames.get(i).getListOfValues();}
     public Game getGame(int i){return listOfGames.get(i);}
     public String getTheme(int i){return listOfGames.get(i).getTheme();}
