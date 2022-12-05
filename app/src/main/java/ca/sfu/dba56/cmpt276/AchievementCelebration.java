@@ -50,7 +50,7 @@ public class AchievementCelebration extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         gameTheme = getAchievementTheme(this);
         achievements = new Achievements(getAchievementTheme(this));
-        currentConfigPosition = manager.getIndex();
+        currentConfigPosition = manager.getIndexOfCurrentConfiguration();
 
         Bundle bundle = getIntent().getExtras(); // from game history
         if (bundle != null){ //If game is being edited
@@ -58,7 +58,7 @@ public class AchievementCelebration extends AppCompatActivity {
             indexOfGame = bundle.getInt("selected game"); //index of game is game being edited
         } else { //If new game is being added
             isNewGame = true;
-            indexOfGame = manager.getItemAtIndex(currentConfigPosition).getSizeOfListOfConfigs() - 1; //index of game is last position
+            indexOfGame = manager.getItemAtIndex(currentConfigPosition).getSizeOfListOfGamePlays() - 1; //index of game is last position
         }
 
         //Get the level user achieved when editing or adding new game
