@@ -22,6 +22,11 @@ import ca.sfu.dba56.cmpt276.model.Achievements;
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 import ca.sfu.dba56.cmpt276.model.Game;
 
+/*
+*  AchievementCelebration class displays an animation, plays a sound, when user achieves a level
+*  It shows how many points away the user is from the next level, or will tell user they are already at highest level
+*  User can change the theme using the dropdown menu and can replay the animation
+ */
 public class AchievementCelebration extends AppCompatActivity {
     private final String FRUITS = "Fruits";
     private final String FANTASY = "Fantasy";

@@ -34,6 +34,10 @@ import java.util.ArrayList;
 
 import ca.sfu.dba56.cmpt276.model.ConfigurationsManager;
 
+/*
+* AchievementStatistics class will display in a graph how many times user has achieved the each level
+* regardless of theme. If user edits the game play and achieves a new level, the previous level will be deleted from stats
+ */
 public class AchievementStatistics extends AppCompatActivity {
     private final int LOWEST_LEVEL = 1;
     private final int GREATEST_LEVEL = 10;
