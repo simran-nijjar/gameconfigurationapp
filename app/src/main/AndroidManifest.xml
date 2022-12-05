@@ -13,11 +13,21 @@
         android:theme="@style/Theme.CMPT276"
         tools:targetApi="31">
         <activity
+            android:name=".AchievementStatistics"
+            android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="Achievement Statistics"
+            android:parentActivityName=".ViewConfiguration">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".AchievementCelebration"
             android:configChanges="keyboard|orientation|keyboardHidden|screenSize"
-            android:parentActivityName=".ViewConfiguration"
+            android:exported="false"
             android:label="Achievement Celebration"
-            android:exported="false">
+            android:parentActivityName=".ViewConfiguration">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

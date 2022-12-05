@@ -9,18 +9,18 @@ import java.util.List;
  * allows to add new games to the list, get/set min/max scores and name, and string with played games info
  */
 public class Configuration {
-
-
     private String gameName;
     private int minPoorScore;
     private int maxBestScore;
     private List<Game> listOfGames = new ArrayList<>();
+    private int achievementsEarnedStats[];
 
     //constructor
     public Configuration(String newGameName, int newMinScore, int newMaxScore){
         gameName = newGameName;
         minPoorScore = newMinScore;
         maxBestScore = newMaxScore;
+        this.achievementsEarnedStats = new int[]{0,0,0,0,0,0,0,0,0,0};
     }
 
     //add new game (to the list)
@@ -45,4 +45,21 @@ public class Configuration {
     public List<Integer> getListOfValues(int i){return listOfGames.get(i).getListOfValues();}
     public Game getGame(int i){return listOfGames.get(i);}
     public String getTheme(int i){return listOfGames.get(i).getTheme();}
+    //Adds achievement level index to array of achievement stats
+    public void addAchievementsEarnedStats(int index){this.achievementsEarnedStats[index] += 1;}
+    //Removes achievement level index from array of achievement stats
+    public void removeAchievementsEarnedStats(int index){
+        if (this.achievementsEarnedStats[index] == 0){
+            throw new IllegalArgumentException("Cannot remove level earned from achievement stats because the stat for this level is zero\n");
+        }
+        this.achievementsEarnedStats[index] -= 1;
+    }
+    public int getAchievementsEarnedStats(int index){return this.achievementsEarnedStats[index];}
+    //Returns true for game configurations added before this iteration
+    public boolean isAchievementsEarnedStatsArrNull(){
+        if (this.achievementsEarnedStats == null){
+            return true;
+        }
+        return false;
+    }
 }
