@@ -1,5 +1,9 @@
 package ca.sfu.dba56.cmpt276.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 import java.util.List;
 
 /*
@@ -23,6 +27,8 @@ public class Game {
     private double adjustDifficulty;
     private int minScore;
     private int maxScore;
+    private String imageString;
+
 
     public Game(int players, int scores, List<Integer> listOfValues, Configuration manager,
                 String dateGamePlayed, boolean isCalculatingRangeLevels, String theme, int difficultyLevel) {
@@ -142,4 +148,21 @@ public class Game {
     public boolean isHighestLevelAchieved(){return achievements.isHighestLevelAchieved();}
     public int getPointsAwayFromNextLevel(){return achievements.getPointsAwayFromNextLevel();}
     public int getIndexLevelAchieved(){return achievements.getIndexLevelAchieved();}
+
+    public void setImageStringForGamePlay(String newStr){imageString = newStr;}
+    public String getImageStringForGamePlay() {return imageString;}
+
+
+    // inspired/source: https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+    // converts imageString variable to bitmap
+    public Bitmap imageStringToBitMap(){
+        try {
+            byte [] encodeByte= Base64.decode(this.imageString, Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
 }
