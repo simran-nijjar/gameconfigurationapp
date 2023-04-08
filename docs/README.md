@@ -6,7 +6,7 @@ Users can view achievements for a given number of players, view history, edit an
 Game configurations and game plays are saved between launches of the application.
 This app was developed by the Sodium Team.
 
-This application was created as a group project for my CMPT 276 Introduction to Software Engineering Class by Dr. Brian Fraser. I obtained permission from Dr. Fraser to post this on my GitHub publicly.
+This application was created as a group project for my CMPT 276 Introduction to Software Engineering Class in Fall 2022 by Dr. Brian Fraser. I obtained permission from Dr. Fraser to post this on my GitHub publicly.
 
 ## My Contributions: 
 - I created the achievement levels for this app. I calculated the achievement earned for each game play and I calculated the score range for each achievement level for each game depending on the number of plays and game difficulty. 
