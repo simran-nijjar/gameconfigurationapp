@@ -1,17 +1,30 @@
-Configurations Application
+# Configurations Application
+
 This is an application to store game configurations and game plays for saved games.
 User can create games with expected min and max scores and add new games with combined scores for multiple players.
 Users can view achievements for a given number of players, view history, edit and delete game configuration.
 Game configurations and game plays are saved between launches of the application.
 This app was developed by the Sodium Team.
 
+This application was created as a group project for my CMPT 276 Introduction to Software Engineering Class by Dr. Brian Fraser. I obtained permission from Dr. Fraser to post this on my GitHub publicly.
+
+## My Contributions: 
+- I created the achievement levels for this app. I calculated the achievement earned for each game play and I calculated the score range for each achievement level for each game depending on the number of plays and game difficulty. 
+- I added the game difficulty for this app which adjusts what score is required to get each achievement level
+- I added the three themes that will change the background, names of achievement levels for each game play and when viewing achievements. 
+- I made the achievement celebration page which shows how many points the user was away from the next level which also allows user to change the theme of the game they just played.
+- I created animation for each theme was added to achievement celebration page as well. 
+- I created the achievement statistics page which shows the user how many times they achieved each level in a graph.
+- I have also contributed on the about screen and collaborated on the parts that my group partners worked on.  
+
+
 The following are assumptions made after making clarifications about feature requirements with
 Dr. Brian Fraser and design choices made by Sodium.
 
-General:
+## General:
 Application mode is set to portrait mode only
 
-Game Configurations:
+## Game Configurations:
 In help page, buttons when clicked will display project and course information, app description,
 hyperlink sources, and list of achievements
 Scores can be whole numbers and negative numbers. Decimals are not allowed
@@ -38,7 +51,7 @@ which user cannot enter and displayed numbers greater than max before reaching P
 Worst level is always Beautiful Bananas with less than expected min score and best level is always
 Perfect Peaches >= expected max score
 
-Game Plays:
+## Game Plays:
 When a user clicks a game from the game configuration list, they are taken to view configuration
 where they have the buttons when clicked to add a new game, view achievement levels for number of
 players inputted, edit, and delete game configuration. Users can see the history of a game when
